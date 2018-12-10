@@ -1,6 +1,6 @@
 module.exports = {
   title: `Documentation`,
-  description: `For Training and Projects created by Juan Pablo Perez`,
+  description: `For Training and Projects`,
   head: [
     ['link', { rel: 'icon', href: '/images/favicon.png' }]
   ],  
@@ -16,6 +16,25 @@ module.exports = {
       { text: 'About me', link: 'https://github.com/peelmicro'},
       { text: 'Github', link: 'https://github.com/peelmicro/documentation'},
     ],
-    sidebar: 'auto'
-  }  
+    sidebar: {
+      '/staticwebs/': [
+        {
+          title: 'Markdown',
+          collapsable: false,
+          children: [
+            'markdown',
+            'markdown-easy-markdown-with-vs-code',
+          ]
+        },
+        {
+          title: 'VuePress',
+          collapsable: false,
+          children: [
+            'vuepress',
+            'vuepress-how-to-use-vuepress-for-a-documentation-site',
+          ]
+        }
+      ]
+    }
+  } 
 }

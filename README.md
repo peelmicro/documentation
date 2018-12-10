@@ -1,8 +1,8 @@
 ---
 home: true
 heroImage: /images/Documentation.png
-actionText: Documents →
-actionLink: /Documents/
+actionText: Projects →
+actionLink: /projects/
 features:
 - title: Projects
   details: Public projects developed by myself
