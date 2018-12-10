@@ -17,7 +17,96 @@ module.exports = {
       { text: 'Github', link: 'https://github.com/peelmicro/documentation'},
     ],
     sidebar: {
+      '/projects/': [
+        '',
+        'documentation.md',
+        'dot-net-multi-docker.md',
+        'java-multi-docker.md',
+        'python-multi-docker.md',
+        'dot-net-core-react-redux-advanced.md',
+        'purchase-slack-command-dotnet.md',
+        'node-with-vuejs-fullstack-web-development.md',
+        'ethereum-kickstart-vue.md',
+        'devmeetup-vuetify-nuxt.md'
+      ],
+      '/frontend/': [
+        '',
+        {
+          title: 'Vue.js',
+          collapsable: false,
+          children: [
+            'vuejs'
+          ]
+        },
+        {
+          title: 'React',
+          collapsable: false,
+          children: [
+            'react'
+          ]
+        },
+        {
+          title: 'Angular',
+          collapsable: false,
+          children: [
+            'angular'
+          ]
+        },
+        {
+          title: 'JavaScript',
+          collapsable: false,
+          children: [
+            'javascript'
+          ]
+        },
+        {
+          title: 'CSS',
+          collapsable: false,
+          children: [
+            'css'
+          ]
+        }
+      ],
+      '/backend/': [
+        '',
+        {
+          title: 'Node.js',
+          collapsable: false,
+          children: [
+            'nodejs'
+          ]
+        },
+        {
+          title: 'Java',
+          collapsable: false,
+          children: [
+            'java'
+          ]
+        },
+        {
+          title: 'Python',
+          collapsable: false,
+          children: [
+            'python'
+          ]
+        },
+        {
+          title: '.Net Core',
+          collapsable: false,
+          children: [
+            'dotnetcore'
+          ]
+        },
+        {
+          title: '.Net',
+          collapsable: false,
+          children: [
+            'dotnet'
+          ]
+        }
+      ],
       '/staticwebs/': [
+        '',
         {
           title: 'Markdown',
           collapsable: false,
@@ -32,6 +121,47 @@ module.exports = {
           children: [
             'vuepress',
             'vuepress-how-to-use-vuepress-for-a-documentation-site',
+          ]
+        }
+      ],
+      '/microservices/': [
+        '',
+        {
+          title: 'Development',
+          collapsable: false,
+          children: [
+            'development'
+          ]
+        },
+        {
+          title: 'Docker',
+          collapsable: false,
+          children: [
+            'docker'
+          ]
+        },
+        {
+          title: 'Kubernetes',
+          collapsable: false,
+          children: [
+            'kubernetes'
+          ]
+        }
+      ],
+      '/other/': [
+        '',
+        {
+          title: 'Blockchain',
+          collapsable: false,
+          children: [
+            'blockchain'
+          ]
+        },
+        {
+          title: 'Excel',
+          collapsable: false,
+          children: [
+            'excel'
           ]
         }
       ]

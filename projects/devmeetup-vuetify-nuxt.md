@@ -1,0 +1,1 @@
+# Nuxt version of the dev meeting application built with Vue + Vuetify + Firebase based on "Build an App with Vue, Vuetify & Firebase" Academind course

@@ -1,0 +1,1 @@
+# .Net Core version of the "How to create a Slack bot to automate tasks for you" Udemy Course
