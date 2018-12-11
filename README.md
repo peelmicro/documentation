@@ -5,7 +5,7 @@ actionText: Projects →
 actionLink: /projects/
 features:
 - title: Projects
-  details: Public projects developed by myself
+  details: Public projects developed by me
 - title: Front End 
   details: Vue.Js, React, Angular, JavaScript, CSS, ...
 - title: Back End

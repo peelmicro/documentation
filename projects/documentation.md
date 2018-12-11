@@ -1,1 +1,1 @@
-# Documentation Website for Training and Projects created using VuePress
+# Documentation Website for Training and Projects. It is created using VuePress

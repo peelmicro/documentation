@@ -1,10 +1,10 @@
 # Projects
 
-This documentation section is about the public projects developed by myself.
+This documentation section is about the public projects developed by me.
 
 | Project                                                                                                                                         | Dates               | Source Code                                                                                         |
 | ----------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- | --------------------------------------------------------------------------------------------------- |
-| [Documentation Website for Training and Projects created using VuePress](documentation.md)                                                                                                               | Dec 2018 -          | [documentation](https://github.com/peelmicro/documentation)                                         |
+| [Documentation Website for Training and Projects. It is created using VuePress](documentation.md)                                                                                                               | Dec 2018 -          | [documentation](https://github.com/peelmicro/documentation)                                         |
 | [.NET Core version of the "Docker and Kubernetes: The Complete Guide" Udemy course](dot-net-multi-docker.md) | Nov 2018 - Dic 2018 | [dot-net-multi-docker](https://github.com/peelmicro/dot-net-multi-docker) |
 | [Java version of the "Docker and Kubernetes: The Complete Guide" Udemy course](java-multi-docker.md)        | Nov 2018 - Dic 2018 | [java-multi-docker](https://github.com/peelmicro/java-multi-docker)                                 |
 | [Python version of the "Docker and Kubernetes: The Complete Guide" Udemy course](python-multi-docker.md)     | Nov 2018 - Dic 2018 | [python-multi-docker](https://github.com/peelmicro/python-multi-docker)                             |
