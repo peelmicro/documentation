@@ -1,7 +1,7 @@
 # .NET Core version of the "Docker and Kubernetes: The Complete Guide" Udemy Course 
 
 Within the code you can see how to:
-- Create different Docket Container Types and relate all of them:
+- Create different Docker Container Types and relate all of them:
 1. React Client App
 2. .NET Core Web API
 3. .NET Core Console
@@ -25,7 +25,9 @@ Within the code you can see how to:
 - Run the Ruby Travis CI CLI from a Docker container locally
 - Manage the automatic creation and renewal of a TLS certificate using Kubernetes to run the application with HTTPS
 
-The code is store in a [Github Repository](https://github.com/peelmicro/dotnet-core-multi-docker).
+The code is store in [This Github Repository](https://github.com/peelmicro/dotnet-core-multi-docker).
+
+[[toc]]
 
 ## Multi-Docker solution
 ### Create the initial version of the `Worker` Project
@@ -1180,7 +1182,7 @@ client_1    | Note that the development build is not optimized.
 client_1    | To create a production build, use yarn build.
 client_1    |
 ```
-- Reverted `Server Dockerfile`
+- Revert `Server Dockerfile`
 > `Dockerfile`
 ```docker
 FROM microsoft/dotnet:2.1-sdk
@@ -1195,7 +1197,7 @@ COPY . ./
 RUN dotnet publish -c Release -o out
 ENTRYPOINT ["dotnet", "out/Server.dll"]
 ```
-- Reverted `Worker Dockerfile`
+- Revert `Worker Dockerfile`
 > `Dockerfile`
 ```docker
 FFROM microsoft/dotnet:2.1-sdk
@@ -1210,7 +1212,7 @@ COPY . ./
 RUN dotnet publish -c Release -o out
 ENTRYPOINT ["dotnet", "out/Worker.dll"]
 ```
-- Reverted `docker-compose.yml`
+- Revert `docker-compose.yml`
 > `docker-compose.yml`
 ```yml
 version: '3'
@@ -1448,7 +1450,7 @@ nginx_1     | 172.18.0.1 - - [11/Nov/2018:19:31:35 +0000] "GET /static/js/0.chun
 nginx_1     | 172.18.0.1 - - [11/Nov/2018:19:31:35 +0000] "GET /static/js/0.chunk.js.map HTTP/1.1" 200 423546 "http://localhost:3050/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36" "-"
 ```
 - Change `program.cs` in `server` project
-- Change from .UseUrls("http://localhost:5000/") to .UseUrls("http://*:5000/")
+- Change from `.UseUrls("http://localhost:5000/")` to `.UseUrls("http://*:5000/")`
 ```sh
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ docker-compose up --build
@@ -1579,7 +1581,7 @@ client_1    | Note that the development build is not optimized.
 client_1    | To create a production build, use yarn build.
 ```
 
-4. Browse to http://localhost:3050/
+4. Browse to `http://localhost:3050/`
 ```
 logo
 Fib Calculator (.NET Core)
@@ -1804,8 +1806,11 @@ Done. Your build exited with 0.
 ```
 7. Add the `environment variables` on `Travis CI`
 - The following setting variables have been added:
+
 DOCKER_ID: `peelmicro`
+
 DOCKER_PASSWORD: `xxxxxxxxxxxxxxxxxx`
+
 8. Modify `.travis.yml` to include the generation of the `Docker images` and that they are pushed to `Docker Hub`
 > `.travis.yml`
 ```yml
@@ -2123,17 +2128,24 @@ deploy:
 }
 ```
 3. Create new application in `AWS Elastic Beanstalk`
-- Go to https://console.aws.amazon.com/elasticbeanstalk/home?region-us-east-1#/welcome
+- Go to `https://console.aws.amazon.com/elasticbeanstalk/home?region-us-east-1#/welcome`
 - Clik on `Create New Applicacion`
+
 Create New Application
+
 Application Name: `dotnet-core-muti-docker`
+
 Description: 
+
 - Click on `Create`
 
 - Click on `Create one now`
 - Select `Web server environment` and click on `Select`
+
 Application name: `dotnet-core-muti-docker`
+
 Environment name: `DotnetCoreMutiDocker-env`
+
 - Select Platform: `Multi-container Docker`
 - Click on `Create Environment`
 ```
@@ -2163,48 +2175,69 @@ Using elasticbeanstalk-us-east-1-972569889348 as Amazon S3 storage bucket for en
 10:11am
 createEnvironment is starting.
 ```
-- Browse to http://dotnetcoremutidocker-env.fzi9uupmiy.us-east-1.elasticbeanstalk.com/
+- Browse to `http://dotnetcoremutidocker-env.fzi9uupmiy.us-east-1.elasticbeanstalk.com/`
 
 4. Add AWS `Relational Database Service (RDS)`
 - On https://console.aws.amazon.com/rds/home?region-us-east-1# look for `Create Database` and click on it.
 - Select `PostgreSQL`, mark `[X] Only enable options eligible for RDS Free Usage Tier` and then click on `Next`
+
 License model: `postgresql-license`
+
 Db engine version: `PostgreSQL 10.4-R1`
+
 Db Instance class: `db.t2.micro - 1 vCPU, 1 GiB RAM`
+
 Allocated storaged: `20 GiB`
+
 DB instance identifier: `dotnet-core-multi-docker-postgres`
+
 Master username: `postgres`
+
 Master password: `postgres_password`
+
 Confirm password: `postgres_password` 
+
 - Click on `Next`
 
 Virtual Private Cloud (VPC): `Default VPC (vpc-2c2e8936)`
+
 Subnet group: `default`
+
 Public accessibility: `(No)`
+
 VPC segurity groups: `(X) Create new VPC security group` ( ) Choose existing VPC security groups
 
 Database name: `fibvalues`
+
 Port: `5432`
+
 DB parameter group: `default.postgres10`
+
 IAM Db authentication: ( ) Enable IAM DB authentication `(X) Disable`
 
 Encryption: `Nothing to be done.`
+
 Backup: 
+
 Backup retention period: `7 days.`
+
 Backup window: ( ) Select Window `(X) No preference`
+
 `[X] Copy tags to snapshots`
 
 Monitoring: ( ) Enable enhanced monitoring `(X) Disable enhanced monitoring`
 
 Maintenance: 
+
 Auto minor version upgrade: `(X) Enable auto minor version upgrade` ( ) Enable auto minor version upgrade 
+
 Maintenance window: ( ) Select Window `(X) No Preference`
 
 Del protection: `[X] Enable deletion protection`
 
 - Click on `Create Database`
 
-- The situation about the current database can be seen on https://console.aws.amazon.com/rds/home?region-us-east-1#dbinstance:id-dotnet-core-multi-docker-postgres 
+- The situation about the `current database` can be seen on `https://console.aws.amazon.com/rds/home?region-us-east-1#dbinstance:id-dotnet-core-multi-docker-postgres` 
 
 
 5. Add AWS `Elastic Cache`
@@ -2214,46 +2247,65 @@ Del protection: `[X] Enable deletion protection`
 Cluster engine `(X) Redis` [ ] Cluster mode enabled ( ) Memcached
 
 Redis settings
+
 Name: `ncmulti-docker-redis`
+
 Description: 
+
 Engine version compatibility: `4.0.10`
+
 Port: `6379`
+
 Parameter group: `default.redis4.0`
+
 Node type: `cache.t2.micro (0.5 GiB)` **(Ensure not to choose "cache.r5.large (13.07 GiB)")**
+
 Number of replicas: `None` **(Ensure to not to choose 2)**
 
 Advanced Redis settings
 
 Subnet group: `redis-group (vpc-4c2e8936)`
+
 Preferred availability zone(s): `(X) No preference` ( ) Select zones
 
 Security
+
 Security groups: `default (sg-848995ca)`
+
 Encryption at-rest: `[ ]` 
+
 Encryption in-transit: `[ ]`
 
 Import data to cluster
+
 Seed RDB file S3 location: 
 
 Backup
+
 Enable automatic backups: `[ ]`
 
 Maintenance
+
 Maintenance window: `(X) No preference` ( ) Specify maintenance window
+
 Topic for SNS notification: Disable notifications
 
 - Click on `Create`
 
-It goes to https://console.aws.amazon.com/elasticache/home?region-us-east-1#redis: and the dotnet-core-multi-docker-redis cluster starts to create
+It goes to `https://console.aws.amazon.com/elasticache/home?region-us-east-1#redis:` and the `dotnet-core-multi-docker-redis` cluster starts to create
 
 6. Create a new `Security Group`
 
 - go to https://console.aws.amazon.com/vpc/home?region-us-east-1 and click on the left menu on `Security - Security Groups` and it goes to https://console.aws.amazon.com/vpc/home?region-us-east-1#securityGroups
 
 - Click on `Create Security Group`
+
 Name tag: `dotnet-core-multi-docker`
+
 Group name: `dotnet-core-multi-docker`
+
 Description: `Traffic for services in dotnet-core-multi-docker app`
+
 VPC: `vpc-4c2e8936`
 
 -Click on `Yes, Create`
@@ -2261,17 +2313,27 @@ VPC: `vpc-4c2e8936`
 The new `multi-docker` security group is created. `Select` it and on the bottom:
 
 Summary:
+
 Group name: `dotnet-core-multi-docker`
+
 VPC: `vpc-4c2e8936`
+
 Group ID: `sg-06f078fb1006ceed7 | dotnet-core-multi-docker`
+
 Group description: `Traffic for services in dotnet-core-multi-docker app`
 
 Inbound Rules:
+
 - Click on `Edit`
+
 Type: `Custom TCP Rule`
+
 Protocol: `TCP (6)`
+
 Port Range: `5432-6379`
+
 Source: `sg-06f078fb1006ceed7 (the one for multi-docker)`
+
 Description:
 
 - Click on `Save` and `(X) Save Successful` is shown.
@@ -2281,16 +2343,20 @@ Description:
 - Select the `DotnetCoreMutiDocker-env` environment
 - Click on `Configuration` left menu
 - Click on Instances `Modify` on the bottom.
+
 On EC2 security groups
+
 - mark the `[X] dotnet-core-multi-docker` security group
+
 Both the `awseb-e-p33qnysnga-stack-AWSEBSecurityGroup-18LZQS0T12BN6 sg-08c14d3713914766a DotnetCoreMutiDocker-env` and the `dotnet-core-multi-docker sg-06f078fb1006ceed7 dotnet-core-multi-docker` must be selected
 
 - Click on `Apply`
+
 The folowing message is shown:
 
 Elastic Beanstalk is updating your environment.
-To cancel this operation select Abort Current Operation from the Actions dropdown.
 
+To cancel this operation select Abort Current Operation from the Actions dropdown.
 
 2nd) Assign the new security group to the RDS (Postgres) instance
 - Select `RDS` on Services - History left menu.
@@ -2298,29 +2364,42 @@ To cancel this operation select Abort Current Operation from the Actions dropdow
 - Click on `dotnet-core-multi-docker-postgres` instance
 - Scroll down and look for `Details` and then Click on [Modify]
 - Scroll down and look for `Network & Security` 
+
 On Security Group add the `dotnet-core-multi-docker (sg-06f078fb1006ceed7) (vpc-4c2e8936)` one.
+
 Both of them must be selected (the `rds-launch-wizard` and the `dotnet-core-multi-docker` ones).
+
 - Scroll down to the very bottom and click on `Continue` 
 
 On Scheduling of modifications select `(X) Apply immediately`.
+
 - Click on `Modify DB Instance`
 
-
 3rd) Assign the new security group to the EC (Redis) instance
+
 - Select `ElasticCache` on `Services - History` left menu
 - Click on `Redis` left menu
-The `ncmulti-docker-redis` should be with the `available` status
-- Select it and click `Modify` on the left top.
 
+The `ncmulti-docker-redis` should be with the `available` status
+
+- Select it and click `Modify` on the left top.
 	
 Modify Cluster
+
 Engine: `redis`
+
 Engine Version Compatibility: `4.0.10` 
+
 VPC Security Group(s): click on `little pencil` and select the `multi-docker` one as well. Click on `Save`: `default (sg-848995ca)`, `dotnet-core-multi-docker (sg-06f078fb1006ceed7)` (both of them are selected)
+
 Parameter Group: `default.redis4.0`
+
 Node Type: `cache.t2.micro`
+
 Maintenance Window: `Saturday ....`  :  UTC -   :  UTC
+
 Topic for SNS Notification*: `Disable notifications`
+
 Apply immediately: `[X]`
 
 - Click on `Modify` and it starts to modify it.
@@ -2330,12 +2409,20 @@ Apply immediately: `[X]`
 - Select the `DotnetCoreMutiDocker-env` environment
 - Click on Software `Modify` button.
       - `REDIS_HOST`-`multi-docker-redis.lmrcvz.0001.use1.cache.amazonaws.com` (it must be obtained from the multi-docker-redis EC instance)
+
       - `REDIS_PORT`-`6379`
+
       - `PGUSER`-`postgres`
-      - `PGHOST`-`dotnet-core-multi-docker-postgres.cvzlrthufo75.us-east-1.rds.amazonaws.com` (it must be obtained from Connect - end-point on the RDS instance)
+
+      - `PGHOST`-`dotnet-core-multi-docker-postgres.cvzlrthufo75.us-east-1.rds.amazonaws.com` (it must be obtained from Connect - end-point on the RDS 
+      instance)
+
       - `PGDATABASE`-`fibvalues`
+
       - `PGPASSWORD`-`postgres_password`
+
       - `PGPORT`-`5432`
+
 Click on `Apply`
 
 8. Add the `IAM Keys` for Deployment
@@ -2344,7 +2431,9 @@ Click on `Apply`
 - Click on `Add user`
 
 User name: `dotnet-core-multi-docker-deployer`
+
 - Select AWS access type
+
 Access type: `[X] Programmatic access` [ ] AWS Management Console access
 
 - Click on `Next: Permissions`
@@ -2357,12 +2446,13 @@ Access type: `[X] Programmatic access` [ ] AWS Management Console access
 
 ```
 Add user
+
 Review
+
 Review your choices. After you create the user, you can view and download the autogenerated password and access key.
 
 User details
-User name
-multi-docker-deployer
+User name: `multi-docker-deployer`
 AWS access type
 Programmatic access - with an access key
 Permissions boundary
@@ -2389,6 +2479,7 @@ AWSElasticBeanstalkWebTier
 Managed policy
 AWSElasticBeanstalkWorkerTier
 ```
+
 - Click on `Create User`
 ```
 Success
@@ -2404,7 +2495,9 @@ Secret access key: pJauqjTXEBPYUGVfFNkTXXXXXXXXXXXXXX
 9. Add the two keys obatined to `Travis CI` setting variables
 
 - On https://travis-ci.com/peelmicro/dotnet-core-multi-docker click on `More Opcions -Settings` add:
+
 AWS_ACCESS_KEY: `AKIAJVPFWXXXXXXXXXXX`
+
 AWS_SECRET_KEY: `pJauqjTXEBPYUGVfFNkTXXXXXXXXXXXXXX`
 
 10. Commit the changes 
@@ -2644,10 +2737,10 @@ To be able to delete the database, modify the database and disable deletion prot
 
 - On Details click on `Modify` 
 
-- Scrool down to 
-Deletion protection
+- Scroll down to `Deletion protection`
 
 Enable deletion protection
+
 [X] Protects the database from being deleted accidentally. While this option is enabled, you can’t delete the database.
 
 Unmark `[ ] Protects the database from being deleted accidentally.` and then click on `Continue`
@@ -2674,7 +2767,7 @@ If you choose to apply changes immediately, please note that any changes in the 
 - Click on `Modify DB Instance`
 
 - Click again on `Instance actions` and then `Delete` 
-
+```
 Delete dotnet-core-multi-docker-postgres instance?
 
 Are you sure you want to Delete the dotnet-core-multi-docker-postgres DB Instance?
@@ -2686,7 +2779,7 @@ Determines whether a final DB Snapshot is created before the DB instance is dele
 
 dotnet-core-multi-docker-postgres-final-snapshot
 To confirm deletion, type delete me into the field
-
+```
 
 - Enter `delete me` on the last field and the click on `Delete`
 
@@ -2697,10 +2790,11 @@ It's deleted after a while.
 - Look for `Elastic Cache`, then click on `Redis` on left menu 
 - Click on the `multi-docker-redis` cluster and then on the `Delete` butoon on the top
 
-	
+```
 Delete Cluster
 Are you sure you want to delete this Cluster?
 ncmulti-docker-redis
+```
 -Click on `Delete`
 
 It's deleted after a while
@@ -2710,9 +2804,11 @@ It's deleted after a while
 - Look for `VPC`, then on your `Security Groups` on the left menu
 - Select `dotnet-core-multi-docker` Group and then `Security Group Actions` and then `Delete Security Group`
 
+```
 Delete Security Group
 Are you sure you want to delete this security group?
 sg-06f078fb1006ceed7 - dotnet-core-multi-docker (dotnet-core-multi-docker)
+```
 - Click on `Yes, Delete`
 
 > 5th) (Optional) IAM security users
@@ -2720,12 +2816,1920 @@ sg-06f078fb1006ceed7 - dotnet-core-multi-docker (dotnet-core-multi-docker)
 - Look for `IAM`, then click on `users` on the left menu.
 
 - mark the `dotnet-core-multi-docker-deployer` user and the click on `Delete user`
-
+```
 Delete user
 The following users will be permanently deleted, including all user data, user security credentials, and user inline policies. Deleted user data cannot be recovered. Are you sure that you want to delete the following users?
 User name Last activity
 dotnet-core-multi-docker-deployer 1 hour ago
 [X] One or more of these users have recently accessed AWS. Deleting them could affect running systems. Check the box to confirm that you want to delete these users.
+```
 - Click on `Yes, delete`
 
 The user is deleted.
+
+## Onwards to Kubernetes!
+1. Modify the `client\nginx\default.conf` file to avoid it fails when running it inside Kubernetes
+```css
+server {
+  listen 3000;
+
+  location / {
+    root /usr/share/nginx/html;
+    index index.html index.htm;
+    #try_files $uri $uri/ /index.html;
+  }
+
+}
+```
+2. Create the `simplek8s` folder and the `config` Kubernetes files
+
+>`client-node-port.yaml`
+```yml
+apiVersion: v1
+kind: Service
+metadata: 
+  name: dotnet-core-client-node-port
+spec:
+  type: NodePort
+  ports: 
+    - port: 3050
+      targetPort: 3000
+      nodePort: 31515
+  selector:
+    component: web
+```
+
+>`client-pod.yaml`
+```yml
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: dotnet-core-client-pod
+  labels:
+    component: web
+spec:
+  containers:
+    - name: client
+      image: peelmicro/dotnet-core-multi-client
+      ports: 
+        - containerPort: 3000
+```
+3. Create the `dotnet-core-multi-client` Docker image
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
+$ docker build -t peelmicro/dotnet-core-multi-client ./client
+Sending build context to Docker daemon  340.5kB
+Step 1/10 : FROM node:alpine as builder
+ ---> 4b3c025f5508
+Step 2/10 : WORKDIR /app
+ ---> Using cache
+ ---> 1a05d05e0b5b
+Step 3/10 : COPY ./package.json ./
+ ---> Using cache
+ ---> 829609b8e407
+Step 4/10 : RUN npm install
+ ---> Using cache
+ ---> a2ca727a111e
+Step 5/10 : COPY . .
+ ---> 6acfa2d32fa0
+Step 6/10 : RUN npm run build
+ ---> Running in d20ea3e55244
+
+> client@0.1.0 build /app
+> react-scripts build
+
+Creating an optimized production build...
+Compiled successfully.
+
+File sizes after gzip:
+
+  47.2 KB  build/static/js/1.7b85cb19.chunk.js
+  1.38 KB  build/static/js/main.a0376e20.chunk.js
+  763 B    build/static/js/runtime~main.229c360f.js
+  510 B    build/static/css/main.0b4a1755.chunk.css
+
+The project was built assuming it is hosted at the server root.
+You can control this with the homepage field in your package.json.
+For example, add this to build it for GitHub Pages:
+
+  "homepage" : "http://myname.github.io/myapp",
+
+The build folder is ready to be deployed.
+You may serve it with a static server:
+
+  yarn global add serve
+  serve -s build
+
+Find out more about deployment here:
+
+  http://bit.ly/CRA-deploy
+
+Removing intermediate container d20ea3e55244
+ ---> 5191a5c76f1e
+Step 7/10 : FROM nginx
+ ---> e81eb098537d
+Step 8/10 : EXPOSE 3000
+ ---> Using cache
+ ---> 021956dfacb6
+Step 9/10 : COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
+ ---> b206c3bc0cf7
+Step 10/10 : COPY --from=builder /app/build /usr/share/nginx/html
+ ---> 546c91a82816
+Successfully built 546c91a82816
+Successfully tagged peelmicro/dotnet-core-multi-client:latest
+SECURITY WARNING: You are building a Docker image from Windows against a non-Windows Docker host. All files and directories added to build context will have '-rwxr-xr-x' permissions. It is recommended to double check and reset permissions for sensitive files and directories.
+```
+4. Push the `dotnet-core-multi-client` image to `Docker Hub`
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
+$ docker push peelmicro/dotnet-core-multi-client
+The push refers to repository [docker.io/peelmicro/dotnet-core-multi-client]
+509684436c77: Pushed
+2e55e5f66dcf: Pushed
+9a8f339aeebe: Layer already exists
+876456b96423: Layer already exists
+ef68f6734aa4: Layer already exists
+latest: digest: sha256:030b8c60c053b98099ee08005d72f5f9b28141569a34a8aa03b01d54aa0bd2a3 size: 1365
+```
+5. Create the `dotnet-core-client-pod` pod
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)$ cd simplek8s/
+
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex/simplek8s (master)
+$ kubectl apply -f client-pod.yaml
+pod "dotnet-core-client-pod" created
+```
+6. Create the `dotnet-core-client-node-port` service
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex/simplek8s (master)
+$ kubectl apply -f client-node-port.yaml
+service "dotnet-core-client-node-port" created
+```
+7. Confirm the IP where `minikube` is running
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex/simplek8s (master)
+$ minikube status
+minikube: Running
+cluster: Running
+kubectl: Correctly Configured: pointing to minikube-vm at 192.168.0.109
+```
+8. Ensure the `client` app is running properly
+* Goto to `http://192.168.0.109:31515/`
+
+![](/images/projects/dot-net-multi-docker/ClientRunning.png)
+
+9. Stop the `dotnet-core-client-pod` pod
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex/simplek8s (master)
+$ kubectl delete pod dotnet-core-client-pod
+pod "dotnet-core-client-pod" deleted
+```
+10. Stop the `dotnet-core-client-node-port` service
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex/simplek8s (master)
+$ kubectl delete service dotnet-core-client-node-port
+service "dotnet-core-client-node-port" deleted
+```
+11. Modify `.travis.yml` to avoid it deploys to `AWS Elastic Beanstalk`
+```yaml
+sudo: required
+language: node_js
+node_js: 
+  - "8"
+services:
+  - docker
+before_install:
+  - docker build -t peelmicro/test-client -f ./client/Dockerfile.dev ./client
+script:
+  - docker run peelmicro/test-client npm run test -- --coverage
+after_success:
+  - docker build -t peelmicro/dotnet-core-multi-client ./client
+  - docker build -t peelmicro/dotnet-core-multi-nginx ./nginx
+  - docker build -t peelmicro/dotnet-core-multi-server ./Server
+  - docker build -t peelmicro/dotnet-core-multi-worker ./Worker
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
+  - docker push peelmicro/dotnet-core-multi-client
+  - docker push peelmicro/dotnet-core-multi-nginx
+  - docker push peelmicro/dotnet-core-multi-server
+  - docker push peelmicro/dotnet-core-multi-worker
+# Commented out for Kubernettes
+# deploy:
+#   provider: elasticbeanstalk
+#   region: "us-east-1"
+#   app: "dotnet-core-muti-docker"
+#   env: "DotnetCoreMutiDocker-env"
+#   bucket_name: "elasticbeanstalk-us-east-1-972569889348"
+#   #bucket_path: ""
+#   on:
+#     branch: "master"
+#   access_key_id: $AWS_ACCESS_KEY
+#   secret_access_key:
+#     secure: "$AWS_SECRET_KEY"
+```
+12. Update `README.md`
+```md
+## .Net Core version of the "Docker and Kubernetes: The Complete Guide" course.
+
+> source code for the .Net Core version of the "Docker and Kubernetes: The Complete Guide" course.
+
+## Execute it locally
+
+$ docker-compose up --build
+
+Navigate to http://localhost:3050/
+
+## Continuous Integration with Travis CI + Amazon AWS
+
+- The repository must be created on https://github.com/
+
+- The repository must be assigned from GitHub on https://travis-ci.com/. The following setting variables must be set up:
+1) AWS_ACCESS_KEY (for 11.-Multi-Container Deployments to AWS)
+2) AWS_SECRET_KEY (for 11.-Multi-Container Deployments to AWS)
+3) DOCKER_ID
+4) DOCKER_PASSWORD
+
+- The following instances must be created on Amazon (for 11.-Multi-Container Deployments to AWS)
+1) Elastic Beanstalk (EB)
+2) Relational Database Service (RDS) for Postgres
+3) ElastiCache for Redis
+4) Custom Security Group
+5) Identity and Access Magagement (IAM)
+
+## Within the code you can see how to
+- Create different Docket Container Types and relate all of them
+  1) React Client App
+  2) .NET Core Web API
+  3) .NET Core Console
+  4) Postgres
+  5) Redis
+  6) NGINX
+- Use Postgres from a Docker Container with .Net Core
+- Use Redis from a Docker Container with .Net Core creating a subscription on the Web API App and subscribe to it on the Console App.
+- Accept dynamic POST request with .Net Core API
+- Send dynamic JSON responses from .Net Core API
+- Use Docker Compose to run and relate easily different Docker Components
+- Use NIGIX Container to run the React Client App
+- Use NIGIX Container as Reverse Proxy with .NET Core API
+- Work with different AWS Amazon service types to deploy a multi container Docker application using AWS Elastic Beanstalk
+- Upload own Containers to Docker Hub and download them with the deployment
+- Use Travis CI for the Continuous Integration Workflow
+- Use Kubernetes
+- Use Minikube to run Kubernetes locally
+- Use Kubectl CLI for interacting with Kubernetes Master
+
+## In order to get to know what has been developed follow the course on
+
+https://www.udemy.com/docker-and-kubernetes-the-complete-guide
+```
+13. Commit and push the changes to the `Github` repository
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex/simplek8s (master)
+$ git add .
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex/simplek8s (master)
+$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        modified:   ../.travis.yml
+        modified:   ../README.md
+        modified:   ../client/nginx/default.conf
+        new file:   client-node-port.yaml
+        new file:   client-pod.yaml
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex/simplek8s (master)
+$ git commit -m "Onwards to Kubernetes!"
+[master e541a19] Onwards to Kubernetes!
+ 5 files changed, 46 insertions(+), 24 deletions(-)
+ create mode 100644 simplek8s/client-node-port.yaml
+ create mode 100644 simplek8s/client-pod.yaml
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex/simplek8s (master)
+$ git push origin HEAD
+Counting objects: 10, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (9/9), done.
+Writing objects: 100% (10/10), 1.25 KiB | 425.00 KiB/s, done.
+Total 10 (delta 5), reused 0 (delta 0)
+remote: Resolving deltas: 100% (5/5), completed with 5 local objects.
+To https://github.com/peelmicro/dotnet-core-multi-docker.git
+   1ab54fd..e541a19  HEAD -> master
+```
+## Maintaining Sets of Containers with Deployments
+1. Create the new `client-deployment.yaml` config file.
+```yml
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: dotnet-core-client-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: web
+  template:
+    metadata:
+      labels:
+        component: web
+    spec:
+      containers: 
+        - name: client
+          image: peelmicro/dotnet-core-multi-client
+          ports: 
+            - containerPort: 3000
+```
+2. Delete current `pods`, `deployments` and `services`
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
+$ kubectl get pods
+NAME                                      READY     STATUS    RESTARTS   AGE
+java-client-deployment-7cd5869df7-xd77x   1/1       Running   0          25m
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
+$ kubectl get deployments
+NAME                     DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+java-client-deployment   1         1         1            1           41m
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
+$ kubectl delete deployment java-client-deployment
+deployment.extensions "java-client-deployment" deleted
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
+$ kubectl get pods
+No resources found.
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
+$ kubectl get deployments
+No resources found.
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
+$ kubectl get services
+NAME                    TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE
+java-client-node-port   NodePort    10.99.198.24   <none>        3050:31515/TCP   42m
+kubernetes              ClusterIP   10.96.0.1      <none>        443/TCP          3d
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
+$ kubectl delete service java-client-node-port
+service "java-client-node-port" deleted
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
+$ kubectl get services
+NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   3d
+```
+3. Apply the `client-deployment` config deployment
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex/simplek8s (master)
+$ kubectl apply -f client-deployment.yaml
+deployment.apps "dotnet-core-client-deployment" created
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex/simplek8s (master)
+$ kubectl get deployments
+NAME                            DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+dotnet-core-client-deployment   1         1         1            1           20s
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex/simplek8s (master)
+$ kubectl get pods
+NAME                                             READY     STATUS    RESTARTS   AGE
+dotnet-core-client-deployment-7b4f7756df-7jwc2   1/1       Running   0          37s
+```
+4. Apply the 'client-node-port` config service
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex/simplek8s (master)
+$ kubectl apply -f client-node-port.yaml
+service "dotnet-core-client-node-port" created
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex/simplek8s (master)
+$ kubectl get services
+NAME                           TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+dotnet-core-client-node-port   NodePort    10.98.205.161   <none>        3050:31515/TCP   18s
+kubernetes                     ClusterIP   10.96.0.1       <none>        443/TCP          3d
+```
+5. Test if the `multi-client` instance is running properly
+- Find out the current IP
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex/simplek8s (master)
+$ minikube ip
+192.168.0.109
+```
+- Browse to `http://192.168.0.109:31515/`
+
+![](/images/projects/dot-net-multi-docker/MultiClientIsRunning.png)
+
+6. Modify the `App.js` program to put another header to identify the version
+```js
+import React, { Component } from 'react';
+import logo from './logo.svg';
+import './App.css';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import OtherPage from './OtherPage';
+import Fib from './Fib';
+
+class App extends Component {
+  render() {
+    return (
+      <Router>
+        <div className="App">
+          <header className="App-header">
+            <img src={logo} className="App-logo" alt="logo" />
+            <h1 className="App-title">Fib Calculator version 2 (.NET Core)</h1>
+            <Link to="/">Home</Link>
+            <Link to="/otherpage">Other Page</Link>
+          </header>
+          <div>
+            <Route exact path="/" component={Fib} />
+            <Route path="/otherpage" component={OtherPage} />
+          </div>
+        </div>
+      </Router>
+    );
+  }
+}
+
+export default App;
+```
+7. Rebuild the `dotnet-core-multi-client` image with a different tag
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex/simplek8s (master)
+$ docker build -t peelmicro/dotnet-core-multi-client:v2 ./client
+unable to prepare context: path "./client" not found
+
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex/simplek8s (master)
+$ cd ..
+
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
+$ docker build -t peelmicro/dotnet-core-multi-client:v2 ./client
+Sending build context to Docker daemon  340.5kB
+Step 1/10 : FROM node:alpine as builder
+ ---> 4b3c025f5508
+Step 2/10 : WORKDIR /app
+ ---> Using cache
+ ---> 1a05d05e0b5b
+Step 3/10 : COPY ./package.json ./
+ ---> Using cache
+ ---> 829609b8e407
+Step 4/10 : RUN npm install
+ ---> Using cache
+ ---> a2ca727a111e
+Step 5/10 : COPY . .
+ ---> f97a3f7fec67
+Step 6/10 : RUN npm run build
+ ---> Running in b66908932e97
+
+> client@0.1.0 build /app
+> react-scripts build
+
+Creating an optimized production build...
+Compiled successfully.
+
+File sizes after gzip:
+
+  47.2 KB  build/static/js/1.7b85cb19.chunk.js
+  1.38 KB  build/static/js/main.8fec770a.chunk.js
+  763 B    build/static/js/runtime~main.229c360f.js
+  510 B    build/static/css/main.0b4a1755.chunk.css
+
+The project was built assuming it is hosted at the server root.
+You can control this with the homepage field in your package.json.
+For example, add this to build it for GitHub Pages:
+
+  "homepage" : "http://myname.github.io/myapp",
+
+The build folder is ready to be deployed.
+You may serve it with a static server:
+
+  yarn global add serve
+  serve -s build
+
+Find out more about deployment here:
+
+  http://bit.ly/CRA-deploy
+
+Removing intermediate container b66908932e97
+ ---> dbb856fffe55
+Step 7/10 : FROM nginx
+ ---> e81eb098537d
+Step 8/10 : EXPOSE 3000
+ ---> Using cache
+ ---> 021956dfacb6
+Step 9/10 : COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
+ ---> Using cache
+ ---> b206c3bc0cf7
+Step 10/10 : COPY --from=builder /app/build /usr/share/nginx/html
+ ---> e67ddcc389e0
+Successfully built e67ddcc389e0
+Successfully tagged peelmicro/dotnet-core-multi-client:v2
+SECURITY WARNING: You are building a Docker image from Windows against a non-Windows Docker host. All files and directories added to build context will have '-rwxr-xr-x' permissions. It is recommended to double check and reset permissions for sensitive files and directories.
+```
+
+8. Push the new `dotnet-core-multi-client` image to `Docker Hub`
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
+$ docker push peelmicro/dotnet-core-multi-client:v2
+The push refers to repository [docker.io/peelmicro/dotnet-core-multi-client]
+f782c1c2a156: Pushed
+2e55e5f66dcf: Layer already exists
+9a8f339aeebe: Layer already exists
+876456b96423: Layer already exists
+ef68f6734aa4: Layer already exists
+v2: digest: sha256:f587dfb422b8b59f7190c8586581121f07cb4aa5a9cdb2d631b3df5c05daf32a size: 1365
+```
+9. `Run` a specific `kubectl` command forcing the deployment to use the `image version`
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
+$ kubectl set image deployment/dotnet-core-client-deployment client=peelmicro/dotnet-core-multi-client:v2
+deployment.apps "dotnet-core-client-deployment" image updated
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
+$ kubectl get deployments
+NAME                            DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+dotnet-core-client-deployment   1         1         1            1           2h
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
+$ kubectl get pods
+NAME                                             READY     STATUS    RESTARTS   AGE
+dotnet-core-client-deployment-76cbb7f86f-dw2s7   1/1       Running   0          1m
+```
+10. Test if the new instance of the `muti-client` is running
+- Browse to `http://192.168.0.109:31515/`
+
+![](/images/projects/dot-net-multi-docker/NewMultiClientIsRunning.png)
+
+11. `Commit` and `Push` changes to Github Repository
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
+$ git add .
+warning: LF will be replaced by CRLF in client/src/App.js.
+The file will have its original line endings in your working directory.
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
+$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        modified:   client/src/App.js
+        new file:   simplek8s/client-deployment.yaml
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
+$ git commit -m "Maintaining Sets of Containers with Deployments"
+[master a63caa1] Maintaining Sets of Containers with Deployments
+ 2 files changed, 20 insertions(+), 1 deletion(-)
+ create mode 100644 simplek8s/client-deployment.yaml
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
+$ git push origin HEAD
+Counting objects: 7, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (7/7), done.
+Writing objects: 100% (7/7), 813 bytes | 42.00 KiB/s, done.
+Total 7 (delta 4), reused 0 (delta 0)
+remote: Resolving deltas: 100% (4/4), completed with 4 local objects.
+To https://github.com/peelmicro/dotnet-core-multi-docker.git
+   e541a19..a63caa1  HEAD -> master
+```
+## A Multi-Container App with Kubernetes
+1. Clean up the current objects running locally on `minikube`
+- Check if there are any `service` running
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)$ kubectl get allNAME                                            READY     STATUS    RESTARTS   AGEpod/java-client-deployment-d84b8c989-8w8df      1/1       Running   1          22h
+pod/java-client-deployment-d84b8c989-kvjjh      1/1       Running   1          22h
+pod/java-client-deployment-d84b8c989-l6vvv      1/1       Running   1          22h
+pod/java-postgres-deployment-5dd96996db-8kchj   1/1       Running   1          22h
+pod/java-redis-deployment-666bf96bdd-hp8sq      1/1       Running   1          22h
+pod/java-server-deployment-c45c6b558-558wp      1/1       Running   2          22h
+pod/java-server-deployment-c45c6b558-b6q8l      1/1       Running   3          22h
+pod/java-server-deployment-c45c6b558-fm65j      1/1       Running   1          22h
+pod/java-worker-deployment-59576b545-6gsln      1/1       Running   4          22h
+
+NAME                                       TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+service/java-client-cluster-ip-service     ClusterIP   10.106.142.133   <none>        3000/TCP   22h
+service/java-postgres-cluster-ip-service   ClusterIP   10.106.38.71     <none>        5432/TCP   22h
+service/java-redis-cluster-ip-service      ClusterIP   10.109.132.210   <none>        6379/TCP   22h
+service/java-server-cluster-ip-service     ClusterIP   10.101.10.127    <none>        5000/TCP   22h
+service/kubernetes                         ClusterIP   10.96.0.1        <none>        443/TCP    22h
+
+NAME                                       DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/java-client-deployment     3         3         3            3           22h
+deployment.apps/java-postgres-deployment   1         1         1            1           22h
+deployment.apps/java-redis-deployment      1         1         1            1           22h
+deployment.apps/java-server-deployment     3         3         3            3           22h
+deployment.apps/java-worker-deployment     1         1         1            1           22h
+
+NAME                                                  DESIRED   CURRENT   READY     AGE
+replicaset.apps/java-client-deployment-d84b8c989      3         3         3         22h
+replicaset.apps/java-postgres-deployment-5dd96996db   1         1         1         22h
+replicaset.apps/java-redis-deployment-666bf96bdd      1         1         1         22h
+replicaset.apps/java-server-deployment-c45c6b558      3         3         3         22h
+replicaset.apps/java-worker-deployment-59576b545      1         1         1         22h
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
+$ kubectl get storageclass
+NAME                 PROVISIONER                AGE
+standard (default)   k8s.io/minikube-hostpath   5d
+```
+- Execute the `kubectl delete daemonsets,replicasets,services,deployments,pods,rc,pv,pvc,namespaces,secrets,ingresses --all` command to remove all the `Kubernetes objects`
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
+$ kubectl delete daemonsets,replicasets,services,deployments,pods,rc,pv,pvc,namespaces,secrets,ingresses --all
+replicaset.extensions "java-client-deployment-d84b8c989" deleted
+replicaset.extensions "java-postgres-deployment-5dd96996db" deleted
+replicaset.extensions "java-redis-deployment-666bf96bdd" deleted
+replicaset.extensions "java-server-deployment-c45c6b558" deleted
+replicaset.extensions "java-worker-deployment-59576b545" deleted
+service "java-client-cluster-ip-service" deleted
+service "java-postgres-cluster-ip-service" deleted
+service "java-redis-cluster-ip-service" deleted
+service "java-server-cluster-ip-service" deleted
+service "kubernetes" deleted
+deployment.extensions "java-client-deployment" deleted
+deployment.extensions "java-postgres-deployment" deleted
+deployment.extensions "java-redis-deployment" deleted
+deployment.extensions "java-server-deployment" deleted
+deployment.extensions "java-worker-deployment" deleted
+pod "java-client-deployment-d84b8c989-h7lv9" deleted
+pod "java-postgres-deployment-5dd96996db-zkbrk" deleted
+pod "java-redis-deployment-666bf96bdd-8jgtv" deleted
+pod "java-server-deployment-c45c6b558-2429g" deleted
+pod "java-server-deployment-c45c6b558-2b6k2" deleted
+pod "java-server-deployment-c45c6b558-rqlpz" deleted
+pod "java-worker-deployment-59576b545-kjtzr" deleted
+persistentvolume "pvc-30979207-f660-11e8-a7aa-00155dc00118" deleted
+persistentvolumeclaim "java-database-persistent-volume-claim" deleted
+namespace "ingress-nginx" deleted
+secret "default-token-fcp79" deleted
+secret "pgpassword" deleted
+ingress.extensions "java-ingress-service" deleted
+Error from server (Forbidden): namespaces "default" is forbidden: this namespace may not be deleted
+Error from server (Forbidden): namespaces "kube-public" is forbidden: this namespace may not be deleted
+Error from server (Forbidden): namespaces "kube-system" is forbidden: this namespace may not be deleted
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
+$ kubectl get all
+NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   2m
+```
+2. Make a copy of the whole solution on the `elastic-beanstalk` folder
+
+![](/images/projects/dot-net-multi-docker/BackupEverythingOnElasticBeanstalkFolder.png)
+
+3. Remove the `.travis.yml`, `docker-compose.yml` and `Dockerrun.aws.json`  files and the `nginx` and  `simplek8s` folders.
+
+![](/images/projects/dot-net-multi-docker/RemoveFilesAndFolders.png)
+
+4. Copy the `k8s` folder from the `Java` version.
+
+![](/images/projects/dot-net-multi-docker/CopyK8sFolder.png)
+
+5. Modify all the `configuration` files.
+
+> `client-cluster-ip-service.yaml`
+```yml
+apiVersion: v1
+kind: Service
+metadata:
+  name: dotnet-core-client-cluster-ip-service
+spec: 
+  type: ClusterIP
+  selector:
+    component: web
+  ports: 
+    - port: 3000
+      targetPort: 3000
+```
+> `client-deployment.yaml`
+```yml
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: dotnet-core-client-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      component: web
+  template:
+    metadata:
+      labels:
+        component: web
+    spec:
+      containers: 
+        - name: client
+          image: peelmicro/dotnet-core-multi-client
+          ports: 
+            - containerPort: 3000
+```
+> `database-persistent-volume-claim.yaml`
+```yml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: dotnet-core-database-persistent-volume-claim
+spec: 
+  accessModes: 
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+```
+> `ingress-service.yaml`
+```yml
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: dotnet-core-ingress-service
+  annotations: 
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec: 
+  rules:
+    - http:
+        paths:
+          - path: /
+            backend: 
+              serviceName: dotnet-core-client-cluster-ip-service
+              servicePort: 3000
+          - path: /api/
+            backend: 
+              serviceName: dotnet-core-server-cluster-ip-service
+              servicePort: 5000
+```
+> `postgres-cluster-ip-service.yaml`
+```yml
+apiVersion: v1
+kind: Service
+metadata:
+  name: dotnet-core-postgres-cluster-ip-service
+spec: 
+  type: ClusterIP
+  selector:
+    component: postgres
+  ports: 
+    - port: 5432
+      targetPort: 5432
+```
+> `postgres-deployment.yaml`
+```yml
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: dotnet-core-postgres-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: postgres
+  template:
+    metadata:
+      labels:
+        component: postgres
+    spec:
+      volumes:
+        - name: postgres-storage
+          persistentVolumeClaim: 
+            claimName: dotnet-core-database-persistent-volume-claim
+      containers: 
+        - name: postgres
+          image: postgres
+          ports: 
+            - containerPort: 5432
+          volumeMounts: 
+            - name: postgres-storage
+              mountPath: /var/lib/postgresql/data
+              subPath: postgres
+          env:
+            - name: PGPASSWORD
+              valueFrom: 
+                secretKeyRef:
+                  name: pgpassword
+                  key: PGPASSWORD
+```
+> `redis-cluster-ip-service.yaml`
+```yml
+apiVersion: v1
+kind: Service
+metadata:
+  name: dotnet-core-redis-cluster-ip-service
+spec: 
+  type: ClusterIP
+  selector:
+    component: redis
+  ports: 
+    - port: 6379
+      targetPort: 6379
+```
+> `redis-deployment.yaml`
+```yml
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: dotnet-core-redis-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: redis
+  template:
+    metadata:
+      labels:
+        component: redis
+    spec:
+      containers: 
+        - name: redis
+          image: redis
+          ports: 
+            - containerPort: 6379
+```
+> `server-cluster-ip-service.yaml`
+```yml
+apiVersion: v1
+kind: Service
+metadata:
+  name: dotnet-core-server-cluster-ip-service
+spec: 
+  type: ClusterIP
+  selector:
+    component: server
+  ports: 
+    - port: 5000
+      targetPort: 5000
+```
+> `server-deployment.yaml`
+```yml
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: dotnet-core-server-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      component: server
+  template:
+    metadata:
+      labels:
+        component: server
+    spec:
+      containers: 
+        - name: server
+          image: peelmicro/dotnet-core-multi-server
+          ports: 
+            - containerPort: 5000
+          env:
+            - name: REDIS_HOST
+              value: dotnet-core-redis-cluster-ip-service
+            - name: REDIS_PORT
+              value: '6379'     
+            - name: PGUSER
+              value: postgres
+            - name: PGHOST
+              value: dotnet-core-postgres-cluster-ip-service
+            - name: PGDATABASE
+              value: postgres
+            - name: PGPORT
+              value: '5432'
+            - name: PGPASSWORD
+              valueFrom: 
+                secretKeyRef:
+                  name: pgpassword
+                  key: PGPASSWORD
+```
+> `worker-deployment.yaml`
+```yml
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: dotnet-core-worker-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: worker
+  template:
+    metadata:
+      labels:
+        component: worker
+    spec:
+      containers: 
+        - name: worker
+          image: peelmicro/dotnet-core-multi-worker
+          env:
+              - name: REDIS_HOST
+                value: dotnet-core-redis-cluster-ip-service
+              - name: REDIS_PORT
+                value: '6379'
+```
+6. Create the `secrets` for the `postgres` password
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
+$ kubectl create secret generic pgpassword --from-literal PGPASSWORD=postgres_password
+secret "pgpassword" created
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
+$ kubectl get secrets
+NAME                  TYPE                                  DATA      AGE
+default-token-w9xdh   kubernetes.io/service-account-token   3         28s
+pgpassword            Opaque                                1         6s
+```
+7. Execute the `mandatory` `kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/mandatory.yaml` `Ingress Nginx` and `minikube addons enable ingress` `Minikube` commands.
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
+$ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/mandatory.yaml
+namespace "ingress-nginx" created
+configmap "nginx-configuration" created
+serviceaccount "nginx-ingress-serviceaccount" created
+clusterrole.rbac.authorization.k8s.io "nginx-ingress-clusterrole" configured
+role.rbac.authorization.k8s.io "nginx-ingress-role" created
+rolebinding.rbac.authorization.k8s.io "nginx-ingress-role-nisa-binding" created
+clusterrolebinding.rbac.authorization.k8s.io "nginx-ingress-clusterrole-nisa-binding" configured
+deployment.extensions "nginx-ingress-controller" created
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
+$ minikube addons enable ingress
+ingress was successfully enabled
+```
+
+8. Install all the `Kubernetes objects`
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
+$ kubectl apply -f k8s
+service "dotnet-core-client-cluster-ip-service" created
+deployment.apps "dotnet-core-client-deployment" created
+persistentvolumeclaim "dotnet-core-database-persistent-volume-claim" created
+ingress.extensions "dotnet-core-ingress-service" created
+service "dotnet-core-postgres-cluster-ip-service" created
+deployment.apps "dotnet-core-postgres-deployment" created
+service "dotnet-core-redis-cluster-ip-service" created
+deployment.apps "dotnet-core-redis-deployment" created
+service "dotnet-core-server-cluster-ip-service" created
+deployment.apps "dotnet-core-server-deployment" created
+deployment.apps "dotnet-core-worker-deployment" created
+```
+- Check if the services are available
+```sh
+$ kubectl get all
+NAME                                                   READY     STATUS              RESTARTS   AGE
+pod/dotnet-core-client-deployment-7b4f7756df-cq5rf     1/1       Running             0          32s
+pod/dotnet-core-client-deployment-7b4f7756df-qhkw7     1/1       Running             0          32s
+pod/dotnet-core-client-deployment-7b4f7756df-z9htd     1/1       Running             0          32s
+pod/dotnet-core-postgres-deployment-6c4b98478d-88rkp   0/1       ContainerCreating   0          30s
+pod/dotnet-core-redis-deployment-666bf96bdd-mfwx7      0/1       ContainerCreating   0          29s
+pod/dotnet-core-server-deployment-545bb75676-9vtsw     0/1       ContainerCreating   0          27s
+pod/dotnet-core-server-deployment-545bb75676-h4dvp     0/1       ContainerCreating   0          28s
+pod/dotnet-core-server-deployment-545bb75676-nw4xd     0/1       ContainerCreating   0          27s
+pod/dotnet-core-worker-deployment-7b5d67dc7f-gk6zm     0/1       ContainerCreating   0          27s
+
+NAME                                              TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+service/dotnet-core-client-cluster-ip-service     ClusterIP   10.104.239.99    <none>        3000/TCP   32s
+service/dotnet-core-postgres-cluster-ip-service   ClusterIP   10.111.75.44     <none>        5432/TCP   30s
+service/dotnet-core-redis-cluster-ip-service      ClusterIP   10.96.174.32     <none>        6379/TCP   30s
+service/dotnet-core-server-cluster-ip-service     ClusterIP   10.104.117.208   <none>        5000/TCP   29s
+service/kubernetes                                ClusterIP   10.96.0.1        <none>        443/TCP    3m
+
+NAME                                              DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/dotnet-core-client-deployment     3         3         3            3           32s
+deployment.apps/dotnet-core-postgres-deployment   1         1         1            0           30s
+deployment.apps/dotnet-core-redis-deployment      1         1         1            0           30s
+deployment.apps/dotnet-core-server-deployment     3         3         3            0           28s
+deployment.apps/dotnet-core-worker-deployment     1         1         1            0           27s
+
+NAME                                                         DESIRED   CURRENT   READY     AGE
+replicaset.apps/dotnet-core-client-deployment-7b4f7756df     3         3         3         32s
+replicaset.apps/dotnet-core-postgres-deployment-6c4b98478d   1         1         0         30s
+replicaset.apps/dotnet-core-redis-deployment-666bf96bdd      1         1         0         29s
+replicaset.apps/dotnet-core-server-deployment-545bb75676     3         3         0         28s
+replicaset.apps/dotnet-core-worker-deployment-7b5d67dc7f     1         1         0         27s
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
+$ kubectl get ing
+NAME                          HOSTS     ADDRESS   PORTS     AGE
+dotnet-core-ingress-service   *                   80        1m
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
+$ kubectl get all
+NAME                                                   READY     STATUS    RESTARTS   AGE
+pod/dotnet-core-client-deployment-7b4f7756df-cq5rf     1/1       Running   0          9m
+pod/dotnet-core-client-deployment-7b4f7756df-qhkw7     1/1       Running   0          9m
+pod/dotnet-core-client-deployment-7b4f7756df-z9htd     1/1       Running   0          9m
+pod/dotnet-core-postgres-deployment-6c4b98478d-88rkp   1/1       Running   0          9m
+pod/dotnet-core-redis-deployment-666bf96bdd-mfwx7      1/1       Running   0          9m
+pod/dotnet-core-server-deployment-545bb75676-9vtsw     1/1       Running   1          9m
+pod/dotnet-core-server-deployment-545bb75676-h4dvp     1/1       Running   1          9m
+pod/dotnet-core-server-deployment-545bb75676-nw4xd     1/1       Running   0          9m
+pod/dotnet-core-worker-deployment-7b5d67dc7f-gk6zm     1/1       Running   0          9m
+
+NAME                                              TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+service/dotnet-core-client-cluster-ip-service     ClusterIP   10.104.239.99    <none>        3000/TCP   9m
+service/dotnet-core-postgres-cluster-ip-service   ClusterIP   10.111.75.44     <none>        5432/TCP   9m
+service/dotnet-core-redis-cluster-ip-service      ClusterIP   10.96.174.32     <none>        6379/TCP   9m
+service/dotnet-core-server-cluster-ip-service     ClusterIP   10.104.117.208   <none>        5000/TCP   9m
+service/kubernetes                                ClusterIP   10.96.0.1        <none>        443/TCP    12m
+
+NAME                                              DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/dotnet-core-client-deployment     3         3         3            3           9m
+deployment.apps/dotnet-core-postgres-deployment   1         1         1            1           9m
+deployment.apps/dotnet-core-redis-deployment      1         1         1            1           9m
+deployment.apps/dotnet-core-server-deployment     3         3         3            3           9m
+deployment.apps/dotnet-core-worker-deployment     1         1         1            1           9m
+
+NAME                                                         DESIRED   CURRENT   READY     AGE
+replicaset.apps/dotnet-core-client-deployment-7b4f7756df     3         3         3         9m
+replicaset.apps/dotnet-core-postgres-deployment-6c4b98478d   1         1         1         9m
+replicaset.apps/dotnet-core-redis-deployment-666bf96bdd      1         1         1         9m
+replicaset.apps/dotnet-core-server-deployment-545bb75676     3         3         3         9m
+replicaset.apps/dotnet-core-worker-deployment-7b5d67dc7f     1         1         1         9m
+```
+9. Run `minikube` locally
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
+$ minikube ip
+192.168.0.107
+```
+- Browse to `https://192.168.0.107/`
+
+![](/images/projects/dot-net-multi-docker/RunMinikube.png)
+
+- Click on `ADVANCED`
+
+![](/images/projects/dot-net-multi-docker/RunMinikube2.png)
+
+- Click on `Proceed to 192.168.0.107 (unsafe)`
+
+![](/images/projects/dot-net-multi-docker/RunMinikube3.png)
+
+10. Have a look at the `Minikube Dashboard'
+- Execute the `minikube dashboard` command
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ minikube dashboard
+Opening http://127.0.0.1:52302/api/v1/namespaces/kube-system/services/http:kubernetes-dashboard:/proxy/ in your default browser...
+```
+
+![](/images/projects/dot-net-multi-docker/MinikubeDashboard.png)
+
+![](/images/projects/dot-net-multi-docker/MinikubeDashboard2.png)
+
+11. Update the `README.md` document
+```md
+## .Net Core version of the "Docker and Kubernetes: The Complete Guide" course.
+
+> source code for the .Net Core version of the "Docker and Kubernetes: The Complete Guide" course.
+
+## AWS Elastic Beanstalk version (Up to `11.-Multi-Container Deployments to AWS` section) is on the `elastic-beanstalk` subfolder:
+### Execute it locally using 
+
+$ cd elastic-beanstalk
+
+$ docker-compose up --build
+
+Navigate to http://localhost:3050/
+
+### Continuous Integration with Travis CI + Amazon AWS
+
+- The repository must be created on https://github.com/
+
+- The repository must be assigned from GitHub on https://travis-ci.com/. The following setting variables must be set up:
+1) AWS_ACCESS_KEY (for 11.-Multi-Container Deployments to AWS)
+2) AWS_SECRET_KEY (for 11.-Multi-Container Deployments to AWS)
+3) DOCKER_ID
+4) DOCKER_PASSWORD
+
+- The following instances must be created on Amazon (for 11.-Multi-Container Deployments to AWS)
+1) Elastic Beanstalk (EB)
+2) Relational Database Service (RDS) for Postgres
+3) ElastiCache for Redis
+4) Custom Security Group
+5) Identity and Access Magagement (IAM)
+
+## Kubernetes version (From `12.-Onwards to Kubernetes!`) is on the root folder:
+1. Create the `secrets` for the `postgres` password: `kubectl create secret generic pgpassword --from-literal PGPASSWORD=postgres_password`
+2. Execute the `mandatory` `kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/mandatory.yaml` `Ingress Nginx` command
+3. Enable Ingress using `minikube addons enable ingress`
+4. Install all the `Kubernetes objects` with `kubectl apply -f k8s`
+5. Get the local IP with `minikube IP`
+6. Browse to the local IP 
+
+## Within the code you can see how to
+- Create different Docket Container Types and relate all of them
+  1) React Client App
+  2) .NET Core Web API
+  3) .NET Core Console
+  4) Postgres
+  5) Redis
+  6) NGINX
+- Use Postgres from a Docker Container with .Net Core
+- Use Redis from a Docker Container with .Net Core creating a subscription on the Web API App and subscribe to it on the Console App.
+- Accept dynamic POST request with .Net Core API
+- Send dynamic JSON responses from .Net Core API
+- Use Docker Compose to run and relate easily different Docker Components
+- Use NIGIX Container to run the React Client App
+- Use NIGIX Container as Reverse Proxy with .NET Core API
+- Work with different AWS Amazon service types to deploy a multi container Docker application using AWS Elastic Beanstalk
+- Upload own Containers to Docker Hub and download them with the deployment
+- Use Travis CI for the Continuous Integration Workflow
+- Use Kubernetes to run the same multi container application
+- Use Minikube to run Kubernetes locally
+- Use Kubectl CLI for interacting with Kubernetes Master
+
+## In order to get to know what has been developed follow the course on
+
+https://www.udemy.com/docker-and-kubernetes-the-complete-guide
+
+```
+12. `Commit` and `Push` the changes to Github Repository
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
+$ git add .
+warning: LF will be replaced by CRLF in elastic-beanstalk/.gitignore.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in elastic-beanstalk/client/README.md.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in elastic-beanstalk/client/package.json.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in elastic-beanstalk/client/public/index.html.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in elastic-beanstalk/client/public/manifest.json.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in elastic-beanstalk/client/src/App.css.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in elastic-beanstalk/client/src/App.js.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in elastic-beanstalk/client/src/App.test.js.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in elastic-beanstalk/client/src/Fib.js.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in elastic-beanstalk/client/src/OtherPage.js.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in elastic-beanstalk/client/src/index.css.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in elastic-beanstalk/client/src/index.js.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in elastic-beanstalk/client/src/logo.svg.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in elastic-beanstalk/client/src/serviceWorker.js.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in elastic-beanstalk/client/yarn.lock.
+The file will have its original line endings in your working directory.
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
+$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        modified:   README.md
+        new file:   elastic-beanstalk/.gitignore
+        renamed:    .travis.yml -> elastic-beanstalk/.travis.yml
+        renamed:    Dockerrun.aws.json -> elastic-beanstalk/Dockerrun.aws.json
+        new file:   elastic-beanstalk/README.md
+        new file:   elastic-beanstalk/Server/.dockerignore
+        new file:   elastic-beanstalk/Server/Controllers/ValuesController.cs
+        new file:   elastic-beanstalk/Server/Data/DataContext.cs
+        new file:   elastic-beanstalk/Server/Data/DatabaseService.cs
+        new file:   elastic-beanstalk/Server/Data/IDatabaseService.cs
+        new file:   elastic-beanstalk/Server/Dockerfile
+        new file:   elastic-beanstalk/Server/Models/Value.cs
+        new file:   elastic-beanstalk/Server/Program.cs
+        new file:   elastic-beanstalk/Server/Server.csproj
+        new file:   elastic-beanstalk/Server/Startup.cs
+        new file:   elastic-beanstalk/Worker/.dockerignore
+        new file:   elastic-beanstalk/Worker/Dockerfile
+        new file:   elastic-beanstalk/Worker/Program.cs
+        new file:   elastic-beanstalk/Worker/Worker.csproj
+        new file:   elastic-beanstalk/client/.dockerignore
+        new file:   elastic-beanstalk/client/Dockerfile
+        new file:   elastic-beanstalk/client/Dockerfile.dev
+        new file:   elastic-beanstalk/client/README.md
+        new file:   elastic-beanstalk/client/nginx/default.conf
+        new file:   elastic-beanstalk/client/package.json
+        new file:   elastic-beanstalk/client/public/favicon.ico
+        new file:   elastic-beanstalk/client/public/index.html
+        new file:   elastic-beanstalk/client/public/manifest.json
+        new file:   elastic-beanstalk/client/src/App.css
+        new file:   elastic-beanstalk/client/src/App.js
+        new file:   elastic-beanstalk/client/src/App.test.js
+        new file:   elastic-beanstalk/client/src/Fib.js
+        new file:   elastic-beanstalk/client/src/OtherPage.js
+        new file:   elastic-beanstalk/client/src/index.css
+        new file:   elastic-beanstalk/client/src/index.js
+        new file:   elastic-beanstalk/client/src/logo.svg
+        new file:   elastic-beanstalk/client/src/serviceWorker.js
+        new file:   elastic-beanstalk/client/yarn.lock
+        renamed:    docker-compose.yml -> elastic-beanstalk/docker-compose.yml
+        new file:   elastic-beanstalk/nginx/Dockerfile
+        new file:   elastic-beanstalk/nginx/Dockerfile.dev
+        new file:   elastic-beanstalk/nginx/default.conf
+        renamed:    simplek8s/client-deployment.yaml -> elastic-beanstalk/simplek8s/client-deployment.yaml
+        renamed:    simplek8s/client-node-port.yaml -> elastic-beanstalk/simplek8s/client-node-port.yaml
+        renamed:    simplek8s/client-pod.yaml -> elastic-beanstalk/simplek8s/client-pod.yaml
+        new file:   k8s/client-cluster-ip-service.yaml
+        new file:   k8s/client-deployment.yaml
+        new file:   k8s/database-persistent-volume-claim.yaml
+        new file:   k8s/ingress-service.yaml
+        new file:   k8s/postgres-cluster-ip-service.yaml
+        new file:   k8s/postgres-deployment.yaml
+        new file:   k8s/redis-cluster-ip-service.yaml
+        new file:   k8s/redis-deployment.yaml
+        new file:   k8s/server-cluster-ip-service.yaml
+        new file:   k8s/server-deployment.yaml
+        new file:   k8s/worker-deployment.yaml
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
+$ git commit -m "A Multi-Container App with Kubernetes"
+[master e8a08b5] A Multi-Container App with Kubernetes
+ 56 files changed, 9658 insertions(+), 3 deletions(-)
+ create mode 100644 elastic-beanstalk/.gitignore
+ rename .travis.yml => elastic-beanstalk/.travis.yml (100%)
+ rename Dockerrun.aws.json => elastic-beanstalk/Dockerrun.aws.json (100%)
+ create mode 100644 elastic-beanstalk/README.md
+ create mode 100644 elastic-beanstalk/Server/.dockerignore
+ create mode 100644 elastic-beanstalk/Server/Controllers/ValuesController.cs
+ create mode 100644 elastic-beanstalk/Server/Data/DataContext.cs
+ create mode 100644 elastic-beanstalk/Server/Data/DatabaseService.cs
+ create mode 100644 elastic-beanstalk/Server/Data/IDatabaseService.cs
+ create mode 100644 elastic-beanstalk/Server/Dockerfile
+ create mode 100644 elastic-beanstalk/Server/Models/Value.cs
+ create mode 100644 elastic-beanstalk/Server/Program.cs
+ create mode 100644 elastic-beanstalk/Server/Server.csproj
+ create mode 100644 elastic-beanstalk/Server/Startup.cs
+ create mode 100644 elastic-beanstalk/Worker/.dockerignore
+ create mode 100644 elastic-beanstalk/Worker/Dockerfile
+ create mode 100644 elastic-beanstalk/Worker/Program.cs
+ create mode 100644 elastic-beanstalk/Worker/Worker.csproj
+ create mode 100644 elastic-beanstalk/client/.dockerignore
+ create mode 100644 elastic-beanstalk/client/Dockerfile
+ create mode 100644 elastic-beanstalk/client/Dockerfile.dev
+ create mode 100644 elastic-beanstalk/client/README.md
+ create mode 100644 elastic-beanstalk/client/nginx/default.conf
+ create mode 100644 elastic-beanstalk/client/package.json
+ create mode 100644 elastic-beanstalk/client/public/favicon.ico
+ create mode 100644 elastic-beanstalk/client/public/index.html
+ create mode 100644 elastic-beanstalk/client/public/manifest.json
+ create mode 100644 elastic-beanstalk/client/src/App.css
+ create mode 100644 elastic-beanstalk/client/src/App.js
+ create mode 100644 elastic-beanstalk/client/src/App.test.js
+ create mode 100644 elastic-beanstalk/client/src/Fib.js
+ create mode 100644 elastic-beanstalk/client/src/OtherPage.js
+ create mode 100644 elastic-beanstalk/client/src/index.css
+ create mode 100644 elastic-beanstalk/client/src/index.js
+ create mode 100644 elastic-beanstalk/client/src/logo.svg
+ create mode 100644 elastic-beanstalk/client/src/serviceWorker.js
+ create mode 100644 elastic-beanstalk/client/yarn.lock
+ rename docker-compose.yml => elastic-beanstalk/docker-compose.yml (100%)
+ create mode 100644 elastic-beanstalk/nginx/Dockerfile
+ create mode 100644 elastic-beanstalk/nginx/Dockerfile.dev
+ create mode 100644 elastic-beanstalk/nginx/default.conf
+ rename {simplek8s => elastic-beanstalk/simplek8s}/client-deployment.yaml (100%)
+ rename {simplek8s => elastic-beanstalk/simplek8s}/client-node-port.yaml (100%)
+ rename {simplek8s => elastic-beanstalk/simplek8s}/client-pod.yaml (100%)
+ create mode 100644 k8s/client-cluster-ip-service.yaml
+ create mode 100644 k8s/client-deployment.yaml
+ create mode 100644 k8s/database-persistent-volume-claim.yaml
+ create mode 100644 k8s/ingress-service.yaml
+ create mode 100644 k8s/postgres-cluster-ip-service.yaml
+ create mode 100644 k8s/postgres-deployment.yaml
+ create mode 100644 k8s/redis-cluster-ip-service.yaml
+ create mode 100644 k8s/redis-deployment.yaml
+ create mode 100644 k8s/server-cluster-ip-service.yaml
+ create mode 100644 k8s/server-deployment.yaml
+ create mode 100644 k8s/worker-deployment.yaml
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
+$ git push origin HEAD
+Counting objects: 3, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 324 bytes | 108.00 KiB/s, done.
+Total 3 (delta 2), reused 0 (delta 0)
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+To https://github.com/peelmicro/dotnet-core-multi-docker.git
+   e8a08b5..7311ccb  HEAD -> master
+```
+
+## Kubernetes Production Deployment
+1. Add a tag to the current `Github` repository
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)$ git tag MultiContainerAppWithKubernetes
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
+$ git push origin --tags
+Total 0 (delta 0), reused 0 (delta 0)
+To https://github.com/peelmicro/dotnet-core-multi-docker.git
+ * [new tag]         MultiContainerAppWithKubernetes -> MultiContainerAppWithKubernetes
+```
+2. Create the `multi-container-minikube` folder
+
+![](/images/projects/dot-net-multi-docker/NewMultiContainerMinikubeFolder.png)
+
+3. Copy the current project to the new folder
+
+![](/images/projects/dot-net-multi-docker/CopyCurrentFolderToNewMinikubeFolder.png)
+
+4. Copy all the `yaml` Kubernetes config files from the `Python` solution.
+- Delete the current files
+- Copy from the `Python` solution
+5. Update the following `yaml` Kubernetes config files
+> `client-deployment.yaml`
+```yml
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: client-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      component: web
+  template:
+    metadata:
+      labels:
+        component: web
+    spec:
+      containers: 
+        - name: client
+          image: peelmicro/dotnet-core-multi-client
+          ports: 
+            - containerPort: 3000
+```
+> `server-deployment.yaml`
+```yml
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: server-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      component: server
+  template:
+    metadata:
+      labels:
+        component: server
+    spec:
+      containers: 
+        - name: server
+          image: peelmicro/dotnet-core-multi-server
+          ports: 
+            - containerPort: 5000
+          env:
+            - name: REDIS_HOST
+              value: redis-cluster-ip-service
+            - name: REDIS_PORT
+              value: '6379'     
+            - name: PGUSER
+              value: postgres
+            - name: PGHOST
+              value: postgres-cluster-ip-service
+            - name: PGDATABASE
+              value: postgres
+            - name: PGPORT
+              value: '5432'
+            - name: PGPASSWORD
+              valueFrom: 
+                secretKeyRef:
+                  name: pgpassword
+                  key: PGPASSWORD
+```
+> `worker-deployment.yaml`
+```yml
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: worker-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: worker
+  template:
+    metadata:
+      labels:
+        component: worker
+    spec:
+      containers: 
+        - name: worker
+          image: peelmicro/dotnet-core-multi-worker
+          env:
+              - name: REDIS_HOST
+                value: redis-cluster-ip-service
+              - name: REDIS_PORT
+                value: '6379'
+```
+6. Copy the `.travis.yml` file from the `Python` solution
+```yml
+sudo: required
+language: node_js
+node_js: 
+  - "8"
+services:
+  - docker
+env: 
+  global:
+    # Get an unique value of the latest commit to be used to identify the images
+    - SHA=$(git rev-parse HEAD)
+    # Tell Google Cloud CLI not to display any prompts
+    - CLOUDSDK_CORE_DISABLE_PROMPTS=1
+before_install:
+  # Decrypt the encrypted Google Cloud Keys and copy locally
+  - openssl aes-256-cbc -K $encrypted_0c35eebf403c_key -iv $encrypted_0c35eebf403c_iv -in service-account.json.enc -out service-account.json -d
+  # Install the Google Cloud SDK CLI
+  - curl https://sdk.cloud.google.com | bash > /dev/null;
+  # Apply additional configuration inside Travis CI instance
+  - source $HOME/google-cloud-sdk/path.bash.inc
+  # Install kubectl
+  - gcloud components update kubectl
+  # Authentication with Google Cloud using the decrypted json key file
+  - gcloud auth activate-service-account --key-file service-account.json
+  # Select the Google Cloud project that we're going to use
+  - gcloud config set project multi-k8s-224518
+  # Select the zone where the Kubernetes Cluster is installed
+  - gcloud config set compute/zone us-central1-a
+  # Select the Google Kubernetes Cluster
+  - gcloud container clusters get-credentials multi-cluster
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin 
+  # Build the 'test' version of multi-client
+  - docker build -t peelmicro/test-client -f ./client/Dockerfile.dev ./client
+script:
+  # Run the current test
+  - docker run peelmicro/test-client npm run test -- --coverage
+# Exceute an external script to do the deployment to Google Cloud
+deploy:
+  provider: script
+  script: bash ./deploy.sh
+  on:
+    branch: master
+```
+7. Copy and update the `deploy.sh` file
+```sh
+# Create the Docker Images
+docker build -t peelmicro/dotnet-core-multi-client:latest -t peelmicro/dotnet-core-multi-client:$SHA -f ./client/Dockerfile ./client
+docker build -t peelmicro/dotnet-core-multi-server:latest -t peelmicro/dotnet-core-multi-server:$SHA -f ./server/Dockerfile ./server
+docker build -t peelmicro/dotnet-core-multi-worker:latest -t peelmicro/dotnet-core-multi-worker:$SHA -f ./worker/Dockerfile ./worker
+
+# Take those images and push them to docker hub
+docker push peelmicro/dotnet-core-multi-client:latest
+docker push peelmicro/dotnet-core-multi-client:$SHA
+docker push peelmicro/dotnet-core-multi-server:latest
+docker push peelmicro/dotnet-core-multi-server:$SHA
+docker push peelmicro/dotnet-core-multi-worker:latest
+docker push peelmicro/dotnet-core-multi-worker:$SHA
+# Apply all configs in the 'k8s' folder
+kubectl apply -f k8s
+# Imperatively set lastest images on each deployment
+kubectl set image deployments/client-deployment client=peelmicro/dotnet-core-multi-client:$SHA
+kubectl set image deployments/server-deployment server=peelmicro/dotnet-core-multi-server:$SHA
+kubectl set image deployments/worker-deployment worker=peelmicro/dotnet-core-multi-worker:$SHA
+```
+8. Link the `dotnet-core-multi-docker` repository to [travis-ci.org](https://travis-ci.org/)
+- Browse to `https://travis-ci.org/account/repositories`
+
+![](/images/projects/dot-net-multi-docker/LinkToTravisCiOrg.png)
+
+- Click on the button to link
+
+![](/images/projects/dot-net-multi-docker/LinkToTravisCiOrg2.png)
+
+- Go to `Settings`
+- Add the `DOCKER_ID` and `DOCKER_PASSWORD` environment variables
+
+![](/images/projects/dot-net-multi-docker/LinkToTravisCiOrg3.png)
+
+9. Copy the `service-account.json` file from `Python` and add it to the `.gitignore` file.
+10. Generate the `service-account.json.enc` file with `Travis CI CLI` using `PowerShell`
+```sh
+PS C:\WINDOWS\system32> cd C:\Users\juan.pablo.perez\OneDrive\Training\Docker\DockerAndKubernetes.TheCompleteGuide\dotnet-core-complex
+PS C:\Users\juan.pablo.perez\OneDrive\Training\Docker\DockerAndKubernetes.TheCompleteGuide\dotnet-core-complex> docker run -it -v ${pwd}:/app ruby:2.3 sh
+# ls
+app  bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+# cd app
+# ls
+README.md  Server  Worker  client  deploy.sh  elastic-beanstalk  k8s  multi-container-minikube  service-account.json
+```
+```sh
+# gem install travis --no-rdoc --no-ri
+Fetching: multipart-post-2.0.0.gem (100%)
+Successfully installed multipart-post-2.0.0
+Fetching: faraday-0.15.4.gem (100%)
+Successfully installed faraday-0.15.4
+Fetching: faraday_middleware-0.12.2.gem (100%)
+Successfully installed faraday_middleware-0.12.2
+Fetching: highline-1.7.10.gem (100%)
+Successfully installed highline-1.7.10
+Fetching: backports-3.11.4.gem (100%)
+Successfully installed backports-3.11.4
+Fetching: multi_json-1.13.1.gem (100%)
+Successfully installed multi_json-1.13.1
+Fetching: addressable-2.4.0.gem (100%)
+Successfully installed addressable-2.4.0
+Fetching: net-http-persistent-2.9.4.gem (100%)
+Successfully installed net-http-persistent-2.9.4
+Fetching: net-http-pipeline-1.0.1.gem (100%)
+Successfully installed net-http-pipeline-1.0.1
+Fetching: gh-0.15.1.gem (100%)
+Successfully installed gh-0.15.1
+Fetching: launchy-2.4.3.gem (100%)
+Successfully installed launchy-2.4.3
+Fetching: ffi-1.9.25.gem (100%)
+Building native extensions. This could take a while...
+Successfully installed ffi-1.9.25
+Fetching: ethon-0.11.0.gem (100%)
+Successfully installed ethon-0.11.0
+Fetching: typhoeus-0.8.0.gem (100%)
+Successfully installed typhoeus-0.8.0
+Fetching: websocket-1.2.8.gem (100%)
+Successfully installed websocket-1.2.8
+Fetching: pusher-client-0.6.2.gem (100%)
+Successfully installed pusher-client-0.6.2
+Fetching: travis-1.8.9.gem (100%)
+Successfully installed travis-1.8.9
+17 gems installed
+```
+```sh
+# travis
+Shell completion not installed. Would you like to install it now? |y| n
+Usage: travis COMMAND ...
+
+Available commands:
+
+        accounts       displays accounts and their subscription status
+        branches       displays the most recent build for each branch
+        cache          lists or deletes repository caches
+        cancel         cancels a job or build
+        console        interactive shell
+        disable        disables a project
+        enable         enables a project
+        encrypt        encrypts values for the .travis.yml
+        encrypt-file   encrypts a file and adds decryption steps to .travis.yml
+        endpoint       displays or changes the API endpoint
+        env            show or modify build environment variables
+        help           helps you out when in dire need of information
+        history        displays a projects build history
+        init           generates a .travis.yml and enables the project
+        lint           display warnings for a .travis.yml
+        login          authenticates against the API and stores the token
+        logout         deletes the stored API token
+        logs           streams test logs
+        monitor        live monitor for what's going on
+        open           opens a build or job in the browser
+        pubkey         prints out a repository's public key
+        raw            makes an (authenticated) API call and prints out the result
+        report         generates a report useful for filing issues
+        repos          lists repositories the user has certain permissions on
+        requests       lists recent requests
+        restart        restarts a build or job
+        settings       access repository settings
+        setup          sets up an addon or deploy target
+        show           displays a build or job
+        sshkey         checks, updates or deletes an SSH key
+        status         checks status of the latest build
+        sync           triggers a new sync with GitHub
+        token          outputs the secret API token
+        version        outputs the client version
+        whatsup        lists most recent builds
+        whoami         outputs the current user
+
+run `/usr/local/bundle/bin/travis help COMMAND` for more infos
+```
+```sh
+# travis login
+We need your GitHub login to identify you.
+This information will not be sent to Travis CI, only to api.github.com.
+The password will not be displayed.
+
+Try running with --github-token or --auto if you don't want to enter your password anyway.
+
+Username: peelmicro
+Password for peelmicro: *********************
+Successfully logged in as peelmicro!
+```
+```sh
+Successfully logged in as peelmicro!
+# travis encrypt-file service-account.json -r peelmicro/dotnet-core-multi-docker
+encrypting service-account.json for peelmicro/multi-docker
+storing result as service-account.json.enc
+storing secure env variables for decryption
+
+Please add the following to your build script (before_install stage in your .travis.yml, for instance):
+
+    openssl aes-256-cbc -K $encrypted_0c35eebf403c_key -iv $encrypted_0c35eebf403c_iv -in service-account.json.enc -out service-account.json -d
+
+Pro Tip: You can add it automatically by running with --add.
+
+Make sure to add service-account.json.enc to the git repository.
+Make sure not to add service-account.json to the git repository.
+Commit all changes to your .travis.yml.
+```
+- Ensure the Travis CI encryption setting variables have been created.
+
+![](/images/projects/dot-net-multi-docker/EncryptServiceAccountJsonFile.png)
+
+- Ensure the `service-account.json.enc` file has been created
+
+![](/images/projects/dot-net-multi-docker/EncryptServiceAccountJsonFile2.png)
+
+11. Update the `README.md` file
+```md
+## .Net Core version of the "Docker and Kubernetes: The Complete Guide" course.
+
+> source code for the .Net Core version of the "Docker and Kubernetes: The Complete Guide" course.
+
+## AWS Elastic Beanstalk version (Up to `11.-Multi-Container Deployments to AWS` section) is on the `elastic-beanstalk` subfolder:
+### Execute it locally using 
+
+$ cd elastic-beanstalk
+
+$ docker-compose up --build
+
+Navigate to http://localhost:3050/
+
+### Continuous Integration with Travis CI + Amazon AWS
+
+- The repository must be created on https://github.com/
+
+- The repository must be assigned from GitHub on https://travis-ci.com/. The following setting variables must be set up:
+1) AWS_ACCESS_KEY (for 11.-Multi-Container Deployments to AWS)
+2) AWS_SECRET_KEY (for 11.-Multi-Container Deployments to AWS)
+3) DOCKER_ID
+4) DOCKER_PASSWORD
+
+- The following instances must be created on Amazon (for 11.-Multi-Container Deployments to AWS)
+1) Elastic Beanstalk (EB)
+2) Relational Database Service (RDS) for Postgres
+3) ElastiCache for Redis
+4) Custom Security Group
+5) Identity and Access Magagement (IAM)
+
+## Kubernetes minkube local version (From `12.-Onwards to Kubernetes!`) is on the `multi-container-minikube` folder:
+
+### Execute it locally 
+1. Create the `secrets` for the `postgres` password: `kubectl create secret generic pgpassword --from-literal PGPASSWORD=postgres_password`
+2. Execute the `mandatory` `kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/mandatory.yaml` `Ingress Nginx` command
+3. Enable Ingress using `minikube addons enable ingress`
+4. Install all the `Kubernetes objects` with `kubectl apply -f k8s`
+5. Get the local IP with `minikube IP`
+6. Browse to the local IP 
+
+## Kubernetes `Google Cloud` version (From `12.-Onwards to Kubernetes!`) is on the root folder:
+
+- The repository must be assigned from GitHub on https://travis-ci.org/. The following setting variables must be set up:
+1) DOCKER_ID
+2) DOCKER_PASSWORD
+
+## Within the code you can see how to
+- Create different Docket Container Types and relate all of them
+  1) React Client App
+  2) .NET Core Web API
+  3) .NET Core Console
+  4) Postgres
+  5) Redis
+  6) NGINX
+- Use Postgres from a Docker Container with .Net Core
+- Use Redis from a Docker Container with .Net Core creating a subscription on the Web API App and subscribe to it on the Console App.
+- Accept dynamic POST request with .Net Core API
+- Send dynamic JSON responses from .Net Core API
+- Use Docker Compose to run and relate easily different Docker Components
+- Use NIGIX Container to run the React Client App
+- Use NIGIX Container as Reverse Proxy with .NET Core API
+- Work with different AWS Amazon service types to deploy a multi container Docker application using AWS Elastic Beanstalk
+- Upload own Containers to Docker Hub and download them with the deployment
+- Use Travis CI for the Continuous Integration Workflow
+- Use Kubernetes to run the same multi container application
+- Use Minikube to run Kubernetes locally
+- Use Kubectl CLI for interacting with Kubernetes Master
+- Use Google Kubernetes Engine to run the Kubernetes Cluster on the Cloud
+- Run the Ruby Travis CI CLI from a Docker container locally
+- Manage the automatic creation and renewal of a TLS certificate using Kubernetes to run the application with HTTPS
+
+## In order to get to know what has been developed follow the course on
+
+https://www.udemy.com/docker-and-kubernetes-the-complete-guide
+
+```
+12. Commit the code
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
+$ git add .
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
+$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        modified:   .gitignore
+        new file:   .travis.yml
+        modified:   README.md
+        new file:   deploy.sh
+        new file:   k8s/certificate.yaml
+        modified:   k8s/client-cluster-ip-service.yaml
+        modified:   k8s/client-deployment.yaml
+        modified:   k8s/database-persistent-volume-claim.yaml
+        modified:   k8s/ingress-service.yaml
+        new file:   k8s/issuer.yaml
+        modified:   k8s/postgres-cluster-ip-service.yaml
+        modified:   k8s/postgres-deployment.yaml
+        modified:   k8s/redis-cluster-ip-service.yaml
+        modified:   k8s/redis-deployment.yaml
+        modified:   k8s/server-cluster-ip-service.yaml
+        modified:   k8s/server-deployment.yaml
+        modified:   k8s/worker-deployment.yaml
+        new file:   multi-container-minikube/.gitignore
+        new file:   multi-container-minikube/README.md
+        new file:   multi-container-minikube/Server/.dockerignore
+        new file:   multi-container-minikube/Server/Controllers/ValuesController.cs
+        new file:   multi-container-minikube/Server/Data/DataContext.cs
+        new file:   multi-container-minikube/Server/Data/DatabaseService.cs
+        new file:   multi-container-minikube/Server/Data/IDatabaseService.cs
+        new file:   multi-container-minikube/Server/Dockerfile
+        new file:   multi-container-minikube/Server/Models/Value.cs
+        new file:   multi-container-minikube/Server/Program.cs
+        new file:   multi-container-minikube/Server/Server.csproj
+        new file:   multi-container-minikube/Server/Startup.cs
+        new file:   multi-container-minikube/Worker/.dockerignore
+        new file:   multi-container-minikube/Worker/Dockerfile
+        new file:   multi-container-minikube/Worker/Program.cs
+        new file:   multi-container-minikube/Worker/Worker.csproj
+        new file:   multi-container-minikube/client/.dockerignore
+        new file:   multi-container-minikube/client/Dockerfile
+        new file:   multi-container-minikube/client/Dockerfile.dev
+        new file:   multi-container-minikube/client/README.md
+        new file:   multi-container-minikube/client/nginx/default.conf
+        new file:   multi-container-minikube/client/package.json
+        new file:   multi-container-minikube/client/public/favicon.ico
+        new file:   multi-container-minikube/client/public/index.html
+        new file:   multi-container-minikube/client/public/manifest.json
+        new file:   multi-container-minikube/client/src/App.css
+        new file:   multi-container-minikube/client/src/App.js
+        new file:   multi-container-minikube/client/src/App.test.js
+        new file:   multi-container-minikube/client/src/Fib.js
+        new file:   multi-container-minikube/client/src/OtherPage.js
+        new file:   multi-container-minikube/client/src/index.css
+        new file:   multi-container-minikube/client/src/index.js
+        new file:   multi-container-minikube/client/src/logo.svg
+        new file:   multi-container-minikube/client/src/serviceWorker.js
+        new file:   multi-container-minikube/client/yarn.lock
+        new file:   multi-container-minikube/k8s/client-cluster-ip-service.yaml
+        new file:   multi-container-minikube/k8s/client-deployment.yaml
+        new file:   multi-container-minikube/k8s/database-persistent-volume-claim.yaml
+        new file:   multi-container-minikube/k8s/ingress-service.yaml
+        new file:   multi-container-minikube/k8s/postgres-cluster-ip-service.yaml
+        new file:   multi-container-minikube/k8s/postgres-deployment.yaml
+        new file:   multi-container-minikube/k8s/redis-cluster-ip-service.yaml
+        new file:   multi-container-minikube/k8s/redis-deployment.yaml
+        new file:   multi-container-minikube/k8s/server-cluster-ip-service.yaml
+        new file:   multi-container-minikube/k8s/server-deployment.yaml
+        new file:   multi-container-minikube/k8s/worker-deployment.yaml
+        renamed:    nginx/Dockerfile -> multi-container-minikube/nginx/Dockerfile
+        renamed:    nginx/Dockerfile.dev -> multi-container-minikube/nginx/Dockerfile.dev
+        renamed:    nginx/default.conf -> multi-container-minikube/nginx/default.conf
+        new file:   service-account.json.enc
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
+$ git commit -m "Added Google Kubernetes Engine configuration"
+[master 5cc159d] Added Google Kubernetes Engine configuration
+ 67 files changed, 9761 insertions(+), 21 deletions(-)
+ create mode 100644 .travis.yml
+ create mode 100644 deploy.sh
+ create mode 100644 k8s/certificate.yaml
+ create mode 100644 k8s/issuer.yaml
+ create mode 100644 multi-container-minikube/.gitignore
+ create mode 100644 multi-container-minikube/README.md
+ create mode 100644 multi-container-minikube/Server/.dockerignore
+ create mode 100644 multi-container-minikube/Server/Controllers/ValuesController.cs
+ create mode 100644 multi-container-minikube/Server/Data/DataContext.cs
+ create mode 100644 multi-container-minikube/Server/Data/DatabaseService.cs
+ create mode 100644 multi-container-minikube/Server/Data/IDatabaseService.cs
+ create mode 100644 multi-container-minikube/Server/Dockerfile
+ create mode 100644 multi-container-minikube/Server/Models/Value.cs
+ create mode 100644 multi-container-minikube/Server/Program.cs
+ create mode 100644 multi-container-minikube/Server/Server.csproj
+ create mode 100644 multi-container-minikube/Server/Startup.cs
+ create mode 100644 multi-container-minikube/Worker/.dockerignore
+ create mode 100644 multi-container-minikube/Worker/Dockerfile
+ create mode 100644 multi-container-minikube/Worker/Program.cs
+ create mode 100644 multi-container-minikube/Worker/Worker.csproj
+ create mode 100644 multi-container-minikube/client/.dockerignore
+ create mode 100644 multi-container-minikube/client/Dockerfile
+ create mode 100644 multi-container-minikube/client/Dockerfile.dev
+ create mode 100644 multi-container-minikube/client/README.md
+ create mode 100644 multi-container-minikube/client/nginx/default.conf
+ create mode 100644 multi-container-minikube/client/package.json
+ create mode 100644 multi-container-minikube/client/public/favicon.ico
+ create mode 100644 multi-container-minikube/client/public/index.html
+ create mode 100644 multi-container-minikube/client/public/manifest.json
+ create mode 100644 multi-container-minikube/client/src/App.css
+ create mode 100644 multi-container-minikube/client/src/App.js
+ create mode 100644 multi-container-minikube/client/src/App.test.js
+ create mode 100644 multi-container-minikube/client/src/Fib.js
+ create mode 100644 multi-container-minikube/client/src/OtherPage.js
+ create mode 100644 multi-container-minikube/client/src/index.css
+ create mode 100644 multi-container-minikube/client/src/index.js
+ create mode 100644 multi-container-minikube/client/src/logo.svg
+ create mode 100644 multi-container-minikube/client/src/serviceWorker.js
+ create mode 100644 multi-container-minikube/client/yarn.lock
+ create mode 100644 multi-container-minikube/k8s/client-cluster-ip-service.yaml
+ create mode 100644 multi-container-minikube/k8s/client-deployment.yaml
+ create mode 100644 multi-container-minikube/k8s/database-persistent-volume-claim.yaml
+ create mode 100644 multi-container-minikube/k8s/ingress-service.yaml
+ create mode 100644 multi-container-minikube/k8s/postgres-cluster-ip-service.yaml
+ create mode 100644 multi-container-minikube/k8s/postgres-deployment.yaml
+ create mode 100644 multi-container-minikube/k8s/redis-cluster-ip-service.yaml
+ create mode 100644 multi-container-minikube/k8s/redis-deployment.yaml
+ create mode 100644 multi-container-minikube/k8s/server-cluster-ip-service.yaml
+ create mode 100644 multi-container-minikube/k8s/server-deployment.yaml
+ create mode 100644 multi-container-minikube/k8s/worker-deployment.yaml
+ rename {nginx => multi-container-minikube/nginx}/Dockerfile (100%)
+ rename {nginx => multi-container-minikube/nginx}/Dockerfile.dev (100%)
+ rename {nginx => multi-container-minikube/nginx}/default.conf (100%)
+ create mode 100644 service-account.json.enc
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
+$ git push origin HEAD
+Counting objects: 22, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (22/22), done.
+Writing objects: 100% (22/22), 7.19 KiB | 320.00 KiB/s, done.
+Total 22 (delta 7), reused 0 (delta 0)
+remote: Resolving deltas: 100% (7/7), completed with 5 local objects.
+To https://github.com/peelmicro/dotnet-core-multi-docker.git
+   7311ccb..5cc159d  HEAD -> master
+```
+13. Check if it has been installed correctly
+- Ensure it has been deployed correctly with `Travis CI`
+```sh
+The push refers to a repository [docker.io/[secure]/dotnet-core-multi-server]
+An image does not exist locally with the tag: [secure]/dotnet-core-multi-server
+The push refers to a repository [docker.io/[secure]/dotnet-core-multi-server]
+An image does not exist locally with the tag: [secure]/dotnet-core-multi-server
+The push refers to a repository [docker.io/[secure]/dotnet-core-multi-worker]
+An image does not exist locally with the tag: [secure]/dotnet-core-multi-worker
+The push refers to a repository [docker.io/[secure]/dotnet-core-multi-worker]
+An image does not exist locally with the tag: [secure]/dotnet-core-multi-worker
+certificate.certmanager.k8s.io "k8s-multi-com-tls" configured
+service "client-cluster-ip-service" unchanged
+deployment.apps "client-deployment" configured
+persistentvolumeclaim "database-persistent-volume-claim" unchanged
+ingress.extensions "ingress-service" unchanged
+clusterissuer.certmanager.k8s.io "letsencrypt-prod" configured
+service "postgres-cluster-ip-service" unchanged
+deployment.apps "postgres-deployment" unchanged
+service "redis-cluster-ip-service" unchanged
+deployment.apps "redis-deployment" unchanged
+service "server-cluster-ip-service" unchanged
+deployment.apps "server-deployment" configured
+deployment.apps "worker-deployment" configured
+deployment.apps "client-deployment" image updated
+deployment.apps "server-deployment" image updated
+deployment.apps "worker-deployment" image updated
+Already up to date!
+HEAD detached at 5cc159d
+nothing to commit, working tree clean
+Dropped refs/stash@{0} (1b4ca8481590fa81fe207c978f3ba9011d5a7a90)
+Done. Your build exited with 0.
+```
+
+![](/images/projects/dot-net-multi-docker/GoogleEKUpdatedProperly.png)
+
+- Browse to [Google Cloud Platform](https://console.cloud.google.com/home/dashboard)
+
+![](/images/projects/dot-net-multi-docker/GoogleEKUpdatedProperly2.png)
+
+![](/images/projects/dot-net-multi-docker/GoogleEKUpdatedProperly3.png)
+
+![](/images/projects/dot-net-multi-docker/GoogleEKUpdatedProperly4.png)
