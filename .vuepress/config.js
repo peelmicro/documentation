@@ -5,6 +5,10 @@ module.exports = {
     ['link', { rel: 'icon', href: '/images/favicon.png' }]
   ],  
   themeConfig: {
+    algolia: {
+      apiKey: '9d9b53b6e2f953299ac9ab6d8b6428d1',
+      indexName: 'peelmicro'
+    },    
     nav: [
       { text: 'Home', link: '/'},
       { text: 'Projects', link: '/projects/'},
