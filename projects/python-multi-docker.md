@@ -2,6 +2,8 @@
 
 The code is stored in [This Github Repository](https://github.com/peelmicro/python-multi-docker).
 
+Source code for the `Python` version of the [Docker and Kubernetes: The Complete Guide](https://www.udemy.com/docker-and-kubernetes-the-complete-guide) Udemy course
+
 Within the code you can see how to:
 - Create different Docker Container Types and relate all of them:
 1. React Client App
@@ -26,6 +28,7 @@ Within the code you can see how to:
 - Run the Ruby Travis CI CLI from a Docker container locally
 - Manage the automatic creation and renewal of a TLS certificate using Kubernetes to run the application with HTTPS
 
+> Table of contents
 [[toc]]
 
 ## Create the `server` application using python

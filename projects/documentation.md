@@ -10,6 +10,7 @@ Within the code you can see how to:
 - Set up [Algolia Search](https://www.algolia.com/)
 - Set up [Google Analytics](https://analytics.google.com)
 
+> Table of contents
 [[toc]]
 
 ## Set up the project
