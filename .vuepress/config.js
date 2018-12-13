@@ -1,14 +1,19 @@
-module.exports = {
+module.exports = ctx => ({
   title: `Documentation`,
   description: `For Training and Projects`,
   head: [
     ['link', { rel: 'icon', href: '/images/favicon.png' }]
   ],  
   themeConfig: {
-    algolia: {
+    algolia: ctx.isProd ? ({
       apiKey: '9d9b53b6e2f953299ac9ab6d8b6428d1',
       indexName: 'peelmicro'
-    },    
+    }) : null,
+    plugins: [
+      ['@vuepress/google-analytics', {
+        ga: 'UA-130949957-1'
+      }],
+    ],      
     nav: [
       { text: 'Home', link: '/'},
       { text: 'Projects', link: '/projects/'},
@@ -171,4 +176,4 @@ module.exports = {
       ]
     }
   } 
-}
+})

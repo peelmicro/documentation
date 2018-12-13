@@ -1,5 +1,7 @@
 # Java version of the "Docker and Kubernetes: The Complete Guide" Udemy course 
 
+The code is store in [This Github Repository](https://github.com/peelmicro/java-multi-docker).
+
 Within the code you can see how to:
 - Create different Docker Container Types and relate all of them:
 1. React Client App
@@ -24,8 +26,6 @@ Within the code you can see how to:
 - Use Google Kubernetes Engine to run the Kubernetes Cluster on the Cloud
 - Run the Ruby Travis CI CLI from a Docker container locally
 - Manage the automatic creation and renewal of a TLS certificate using Kubernetes to run the application with HTTPS
-
-The code is store in [This Github Repository](https://github.com/peelmicro/java-multi-docker).
 
 [[toc]]
 
