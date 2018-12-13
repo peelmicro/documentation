@@ -1,6 +1,6 @@
 # Documentation Website for Training and Projects. It is created using VuePress.
 
-The code is store in [This Github Repository](https://github.com/peelmicro/documentation).
+The code is stored in [This Github Repository](https://github.com/peelmicro/documentation).
 
 Within the code you can see how to:
 - Create a static website for documentation using [VuePress](https://vuepress.vuejs.org/)
@@ -1634,3 +1634,84 @@ module.exports = ctx => ({
 
 6. Commit and push changes and ensure there are no errors on the production website.
 
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Projects/Documentation (master)
+$ git commit -m "Added Google Analytics"
+[master 29ac136] Added Google Analytics
+ 69 files changed, 1807 insertions(+), 12 deletions(-)
+ create mode 100644 .vuepress/public/images/projects/documentation/AddNewFolder.png
+ create mode 100644 .vuepress/public/images/projects/documentation/AddNewFolder2.png
+ create mode 100644 .vuepress/public/images/projects/documentation/AlgoliaSearchSetUp.png
+ create mode 100644 .vuepress/public/images/projects/documentation/AlgoliaSearchSetUp2.png
+ create mode 100644 .vuepress/public/images/projects/documentation/AlgoliaSearchSetUp3.png
+ create mode 100644 .vuepress/public/images/projects/documentation/ChangesDeployedCorrectly.png
+ create mode 100644 .vuepress/public/images/projects/documentation/CreateGitHubRepository.png
+ create mode 100644 .vuepress/public/images/projects/documentation/CreateGitHubRepository2.png
+ create mode 100644 .vuepress/public/images/projects/documentation/CreateGitHubRepository3.png
+ create mode 100644 .vuepress/public/images/projects/documentation/CreateGitHubRepository4.png
+ create mode 100644 .vuepress/public/images/projects/documentation/CreateGitHubRepository5.png
+ create mode 100644 .vuepress/public/images/projects/documentation/DeployInNetlify.png
+ create mode 100644 .vuepress/public/images/projects/documentation/DeployInNetlify10.png
+ create mode 100644 .vuepress/public/images/projects/documentation/DeployInNetlify11.png
+ create mode 100644 .vuepress/public/images/projects/documentation/DeployInNetlify12.png
+ create mode 100644 .vuepress/public/images/projects/documentation/DeployInNetlify13.png
+ create mode 100644 .vuepress/public/images/projects/documentation/DeployInNetlify14.png
+ create mode 100644 .vuepress/public/images/projects/documentation/DeployInNetlify15.png
+ create mode 100644 .vuepress/public/images/projects/documentation/DeployInNetlify16.png
+ create mode 100644 .vuepress/public/images/projects/documentation/DeployInNetlify17.png
+ create mode 100644 .vuepress/public/images/projects/documentation/DeployInNetlify18.png
+ create mode 100644 .vuepress/public/images/projects/documentation/DeployInNetlify19.png
+ create mode 100644 .vuepress/public/images/projects/documentation/DeployInNetlify2.png
+ create mode 100644 .vuepress/public/images/projects/documentation/DeployInNetlify20.png
+ create mode 100644 .vuepress/public/images/projects/documentation/DeployInNetlify21.png
+ create mode 100644 .vuepress/public/images/projects/documentation/DeployInNetlify22.png
+ create mode 100644 .vuepress/public/images/projects/documentation/DeployInNetlify23.png
+ create mode 100644 .vuepress/public/images/projects/documentation/DeployInNetlify3.png
+ create mode 100644 .vuepress/public/images/projects/documentation/DeployInNetlify4.png
+ create mode 100644 .vuepress/public/images/projects/documentation/DeployInNetlify5.png
+ create mode 100644 .vuepress/public/images/projects/documentation/DeployInNetlify6.png
+ create mode 100644 .vuepress/public/images/projects/documentation/DeployInNetlify7.png
+ create mode 100644 .vuepress/public/images/projects/documentation/DeployInNetlify8.png
+ create mode 100644 .vuepress/public/images/projects/documentation/DeployInNetlify9.png
+ create mode 100644 .vuepress/public/images/projects/documentation/DevelopMainParts.png
+ create mode 100644 .vuepress/public/images/projects/documentation/DevelopMainParts2.png
+ create mode 100644 .vuepress/public/images/projects/documentation/DevelopMainParts3.png
+ create mode 100644 .vuepress/public/images/projects/documentation/DevelopMainParts4.png
+ create mode 100644 .vuepress/public/images/projects/documentation/DevelopMainParts5.png
+ create mode 100644 .vuepress/public/images/projects/documentation/GoogleAnalytics.png
+ create mode 100644 .vuepress/public/images/projects/documentation/GoogleAnalytics2.png
+ create mode 100644 .vuepress/public/images/projects/documentation/GoogleAnalytics3.png
+ create mode 100644 .vuepress/public/images/projects/documentation/GoogleAnalytics4.png
+ create mode 100644 .vuepress/public/images/projects/documentation/GoogleAnalytics5.png
+ create mode 100644 .vuepress/public/images/projects/documentation/SetUpProject.png
+ create mode 100644 .vuepress/public/images/projects/documentation/SetUpProject2.png
+ create mode 100644 .vuepress/public/images/projects/documentation/SetUpProject3.png
+ create mode 100644 .vuepress/public/images/projects/documentation/SetUpProject4.png
+ create mode 100644 .vuepress/public/images/projects/documentation/SetUpProject5.png
+ create mode 100644 .vuepress/public/images/projects/documentation/SetUpProject6.png
+ create mode 100644 .vuepress/public/images/projects/documentation/SetupACustomDomain.png
+ create mode 100644 .vuepress/public/images/projects/documentation/SetupACustomDomain10.png
+ create mode 100644 .vuepress/public/images/projects/documentation/SetupACustomDomain11.png
+ create mode 100644 .vuepress/public/images/projects/documentation/SetupACustomDomain12.png
+ create mode 100644 .vuepress/public/images/projects/documentation/SetupACustomDomain2.png
+ create mode 100644 .vuepress/public/images/projects/documentation/SetupACustomDomain3.png
+ create mode 100644 .vuepress/public/images/projects/documentation/SetupACustomDomain4.png
+ create mode 100644 .vuepress/public/images/projects/documentation/SetupACustomDomain5.png
+ create mode 100644 .vuepress/public/images/projects/documentation/SetupACustomDomain6.png
+ create mode 100644 .vuepress/public/images/projects/documentation/SetupACustomDomain7.png
+ create mode 100644 .vuepress/public/images/projects/documentation/SetupACustomDomain8.png
+ create mode 100644 .vuepress/public/images/projects/documentation/SetupACustomDomain9.png
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Projects/Documentation (master)
+$ git push origin HEAD
+Counting objects: 77, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (76/76), done.
+Writing objects: 100% (77/77), 4.08 MiB | 186.00 KiB/s, done.
+Total 77 (delta 9), reused 0 (delta 0)
+remote: Resolving deltas: 100% (9/9), completed with 8 local objects.
+To https://github.com/peelmicro/documentation.git
+   bc293cc..29ac136  HEAD -> master
+```
+![](/images/projects/documentation/GoogleAnalytics6.png)

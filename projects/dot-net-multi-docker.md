@@ -1,6 +1,6 @@
 # .NET Core version of the "Docker and Kubernetes: The Complete Guide" Udemy Course 
 
-The code is store in [This Github Repository](https://github.com/peelmicro/dotnet-core-multi-docker).
+The code is stored in [This Github Repository](https://github.com/peelmicro/dotnet-core-multi-docker).
 
 Within the code you can see how to:
 - Create different Docker Container Types and relate all of them:
