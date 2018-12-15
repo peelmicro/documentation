@@ -20,7 +20,6 @@ module.exports = ctx => ({
       { text: 'Front End', link: '/frontend/'},
       { text: 'Back End', link: '/backend/'},
       { text: 'Static Webs', link: '/staticwebs/'},
-      { text: 'Microservices', link: '/microservices/'},
       { text: 'Other', link: '/other/'},
       { text: 'About me', link: 'https://github.com/peelmicro'},
       { text: 'Github', link: 'https://github.com/peelmicro/documentation'},
@@ -29,10 +28,10 @@ module.exports = ctx => ({
       '/projects/': [
         '',
         'documentation.md',
-        'dot-net-multi-docker.md',
+        'dotnet-core-multi-docker.md',
         'java-multi-docker.md',
         'python-multi-docker.md',
-        'dot-net-core-react-redux-advanced.md',
+        'dotnet-core-react-redux-advanced.md',
         'purchase-slack-command-dotnet.md',
         'node-with-vuejs-fullstack-web-development.md',
         'ethereum-kickstart-vue.md',
@@ -82,21 +81,26 @@ module.exports = ctx => ({
           title: 'Node.js',
           collapsable: false,
           children: [
-            'nodejs'
+            'nodejs',
+            '/other/docker-multi-docker'
           ]
         },
         {
           title: 'Java',
           collapsable: false,
           children: [
-            'java'
+            'java',
+            '/projects/java-multi-docker',            
+            'java-mastering-micro-services-using-java-sprint-boot'
           ]
         },
         {
           title: 'Python',
           collapsable: false,
           children: [
-            'python'
+            'python',
+            '/projects/python-multi-docker',
+            'python-pythonforbeginnersintro'
           ]
         },
         {
@@ -133,32 +137,16 @@ module.exports = ctx => ({
           ]
         }
       ],
-      '/microservices/': [
+      '/other/': [
         '',
-        {
-          title: 'Development',
-          collapsable: false,
-          children: [
-            'development'
-          ]
-        },
         {
           title: 'Docker',
           collapsable: false,
           children: [
-            'docker'
+            'docker',
+            'docker-multi-docker'
           ]
         },
-        {
-          title: 'Kubernetes',
-          collapsable: false,
-          children: [
-            'kubernetes'
-          ]
-        }
-      ],
-      '/other/': [
-        '',
         {
           title: 'Blockchain',
           collapsable: false,
@@ -167,10 +155,12 @@ module.exports = ctx => ({
           ]
         },
         {
-          title: 'Excel',
+          title: 'Visual Studio',
           collapsable: false,
           children: [
-            'excel'
+            'visualstudio',
+            '/staticwebs/vuepress-how-to-use-vuepress-for-a-documentation-site',
+            'visualstudio-vs-resharper'  
           ]
         }
       ]

@@ -1,5 +1,11 @@
 # Easy Markdown with VS Code
-On the `Udemy` [Easy Markdown with VS Code](https://www.udemy.com/easyMarkdownWithVsCode/) you can Learn Markdown and compose documents the easy way with VS Code.
+On this [Easy Markdown with VS Code](https://www.udemy.com/easy-markdown-with-vs-code/) `Udemy` course you can Learn `Markdown` and compose documents the easy way with VS Code.
+
+##What I've learned
+- Create markdown documents the easy way with VS Code.
+- Find the best VS Code extensions for streamlining your Markdown efforts.
+- Add pictures and YouTube videos to Markdown documents.
+- Convert Excel, Numbers, Sheets tables to Markdown tables and HTML tables.
 
 ## Install Extensions
 ![](/images/markdown/easy-markdown-with-vs-code/Extensions.png "Extensions")

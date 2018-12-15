@@ -4,4 +4,8 @@
 Nowadays is highly used as a base tool to generate Static Webs.
 
 ## Courses
-- [Easy Markdown with VS Code](markdown-easy-markdown-with-vs-code.md)
+
+| Course                                                                                                                                         | Date               | Source Code                                                                                         |
+| ----------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- | --------------------------------------------------------------------------------------------------- |
+| [Easy Markdown with VS Code](markdown-easy-markdown-with-vs-code.md)                                                                                                               | 16/11/2018 |                                          |
+

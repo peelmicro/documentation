@@ -1,5 +1,5 @@
 # Learn how to use VuePress for a Documentation Site
-On this [VuePress Tutorial - Learn how to use VuePress for a Documentation Site (Beginner)](https://www.youtube.com/watch?v=5Kqyhu_eIcw) `YouTube` course we can see an introduction to VuePress where the some of the features are quite well explained.
+On this [VuePress Tutorial - Learn how to use VuePress for a Documentation Site (Beginner)](https://www.youtube.com/watch?v=5Kqyhu_eIcw) `Design Course` course we can see an introduction to VuePress where the some of the main features are quite well explained.
 
 ## Steps to create a documentation web static site
 1. Create the `muhvuepress` directory

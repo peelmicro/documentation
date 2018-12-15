@@ -2979,7 +2979,7 @@ kubectl: Correctly Configured: pointing to minikube-vm at 192.168.0.109
 8. Ensure the `client` app is running properly
 * Goto to `http://192.168.0.109:31515/`
 
-![](/images/projects/dot-net-multi-docker/ClientRunning.png)
+![](/images/projects/dotnet-core-multi-docker/ClientRunning.png)
 
 9. Stop the `dotnet-core-client-pod` pod
 ```sh
@@ -3233,7 +3233,7 @@ $ minikube ip
 ```
 - Browse to `http://192.168.0.109:31515/`
 
-![](/images/projects/dot-net-multi-docker/MultiClientIsRunning.png)
+![](/images/projects/dotnet-core-multi-docker/MultiClientIsRunning.png)
 
 6. Modify the `App.js` program to put another header to identify the version
 ```js
@@ -3374,7 +3374,7 @@ dotnet-core-client-deployment-76cbb7f86f-dw2s7   1/1       Running   0          
 10. Test if the new instance of the `muti-client` is running
 - Browse to `http://192.168.0.109:31515/`
 
-![](/images/projects/dot-net-multi-docker/NewMultiClientIsRunning.png)
+![](/images/projects/dotnet-core-multi-docker/NewMultiClientIsRunning.png)
 
 11. `Commit` and `Push` changes to Github Repository
 ```sh
@@ -3497,15 +3497,15 @@ service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   2m
 ```
 2. Make a copy of the whole solution on the `elastic-beanstalk` folder
 
-![](/images/projects/dot-net-multi-docker/BackupEverythingOnElasticBeanstalkFolder.png)
+![](/images/projects/dotnet-core-multi-docker/BackupEverythingOnElasticBeanstalkFolder.png)
 
 3. Remove the `.travis.yml`, `docker-compose.yml` and `Dockerrun.aws.json`  files and the `nginx` and  `simplek8s` folders.
 
-![](/images/projects/dot-net-multi-docker/RemoveFilesAndFolders.png)
+![](/images/projects/dotnet-core-multi-docker/RemoveFilesAndFolders.png)
 
 4. Copy the `k8s` folder from the `Java` version.
 
-![](/images/projects/dot-net-multi-docker/CopyK8sFolder.png)
+![](/images/projects/dotnet-core-multi-docker/CopyK8sFolder.png)
 
 5. Modify all the `configuration` files.
 
@@ -3877,15 +3877,15 @@ $ minikube ip
 ```
 - Browse to `https://192.168.0.107/`
 
-![](/images/projects/dot-net-multi-docker/RunMinikube.png)
+![](/images/projects/dotnet-core-multi-docker/RunMinikube.png)
 
 - Click on `ADVANCED`
 
-![](/images/projects/dot-net-multi-docker/RunMinikube2.png)
+![](/images/projects/dotnet-core-multi-docker/RunMinikube2.png)
 
 - Click on `Proceed to 192.168.0.107 (unsafe)`
 
-![](/images/projects/dot-net-multi-docker/RunMinikube3.png)
+![](/images/projects/dotnet-core-multi-docker/RunMinikube3.png)
 
 10. Have a look at the `Minikube Dashboard'
 - Execute the `minikube dashboard` command
@@ -3895,9 +3895,9 @@ $ minikube dashboard
 Opening http://127.0.0.1:52302/api/v1/namespaces/kube-system/services/http:kubernetes-dashboard:/proxy/ in your default browser...
 ```
 
-![](/images/projects/dot-net-multi-docker/MinikubeDashboard.png)
+![](/images/projects/dotnet-core-multi-docker/MinikubeDashboard.png)
 
-![](/images/projects/dot-net-multi-docker/MinikubeDashboard2.png)
+![](/images/projects/dotnet-core-multi-docker/MinikubeDashboard2.png)
 
 11. Update the `README.md` document
 ```md
@@ -4153,11 +4153,11 @@ To https://github.com/peelmicro/dotnet-core-multi-docker.git
 ```
 2. Create the `multi-container-minikube` folder
 
-![](/images/projects/dot-net-multi-docker/NewMultiContainerMinikubeFolder.png)
+![](/images/projects/dotnet-core-multi-docker/NewMultiContainerMinikubeFolder.png)
 
 3. Copy the current project to the new folder
 
-![](/images/projects/dot-net-multi-docker/CopyCurrentFolderToNewMinikubeFolder.png)
+![](/images/projects/dotnet-core-multi-docker/CopyCurrentFolderToNewMinikubeFolder.png)
 
 4. Copy all the `yaml` Kubernetes config files from the `Python` solution.
 - Delete the current files
@@ -4319,16 +4319,16 @@ kubectl set image deployments/worker-deployment worker=peelmicro/dotnet-core-mul
 8. Link the `dotnet-core-multi-docker` repository to [travis-ci.org](https://travis-ci.org/)
 - Browse to `https://travis-ci.org/account/repositories`
 
-![](/images/projects/dot-net-multi-docker/LinkToTravisCiOrg.png)
+![](/images/projects/dotnet-core-multi-docker/LinkToTravisCiOrg.png)
 
 - Click on the button to link
 
-![](/images/projects/dot-net-multi-docker/LinkToTravisCiOrg2.png)
+![](/images/projects/dotnet-core-multi-docker/LinkToTravisCiOrg2.png)
 
 - Go to `Settings`
 - Add the `DOCKER_ID` and `DOCKER_PASSWORD` environment variables
 
-![](/images/projects/dot-net-multi-docker/LinkToTravisCiOrg3.png)
+![](/images/projects/dotnet-core-multi-docker/LinkToTravisCiOrg3.png)
 
 9. Copy the `service-account.json` file from `Python` and add it to the `.gitignore` file.
 10. Generate the `service-account.json.enc` file with `Travis CI CLI` using `PowerShell`
@@ -4457,11 +4457,11 @@ Commit all changes to your .travis.yml.
 ```
 - Ensure the Travis CI encryption setting variables have been created.
 
-![](/images/projects/dot-net-multi-docker/EncryptServiceAccountJsonFile.png)
+![](/images/projects/dotnet-core-multi-docker/EncryptServiceAccountJsonFile.png)
 
 - Ensure the `service-account.json.enc` file has been created
 
-![](/images/projects/dot-net-multi-docker/EncryptServiceAccountJsonFile2.png)
+![](/images/projects/dotnet-core-multi-docker/EncryptServiceAccountJsonFile2.png)
 
 11. Update the `README.md` file
 ```md
@@ -4727,12 +4727,12 @@ Dropped refs/stash@{0} (1b4ca8481590fa81fe207c978f3ba9011d5a7a90)
 Done. Your build exited with 0.
 ```
 
-![](/images/projects/dot-net-multi-docker/GoogleEKUpdatedProperly.png)
+![](/images/projects/dotnet-core-multi-docker/GoogleEKUpdatedProperly.png)
 
 - Browse to [Google Cloud Platform](https://console.cloud.google.com/home/dashboard)
 
-![](/images/projects/dot-net-multi-docker/GoogleEKUpdatedProperly2.png)
+![](/images/projects/dotnet-core-multi-docker/GoogleEKUpdatedProperly2.png)
 
-![](/images/projects/dot-net-multi-docker/GoogleEKUpdatedProperly3.png)
+![](/images/projects/dotnet-core-multi-docker/GoogleEKUpdatedProperly3.png)
 
-![](/images/projects/dot-net-multi-docker/GoogleEKUpdatedProperly4.png)
+![](/images/projects/dotnet-core-multi-docker/GoogleEKUpdatedProperly4.png)

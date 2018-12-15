@@ -1516,7 +1516,7 @@ Maintenance window: ( ) Select Window (X) No Preference
 
 * Go to [ElastiCache](https://console.aws.amazon.com/elasticache/home?region=us-east-1#)
 
-![](EC.png)
+![](/images/projects/python-multi-docker/EC.png)
 
 * Click on `Redis`
 
