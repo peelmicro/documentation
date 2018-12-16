@@ -4,6 +4,9 @@ The code is stored in [This GitHub Repository](https://github.com/peelmicro/prog
 
 The [Progressive Web Apps (PWA) - The Complete Guide](https://www.udemy.com/progressive-web-app-pwa-the-complete-guide/) Udemy course teaches to build a `Progressive Web App` (PWA) that feels like an iOS & Android App, using Device Camera, Push Notifications and more.
 
+> Table of contents
+[[toc]]
+
 ## I've learned how to
 - Build web apps that look and feel like native mobile apps for iOS and Android
 - Use service workers to build web apps that work without internet connection (offline-first)

@@ -60,7 +60,13 @@ module.exports = ctx => ({
           title: 'Angular',
           collapsable: false,
           children: [
-            'angular'
+            'angular',
+            'angular-angular-pwa-course',
+            'angular-angular-material-course',
+            'angular-angular-full-app-with-angular-material-angularfire-ngrx',
+            '/backend/dotnetcore-asp-net-core-angular-from-scratch',
+            '/backend/java-angular-4-java-developers',
+            'angular-the-complete-guide-to-angular-2'
           ]
         },
         {
@@ -97,7 +103,10 @@ module.exports = ctx => ({
           children: [
             'java',
             '/projects/java-multi-docker',            
-            'java-mastering-micro-services-using-java-sprint-boot'
+            'java-mastering-micro-services-using-java-sprint-boot',
+            'java-angular-4-java-developers',
+            'java-spring-framework-video-tutorial',
+            'java-mavencrashcourse'
           ]
         },
         {
@@ -114,14 +123,17 @@ module.exports = ctx => ({
           collapsable: false,
           children: [
             'dotnetcore',
-            'dotnetcore-aplicaciones-web-en-tiempo-real-con-signalr-core'
+            'dotnetcore-aplicaciones-web-en-tiempo-real-con-signalr-core',
+            'dotnetcore-asp-net-core-angular-from-scratch',
+            'dotnetcore-aspnet-core-2-security-and-identity-management-with-c'
           ]
         },
         {
           title: '.Net',
           collapsable: false,
           children: [
-            'dotnet'
+            'dotnet',
+            'dotnet-the-ultimate-linq-with-csharp-masterclass-basics-to-advanced'
           ]
         }
       ],
