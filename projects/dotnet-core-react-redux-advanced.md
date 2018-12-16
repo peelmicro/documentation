@@ -1,8 +1,10 @@
 # .Net Core version of the "Node JS: Advanced Concepts" Udemy course
 
-The code is stored in [This Github Repository](https://github.com/peelmicro/dot-net-core-react-redux-advanced).
+The code is stored in [This GitHub Repository](https://github.com/peelmicro/dot-net-core-react-redux-advanced).
 
 Source code for the `.Net Core` version of the [Node JS: Advanced Concepts](https://www.udemy.com/advanced-node-for-developers) Udemy course
+
+You can find more information on [Node JS: Advanced Concepts](/backend/nodejs-advanced-node-for-developers.md) 
 
 Within the code you can see how to:
 - Use MongoDb with .Net Core

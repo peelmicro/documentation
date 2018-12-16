@@ -1,6 +1,6 @@
 # Documentation Website for Training and Projects. It is created using VuePress.
 
-The code is stored in [This Github Repository](https://github.com/peelmicro/documentation).
+The code is stored in [This GitHub Repository](https://github.com/peelmicro/documentation).
 
 Within the code you can see how to:
 - Create a static website for documentation using [VuePress](https://vuepress.vuejs.org/)

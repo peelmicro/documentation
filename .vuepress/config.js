@@ -67,7 +67,9 @@ module.exports = ctx => ({
           title: 'JavaScript',
           collapsable: false,
           children: [
-            'javascript'
+            'javascript',
+            'javascript-javascript-es6-tutorial',
+            'javascript-progressive-web-app-pwa-the-complete-guide'
           ]
         },
         {
@@ -85,7 +87,8 @@ module.exports = ctx => ({
           collapsable: false,
           children: [
             'nodejs',
-            '/other/docker-multi-docker'
+            '/other/docker-multi-docker',
+            'nodejs-advanced-node-for-developers'
           ]
         },
         {
@@ -110,7 +113,8 @@ module.exports = ctx => ({
           title: '.Net Core',
           collapsable: false,
           children: [
-            'dotnetcore'
+            'dotnetcore',
+            'dotnetcore-aplicaciones-web-en-tiempo-real-con-signalr-core'
           ]
         },
         {
@@ -164,6 +168,14 @@ module.exports = ctx => ({
             'visualstudio',
             '/staticwebs/markdown-easy-markdown-with-vs-code',
             'visualstudio-vs-resharper'  
+          ]
+        },
+        {
+          title: 'RegEx',
+          collapsable: false,
+          children: [
+            'regex',
+            'regex-regex-academy-an-introduction-to-text-parsing-sorcery'
           ]
         }
       ]

@@ -1,1 +1,10 @@
 # Introduction
+[JavaScript](https://en.wikipedia.org/wiki/JavaScript) often abbreviated as JS, is a high-level, interpreted programming language that conforms to the ECMAScript specification. It is a language which is also characterized as dynamic, weakly typed, prototype-based and multi-paradigm.
+
+Alongside HTML and CSS, JavaScript is one of the three core technologies of the World Wide Web. JavaScript enables interactive web pages and thus is an essential part of web applications. The vast majority of websites use it, and all major web browsers have a dedicated JavaScript engine to execute it.
+
+## Courses
+| Course                                                                                                                                         | Date               | Source Code                                                                                         |
+| ----------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- | --------------------------------------------------------------------------------------------------- |
+| [ES6 Javascript: The Complete Developer's Guide](javascript-javascript-es6-tutorial.md)                                                                                                               | 30/09/2018 |                         |
+| [Progressive Web Apps (PWA) - The Complete Guide](javascript-progressive-web-app-pwa-the-complete-guide.md)                                                                                                               | 22/09/2018 |    [progressive-web-apps](https://github.com/peelmicro/progressive-web-apps)<br>[progressive-web-apps-spas](https://github.com/peelmicro/progressive-web-apps-spas)                 |

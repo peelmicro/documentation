@@ -1,6 +1,6 @@
 # .NET Core version of the "Docker and Kubernetes: The Complete Guide" Udemy Course 
 
-The code is stored in [This Github Repository](https://github.com/peelmicro/dotnet-core-multi-docker).
+The code is stored in [This GitHub Repository](https://github.com/peelmicro/dotnet-core-multi-docker).
 
 Source code for the `.Net Core` version of the [Docker and Kubernetes: The Complete Guide](https://www.udemy.com/docker-and-kubernetes-the-complete-guide) Udemy course
 
@@ -31,6 +31,8 @@ Within the code you can see how to:
 
 > Table of contents
 [[toc]]
+
+You can find more information on [Docker and Kubernetes: The Complete Guide](/other/docker-multi-docker.md).
 
 ## Multi-Docker solution
 ### Create the initial version of the `Worker` Project

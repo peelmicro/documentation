@@ -1,6 +1,6 @@
 # Vue.js version of the "Node With React Fullstack Web Development" Udemy course
 
-The code is stored in [This Github Repository](https://github.com/peelmicro/node-with-vuejs-fullstack-web-development).
+The code is stored in [This GitHub Repository](https://github.com/peelmicro/node-with-vuejs-fullstack-web-development).
 
 Source code for the `Vue.js-Nuxt` version of the [Node With React Fullstack Web Development](https://www.udemy.com/node-with-react-fullstack-web-development/) Udemy course
 

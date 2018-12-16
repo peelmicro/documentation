@@ -1,7 +1,7 @@
 # Nuxt version of the dev meeting application built with Vue + Vuetify + Firebase based on "Build an App with Vue, Vuetify & Firebase" Academind course
 
 
-The code is stored in [This Github Repository](https://github.com/peelmicro/devmeetup-vuetify-nuxt).
+The code is stored in [This GitHub Repository](https://github.com/peelmicro/devmeetup-vuetify-nuxt).
 
 Source code for the `Nuxt` version of the [Build an App with Vue, Vuetify & Firebase](https://www.academind.com/learn/vue-js/a-comprehensive-project-with-vuetify-and-firebase/) Academind course
 

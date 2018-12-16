@@ -1,9 +1,19 @@
 # Docker and Kubernetes: The Complete Guide
 
+The code is stored in [This GitHub Repository](https://github.com/peelmicro/docker-react) and [Another GitHub Repository](https://github.com/peelmicro/multi-docker).
+
 The [Docker and Kubernetes: The Complete Guide](https://www.udemy.com/docker-and-kubernetes-the-complete-guide/) Udemy course explains how to build, test, and deploy Docker applications with Kubernetes while learning production-style development workflows.
 
 > Table of contents
 [[toc]]
+
+> Related projects
+
+| Project                                                                                                                                         | Dates               | Source Code                                                                                         |
+| ----------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- | --------------------------------------------------------------------------------------------------- |
+| [.NET Core version of the "Docker and Kubernetes: The Complete Guide" Udemy course](/projects/dotnet-core-multi-docker.md) | Nov 2018 - Dic 2018 | [dotnet-core-multi-docker](https://github.com/peelmicro/dotnet-core-multi-docker) |
+| [Java version of the "Docker and Kubernetes: The Complete Guide" Udemy course](/projects/java-multi-docker.md)        | Nov 2018 - Dic 2018 | [java-multi-docker](https://github.com/peelmicro/java-multi-docker)                                 |
+| [Python version of the "Docker and Kubernetes: The Complete Guide" Udemy course](/projects/python-multi-docker.md)     | Nov 2018 - Dic 2018 | [python-multi-docker](https://github.com/peelmicro/python-multi-docker)                             |
 
 ## What I've learned
 - Docker from scratch, no previous experience required
