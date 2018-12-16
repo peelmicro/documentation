@@ -4763,3 +4763,3431 @@ C:\Users\juan.pablo.perez\OneDrive\Training\Docker\DockerAndKubernetes.TheComple
 
 C:\Users\juan.pablo.perez\OneDrive\Training\Docker\DockerAndKubernetes.TheCompleteGuide\complex>mkdir server
 ```
+### Create the `client` app
+1. Use `create-react-app` to create the `client` app
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex
+$ create-react-app client
+
+Creating a new React app in C:\Users\juan.pablo.perez\OneDrive\Training\Docker\DockerAndKubernetes.TheCompleteGuide\complex\client.
+
+Installing packages. This might take a couple of minutes.
+Installing react, react-dom, and react-scripts...
+
+yarn add v1.9.2
+warning ..\package.json: No license field
+[1/4] Resolving packages...
+[2/4] Fetching packages...
+[-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------] 0/1283(node:20512) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
+info fsevents@1.2.4: The platform "win32" is incompatible with this module.
+info "fsevents@1.2.4" is an optional dependency and failed compatibility check. Excluding it from installation.
+[3/4] Linking dependencies...
+[4/4] Building fresh packages...
+success Saved lockfile.
+warning Your current version of Yarn is out of date. The latest version is "1.12.1", while you're on "1.9.2".
+info To upgrade, download the latest installer at "https://yarnpkg.com/latest.msi".
+success Saved 6 new dependencies.
+info Direct dependencies
+├─ react-dom@16.6.0
+├─ react-scripts@2.1.1
+└─ react@16.6.0
+info All dependencies
+├─ babel-preset-react-app@6.1.0
+├─ react-dev-utils@6.1.1
+├─ react-dom@16.6.0
+├─ react-error-overlay@5.1.0
+├─ react-scripts@2.1.1
+└─ react@16.6.0
+Done in 78.37s.
+
+Initialized a git repository.
+
+Success! Created client at C:\Users\juan.pablo.perez\OneDrive\Training\Docker\DockerAndKubernetes.TheCompleteGuide\complex\client
+Inside that directory, you can run several commands:
+
+  yarn start
+    Starts the development server.
+
+  yarn build
+    Bundles the app into static files for production.
+
+  yarn test
+    Starts the test runner.
+
+  yarn eject
+    Removes this tool and copies build dependencies, configuration files
+    and scripts into the app directory. If you do this, you can’t go back!
+
+We suggest that you begin by typing:
+
+  cd client
+  yarn start
+
+Happy hacking!
+```
+2. Create the `Dockerfile.dev` file
+> `Dockerfile.dev'
+```yml
+FROM node:alpine
+WORKDIR /app
+COPY package.json .
+RUN npm install
+COPY . .
+CMD ["npm", "run", "start"]
+```
+
+3. Build the image
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/client (master)
+$ docker build -f Dockerfile.dev .
+Sending build context to Docker daemon  138.5MB
+Step 1/6 : FROM node:alpine
+ ---> 5d526f8ba00b
+Step 2/6 : WORKDIR /app
+ ---> Using cache
+ ---> e7ae20d6064b
+Step 3/6 : COPY package.json .
+ ---> 6b43d0d016f7
+Step 4/6 : RUN npm install
+ ---> Running in 063d9fca581d
+npm WARN deprecated circular-json@0.3.3: CircularJSON is in maintenance only, flatted is its successor.
+npm notice created a lockfile as package-lock.json. You should commit this file.
+npm WARN ajv-keywords@3.2.0 requires a peer of ajv@^6.0.0 but none is installed. You must install peer dependencies yourself.
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.4 (node_modules/fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.4: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+
+added 1702 packages from 666 contributors and audited 35705 packages in 53.635s
+found 0 vulnerabilities
+
+Removing intermediate container 063d9fca581d
+ ---> 89f3181f7390
+Step 5/6 : COPY . .
+ ---> e4e2215fcaa5
+Step 6/6 : CMD ["npm", "run", "start"]
+ ---> Running in eea2b0a6b8d2
+Removing intermediate container eea2b0a6b8d2
+ ---> 3df84dd1d1a2
+Successfully built 3df84dd1d1a2
+SECURITY WARNING: You are building a Docker image from Windows against a non-Windows Docker host. All files and directories added to build context will have '-rwxr-xr-x' permissions. It is recommended to double check and reset permissions for sensitive files and directories.
+```
+
+4. Run the new Image
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/client (master)
+$ docker run 3df84dd1d1a2
+
+> client@0.1.0 start /app
+> react-scripts start
+
+Starting the development server...
+
+Compiled successfully!
+
+You can now view client in the browser.
+
+  Local:            http://localhost:3000/
+  On Your Network:  http://172.17.0.3:3000/
+
+Note that the development build is not optimized.
+To create a production build, use yarn build.
+```
+### Create the `server` app
+1. Create the `Dockerfile.dev` file
+> `Dockerfile.dev`
+```yml
+FROM node:alpine
+WORKDIR /app
+COPY package.json .
+RUN npm install
+COPY . .
+CMD ["npm", "run", "dev"]
+```
+2. Build the image
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/server
+$ docker build -f Dockerfile.dev .
+Sending build context to Docker daemon  6.656kB
+Step 1/6 : FROM node:alpine
+ ---> 5d526f8ba00b
+Step 2/6 : WORKDIR /app
+ ---> Using cache
+ ---> e7ae20d6064b
+Step 3/6 : COPY package.json .
+ ---> 75d1f58eb17c
+Step 4/6 : RUN npm install
+ ---> Running in be27b20ed172
+
+> nodemon@1.18.3 postinstall /app/node_modules/nodemon
+> node bin/postinstall || exit 0
+
+Love nodemon? You can now support the project via the open collective:
+ > https://opencollective.com/nodemon/donate
+
+npm notice created a lockfile as package-lock.json. You should commit this file.
+npm WARN app No description
+npm WARN app No repository field.
+npm WARN app No license field.
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.4 (node_modules/fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.4: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+
+added 304 packages from 189 contributors and audited 2423 packages in 12.515s
+found 0 vulnerabilities
+
+Removing intermediate container be27b20ed172
+ ---> 73e942399d21
+Step 5/6 : COPY . .
+ ---> 5159548cec31
+Step 6/6 : CMD ["npm", "run", "dev"]
+ ---> Running in bbaa2265d2fb
+Removing intermediate container bbaa2265d2fb
+ ---> 4bb93b3ce3d4
+Successfully built 4bb93b3ce3d4
+SECURITY WARNING: You are building a Docker image from Windows against a non-Windows Docker host. All files and directories added to build context will have '-rwxr-xr-x' permissions. It is recommended to double check and reset permissions for sensitive files and directories.
+```
+3. Run the new Image
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/server
+$ docker run 4bb93b3ce3d4
+
+> @ dev /app
+> nodemon
+
+[nodemon] 1.18.3
+[nodemon] to restart at any time, enter `rs`
+[nodemon] watching: *.*
+[nodemon] starting `node index.js`
+Listening
+{ Error: connect ECONNREFUSED 127.0.0.1:5432
+    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1117:14)
+  errno: 'ECONNREFUSED',
+  code: 'ECONNREFUSED',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 5432 }
+```
+
+### Create the `worker` app
+1. Create the `Dockerfile.dev` file
+> `Dockerfile.dev`
+```yml
+FROM node:alpine
+WORKDIR /app
+COPY package.json .
+RUN npm install
+COPY . .
+CMD ["npm", "run", "dev"] 
+```
+2. Build the image
+```sh
+  Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/worker
+$ docker build -f Dockerfile.dev .
+Sending build context to Docker daemon   5.12kB
+Step 1/6 : FROM node:alpine
+ ---> 5d526f8ba00b
+Step 2/6 : WORKDIR /app
+ ---> Using cache
+ ---> e7ae20d6064b
+Step 3/6 : COPY package.json .
+ ---> 55fca9e60b08
+Step 4/6 : RUN npm install
+ ---> Running in d0e63267466f
+
+> nodemon@1.18.3 postinstall /app/node_modules/nodemon
+> node bin/postinstall || exit 0
+
+Love nodemon? You can now support the project via the open collective:
+ > https://opencollective.com/nodemon/donate
+
+npm notice created a lockfile as package-lock.json. You should commit this file.
+npm WARN app No description
+npm WARN app No repository field.
+npm WARN app No license field.
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.4 (node_modules/fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.4: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+
+added 237 packages from 140 contributors and audited 2256 packages in 9.855s
+found 0 vulnerabilities
+
+Removing intermediate container d0e63267466f
+ ---> 630bae4161f4
+Step 5/6 : COPY . .
+ ---> 9bcefdbb9302
+Step 6/6 : CMD ["npm", "run", "dev"]
+ ---> Running in 024e8a52179d
+Removing intermediate container 024e8a52179d
+ ---> 7d524be5f965
+Successfully built 7d524be5f965
+SECURITY WARNING: You are building a Docker image from Windows against a non-Windows Docker host. All files and directories added to build context will have '-rwxr-xr-x' permissions. It is recommended to double check and reset permissions for sensitive files and directories.
+```
+3. Run the new Image
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/worker
+$ docker run 7d524be5f965
+
+> @ dev /app
+> nodemon
+
+[nodemon] 1.18.3
+[nodemon] to restart at any time, enter `rs`
+[nodemon] watching: *.*
+[nodemon] starting `node index.js`
+```
+### Create the `docker-compose`
+1. Create the `docker-compose.yml` file
+> `docker-compose.yml`
+```yml
+version: '3'
+services:
+  postgres:
+    image: 'postgres:latest'
+```
+2. Run the `docker-compose`
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex
+$ docker-compose up
+Creating network "complex_default" with the default driver
+Building web
+Traceback (most recent call last):
+  File "docker-compose", line 6, in <module>
+  File "compose\cli\main.py", line 71, in main
+  File "compose\cli\main.py", line 127, in perform_command
+  File "compose\cli\main.py", line 1052, in up
+  File "compose\cli\main.py", line 1048, in up
+  File "compose\project.py", line 471, in up
+  File "compose\service.py", line 352, in ensure_image_exists
+  File "compose\service.py", line 1067, in build
+  File "site-packages\docker\api\build.py", line 154, in build
+  File "site-packages\docker\utils\build.py", line 31, in tar
+  File "site-packages\docker\utils\build.py", line 79, in create_archive
+  File "tarfile.py", line 1803, in gettarinfo
+FileNotFoundError: [WinError 3] The system cannot find the path specified: 'C:\\Users\\juan.pablo.perez\\OneDrive\\Training\\Docker\\DockerAndKubernetes.TheCompleteGuide\\complex\\client\\node_modules\\babel-preset-react-app\\node_modules\\@babel\\plugin-transform-react-constant-elements\\node_modules\\@babel\\core\\lib\\config\\validation\\option-assertions.js'
+[34404] Failed to execute script docker-compose
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex
+$ docker-compose up
+Pulling postgres (postgres:latest)...
+latest: Pulling from library/postgres
+f17d81b4b692: Already exists
+c1f213be5edb: Pull complete
+9c79723dc510: Pull complete
+603a66804109: Pull complete
+b4f1b901e523: Pull complete
+99d9650419de: Pull complete
+02d87bb25bad: Pull complete
+333a24caa91e: Pull complete
+2ace4c87570a: Pull complete
+3add70ce5596: Pull complete
+947f7d36d500: Pull complete
+5e194c53f09f: Pull complete
+e0d520465b2d: Pull complete
+97f206959126: Pull complete
+Digest: sha256:76ff79d72ef95b7c136037c0e8ab629914a8d5e430a3a2aef7d959b5da9a33c5
+Status: Downloaded newer image for postgres:latest
+Creating complex_postgres_1 ... done
+Attaching to complex_postgres_1
+postgres_1  | The files belonging to this database system will be owned by user "postgres".
+postgres_1  | This user must also own the server process.
+postgres_1  |
+postgres_1  | The database cluster will be initialized with locale "en_US.utf8".
+postgres_1  | The default database encoding has accordingly been set to "UTF8".
+postgres_1  | The default text search configuration will be set to "english".
+postgres_1  |
+postgres_1  | Data page checksums are disabled.
+postgres_1  |
+postgres_1  | fixing permissions on existing directory /var/lib/postgresql/data ... ok
+postgres_1  | creating subdirectories ... ok
+postgres_1  | selecting default max_connections ... 100
+postgres_1  | selecting default shared_buffers ... 128MB
+postgres_1  | selecting dynamic shared memory implementation ... posix
+postgres_1  | creating configuration files ... ok
+postgres_1  | running bootstrap script ... ok
+postgres_1  | performing post-bootstrap initialization ... ok
+postgres_1  | syncing data to disk ... ok
+postgres_1  |
+postgres_1  | Success. You can now start the database server using:
+postgres_1  |
+postgres_1  |     pg_ctl -D /var/lib/postgresql/data -l logfile start
+postgres_1  |
+postgres_1  |
+postgres_1  | WARNING: enabling "trust" authentication for local connections
+postgres_1  | You can change this by editing pg_hba.conf or using the option -A, or
+postgres_1  | --auth-local and --auth-host, the next time you run initdb.
+postgres_1  | ****************************************************
+postgres_1  | WARNING: No password has been set for the database.
+postgres_1  |          This will allow anyone with access to the
+postgres_1  |          Postgres port to access your database. In
+postgres_1  |          Docker's default configuration, this is
+postgres_1  |          effectively any other container on the same
+postgres_1  |          system.
+postgres_1  |
+postgres_1  |          Use "-e POSTGRES_PASSWORD=password" to set
+postgres_1  |          it in "docker run".
+postgres_1  | ****************************************************
+postgres_1  | waiting for server to start....2018-11-05 17:39:47.929 UTC [41] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+postgres_1  | 2018-11-05 17:39:47.957 UTC [42] LOG:  database system was shut down at 2018-11-05 17:39:47 UTC
+postgres_1  | 2018-11-05 17:39:47.966 UTC [41] LOG:  database system is ready to accept connections
+postgres_1  |  done
+postgres_1  | server started
+postgres_1  |
+postgres_1  | /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
+postgres_1  |
+postgres_1  | 2018-11-05 17:39:48.019 UTC [41] LOG:  received fast shutdown request
+postgres_1  | waiting for server to shut down....2018-11-05 17:39:48.024 UTC [41] LOG:  aborting any active transactions
+postgres_1  | 2018-11-05 17:39:48.029 UTC [41] LOG:  background worker "logical replication launcher" (PID 48) exited with exit code 1
+postgres_1  | 2018-11-05 17:39:48.029 UTC [43] LOG:  shutting down
+postgres_1  | 2018-11-05 17:39:48.061 UTC [41] LOG:  database system is shut down
+postgres_1  |  done
+postgres_1  | server stopped
+postgres_1  |
+postgres_1  | PostgreSQL init process complete; ready for start up.
+postgres_1  |
+postgres_1  | 2018-11-05 17:39:48.133 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+postgres_1  | 2018-11-05 17:39:48.133 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+postgres_1  | 2018-11-05 17:39:48.141 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+postgres_1  | 2018-11-05 17:39:48.160 UTC [50] LOG:  database system was shut down at 2018-11-05 17:39:48 UTC
+postgres_1  | 2018-11-05 17:39:48.170 UTC [1] LOG:  database system is ready to accept connections
+```
+3. Modify the `docker-compose.yml` file
+> `docker-compose.yml`
+```yml
+version: '3'
+services:
+  postgres:
+    image: 'postgres:latest'
+  redis:
+    image: 'redis:latest'
+  server:
+    build: 
+      dockerfile: Dockerfile.dev
+      context: ./server
+    volumes:
+      - /app/node_modules
+      - ./server:/app
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - PGUSER=postgres
+      - PGHOST=postgres
+      - PGDATABASE=postgres
+      - PGPASSWORD=postgres_password
+      - PGPORT=5432
+  client:
+    build: 
+      dockerfile: Dockerfile.dev
+      context: ./client
+    volumes:
+      - /app/node_modules
+      - ./client:/app
+  worker:
+    build: 
+      dockerfile: Dockerfile.dev
+      context: ./worker
+    volumes:
+      - /app/node_modules
+      - ./worker:/app      
+```
+4. Run the `docker-compose` again
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex
+$ docker-compose up
+Building server
+Step 1/6 : FROM node:alpine
+ ---> 5d526f8ba00b
+Step 2/6 : WORKDIR /app
+ ---> Using cache
+ ---> e7ae20d6064b
+Step 3/6 : COPY package.json .
+ ---> fb4e9e3b94bc
+Step 4/6 : RUN npm install
+ ---> Running in cff49537f852
+
+> nodemon@1.18.3 postinstall /app/node_modules/nodemon
+> node bin/postinstall || exit 0
+
+Love nodemon? You can now support the project via the open collective:
+ > https://opencollective.com/nodemon/donate
+
+npm notice created a lockfile as package-lock.json. You should commit this file.
+npm WARN app No description
+npm WARN app No repository field.
+npm WARN app No license field.
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.4 (node_modules/fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.4: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+
+added 304 packages from 189 contributors and audited 2423 packages in 10.346s
+found 0 vulnerabilities
+
+Removing intermediate container cff49537f852
+ ---> 8a4055e07d27
+Step 5/6 : COPY . .
+ ---> ea5a16494f1b
+Step 6/6 : CMD ["npm", "run", "dev"]
+ ---> Running in e8d26114ba2a
+Removing intermediate container e8d26114ba2a
+ ---> a363eb84a6a1
+Successfully built a363eb84a6a1
+Successfully tagged complex_server:latest
+WARNING: Image for service server was built because it did not already exist. To rebuild this image you must use `docker-compose build` or `docker-compose up --build`.
+Starting complex_postgres_1 ... done
+Creating complex_redis_1    ... done
+Creating complex_server_1   ... done
+Attaching to complex_postgres_1, complex_redis_1, complex_server_1
+postgres_1  | 2018-11-05 17:59:48.911 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+postgres_1  | 2018-11-05 17:59:48.911 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+postgres_1  | 2018-11-05 17:59:48.937 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+postgres_1  | 2018-11-05 17:59:48.984 UTC [21] LOG:  database system was shut down at 2018-11-05 17:59:21 UTC
+postgres_1  | 2018-11-05 17:59:48.996 UTC [1] LOG:  database system is ready to accept connections
+redis_1     | 1:C 05 Nov 2018 17:59:49.373 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+redis_1     | 1:C 05 Nov 2018 17:59:49.373 # Redis version=5.0.0, bits=64, commit=00000000, modified=0, pid=1, just started
+redis_1     | 1:C 05 Nov 2018 17:59:49.373 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+redis_1     | 1:M 05 Nov 2018 17:59:49.381 * Running mode=standalone, port=6379.
+redis_1     | 1:M 05 Nov 2018 17:59:49.381 # WARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.
+redis_1     | 1:M 05 Nov 2018 17:59:49.381 # Server initialized
+redis_1     | 1:M 05 Nov 2018 17:59:49.381 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command 'echo never > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled.
+redis_1     | 1:M 05 Nov 2018 17:59:49.381 * Ready to accept connections
+server_1    |
+server_1    | > @ dev /app
+server_1    | > nodemon
+server_1    |
+server_1    | [nodemon] 1.18.3
+server_1    | [nodemon] to restart at any time, enter `rs`
+server_1    | [nodemon] watching: *.*
+server_1    | [nodemon] starting `node index.js`
+server_1    | Listening
+```
+5. Create the final version `docker-compose.yml` file
+> `docker-compose.yml`
+```yml
+version: '3'
+services:
+  postgres:
+    image: 'postgres:latest'
+  redis:
+    image: 'redis:latest'
+  nginx:
+    restart: always
+    build: 
+      dockerfile: Dockerfile.dev
+      context: ./nginx
+    ports:
+      - '3050:80'
+  api:
+    build: 
+      dockerfile: Dockerfile.dev
+      context: ./server
+    volumes:
+      - /app/node_modules
+      - ./server:/app
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - PGUSER=postgres
+      - PGHOST=postgres
+      - PGDATABASE=postgres
+      - PGPASSWORD=postgres_password
+      - PGPORT=5432
+  client:
+    build: 
+      dockerfile: Dockerfile.dev
+      context: ./client
+    volumes:
+      - /app/node_modules
+      - ./client:/app
+  worker:
+    build: 
+      dockerfile: Dockerfile.dev
+      context: ./worker
+    volumes:
+      - /app/node_modules
+      - ./worker:/app      
+```
+6.- Run the final version
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex
+$ docker-compose up --build
+Building nginx
+Step 1/2 : FROM nginx
+ ---> dbfc48660aeb
+Step 2/2 : COPY ./default.conf /etc/nginx/conf.d/default.conf
+ ---> Using cache
+ ---> 07f910ee6e30
+Successfully built 07f910ee6e30
+Successfully tagged complex_nginx:latest
+Building api
+Step 1/6 : FROM node:alpine
+ ---> 5d526f8ba00b
+Step 2/6 : WORKDIR /app
+ ---> Using cache
+ ---> e7ae20d6064b
+Step 3/6 : COPY package.json .
+ ---> Using cache
+ ---> fb4e9e3b94bc
+Step 4/6 : RUN npm install
+ ---> Using cache
+ ---> 8a4055e07d27
+Step 5/6 : COPY . .
+ ---> e868532f0df9
+Step 6/6 : CMD ["npm", "run", "dev"]
+ ---> Running in efd772095cd8
+Removing intermediate container efd772095cd8
+ ---> 05e3f212205a
+Successfully built 05e3f212205a
+Successfully tagged complex_api:latest
+Building client
+Step 1/6 : FROM node:alpine
+ ---> 5d526f8ba00b
+Step 2/6 : WORKDIR /app
+ ---> Using cache
+ ---> e7ae20d6064b
+Step 3/6 : COPY package.json .
+ ---> 8b4466a525be
+Step 4/6 : RUN npm install
+ ---> Running in 8875a46e025f
+npm WARN deprecated circular-json@0.3.3: CircularJSON is in maintenance only, flatted is its successor.
+npm notice created a lockfile as package-lock.json. You should commit this file.
+npm WARN ajv-keywords@3.2.0 requires a peer of ajv@^6.0.0 but none is installed. You must install peer dependencies yourself.
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.4 (node_modules/fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.4: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+
+added 1702 packages from 666 contributors and audited 35705 packages in 51.375s
+found 0 vulnerabilities
+
+Removing intermediate container 8875a46e025f
+ ---> 8a1ca040e40f
+Step 5/6 : COPY . .
+ ---> 6ff4f0f3d765
+Step 6/6 : CMD ["npm", "run", "start"]
+ ---> Running in 5cc122b56525
+Removing intermediate container 5cc122b56525
+ ---> a766e9b2f044
+Successfully built a766e9b2f044
+Successfully tagged complex_client:latest
+Building worker
+Step 1/6 : FROM node:alpine
+ ---> 5d526f8ba00b
+Step 2/6 : WORKDIR /app
+ ---> Using cache
+ ---> e7ae20d6064b
+Step 3/6 : COPY package.json .
+ ---> c2cb813639f0
+Step 4/6 : RUN npm install
+ ---> Running in 3ce21ab6b52f
+
+> nodemon@1.18.3 postinstall /app/node_modules/nodemon
+> node bin/postinstall || exit 0
+
+Love nodemon? You can now support the project via the open collective:
+ > https://opencollective.com/nodemon/donate
+
+npm notice created a lockfile as package-lock.json. You should commit this file.
+npm WARN app No description
+npm WARN app No repository field.
+npm WARN app No license field.
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.4 (node_modules/fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.4: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+
+added 237 packages from 140 contributors and audited 2256 packages in 8.784s
+found 0 vulnerabilities
+
+Removing intermediate container 3ce21ab6b52f
+ ---> 554d424dca21
+Step 5/6 : COPY . .
+ ---> 1348231bbebe
+Step 6/6 : CMD ["npm", "run", "dev"]
+ ---> Running in 86f18ce51c00
+Removing intermediate container 86f18ce51c00
+ ---> af97232233da
+Successfully built af97232233da
+Successfully tagged complex_worker:latest
+Starting complex_redis_1    ... done
+Starting complex_postgres_1 ... done
+Creating complex_client_1   ... done
+Creating complex_api_1      ... done
+Creating complex_nginx_1    ... done
+Creating complex_worker_1   ... done
+Attaching to complex_redis_1, complex_postgres_1, complex_nginx_1, complex_worker_1, complex_api_1, complex_client_1
+redis_1     | 1:C 06 Nov 2018 16:54:11.712 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+redis_1     | 1:C 06 Nov 2018 16:54:11.712 # Redis version=5.0.0, bits=64, commit=00000000, modified=0, pid=1, just started
+redis_1     | 1:C 06 Nov 2018 16:54:11.712 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+redis_1     | 1:M 06 Nov 2018 16:54:11.725 * Running mode=standalone, port=6379.
+redis_1     | 1:M 06 Nov 2018 16:54:11.725 # WARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.
+redis_1     | 1:M 06 Nov 2018 16:54:11.725 # Server initialized
+redis_1     | 1:M 06 Nov 2018 16:54:11.725 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command 'echo never > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled.
+redis_1     | 1:M 06 Nov 2018 16:54:11.742 * DB loaded from disk: 0.017 seconds
+redis_1     | 1:M 06 Nov 2018 16:54:11.742 * Ready to accept connections
+postgres_1  | 2018-11-06 16:54:12.357 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+postgres_1  | 2018-11-06 16:54:12.357 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+postgres_1  | 2018-11-06 16:54:12.371 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+postgres_1  | 2018-11-06 16:54:12.395 UTC [22] LOG:  database system was shut down at 2018-11-06 05:22:54 UTC
+postgres_1  | 2018-11-06 16:54:12.428 UTC [1] LOG:  database system is ready to accept connections
+nginx_1     | 2018/11/06 16:54:12 [emerg] 1#1: host not found in upstream "client:3000" in /etc/nginx/conf.d/default.conf:2
+nginx_1     | nginx: [emerg] host not found in upstream "client:3000" in /etc/nginx/conf.d/default.conf:2
+worker_1    |
+worker_1    | > @ dev /app
+worker_1    | > nodemon
+worker_1    |
+worker_1    | [nodemon] 1.18.3
+worker_1    | [nodemon] to restart at any time, enter `rs`
+worker_1    | [nodemon] watching: *.*
+worker_1    | [nodemon] starting `node index.js`
+api_1       |
+api_1       | > @ dev /app
+api_1       | > nodemon
+api_1       |
+api_1       | [nodemon] 1.18.3
+api_1       | [nodemon] to restart at any time, enter `rs`
+api_1       | [nodemon] watching: *.*
+api_1       | [nodemon] starting `node index.js`
+api_1       | Listening
+client_1    |
+client_1    | > client@0.1.0 start /app
+client_1    | > react-scripts start
+client_1    |
+client_1    | Starting the development server...
+client_1    |
+client_1    | Compiled successfully!
+client_1    |
+client_1    | You can now view client in the browser.
+client_1    |
+client_1    |   Local:            http://localhost:3000/
+client_1    |   On Your Network:  http://172.19.0.7:3000/
+client_1    |
+client_1    | Note that the development build is not optimized.
+client_1    | To create a production build, use yarn build.
+client_1    |
+Gracefully stopping... (press Ctrl+C again to force)
+Stopping complex_worker_1   ... done
+Stopping complex_api_1      ... done
+Stopping complex_nginx_1    ... done
+Stopping complex_client_1   ... done
+Stopping complex_redis_1    ... done
+Stopping complex_postgres_1 ... done
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex
+$ docker-compose up
+Starting complex_redis_1    ... done
+Starting complex_client_1   ... done
+Starting complex_api_1      ... done
+Starting complex_postgres_1 ... done
+Starting complex_nginx_1    ... done
+Starting complex_worker_1   ... done
+Attaching to complex_redis_1, complex_client_1, complex_nginx_1, complex_postgres_1, complex_worker_1, complex_api_1
+redis_1     | 1:C 06 Nov 2018 16:56:32.278 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+redis_1     | 1:C 06 Nov 2018 16:56:32.278 # Redis version=5.0.0, bits=64, commit=00000000, modified=0, pid=1, just started
+redis_1     | 1:C 06 Nov 2018 16:56:32.278 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+redis_1     | 1:M 06 Nov 2018 16:56:32.279 * Running mode=standalone, port=6379.
+redis_1     | 1:M 06 Nov 2018 16:56:32.279 # WARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.
+redis_1     | 1:M 06 Nov 2018 16:56:32.279 # Server initialized
+redis_1     | 1:M 06 Nov 2018 16:56:32.279 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command 'echo never > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled.
+redis_1     | 1:M 06 Nov 2018 16:56:32.279 * DB loaded from disk: 0.000 seconds
+redis_1     | 1:M 06 Nov 2018 16:56:32.279 * Ready to accept connections
+client_1    |
+client_1    | > client@0.1.0 start /app
+client_1    | > react-scripts start
+client_1    |
+postgres_1  | 2018-11-06 16:56:33.533 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+postgres_1  | 2018-11-06 16:56:33.533 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+postgres_1  | 2018-11-06 16:56:33.614 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+postgres_1  | 2018-11-06 16:56:33.678 UTC [22] LOG:  database system was shut down at 2018-11-06 16:56:10 UTC
+postgres_1  | 2018-11-06 16:56:33.692 UTC [1] LOG:  database system is ready to accept connections
+worker_1    |
+worker_1    | > @ dev /app
+worker_1    | > nodemon
+worker_1    |
+api_1       |
+api_1       | > @ dev /app
+api_1       | > nodemon
+api_1       |
+worker_1    | [nodemon] 1.18.3
+worker_1    | [nodemon] to restart at any time, enter `rs`
+worker_1    | [nodemon] watching: *.*
+worker_1    | [nodemon] starting `node index.js`
+api_1       | [nodemon] 1.18.3
+api_1       | [nodemon] to restart at any time, enter `rs`
+api_1       | [nodemon] watching: *.*
+api_1       | [nodemon] starting `node index.js`
+api_1       | Listening
+client_1    | Starting the development server...
+client_1    |
+client_1    | Compiled successfully!
+
+client_1    |
+client_1    | You can now view client in the browser.
+client_1    |
+client_1    |   Local:            http://localhost:3000/
+client_1    |   On Your Network:  http://172.19.0.4:3000/
+client_1    |
+client_1    | Note that the development build is not optimized.
+client_1    | To create a production build, use yarn build.
+client_1    |
+```
+7. Browse to  http://localhost:3050/
+- And the previous react app (frontend) is running
+```
+logo
+Welcome to React
+Home
+Other Page
+```
+8. Clean up everything and build it again
+```sh
+$ docker system prune
+WARNING! This will remove:
+        - all stopped containers
+        - all networks not used by at least one container
+        - all dangling images
+        - all build cache
+Are you sure you want to continue? [y/N] y
+Deleted Containers:
+7ca41cea2cba87b6aefcab16c7d958234666433494f0b35a19fb073ed28cb1a6
+ffdbcf264b108016a3cdae47b2742e057add728e33b4ef14444bae671b5c25cb
+d6dfa74b69bc132504eed2cdec1fc8778580ba813b7e0edc5cb9a24a1d55c656
+e3a38cb01334560a9c954ba2cd26c27473c7f8f7b48889f2009047eb976870f9
+82ce616ebc3722fc1a63a661518f0fef100023a39f09ec6f5588800631bc5f27
+fff46da09989e016d78946d06fe2fbf220877c124d256498573a65e6d708ad20
+1d3b93ed3cbd1cf8cbe954737a60e5b92a91271da9b964755b117de277957c3f
+825abc21bc36e93f8a2a161629446f72579033bbe6dbc2a36c78846e96d67de1
+0df7a234b6900c388a50da437e67f6a46e640e1f9444c345dfdba044da082dae
+7421c4b411bc4cf35643ba3b13794dcd0935109a87eee7578957a6131acf5c41
+21ff4d5e0caf3ac836b67c212fa27d830808ac33be953a07bd78f55bae7541ae
+56b0c4d9c207ca9b7b583503d6865e614c5bd3fa617b0f651e23219493cc6458
+d16e3657f87b4a93d5ca1366028665bece721cf1e3100d50fb065f77b5046978
+29421740f3dc91616aad04155467a197f940bd8461b2f1b5d5fa281e58cd2157
+9394a1ae85d658cc2e53b9c1e1dcf6f3a286a469186b972e2a26ef4357a8e8de
+6a8d42debc1bc1dc32024fb0478b1dfc6ea70383500b7dfd870ab1529bb13e01
+921957b61741dc8091ff8426965bd114b39fee4be5f5eee6c34b493250eee4aa
+ffe059851944cfb890308633be9fc379a5ff494f94efc7117a0dfefae0191a47
+37cc9633e90f75b427daf8321ea69014f9f9c773ca41f99f7953dc6eaf7d1005
+cdae1ef6c5b94b63d7a9ee691241251afcfa01ac876b544080c570b0290b2301
+bd7a3725e6c9177c9f30763192e5cd370de5a5b554bb31261715300b1df043cc
+e845c632c3191c5df69a45067b922d44d003a62949ed0d6651453228718bc9e1
+
+Deleted Networks:
+frontend_default
+complex_default
+
+Deleted Images:
+deleted: sha256:67402d310ff7263e037f6add9f097a2f307b4c3db8317c27a4eda5fcfbac82ca
+deleted: sha256:e724ffd85c2efd57d13d89a8ea2f162446e8ed3a248f82a58a356fe3f30d8a2e
+deleted: sha256:2e3cbe7a2849b20221a2ca310b8292d023a725d2e43b39fc7b4d9c5f0831bb01
+deleted: sha256:f7487e10e6f3d6662877ea9db5f985dc47d4903063ea6c6a09b0519cc5233960
+deleted: sha256:4f3647afc118060db725681c7e2eb824b161aa7fdd09a7def0e54263a10a5134
+deleted: sha256:bba8f746d79b415733a398b685d3e603da2ad06d1f6d36490b165a01256968a6
+deleted: sha256:f1b865a9617b4c1ea31cf2225cbb9d742788c69592e0520b1fcd0ca89f81c29c
+deleted: sha256:33167675358a331c703d9514f8afa2ec409814f2d20d69dc5bbcceacbe4554d4
+deleted: sha256:f5b001e766fd5e5d38874a30577a1d4138dc83a4688d7cfa69c9172d6a6b609f
+deleted: sha256:27a4f96ea3feac6bce6a32f5bf746446dba8e3aefebd8c5ee1df2ae6177dd2a5
+deleted: sha256:4bb93b3ce3d4158aaec0fe5f53e6f1b109142bd5192481b8ec0227db9949eac2
+deleted: sha256:5159548cec3144fa1bf0a423ed79a54425c202f3b0cb0e0065f027bb8cddf27f
+deleted: sha256:2da979e0b6a5ffb26b7b184cc2e63447fe92dd7f7b40fc36524765ed4fd0283d
+deleted: sha256:73e942399d212e6bf82fdd12215705e946e256c6ec6c6915adbbcea91cc77054
+deleted: sha256:18fcf364e1fe517833c5b81be4339cc6982141d517e91e9d6ab69c1c85cfba93
+deleted: sha256:75d1f58eb17cdcd633d216e2d8524fc13a6a4a2337d2b3757c69474bbbddc571
+deleted: sha256:c3a8f85b76cc642b96720de6213fa5207a349a9ddd25619595d5d4bd9b7f7bce
+deleted: sha256:3df84dd1d1a2da3c789d3a76dacc9fcc963c400245f6a481080b43a4b8781709
+deleted: sha256:e4e2215fcaa525a05664a65826ac6788e75850f589dbde6b81546b0f8db9fcb9
+deleted: sha256:0da2ff6e3faa37977485977b0d9b32c71d673e7f697505eb88770eb2a5d80d45
+deleted: sha256:89f3181f73907da83b22de0aae13b5ee408d18106302015dde0bed62a46f290e
+deleted: sha256:95e7afbf0d16fb3d3ea024d459a2ec0b6090e4493173cd6f692a583526d2e820
+deleted: sha256:6b43d0d016f72afa44e73cc1b4270322116140bcebe7e744bdb6bdd67dc16d10
+deleted: sha256:898af495bd8690dce80e29f4d4d56072eb7ce4241a49d7cfadeb6e9485a63073
+deleted: sha256:7d524be5f965ccb04de5472dfba6d7a3f919647673b3beaae57e2bdee84b7cb9
+deleted: sha256:9bcefdbb93027935a5c0002a7c9eb7e52153e1f3f9cb07942a37ce38fc46b91f
+deleted: sha256:c36fa52d6925b0fca727c89134fd79c6798e9776b531612987078022af16ad5d
+deleted: sha256:630bae4161f4f8b5a36dae7e095f11d2c2e45bb462efe449ca67786ca56bc369
+deleted: sha256:91daf8699816fcaa4cef2ac2a3846aa5a7188fb4ec00fb25e8e02b391c9210af
+deleted: sha256:55fca9e60b08706944457f1d2591b21ed0bc2cd97dec9140dd9e89a4d1907b02
+deleted: sha256:5b4de211345ceb5ff748e6c68cb3ab4d3c4d7e368ea4597760d531dbca6b7901
+deleted: sha256:78c8ea0dcea5bf4d9940894d9fa027b1314080aee7fd5a9ac56da04c59551b18
+deleted: sha256:7272a303c034ab12ec160d38f8f3d381498fff432cdea055824287096f88d1fb
+deleted: sha256:8d0c5316a644e58e00f0ebcdc56d5ec0d164e6dfa9174c152c517afb6b94788e
+deleted: sha256:78fd76eb446c1dc1b4d4fe44d2e36ce89a2ea83244a950e61253424957e5037a
+deleted: sha256:7fe11a5c21c866b6661728593ab2d3b1df0e52c0b2bcea8267921bcdc2919f68
+
+Total reclaimed space: 404.5MB
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex
+$ docker-compose up --build
+Creating network "complex_default" with the default driver
+Building nginx
+Step 1/2 : FROM nginx
+ ---> dbfc48660aeb
+Step 2/2 : COPY ./default.conf /etc/nginx/conf.d/default.conf
+ ---> Using cache
+ ---> 07f910ee6e30
+Successfully built 07f910ee6e30
+Successfully tagged complex_nginx:latest
+Building api
+Step 1/6 : FROM node:alpine
+ ---> 5d526f8ba00b
+Step 2/6 : WORKDIR /app
+ ---> Using cache
+ ---> e7ae20d6064b
+Step 3/6 : COPY package.json .
+ ---> Using cache
+ ---> fb4e9e3b94bc
+Step 4/6 : RUN npm install
+ ---> Using cache
+ ---> 8a4055e07d27
+Step 5/6 : COPY . .
+ ---> Using cache
+ ---> e868532f0df9
+Step 6/6 : CMD ["npm", "run", "dev"]
+ ---> Using cache
+ ---> 05e3f212205a
+Successfully built 05e3f212205a
+Successfully tagged complex_api:latest
+Building client
+Step 1/6 : FROM node:alpine
+ ---> 5d526f8ba00b
+Step 2/6 : WORKDIR /app
+ ---> Using cache
+ ---> e7ae20d6064b
+Step 3/6 : COPY package.json .
+ ---> Using cache
+ ---> 8b4466a525be
+Step 4/6 : RUN npm install
+ ---> Using cache
+ ---> 8a1ca040e40f
+Step 5/6 : COPY . .
+ ---> d142e7d899ce
+Step 6/6 : CMD ["npm", "run", "start"]
+ ---> Running in c23781f2f99b
+Removing intermediate container c23781f2f99b
+ ---> e6c9a9995337
+Successfully built e6c9a9995337
+Successfully tagged complex_client:latest
+Building worker
+Step 1/6 : FROM node:alpine
+ ---> 5d526f8ba00b
+Step 2/6 : WORKDIR /app
+ ---> Using cache
+ ---> e7ae20d6064b
+Step 3/6 : COPY package.json .
+ ---> Using cache
+ ---> c2cb813639f0
+Step 4/6 : RUN npm install
+ ---> Using cache
+ ---> 554d424dca21
+Step 5/6 : COPY . .
+ ---> d540132f46d0
+Step 6/6 : CMD ["npm", "run", "dev"]
+ ---> Running in 48a071a9d206
+Removing intermediate container 48a071a9d206
+ ---> 6897857812bb
+Successfully built 6897857812bb
+Successfully tagged complex_worker:latest
+Creating complex_api_1      ... done
+Creating complex_client_1   ... done
+Creating complex_redis_1    ... done
+Creating complex_nginx_1    ... done
+Creating complex_postgres_1 ... done
+Creating complex_worker_1   ... done
+Attaching to complex_redis_1, complex_nginx_1, complex_postgres_1, complex_worker_1, complex_api_1, complex_client_1
+redis_1     | 1:C 06 Nov 2018 17:08:21.729 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+redis_1     | 1:C 06 Nov 2018 17:08:21.729 # Redis version=5.0.0, bits=64, commit=00000000, modified=0, pid=1, just started
+redis_1     | 1:C 06 Nov 2018 17:08:21.729 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+redis_1     | 1:M 06 Nov 2018 17:08:21.730 * Running mode=standalone, port=6379.
+redis_1     | 1:M 06 Nov 2018 17:08:21.730 # WARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.
+redis_1     | 1:M 06 Nov 2018 17:08:21.730 # Server initialized
+redis_1     | 1:M 06 Nov 2018 17:08:21.730 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command 'echo never > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled.
+redis_1     | 1:M 06 Nov 2018 17:08:21.730 * Ready to accept connections
+nginx_1     | 2018/11/06 17:08:22 [emerg] 1#1: host not found in upstream "client:3000" in /etc/nginx/conf.d/default.conf:2
+nginx_1     | nginx: [emerg] host not found in upstream "client:3000" in /etc/nginx/conf.d/default.conf:2
+postgres_1  | The files belonging to this database system will be owned by user "postgres".
+postgres_1  | This user must also own the server process.
+postgres_1  |
+postgres_1  | The database cluster will be initialized with locale "en_US.utf8".
+postgres_1  | The default database encoding has accordingly been set to "UTF8".
+postgres_1  | The default text search configuration will be set to "english".
+postgres_1  |
+postgres_1  | Data page checksums are disabled.
+postgres_1  |
+postgres_1  | fixing permissions on existing directory /var/lib/postgresql/data ... ok
+postgres_1  | creating subdirectories ... ok
+worker_1    |
+worker_1    | > @ dev /app
+worker_1    | > nodemon
+worker_1    |
+worker_1    | [nodemon] 1.18.3
+worker_1    | [nodemon] to restart at any time, enter `rs`
+worker_1    | [nodemon] watching: *.*
+worker_1    | [nodemon] starting `node index.js`
+api_1       |
+api_1       | > @ dev /app
+api_1       | > nodemon
+api_1       |
+api_1       | [nodemon] 1.18.3
+api_1       | [nodemon] to restart at any time, enter `rs`
+postgres_1  | selecting default max_connections ... 100
+api_1       | [nodemon] watching: *.*
+api_1       | [nodemon] starting `node index.js`
+api_1       | Listening
+api_1       | { Error: connect ECONNREFUSED 172.18.0.4:5432
+api_1       |     at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1117:14)
+api_1       |   errno: 'ECONNREFUSED',
+api_1       |   code: 'ECONNREFUSED',
+api_1       |   syscall: 'connect',
+api_1       |   address: '172.18.0.4',
+api_1       |   port: 5432 }
+postgres_1  | selecting default shared_buffers ... 128MB
+postgres_1  | selecting dynamic shared memory implementation ... posix
+postgres_1  | creating configuration files ... ok
+postgres_1  | running bootstrap script ... ok
+postgres_1  | performing post-bootstrap initialization ... ok
+postgres_1  | syncing data to disk ... ok
+postgres_1  |
+postgres_1  | Success. You can now start the database server using:
+postgres_1  |
+postgres_1  |     pg_ctl -D /var/lib/postgresql/data -l logfile start
+postgres_1  |
+postgres_1  |
+postgres_1  | WARNING: enabling "trust" authentication for local connections
+postgres_1  | You can change this by editing pg_hba.conf or using the option -A, or
+postgres_1  | --auth-local and --auth-host, the next time you run initdb.
+postgres_1  | ****************************************************
+postgres_1  | WARNING: No password has been set for the database.
+postgres_1  |          This will allow anyone with access to the
+postgres_1  |          Postgres port to access your database. In
+postgres_1  |          Docker's default configuration, this is
+postgres_1  |          effectively any other container on the same
+postgres_1  |          system.
+postgres_1  |
+postgres_1  |          Use "-e POSTGRES_PASSWORD=password" to set
+postgres_1  |          it in "docker run".
+postgres_1  | ****************************************************
+postgres_1  | waiting for server to start....2018-11-06 17:08:26.476 UTC [41] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+postgres_1  | 2018-11-06 17:08:26.574 UTC [42] LOG:  database system was shut down at 2018-11-06 17:08:25 UTC
+postgres_1  | 2018-11-06 17:08:26.586 UTC [41] LOG:  database system is ready to accept connections
+postgres_1  |  done
+postgres_1  | server started
+postgres_1  |
+postgres_1  | /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
+postgres_1  |
+postgres_1  | waiting for server to shut down...2018-11-06 17:08:26.633 UTC [41] LOG:  received fast shutdown request
+postgres_1  | .2018-11-06 17:08:26.638 UTC [41] LOG:  aborting any active transactions
+postgres_1  | 2018-11-06 17:08:26.643 UTC [41] LOG:  background worker "logical replication launcher" (PID 48) exited with exit code 1
+postgres_1  | 2018-11-06 17:08:26.643 UTC [43] LOG:  shutting down
+postgres_1  | 2018-11-06 17:08:26.729 UTC [41] LOG:  database system is shut down
+postgres_1  |  done
+postgres_1  | server stopped
+postgres_1  |
+postgres_1  | PostgreSQL init process complete; ready for start up.
+postgres_1  |
+postgres_1  | 2018-11-06 17:08:26.746 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+postgres_1  | 2018-11-06 17:08:26.746 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+postgres_1  | 2018-11-06 17:08:26.767 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+postgres_1  | 2018-11-06 17:08:26.788 UTC [50] LOG:  database system was shut down at 2018-11-06 17:08:26 UTC
+postgres_1  | 2018-11-06 17:08:26.795 UTC [1] LOG:  database system is ready to accept connections
+client_1    |
+client_1    | > client@0.1.0 start /app
+client_1    | > react-scripts start
+client_1    |
+client_1    | Starting the development server...
+client_1    |
+```
+9. Set up Git
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex$ git init
+Initialized empty Git repository in C:/Users/juan.pablo.perez/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/.git/
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ git status
+On branch master
+
+No commits yet
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        .gitignore
+        client/
+        docker-compose.yml
+        nginx/
+        server/
+        worker/
+
+nothing added to commit but untracked files present (use "git add" to track)
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ git add .
+warning: LF will be replaced by CRLF in .gitignore.
+The file will have its original line endings in your working directory.
+warning: adding embedded git repository: client
+hint: You've added another git repository inside your current repository.
+hint: Clones of the outer repository will not contain the contents of
+hint: the embedded repository and will not know how to obtain it.
+hint: If you meant to add a submodule, use:
+hint:
+hint:   git submodule add <url> client
+hint:
+hint: If you added this path by mistake, you can remove it from the
+hint: index with:
+hint:
+hint:   git rm --cached client
+hint:
+hint: See "git help submodule" for more information.
+warning: LF will be replaced by CRLF in server/index.js.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in server/keys.js.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in server/package.json.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in worker/index.js.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in worker/keys.js.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in worker/package.json.
+The file will have its original line endings in your working directory.
+```
+```sh
+C:\WINDOWS\system32>cd C:\Users\juan.pablo.perez\OneDrive\Training\Docker\DockerAndKubernetes.TheCompleteGuide\complex\client
+```
+```sh
+C:\Users\juan.pablo.perez\OneDrive\Training\Docker\DockerAndKubernetes.TheCompleteGuide\complex\client>rmdir .git /s
+.git, Are you sure (Y/N)? y
+```
+```sh
+C:\Users\juan.pablo.perez\OneDrive\Training\Docker\DockerAndKubernetes.TheCompleteGuide\complex\client>
+$ git status
+On branch master
+
+No commits yet
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+
+        new file:   .gitignore
+        new file:   README.md
+        new file:   client/.gitignore
+        new file:   client/Dockerfile
+        new file:   client/Dockerfile.dev
+        new file:   client/README.md
+        new file:   client/nginx/default.conf
+        new file:   client/package.json
+        new file:   client/public/favicon.ico
+        new file:   client/public/index.html
+        new file:   client/public/manifest.json
+        new file:   client/src/App.css
+        new file:   client/src/App.js
+        new file:   client/src/App.test.js
+        new file:   client/src/Fib.js
+        new file:   client/src/OtherPage.js
+        new file:   client/src/index.css
+        new file:   client/src/index.js
+        new file:   client/src/logo.svg
+        new file:   client/src/serviceWorker.js
+        new file:   client/yarn.lock
+        new file:   docker-compose.yml
+        new file:   nginx/Dockerfile
+        new file:   nginx/Dockerfile.dev
+        new file:   nginx/default.conf
+        new file:   server/Dockerfile
+        new file:   server/Dockerfile.dev
+        new file:   server/index.js
+        new file:   server/keys.js
+        new file:   server/package.json
+        new file:   worker/Dockerfile
+        new file:   worker/Dockerfile.dev
+        new file:   worker/index.js
+        new file:   worker/keys.js
+        new file:   worker/package.json
+
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ git remote add origin https://github.com/peelmicro/multi-docker.git
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ git push -u origin master
+Counting objects: 40, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (39/39), done.
+Writing objects: 100% (40/40), 91.90 KiB | 1.19 MiB/s, done.
+Total 40 (delta 2), reused 0 (delta 0)
+remote: Resolving deltas: 100% (2/2), done.
+remote:
+remote: Create a pull request for 'master' on GitHub by visiting:
+remote:      https://github.com/peelmicro/multi-docker/pull/new/master
+remote:
+To https://github.com/peelmicro/multi-docker.git
+ * [new branch]      master -> master
+Branch 'master' set up to track remote branch 'master' from 'origin'.
+```
+
+10. Set up Travis CI.
+> `.travis.yml`
+```yml
+sudo: required
+language: node_js
+node_js: 
+  - "8"
+services:
+  - docker
+before_install:
+  - docker build -t peelmicro/test-client -f ./client/Dockerfile.dev ./client
+script:
+  - docker run peelmicro/test-client npm run test -- --coverage
+after_success:
+  - docker build -t peelmicro/multi-client ./client
+  - docker build -t peelmicro/multi-nginx ./nginx
+  - docker build -t peelmicro/multi-server ./server
+  - docker build -t peelmicro/multi-worker ./worker
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
+  - docker push peelmicro/multi-client
+  - docker push peelmicro/multi-nginx
+  - docker push peelmicro/multi-server
+  - docker push peelmicro/multi-worker
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)$ git statusOn branch master
+Your branch is up to date with 'origin/master'.
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        .travis.yml
+
+nothing added to commit but untracked files present (use "git add" to track)
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ git add .
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ git commit -m "changed travis yml"
+[master 089e934] changed travis yml
+ 1 file changed, 34 insertions(+)
+ create mode 100644 .travis.yml
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ git push origin HEAD
+Counting objects: 3, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 760 bytes | 253.00 KiB/s, done.
+Total 3 (delta 1), reused 0 (delta 0)
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+To https://github.com/peelmicro/multi-docker.git
+   2892ae1..089e934  HEAD -> master
+```
+```sh
+5.78s$ docker run [secure]/test-client npm run test -- --coverage
+> client@0.1.0 test /app
+> react-scripts test "--coverage"
+PASS src/App.test.js
+  ✓ renders without crashing (2ms)
+------------------|----------|----------|----------|----------|-------------------|
+File              |  % Stmts | % Branch |  % Funcs |  % Lines | Uncovered Line #s |
+------------------|----------|----------|----------|----------|-------------------|
+All files         |        0 |        0 |        0 |        0 |                   |
+ App.js           |        0 |      100 |        0 |        0 |                10 |
+ Fib.js           |        0 |      100 |        0 |        0 |... 49,50,57,61,67 |
+ OtherPage.js     |        0 |      100 |        0 |        0 |                 5 |
+ index.js         |        0 |      100 |      100 |        0 |      1,2,3,4,5,12 |
+ serviceWorker.js |        0 |        0 |        0 |        0 |... 23,130,131,132 |
+------------------|----------|----------|----------|----------|-------------------|
+Test Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        4.194s
+Ran all test suites.
+The command "docker run [secure]/test-client npm run test -- --coverage" exited with 0.
+after_success.1
+66.76s$ docker build -t [secure]/multi-client ./client
+Sending build context to Docker daemon  340.5kB
+Step 1/10 : FROM node:alpine as builder
+ ---> 4b3c025f5508
+Step 2/10 : WORKDIR /app
+ ---> Using cache
+ ---> 164c0a23a13e
+Step 3/10 : COPY ./package.json ./
+ ---> fafb95718a8a
+Step 4/10 : RUN npm install
+ ---> Running in 597b10c4996d
+npm WARN deprecated circular-json@0.3.3: CircularJSON is in maintenance only, flatted is its successor.
+npm notice created a lockfile as package-lock.json. You should commit this file.
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.4 (node_modules/fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.4: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+added 1684 packages from 666 contributors and audited 35723 packages in 34.64s
+found 0 vulnerabilities
+ ---> 6551a29e3b97
+Removing intermediate container 597b10c4996d
+Step 5/10 : COPY . .
+ ---> 50a67109cbb2
+Step 6/10 : RUN npm run build
+ ---> Running in d8bda45de499
+> client@0.1.0 build /app
+> react-scripts build
+Creating an optimized production build...
+Compiled successfully.
+File sizes after gzip:
+  47.24 KB  build/static/js/1.e5a12c45.chunk.js
+  1.37 KB   build/static/js/main.55c54dd0.chunk.js
+  763 B     build/static/js/runtime~main.229c360f.js
+  510 B     build/static/css/main.0b4a1755.chunk.css
+The project was built assuming it is hosted at the server root.
+You can control this with the homepage field in your package.json.
+For example, add this to build it for GitHub Pages:
+  "homepage" : "http://myname.github.io/myapp",
+The build folder is ready to be deployed.
+You may serve it with a static server:
+  yarn global add serve
+  serve -s build
+Find out more about deployment here:
+  http://bit.ly/CRA-deploy
+ ---> ea2dbc775d3b
+Removing intermediate container d8bda45de499
+Step 7/10 : FROM nginx
+latest: Pulling from library/nginx
+f17d81b4b692: Pulling fs layer
+82dca86e04c3: Pulling fs layer
+046ccb106982: Pulling fs layer
+046ccb106982: Verifying Checksum
+046ccb106982: Download complete
+82dca86e04c3: Verifying Checksum
+82dca86e04c3: Download complete
+f17d81b4b692: Verifying Checksum
+f17d81b4b692: Download complete
+f17d81b4b692: Pull complete
+82dca86e04c3: Pull complete
+046ccb106982: Pull complete
+Digest: sha256:d59a1aa7866258751a261bae525a1842c7ff0662d4f34a355d5f36826abc0341
+Status: Downloaded newer image for nginx:latest
+ ---> 62f816a209e6
+Step 8/10 : EXPOSE 3000
+ ---> Running in a5d3fe2674d8
+ ---> 2357c481fbf1
+Removing intermediate container a5d3fe2674d8
+Step 9/10 : COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
+ ---> 2b48afd8a3e4
+Step 10/10 : COPY --from=builder /app/build /usr/share/nginx/html
+ ---> fe4cc1b7e99e
+Successfully built fe4cc1b7e99e
+Successfully tagged [secure]/multi-client:latest
+after_success.2
+0.21s$ docker build -t [secure]/multi-nginx ./nginx
+Sending build context to Docker daemon  4.096kB
+Step 1/2 : FROM nginx
+ ---> 62f816a209e6
+Step 2/2 : COPY ./default.conf /etc/nginx/conf.d/default.conf
+ ---> b8701da3d56b
+Successfully built b8701da3d56b
+Successfully tagged [secure]/multi-nginx:latest
+after_success.3
+10.23s$ docker build -t [secure]/multi-server ./server
+Sending build context to Docker daemon   7.68kB
+Step 1/6 : FROM node:alpine
+ ---> 4b3c025f5508
+Step 2/6 : WORKDIR /app
+ ---> Using cache
+ ---> 164c0a23a13e
+Step 3/6 : COPY package.json .
+ ---> 3595bc2fb7df
+Step 4/6 : RUN npm install
+ ---> Running in 42440180f709
+> nodemon@1.18.3 postinstall /app/node_modules/nodemon
+> node bin/postinstall || exit 0
+Love nodemon? You can now support the project via the open collective:
+ > https://opencollective.com/nodemon/donate
+npm notice created a lockfile as package-lock.json. You should commit this file.
+npm WARN app No description
+npm WARN app No repository field.
+npm WARN app No license field.
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.4 (node_modules/fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.4: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+added 304 packages from 189 contributors and audited 2423 packages in 7.331s
+found 0 vulnerabilities
+ ---> d1e8ba3e07ea
+Removing intermediate container 42440180f709
+Step 5/6 : COPY . .
+ ---> 48dc5fedc799
+Step 6/6 : CMD npm run start
+ ---> Running in 4191a39a4a1a
+ ---> 6e94a727a250
+Removing intermediate container 4191a39a4a1a
+Successfully built 6e94a727a250
+Successfully tagged [secure]/multi-server:latest
+after_success.4
+8.79s$ docker build -t [secure]/multi-worker ./worker
+Sending build context to Docker daemon  6.144kB
+Step 1/6 : FROM node:alpine
+ ---> 4b3c025f5508
+Step 2/6 : WORKDIR /app
+ ---> Using cache
+ ---> 164c0a23a13e
+Step 3/6 : COPY package.json .
+ ---> e756edb2d124
+Step 4/6 : RUN npm install
+ ---> Running in 7fad3ee6022b
+> nodemon@1.18.3 postinstall /app/node_modules/nodemon
+> node bin/postinstall || exit 0
+Love nodemon? You can now support the project via the open collective:
+ > https://opencollective.com/nodemon/donate
+npm notice created a lockfile as package-lock.json. You should commit this file.
+npm WARN app No description
+npm WARN app No repository field.
+npm WARN app No license field.
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.4 (node_modules/fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.4: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+added 237 packages from 140 contributors and audited 2256 packages in 6.363s
+found 0 vulnerabilities
+ ---> e6845d19ace9
+Removing intermediate container 7fad3ee6022b
+Step 5/6 : COPY . .
+ ---> 58ee6abf91dc
+Step 6/6 : CMD npm run start
+ ---> Running in 5be2d7dca836
+ ---> 2b781971116e
+Removing intermediate container 5be2d7dca836
+Successfully built 2b781971116e
+Successfully tagged [secure]/multi-worker:latest
+after_success.5
+0.54s$ echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+Login Succeeded
+after_success.6
+5.43s$ docker push [secure]/multi-client
+The push refers to a repository [docker.io/[secure]/multi-client]
+650b3ed93620: Preparing
+1c0f36a3f437: Preparing
+ad9ac0e6043b: Preparing
+6ccbee34dd10: Preparing
+237472299760: Preparing
+6ccbee34dd10: Mounted from library/nginx
+237472299760: Mounted from library/nginx
+ad9ac0e6043b: Mounted from library/nginx
+650b3ed93620: Pushed
+1c0f36a3f437: Pushed
+latest: digest: sha256:5271fd2ad710d738ca37b1d779461e288820a74f04f0eaa4b0b699fb9cf78029 size: 1365
+after_success.7
+6.00s$ docker push [secure]/multi-nginx
+The push refers to a repository [docker.io/[secure]/multi-nginx]
+b2ff3af4e8c5: Preparing
+ad9ac0e6043b: Preparing
+6ccbee34dd10: Preparing
+237472299760: Preparing
+6ccbee34dd10: Mounted from [secure]/multi-client
+237472299760: Mounted from [secure]/multi-client
+ad9ac0e6043b: Mounted from [secure]/multi-client
+b2ff3af4e8c5: Pushed
+latest: digest: sha256:77d1e770c42737750c5d65ecd1c4c98c78f094ee8f81434b6f0e9f4b56b89029 size: 1155
+after_success.8
+5.88s$ docker push [secure]/multi-server
+The push refers to a repository [docker.io/[secure]/multi-server]
+f24323a80ff5: Preparing
+d14b88d4d5a0: Preparing
+e259f18ccf2a: Preparing
+d769ecc13423: Preparing
+b718290f679e: Preparing
+8258ac963d2f: Preparing
+df64d3292fd6: Preparing
+8258ac963d2f: Waiting
+df64d3292fd6: Waiting
+d769ecc13423: Pushed
+f24323a80ff5: Pushed
+b718290f679e: Mounted from library/node
+e259f18ccf2a: Pushed
+8258ac963d2f: Mounted from library/node
+df64d3292fd6: Mounted from library/node
+d14b88d4d5a0: Pushed
+latest: digest: sha256:bc3b4be23bc4208901abe060bcc9c48714fcb7a0e9d571b3198ebaaf30d0c607 size: 1783
+after_success.9
+5.64s$ docker push [secure]/multi-worker
+The push refers to a repository [docker.io/[secure]/multi-worker]
+2757756933ee: Preparing
+a20971296546: Preparing
+ac80b08096c4: Preparing
+d769ecc13423: Preparing
+b718290f679e: Preparing
+8258ac963d2f: Preparing
+df64d3292fd6: Preparing
+8258ac963d2f: Waiting
+df64d3292fd6: Waiting
+d769ecc13423: Mounted from [secure]/multi-server
+b718290f679e: Mounted from [secure]/multi-server
+8258ac963d2f: Mounted from [secure]/multi-server
+ac80b08096c4: Pushed
+df64d3292fd6: Mounted from [secure]/multi-server
+2757756933ee: Pushed
+a20971296546: Pushed
+latest: digest: sha256:ef94ad33a91689cf76cc7f16960e7739a5a41634156f68d492ff966b54578a32 size: 1782
+Done. Your build exited with 0.
+```
+### Multi-Container Deployments to AWS 
+1. Create the `Dockerrun.aws.json`
+- In order to run multiple containers on AWS we need [AWS ECS -Amazon Elastic Container Service](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definitions.html)
+- [Container Definitions](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#container_definitions)
+- [Multicontainer Docker Configuration](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_docker_v2config.html)
+> `Dockerrun.aws.json`
+```json
+{
+  "AWSEBDockerrunVersion": 2,
+  "containerDefinitions": [
+    {
+      "name": "client",
+      "image": "peelmicro/multi-client",
+      "hostname": "client",
+      "essential": false
+    },
+    {
+      "name": "server",
+      "image": "peelmicro/multi-server",
+      "hostname": "api",
+      "essential": false
+    },
+    {
+      "name": "worker",
+      "image": "peelmicro/multi-worker",
+      "hostname": "worker",
+      "essential": false
+    },
+    {
+      "name": "nginx",
+      "image": "peelmicro/multi-nginx",
+      "hostname": "nginx",
+      "essential": true,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 80
+        }
+      ],
+      "links": ["client","server"]
+    }
+  ]
+}
+```
+2. Create new application in [AWS Elastic Beanstalk](https://console.aws.amazon.com/elasticbeanstalk/home?region=us-east-1#/welcome)
+- Click on `Create new application`
+```
+Application Name: muti-docker
+Description: 
+```
+- Click on `Create`
+```
+Actions
+All Applications  muti-docker
+Environments
+Application versions
+Saved configurations
+No environments currently exist for this application. Create one now.
+```
+- Click on `Create one now`
+```
+Select environment tier
+AWS Elastic Beanstalk has two types of environment tiers to support different types of web applications. Web servers are standard applications that listen for and then process HTTP requests, typically over port 80. Workers are specialized applications that have a background processing task that listens for messages on an Amazon SQS queue. Worker applications post those messages to your application by using HTTP.
+
+
+Web server environment
+Run a website, web application, or web API that serves HTTP requests.
+Learn more
+
+
+Worker environment
+Run a worker application that processes long-running workloads on demand or performs tasks on a schedule.
+Learn more
+```
+- Select `Web server environment` and click on `Select`
+```
+Environment information
+Choose the name, subdomain, and description for your environment. These cannot be changed later.
+
+Application name
+muti-docker
+
+Environment name
+
+MutiDocker-env
+Domain
+
+Leave blank for autogenerated value
+ .us-east-1.elasticbeanstalk.com  Check availability
+Description
+
+Base configuration
+Platform
+Preconfigured platform
+Platforms published and maintained by AWS Elastic Beanstalk.
+
+Custom platform
+Platforms created and owned by you. Learn more
+
+Application code
+Sample application
+Get started right away with sample code.
+Existing version
+Application versions that you have uploaded for muti-docker.
+
+Upload your code
+Upload a source bundle from your computer or copy one from Amazon S3.
+ Upload  ZIP or WAR
+```
+- Select Platform: `Multi-container Docker`
+- Click on `Create Environment`
+```
+Creating MutiDocker-env
+This will take a few minutes....
+
+6:28pm
+Using elasticbeanstalk-us-east-1-972569889348 as Amazon S3 storage bucket for environment data.
+6:28pm
+createEnvironment is starting.
+
+All Applications  muti-docker  MutiDocker-env  Environment ID: e-myzxc9aicp, URL: MutiDocker-env.ewrqsny4rf.us-east-1.elasticbeanstalk.com 
+
+Events  Refresh
+Severity 
+2018-09-20 19:33:00 UTC+01002018-11-08 18:34:00 UTC+0000
+2018-11-08 18:33:38 UTC+0000	INFO	Successfully launched environment: MutiDocker-env
+2018-11-08 18:33:38 UTC+0000	INFO	Application available at MutiDocker-env.ewrqsny4rf.us-east-1.elasticbeanstalk.com.
+2018-11-08 18:33:28 UTC+0000	INFO	ECS task: arn:aws:ecs:us-east-1:972569889348:task/c497fad6-0bab-4835-ae46-e9a150ace253 is RUNNING.
+2018-11-08 18:32:35 UTC+0000	INFO	Starting new ECS task with awseb-MutiDocker-env-myzxc9aicp:1.
+2018-11-08 18:31:04 UTC+0000	INFO	Added instance [i-0758a53f730ad10d4] to your environment.
+2018-11-08 18:30:33 UTC+0000	INFO	Waiting for EC2 instances to launch. This may take a few minutes.
+2018-11-08 18:29:25 UTC+0000	INFO	Created EIP: 54.144.65.111
+2018-11-08 18:29:10 UTC+0000	INFO	Created security group named: awseb-e-myzxc9aicp-stack-AWSEBSecurityGroup-G62RAZLSDKY0
+2018-11-08 18:29:04 UTC+0000	INFO	Environment health has transitioned to Pending. Initialization in progress (running for 9 seconds). There are no instances.
+2018-11-08 18:28:49 UTC+0000	INFO	Using elasticbeanstalk-us-east-1-972569889348 as Amazon S3 storage bucket for environment data.
+2018-11-08 18:28:48 UTC+0000	INFO	createEnvironment is starting.
+```
+- Browse to http://mutidocker-env.ewrqsny4rf.us-east-1.elasticbeanstalk.com/
+```
+Congratulations!
+Your Docker Container is now running in Elastic Beanstalk on your own dedicated environment in the AWS Cloud.
+Video Tutorials
+YouTube: Run a Docker Container from the Docker Registry
+YouTube: Use Private Docker Repositories
+Sample Apps
+GitHub: PHP-FPM with Nginx as reverse proxy
+GitHub: PHP and Tomcat with Nginx (Virtual Hosting)
+GitHub: Node.js and Tomcat (Multiple Ports)
+Documentation
+Multi Container Docker Environments
+Getting Started with Multi Container Docker Environments
+AWS Elastic Beanstalk overview
+AWS Elastic Beanstalk concepts
+```
+3. Check the `security Group`
+- Browse to [VPC Isolated Cloud Resource](https://console.aws.amazon.com/vpc/home?region=us-east-1#)
+```
+Note: Your Instances will launch in the US East (N. Virginia) region.
+```
+- Click on [Your VPCs](https://console.aws.amazon.com/vpc/home?region=us-east-1#vpcs:sort=VpcId) link to My VPCs
+```
+Name
+
+VPC ID
+State
+IPv4 CIDR
+IPv6 CIDR
+DHCP options set
+Route table
+Network ACL
+Tenancy
+Default VPC
+Classic link
+ 
+vpc-4c2e8936
+available
+172.31.0.0/16
+-
+dopt-62a5e519
+rtb-9fdbf9e0
+acl-03888679
+default
+Yes
+Disabled
+```
+::: tip info
+VPC ID: vpc-4c2e8936 
+:::
+
+- Click on `Security Groups`
+```
+There must be a security group for MultiDocker-env (SecurityGroup for ElasticBeanstalk environment.)
+Inbound Rules: 
+Type: HTTP (80)
+Protocol: TCP (6)
+Port Range: 80
+Source: 0.0.0.0/0
+Description: 
+
+Outbound Rules:
+Type: ALL Traffic
+Protocol: ALL
+Port Range: ALL
+Source: 0.0.0.0/0
+Description: 
+```
+4. Create the `AWS Relational Database Service (RDS)` instance
+- AWS Relational Database Service (RDS) is going to run the Postgres service
+- Browse [Managed Relationad Database Service](https://console.aws.amazon.com/rds/home?region=us-east-1#), search for `Create Database` and click on it
+- Select `PostgreSQL`, mark `[X] Only enable options eligible for RDS Free Usage Tier` and then click on `Next`
+```
+specify DB details
+Instance specifications
+Estimate your monthly costs for the DB Instance using the AWS Simple Monthly Calculator
+DB engine
+PostgreSQL
+License model
+Info
+DB engine version
+Info
+Free tier
+The Amazon RDS Free Tier provides a single db.t2.micro instance as well as up to 20 GiB of storage, allowing new AWS customers to gain hands-on experience with Amazon RDS. Learn more about the RDS Free Tier and the instance restrictions here.
+
+Only enable options eligible for RDS Free Usage Tier
+Info
+DB instance class
+Info
+Multi-AZ deployment
+Info
+
+Create replica in different zone
+Creates a replica in a different Availability Zone (AZ) to provide data redundancy, eliminate I/O freezes, and minimize latency spikes during system backups.
+
+No
+Storage type
+Info
+Allocated storage
+
+20
+GiB
+(Minimum: 20 GiB, Maximum: 20 GiB) Higher allocated storage may improve IOPS performance.
+Settings
+DB instance identifier
+Info
+Specify a name that is unique for all DB instances owned by your AWS account in the current region.
+
+mydbinstance
+DB instance identifier is case insensitive, but stored as all lower-case, as in "mydbinstance". Must contain from 1 to 63 alphanumeric characters or hyphens (1 to 15 for SQL Server). First character must be a letter. Cannot end with a hyphen or contain two consecutive hyphens.
+Master username
+Info
+Specify an alphanumeric string that defines the login ID for the master user.
+
+Master Username must start with a letter. Must contain 1 to 63 alphanumeric characters.
+Master password
+Info
+
+Master Password must be at least eight characters long, as in "mypassword". Can be any printable ASCII character except "/", """, or "@".
+Confirm password
+Info
+
+License model: postgresql-license
+Db engine version: PostgreSQL 10.4-R1
+Db Instance class: db.t2.micro - 1 vCPU, 1 GiB RAM
+Allocated storaged: 20 GiB
+DB instance identifier: multi-docker-postgres
+Master username: postgres
+Master password: postgres_password
+Confirm password: postgres_password 
+```
+- Click on `Next`
+```
+Network & Security
+Virtual Private Cloud (VPC)
+Info
+VPC defines the virtual networking environment for this DB instance.
+
+Only VPCs with a corresponding DB subnet group are listed.
+Subnet group
+Info
+DB subnet group that defines which subnets and IP ranges the DB instance can use in the VPC you selected.
+Public accessibility
+Info
+
+Yes
+EC2 instances and devices outside of the VPC hosting the DB instance will connect to the DB instances. You must also select one or more VPC security groups that specify which EC2 instances and devices can connect to the DB instance.
+
+No
+DB instance will not have a public IP address assigned. No EC2 instance or devices outside of the VPC will be able to connect.
+Availability zone
+Info
+VPC security groups
+Security groups have rules authorizing connections from all the EC2 instances and devices that need to access the DB instance.
+
+Create new VPC security group
+
+Choose existing VPC security groups
+Database options
+Database name
+Info
+
+postgres
+If you do not specify a database name, Amazon RDS does not create a database.
+Port
+Info
+TCP/IP port the DB instance will use for application connections.
+
+5432
+DB parameter group
+Info
+Option group
+Info
+IAM DB authentication
+Info
+
+Enable IAM DB authentication
+Manage your database user credentials through AWS IAM users and roles.
+
+Disable
+Encryption
+Encryption
+
+Enable encryption
+Learn more 
+Select to encrypt the given instance. Master key ids and aliases appear in the list after they have been created using the Key Management Service(KMS) console.
+
+Disable encryption
+The selected engine or DB instance class does not support storage encryption.
+Backup
+Backup retention period
+Info
+Select the number of days that Amazon RDS should retain automatic backups of this DB instance.
+Backup window
+Info
+
+Select window
+
+No preference
+
+Copy tags to snapshots
+Monitoring
+Enhanced monitoring
+
+Enable enhanced monitoring
+Enhanced monitoring metrics are useful when you want to see how different processes or threads use the CPU.
+
+Disable enhanced monitoring
+Maintenance
+Auto minor version upgrade
+Info
+
+Enable auto minor version upgrade
+Enables automatic upgrades to new minor versions as they are released. The automatic upgrades occur during the maintenance window for the DB instance.
+
+Disable auto minor version upgrade
+Maintenance window
+Info
+Select the period in which you want pending modifications or patches applied to the DB instance by Amazon RDS.
+
+Select window
+
+No preference
+Deletion protection
+
+Enable deletion protection
+Protects the database from being deleted accidentally. While this option is enabled, you can’t delete the database.
+Amazon RDS requires permissions to manage AWS resources on your behalf. By clicking Launch DB Instance, you grant permission for Amazon RDS to create a service-linked role in AWS IAM that contains the required permissions. Learn more.
+
+Virtual Private Cloud (VPC): Default VPC (vpc-2c2e8936)
+Subnet group: default
+Public accessibility: (No)
+VPC segurity groups: (X) Create new VPC security group ( ) Choose existing VPC security groups
+
+Database name: fibvalues
+Port: 5432
+DB parameter group: default.postgres10
+IAM Db authentication: ( ) Enable IAM DB authentication (X) Disable
+
+Encryption: Nothing to be done.
+Backup: 
+Backup retention period: 7 days.
+Backup window: ( ) Select Window (X) No preference
+[X] Copy tags to snapshots
+
+Monitoring: ( ) Enable enhanced monitoring (X) Disable enhanced monitoring
+
+Maintenance: 
+Auto minor version upgrade: (X) Enable auto minor version upgrade ( ) Enable auto minor version upgrade 
+Maintenance window: ( ) Select Window (X) No Preference
+
+Del protection: [X] Enable deletion protection
+```
+- Click on `Create Database`
+```
+Your DB instance is being created.
+Note: Your instance may take a few minutes to launch.
+Connecting to your DB instance
+Once Amazon RDS finishes provisioning your DB instance, you can use a SQL client application or utility to connect to the instance.
+Learn about connecting to your DB instance
+```
+- All the databases can be seen on https://console.aws.amazon.com/rds/home?region=us-east-1#dbinstances:id=multi-docker-postgres;sf=all
+
+5. Create the `AWS Elastic Cache (EC)` instance
+- AWS Elastic Cache is going to run the Redis service
+- Search for `elastic cache` on Services and select ElasticCache (In-memory cache)
+- On the https://console.aws.amazon.com/elasticache/home?region=us-east-1# page click on `Redis` on the left menu:
+- Click on `Create`
+```
+Create your Amazon ElastiCache cluster
+Cluster engine
+Redis
+In-memory data structure store used as database, cache and message broker. ElastiCache for Redis offers Multi-AZ with Auto-Failover and enhanced robustness.
+Cluster Mode enabled
+Memcached
+High-performance, distributed memory object caching system, intended for use in speeding up dynamic web applications.
+Redis settings
+Name
+Description
+Engine version compatibility
+Port
+6379
+Parameter group
+Node type
+
+Number of replicas
+Advanced Redis settings
+Advanced settings have common defaults set to give you the fastest way to get started. You can modify these now or after your cluster has been created.
+Multi-AZ with Auto-Failover
+Subnet group
+Name
+
+my-subnet-group
+Description
+
+Description
+VPC ID
+Subnets
+
+Subnet ID
+Availability zone
+CIDR Block
+subnet-871e5288
+us-east-1f
+172.31.64.0/20
+subnet-1d267c57
+us-east-1a
+172.31.16.0/20
+subnet-3cfc6b60
+us-east-1b
+172.31.32.0/20
+subnet-52de5435
+us-east-1c
+172.31.0.0/20
+subnet-8cc719b2
+us-east-1e
+172.31.48.0/20
+subnet-06c85928
+us-east-1d
+172.31.80.0/20
+Preferred availability zone(s)
+No preference
+Select zones
+Security
+Security groups
+default (sg-848995ca) 
+Encryption at-rest
+Encryption in-transit
+Import data to cluster
+Seed RDB file S3 location
+myBucket/myFolder/objectName
+Use comma to separate multiple paths in the field
+Backup
+Enable automatic backups
+Backup retention period
+day(s)
+Backup window
+No preference
+Specify backup window
+Maintenance
+Maintenance window
+No preference
+Specify maintenance window
+Topic for SNS notification
+
+Create your Amazon ElastiCache cluster
+Cluster engine (X) Redis [ ] Cluster mode enabled ( ) Memcached
+
+Redis settings
+Name: multi-docker-redis
+Description: 
+Engine version compatibility: 4.0.10
+Port: 6379
+Parameter group: default.redis4.0
+Node type: cache.t2.micro (0.5 GiB) (Ensure not to choose "cache.r5.large (13.07 GiB)")
+Number of replicas: None (Ensure to not to choose 2)
+
+Advanced Redis settings
+
+Subnet group: Create new
+Name: redis-group
+Description: Description
+VPC ID: vpc-4c2e8936
+Subnets: 
+	[X] subnet-871e5288 us-east-1f 172.31.64.0/20 
+	[X] subnet-1d267c57 us-east-1a 172.31.16.0/20
+	[ ] subnet-3cfc6b60 us-east-1b 172.31.32.0/20
+	[ ] subnet-52de5435 us-east-1c 172.31.0.0/20
+	[ ] subnet-8cc719b2 us-east-1e 172.31.48.0/20
+	[ ] subnet-06c85928 us-east-1d 172.31.80.0/20
+
+Preferred availability zone(s): (X) No preference ( ) Select zones
+
+Security
+Security groups: default (sg-848995ca) 
+Encryption at-rest: [ ]
+Encryption in-transit: [ ]
+
+Import data to cluster
+
+Seed RDB file S3 location: 
+
+Backup
+
+Enable automatic backups: [ ]
+
+Maintenance
+
+Maintenance window: (X) No preference ( ) Specify maintenance window
+Topic for SNS notification: Disable notifications
+```
+- Click on `Create`
+- It goes to https://console.aws.amazon.com/elasticache/home?region=us-east-1#redis: and the multi-docker-redis cluster starts to create
+6. Create a new `Security Group`
+- This will be used to allow EB Instance + RDS (Postgres) + EC (Redis) to talk to each other.
+- Search for `VPC` on Services (Isolated Cloud resources) and it goes to https://console.aws.amazon.com/vpc/home?region=us-east-1
+- Click on the left menu on `Security - Security Groups` and it goes to https://console.aws.amazon.com/vpc/home?region=us-east-1#securityGroups:
+- The new rds-launch-wizard security group has been created when the Postgres instance was created
+- Click on `Create Security Group`
+```
+Name tag: multi-docker
+Group name: multi-docker
+Description: Traffic for services in multi-docker app
+VPC: vpc-4c2e8936
+```
+-Click on `Yes, Create`
+The new multi-docker security group is created. Select it on the bottom:
+```
+Summary:
+Group name: multi-docker
+VPC: vpc-4c2e8936
+Group ID: sg-0297e8f3709327220 | multi-docker
+Group description: Traffic for services in multi-docker app
+
+Inbound Rules:
+Click on [Edit]
+Type: Custom TCP Rule
+Protocol: TCP (6)
+Port Range: 5432-6379
+Source: sg-0297e8f3709327220 (the one for multi-docker)
+Description:
+```
+- Click on `Save` and `(X) Save Successful` is shown.
+
+I) Assign the new security group to the `EB instance`<br>
+- Select `Elastic Beanstalk` on Services - History left menu.
+- Select the MutiDocker-env environment
+- Click on `Configuration` left menu
+- Click on Instances `Modify` on the bottom.
+- On EC2 security groups mark the `[X] multi-docker security group`
+- Both the "awseb-e-myzxc9aicp-stack-AWSEBSecurityGroup-G62RAZLSDKY0 sg-052974e749c9a690b MutiDocker-env" and the "multi-docker sg-0297e8f3709327220 multi-docker" must be selected
+- Click on `Apply`
+The folowing message is shown:
+```
+Elastic Beanstalk is updating your environment.
+To cancel this operation select Abort Current Operation from the Actions dropdown.
+
+2018-11-09 06:42:59 UTC+0000	INFO	Environment update completed successfully.
+2018-11-09 06:42:00 UTC+0000	INFO	Environment update is starting.
+```
+II) Assign the new security group to the `RDS (Postgres) instance`<br>
+- Select `RDS` on Services - History left menu.
+- Click on `Instances` left menu
+- Click on `multi-docker-postgres` instance
+- Scroll down and look for `Details` and then Click on `Modify`
+- Scroll down and look for `Network & Security` 
+- On `Security Group` add the multi-docker (sg-0297e8f3709327220) (vpc-4c2e8936) one.
+Both of them must be selected (the rds-launch-wizard and the multi-docker ones).
+- Scroll down to the very bottom and click on `Continue`
+- On `Scheduling of modifications` select `(X) Apply immediately`.
+- Click on `Modify DB Instance`
+
+III) Assign the new security group to the `EC (Redis) instance`<br>
+- Select `ElasticCache` on Services - History left menu
+- Click on `Redis` left menu
+The `multi-docker-redis` should be with the `available` status
+- Select it and click `Modify` on the left top.
+```	
+Modify Cluster
+Engine: redis
+Engine Version Compatibility: 4.0.10
+VPC Security Group(s): click on little pencil and select the multi-docker one as well. Click on [Save]: default (sg-848995ca), multi-docker (sg-0297e8f3709327220) (both of them are selected)
+Parameter Group: default.redis4.0
+Node Type: cache.t2.micro
+Maintenance Window: Saturday ....  :  UTC -   :  UTC
+Topic for SNS Notification*: Disable notifications
+Apply immediately: [X]
+```
+- Click on `Modify` and it starts to modify it.
+
+7. Add the `environment variables` on AWS
+- Select `Elastic Beanstalk` on Services - History left menu.
+- Select the `MutiDocker-env` environment
+- Click on Software `Modify` button.
+```
+  - REDIS_HOST=multi-docker-redis.lmrcvz.0001.use1.cache.amazonaws.com (it must be obtained from the multi-docker-redis EC instance)
+  - REDIS_PORT=6379
+  - PGUSER=postgres
+  - PGHOST=multi-docker-postgres.cvzlrthufo75.us-east-1.rds.amazonaws.com (it must be obtained from Connect - end-point on the RDS instance)
+  - PGDATABASE=fibvalues
+  - PGPASSWORD=postgres_password
+  - PGPORT=5432
+```
+- Click on `Apply`
+
+```
+2018-11-09 07:55:40 UTC+0000	INFO	Environment update completed successfully.
+2018-11-09 07:55:40 UTC+0000	INFO	Successfully deployed new configuration to environment.
+2018-11-09 07:55:18 UTC+0000	INFO	ECS task: arn:aws:ecs:us-east-1:972569889348:task/0a5d047f-6b36-430e-b4ba-55824143c3a3 is RUNNING.
+2018-11-09 07:55:08 UTC+0000	INFO	Starting new ECS task with awseb-MutiDocker-env-myzxc9aicp:3.
+2018-11-09 07:55:06 UTC+0000	INFO	Environment health has transitioned from Ok to Info. Configuration update in progress on 1 instance. 0 out of 1 instance completed (running for 41 seconds).
+2018-11-09 07:55:06 UTC+0000	INFO	ECS task: arn:aws:ecs:us-east-1:972569889348:task/c497fad6-0bab-4835-ae46-e9a150ace253 is STOPPED.
+2018-11-09 07:55:01 UTC+0000	INFO	Stopping ECS task arn:aws:ecs:us-east-1:972569889348:task/c497fad6-0bab-4835-ae46-e9a150ace253.
+2018-11-09 07:54:21 UTC+0000	INFO	Updating environment MutiDocker-env's configuration settings.
+2018-11-09 07:54:14 UTC+0000	INFO	Environment update is starting.
+```
+8. Obtain the `IAM Keys` for Deployment
+- Select `IAM` on Services - History left menu.
+- Click on `Users` left menu
+- Click on `Add user`
+```
+Set user details
+You can add multiple users at once with the same access type and permissions. Learn more
+
+User name: multi-docker-deployer
+
+Select AWS access type
+Access type: [X] Programmatic access [ ] AWS Management Console access
+```
+- Click on `Next: Permissions`
+- Click on `Attach existing policies directly`
+- Search for `beanstalk`
+- Mark all of them starting by `AWSElasticNeanstalk`
+- Click on `Next: Review`
+```
+Add user
+Review
+Review your choices. After you create the user, you can view and download the autogenerated password and access key.
+
+User details
+User name
+multi-docker-deployer
+AWS access type
+Programmatic access - with an access key
+Permissions boundary
+Permissions boundary is not set
+Permissions summary
+The following policies will be attached to the user shown above.
+
+Type
+Name
+Managed policy
+AWSElasticBeanstalkCustomPlatformforEC2Role
+Managed policy
+AWSElasticBeanstalkEnhancedHealth
+Managed policy
+AWSElasticBeanstalkFullAccess
+Managed policy
+AWSElasticBeanstalkMulticontainerDocker
+Managed policy
+AWSElasticBeanstalkReadOnlyAccess
+Managed policy
+AWSElasticBeanstalkService
+Managed policy
+AWSElasticBeanstalkWebTier
+Managed policy
+AWSElasticBeanstalkWorkerTier
+```
+- Click on `Create User`
+```
+Success
+You successfully created the users shown below. You can view and download user security credentials. You can also email users instructions for signing in to the AWS Management Console. This is the last time these credentials will be available to download. However, you can create new credentials at any time.
+
+Users with AWS Management Console access can sign-in at: https://972569889348.signin.aws.amazon.com/console
+
+User: multi-docker-deployer
+Access key ID: AKIAIQRJQ7SMVI5FVYWQ
+Secret access key: twBiWOirCgP*********************ugM7hsWbRxf
+```
+
+- Add these two keys to [Travis CI Environment Varfiables](https://travis-ci.com/peelmicro/multi-docker/settings)
+```
+AWS_ACCESS_KEY: AKIAIQRJQ7SMVI5FVYWQ
+AWS_SECRET_KEY: twBiWOirCgP*********************ugM7hsWbRxf
+```
+9. Commit the new `.travis.yml` and the `Dockerrun.aws.json` files
+> `.travis.yml`
+```yml
+sudo: required
+language: node_js
+node_js: 
+  - "8"
+services:
+  - docker
+before_install:
+  - docker build -t peelmicro/test-client -f ./client/Dockerfile.dev ./client
+script:
+  - docker run peelmicro/test-client npm run test -- --coverage
+after_success:
+  - docker build -t peelmicro/multi-client ./client
+  - docker build -t peelmicro/multi-nginx ./nginx
+  - docker build -t peelmicro/multi-server ./server
+  - docker build -t peelmicro/multi-worker ./worker
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
+  - docker push peelmicro/multi-client
+  - docker push peelmicro/multi-nginx
+  - docker push peelmicro/multi-server
+  - docker push peelmicro/multi-worker
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-1"
+  app: "muti-docker"
+  env: "MutiDocker-env"
+  bucket_name: "elasticbeanstalk-us-east-1-972569889348"
+  #bucket_path: ""
+  on:
+    branch: "master"
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: "$AWS_SECRET_KEY"
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   .travis.yml
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        Dockerrun.aws.json
+
+no changes added to commit (use "git add" and/or "git commit -a")
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ git add .
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ git commit -m "added AWS Dockerrun.aws.json file"
+[master 8801512] added AWS Dockerrun.aws.json file
+ 2 files changed, 47 insertions(+), 11 deletions(-)
+ create mode 100644 Dockerrun.aws.json
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ git status
+On branch master
+Your branch is ahead of 'origin/master' by 1 commit.
+  (use "git push" to publish your local commits)
+
+nothing to commit, working tree clean
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ git push origin master
+Counting objects: 4, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (4/4), done.
+Writing objects: 100% (4/4), 751 bytes | 187.00 KiB/s, done.
+Total 4 (delta 2), reused 0 (delta 0)
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+To https://github.com/peelmicro/multi-docker.git
+   089e934..8801512  master -> master
+```
+```sh
+- On `travis-ci config` values:
+```json
+{
+  "os": "linux",
+  "dist": "trusty",
+  "sudo": "required",
+  "group": "stable",
+  "script": [
+    "docker run peelmicro/test-client npm run test -- --coverage"
+  ],
+  "node_js": "8",
+  "language": "node_js",
+  "services": [
+    "docker"
+  ],
+  "after_success": [
+    "docker build -t peelmicro/multi-client ./client",
+    "docker build -t peelmicro/multi-nginx ./nginx",
+    "docker build -t peelmicro/multi-server ./server",
+    "docker build -t peelmicro/multi-worker ./worker",
+    "echo \"$DOCKER_PASSWORD\" | docker login -u \"$DOCKER_ID\" --password-stdin",
+    "docker push peelmicro/multi-client",
+    "docker push peelmicro/multi-nginx",
+    "docker push peelmicro/multi-server",
+    "docker push peelmicro/multi-worker"
+  ],
+  "before_install": [
+    "docker build -t peelmicro/test-client -f ./client/Dockerfile.dev ./client"
+  ]
+}
+```
+```sh
+$ export PATH=./node_modules/.bin:$PATH
+Updating nvm
+nvm.install
+2.66s$ nvm install 8
+Downloading and installing node v8.12.0...
+Downloading https://nodejs.org/dist/v8.12.0/node-v8.12.0-linux-x64.tar.xz...
+Computing checksum with sha256sum
+Checksums matched!
+Now using node v8.12.0 (npm v6.4.1)
+$ node --version
+v8.12.0
+$ npm --version
+6.4.1
+$ nvm --version
+0.33.11
+before_install
+51.72s$ docker build -t [secure]/test-client -f ./client/Dockerfile.dev ./client
+Sending build context to Docker daemon  340.5kB
+Step 1/6 : FROM node:alpine
+alpine: Pulling from library/node
+4fe2ade4980c: Pulling fs layer
+a3f62ee5351e: Pulling fs layer
+b8ee302f1a47: Pulling fs layer
+4fe2ade4980c: Verifying Checksum
+4fe2ade4980c: Download complete
+b8ee302f1a47: Verifying Checksum
+b8ee302f1a47: Download complete
+a3f62ee5351e: Verifying Checksum
+a3f62ee5351e: Download complete
+4fe2ade4980c: Pull complete
+a3f62ee5351e: Pull complete
+b8ee302f1a47: Pull complete
+Digest: sha256:324ccac1d7c4ddf5eb9f9ed5274c37c90965605b5eb68df0a67c6266837bfb79
+Status: Downloaded newer image for node:alpine
+ ---> 4b3c025f5508
+Step 2/6 : WORKDIR /app
+ ---> db01dd6fe548
+Removing intermediate container c119d1ac07d1
+Step 3/6 : COPY package.json .
+ ---> 9827f325ac01
+Step 4/6 : RUN npm install
+ ---> Running in d09f9cf0e4c3
+npm WARN deprecated circular-json@0.3.3: CircularJSON is in maintenance only, flatted is its successor.
+npm notice created a lockfile as package-lock.json. You should commit this file.
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.4 (node_modules/fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.4: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+added 1684 packages from 666 contributors and audited 35723 packages in 35.996s
+found 0 vulnerabilities
+ ---> 6f75c1a564aa
+Removing intermediate container d09f9cf0e4c3
+Step 5/6 : COPY . .
+ ---> 87ee01b29ad3
+Step 6/6 : CMD npm run start
+ ---> Running in 061978e6b9f7
+ ---> 7a0ee21cccd6
+Removing intermediate container 061978e6b9f7
+Successfully built 7a0ee21cccd6
+Successfully tagged [secure]/test-client:latest
+6.20s$ docker run [secure]/test-client npm run test -- --coverage
+> client@0.1.0 test /app
+> react-scripts test "--coverage"
+PASS src/App.test.js
+  ✓ renders without crashing (2ms)
+------------------|----------|----------|----------|----------|-------------------|
+File              |  % Stmts | % Branch |  % Funcs |  % Lines | Uncovered Line #s |
+------------------|----------|----------|----------|----------|-------------------|
+All files         |        0 |        0 |        0 |        0 |                   |
+ App.js           |        0 |      100 |        0 |        0 |                10 |
+ Fib.js           |        0 |      100 |        0 |        0 |... 49,50,57,61,67 |
+ OtherPage.js     |        0 |      100 |        0 |        0 |                 5 |
+ index.js         |        0 |      100 |      100 |        0 |      1,2,3,4,5,12 |
+ serviceWorker.js |        0 |        0 |        0 |        0 |... 23,130,131,132 |
+------------------|----------|----------|----------|----------|-------------------|
+Test Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        4.57s
+Ran all test suites.
+The command "docker run [secure]/test-client npm run test -- --coverage" exited with 0.
+after_success.1
+65.93s$ docker build -t [secure]/multi-client ./client
+Sending build context to Docker daemon  340.5kB
+Step 1/10 : FROM node:alpine as builder
+ ---> 4b3c025f5508
+Step 2/10 : WORKDIR /app
+ ---> Using cache
+ ---> db01dd6fe548
+Step 3/10 : COPY ./package.json ./
+ ---> d58541d4be6d
+Step 4/10 : RUN npm install
+ ---> Running in 10b048398943
+npm WARN deprecated circular-json@0.3.3: CircularJSON is in maintenance only, flatted is its successor.
+npm notice created a lockfile as package-lock.json. You should commit this file.
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.4 (node_modules/fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.4: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+added 1684 packages from 666 contributors and audited 35723 packages in 34.919s
+found 0 vulnerabilities
+ ---> 578021f37301
+Removing intermediate container 10b048398943
+Step 5/10 : COPY . .
+ ---> 222fb10148e8
+Step 6/10 : RUN npm run build
+ ---> Running in 50cc8021aef9
+> client@0.1.0 build /app
+> react-scripts build
+Creating an optimized production build...
+Compiled successfully.
+File sizes after gzip:
+  47.24 KB  build/static/js/1.e5a12c45.chunk.js
+  1.37 KB   build/static/js/main.55c54dd0.chunk.js
+  763 B     build/static/js/runtime~main.229c360f.js
+  510 B     build/static/css/main.0b4a1755.chunk.css
+The project was built assuming it is hosted at the server root.
+You can control this with the homepage field in your package.json.
+For example, add this to build it for GitHub Pages:
+  "homepage" : "http://myname.github.io/myapp",
+The build folder is ready to be deployed.
+You may serve it with a static server:
+  yarn global add serve
+  serve -s build
+Find out more about deployment here:
+  http://bit.ly/CRA-deploy
+ ---> d24d9985ec1a
+Removing intermediate container 50cc8021aef9
+Step 7/10 : FROM nginx
+latest: Pulling from library/nginx
+f17d81b4b692: Pulling fs layer
+82dca86e04c3: Pulling fs layer
+046ccb106982: Pulling fs layer
+046ccb106982: Verifying Checksum
+046ccb106982: Download complete
+82dca86e04c3: Verifying Checksum
+82dca86e04c3: Download complete
+f17d81b4b692: Verifying Checksum
+f17d81b4b692: Download complete
+f17d81b4b692: Pull complete
+82dca86e04c3: Pull complete
+046ccb106982: Pull complete
+Digest: sha256:d59a1aa7866258751a261bae525a1842c7ff0662d4f34a355d5f36826abc0341
+Status: Downloaded newer image for nginx:latest
+ ---> 62f816a209e6
+Step 8/10 : EXPOSE 3000
+ ---> Running in 817c9dd3be0c
+ ---> d83434894e9a
+Removing intermediate container 817c9dd3be0c
+Step 9/10 : COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
+ ---> 1718949db9b2
+Step 10/10 : COPY --from=builder /app/build /usr/share/nginx/html
+ ---> a3c1e2d918be
+Successfully built a3c1e2d918be
+Successfully tagged [secure]/multi-client:latest
+after_success.2
+0.22s$ docker build -t [secure]/multi-nginx ./nginx
+Sending build context to Docker daemon  4.096kB
+Step 1/2 : FROM nginx
+ ---> 62f816a209e6
+Step 2/2 : COPY ./default.conf /etc/nginx/conf.d/default.conf
+ ---> 3a898f4ac8a9
+Successfully built 3a898f4ac8a9
+Successfully tagged [secure]/multi-nginx:latest
+after_success.3
+10.05s$ docker build -t [secure]/multi-server ./server
+Sending build context to Docker daemon   7.68kB
+Step 1/6 : FROM node:alpine
+ ---> 4b3c025f5508
+Step 2/6 : WORKDIR /app
+ ---> Using cache
+ ---> db01dd6fe548
+Step 3/6 : COPY package.json .
+ ---> cda6c5c76616
+Step 4/6 : RUN npm install
+ ---> Running in 5eb7361a0709
+> nodemon@1.18.3 postinstall /app/node_modules/nodemon
+> node bin/postinstall || exit 0
+Love nodemon? You can now support the project via the open collective:
+ > https://opencollective.com/nodemon/donate
+npm notice created a lockfile as package-lock.json. You should commit this file.
+npm WARN app No description
+npm WARN app No repository field.
+npm WARN app No license field.
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.4 (node_modules/fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.4: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+added 304 packages from 189 contributors and audited 2423 packages in 7.388s
+found 0 vulnerabilities
+ ---> 37320c28b96f
+Removing intermediate container 5eb7361a0709
+Step 5/6 : COPY . .
+ ---> a0fab05499a0
+Step 6/6 : CMD npm run start
+ ---> Running in 411ace08a1d6
+ ---> b546506e3698
+Removing intermediate container 411ace08a1d6
+Successfully built b546506e3698
+Successfully tagged [secure]/multi-server:latest
+after_success.4
+8.94s$ docker build -t [secure]/multi-worker ./worker
+Sending build context to Docker daemon  6.144kB
+Step 1/6 : FROM node:alpine
+ ---> 4b3c025f5508
+Step 2/6 : WORKDIR /app
+ ---> Using cache
+ ---> db01dd6fe548
+Step 3/6 : COPY package.json .
+ ---> cffec0871ff3
+Step 4/6 : RUN npm install
+ ---> Running in 3bbb66daa6f3
+> nodemon@1.18.3 postinstall /app/node_modules/nodemon
+> node bin/postinstall || exit 0
+Love nodemon? You can now support the project via the open collective:
+ > https://opencollective.com/nodemon/donate
+npm notice created a lockfile as package-lock.json. You should commit this file.
+npm WARN app No description
+npm WARN app No repository field.
+npm WARN app No license field.
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.4 (node_modules/fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.4: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+added 237 packages from 140 contributors and audited 2256 packages in 6.466s
+found 0 vulnerabilities
+ ---> ab67cca98102
+Removing intermediate container 3bbb66daa6f3
+Step 5/6 : COPY . .
+ ---> 2c84012c627d
+Step 6/6 : CMD npm run start
+ ---> Running in 101789f20325
+ ---> 94583751c335
+Removing intermediate container 101789f20325
+Successfully built 94583751c335
+Successfully tagged [secure]/multi-worker:latest
+after_success.5
+0.54s$ echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+Login Succeeded
+after_success.6
+4.72s$ docker push [secure]/multi-client
+The push refers to a repository [docker.io/[secure]/multi-client]
+4f7d4fd19dfa: Preparing
+b4a6085ef9a5: Preparing
+ad9ac0e6043b: Preparing
+6ccbee34dd10: Preparing
+237472299760: Preparing
+6ccbee34dd10: Layer already exists
+237472299760: Layer already exists
+ad9ac0e6043b: Layer already exists
+b4a6085ef9a5: Pushed
+4f7d4fd19dfa: Pushed
+latest: digest: sha256:7265da8810e230e6f46e943ec23cc836e17602a52cfce5d58b55070c1faf6e38 size: 1365
+after_success.7
+4.34s$ docker push [secure]/multi-nginx
+The push refers to a repository [docker.io/[secure]/multi-nginx]
+53a95f291321: Preparing
+ad9ac0e6043b: Preparing
+6ccbee34dd10: Preparing
+237472299760: Preparing
+ad9ac0e6043b: Layer already exists
+6ccbee34dd10: Layer already exists
+237472299760: Layer already exists
+53a95f291321: Pushed
+latest: digest: sha256:7d7c9ca17e11312d69c18c1fd58c6e5b87a9a3134698adfa559cd1aecf65d8c9 size: 1155
+after_success.8
+5.81s$ docker push [secure]/multi-server
+The push refers to a repository [docker.io/[secure]/multi-server]
+867e8cc86b79: Preparing
+a55b4ad27cfc: Preparing
+ce17fa76a4a8: Preparing
+e44b7b7ece77: Preparing
+b718290f679e: Preparing
+8258ac963d2f: Preparing
+df64d3292fd6: Preparing
+8258ac963d2f: Waiting
+df64d3292fd6: Waiting
+b718290f679e: Layer already exists
+8258ac963d2f: Layer already exists
+df64d3292fd6: Layer already exists
+867e8cc86b79: Pushed
+e44b7b7ece77: Pushed
+ce17fa76a4a8: Pushed
+a55b4ad27cfc: Pushed
+latest: digest: sha256:1e3e7c338e12689837d6e105eb38771006af27bd620c9dc6debc76aea37f82dc size: 1783
+after_success.9
+5.48s$ docker push [secure]/multi-worker
+The push refers to a repository [docker.io/[secure]/multi-worker]
+7262240febd4: Preparing
+4988a40307e8: Preparing
+c53f1b47d55c: Preparing
+e44b7b7ece77: Preparing
+b718290f679e: Preparing
+8258ac963d2f: Preparing
+df64d3292fd6: Preparing
+8258ac963d2f: Waiting
+df64d3292fd6: Waiting
+b718290f679e: Layer already exists
+8258ac963d2f: Layer already exists
+e44b7b7ece77: Mounted from [secure]/multi-server
+df64d3292fd6: Layer already exists
+c53f1b47d55c: Pushed
+7262240febd4: Pushed
+4988a40307e8: Pushed
+latest: digest: sha256:74f3fc2aeaf4b81bc008fb14e2a21d75607d270bc20793460d9027969124f9b8 size: 1782
+dpl_0
+1.45s$ rvm $(travis_internal_ruby) --fuzzy do ruby -S gem install dpl
+Successfully installed dpl-1.10.4
+1 gem installed
+10.67s
+dpl.1
+Installing deploy dependencies
+Successfully installed jmespath-1.4.0
+Successfully installed aws-sigv4-1.0.3
+Successfully installed aws-sdk-core-2.11.167
+Successfully installed aws-sdk-resources-2.11.167
+Successfully installed aws-sdk-2.11.167
+Successfully installed rubyzip-1.2.2
+Successfully installed dpl-elastic_beanstalk-1.10.4
+7 gems installed
+!!! AWS Elastic Beanstalk support is experimental !!!
+dpl.2
+Preparing deploy
+Cleaning up git repository with `git stash --all`. If you need build artifacts for deployment, set `deploy.skip_cleanup: true`. See https://docs.travis-ci.com/user/deployment#Uploading-Files-and-skip_cleanup.
+No local changes to save
+dpl.3
+Deploying application
+No stash entries found.
+Done. Your build exited with 0.
+```
+- On https://console.aws.amazon.com/elasticbeanstalk/home?region=us-east-1#/environment/dashboard?applicationName=muti-docker&environmentId=e-myzxc9aicp
+```
+2018-11-09 08:25:03 UTC+0000	WARN	Environment health has transitioned from Info to Warning. Application update failed 31 seconds ago and took 54 seconds.
+2018-11-09 08:24:11 UTC+0000	ERROR	Failed to deploy application.
+2018-11-09 08:24:11 UTC+0000	ERROR	Service:AmazonECS, Code:ClientException, Message:Invalid setting for container 'client'. At least one of 'memory' or 'memoryReservation' must be specified., Class:com.amazonaws.services.ecs.model.ClientException
+2018-11-09 08:24:03 UTC+0000	INFO	Environment health has transitioned from Ok to Info. Application update in progress (running for 5 seconds).
+2018-11-09 08:23:30 UTC+0000	INFO	Environment update is starting.
+```
+10. Modify the `Dockerrun.aws.json` file to add the memory value
+- We put 128 mbytes to all the containers, but when we go with a real app we should adjust it according to what we need.
+> `Dockerrun.aws.json`
+```json
+{
+  "AWSEBDockerrunVersion": 2,
+  "containerDefinitions": [
+    {
+      "name": "client",
+      "image": "peelmicro/multi-client",
+      "hostname": "client",
+      "essential": false,
+      "memory": 128
+    },
+    {
+      "name": "server",
+      "image": "peelmicro/multi-server",
+      "hostname": "api",
+      "essential": false,
+      "memory": 128
+    },
+    {
+      "name": "worker",
+      "image": "peelmicro/multi-worker",
+      "hostname": "worker",
+      "essential": false,
+      "memory": 128
+    },
+    {
+      "name": "nginx",
+      "image": "peelmicro/multi-nginx",
+      "hostname": "nginx",
+      "essential": true,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 80
+        }
+      ],
+      "links": ["client","server"],
+      "memory": 128
+    }
+  ]
+}
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   Dockerrun.aws.json
+
+no changes added to commit (use "git add" and/or "git commit -a")
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ git add .
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ git commit -m "added memory to the AWS Dockerrun.aws.json file"
+[master 6a70bbd] added memory to the AWS Dockerrun.aws.json file
+ 1 file changed, 8 insertions(+), 4 deletions(-)
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ git push origin master
+Counting objects: 3, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 386 bytes | 128.00 KiB/s, done.
+Total 3 (delta 2), reused 0 (delta 0)
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+To https://github.com/peelmicro/multi-docker.git
+   8801512..6a70bbd  master -> master
+```
+```sh
+------------------|----------|----------|----------|----------|-------------------|
+File              |  % Stmts | % Branch |  % Funcs |  % Lines | Uncovered Line #s |
+------------------|----------|----------|----------|----------|-------------------|
+All files         |        0 |        0 |        0 |        0 |                   |
+ App.js           |        0 |      100 |        0 |        0 |                10 |
+ Fib.js           |        0 |      100 |        0 |        0 |... 49,50,57,61,67 |
+ OtherPage.js     |        0 |      100 |        0 |        0 |                 5 |
+ index.js         |        0 |      100 |      100 |        0 |      1,2,3,4,5,12 |
+ serviceWorker.js |        0 |        0 |        0 |        0 |... 23,130,131,132 |
+------------------|----------|----------|----------|----------|-------------------|
+Test Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        2.236s
+Ran all test suites.
+The command "docker run [secure]/test-client npm run test -- --coverage" exited with 0.
+after_success.1
+63.93s$ docker build -t [secure]/multi-client ./client
+Sending build context to Docker daemon  340.5kB
+Step 1/10 : FROM node:alpine as builder
+ ---> 4b3c025f5508
+Step 2/10 : WORKDIR /app
+ ---> Using cache
+ ---> 3aa5ffeb64d7
+Step 3/10 : COPY ./package.json ./
+ ---> 7b7db4610e31
+Step 4/10 : RUN npm install
+ ---> Running in d6b4768b8453
+npm WARN deprecated circular-json@0.3.3: CircularJSON is in maintenance only, flatted is its successor.
+npm notice created a lockfile as package-lock.json. You should commit this file.
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.4 (node_modules/fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.4: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+added 1684 packages from 666 contributors and audited 35723 packages in 32.913s
+found 0 vulnerabilities
+ ---> 2934a366d359
+Removing intermediate container d6b4768b8453
+Step 5/10 : COPY . .
+ ---> c3f12b759966
+Step 6/10 : RUN npm run build
+ ---> Running in 8a0a041b88ca
+> client@0.1.0 build /app
+> react-scripts build
+Creating an optimized production build...
+Compiled successfully.
+File sizes after gzip:
+  47.24 KB  build/static/js/1.e5a12c45.chunk.js
+  1.37 KB   build/static/js/main.55c54dd0.chunk.js
+  763 B     build/static/js/runtime~main.229c360f.js
+  510 B     build/static/css/main.0b4a1755.chunk.css
+The project was built assuming it is hosted at the server root.
+You can control this with the homepage field in your package.json.
+For example, add this to build it for GitHub Pages:
+  "homepage" : "http://myname.github.io/myapp",
+The build folder is ready to be deployed.
+You may serve it with a static server:
+  yarn global add serve
+  serve -s build
+Find out more about deployment here:
+  http://bit.ly/CRA-deploy
+ ---> 8a852c1b7622
+Removing intermediate container 8a0a041b88ca
+Step 7/10 : FROM nginx
+latest: Pulling from library/nginx
+f17d81b4b692: Pulling fs layer
+82dca86e04c3: Pulling fs layer
+046ccb106982: Pulling fs layer
+046ccb106982: Verifying Checksum
+046ccb106982: Download complete
+82dca86e04c3: Verifying Checksum
+82dca86e04c3: Download complete
+f17d81b4b692: Verifying Checksum
+f17d81b4b692: Download complete
+f17d81b4b692: Pull complete
+82dca86e04c3: Pull complete
+046ccb106982: Pull complete
+Digest: sha256:d59a1aa7866258751a261bae525a1842c7ff0662d4f34a355d5f36826abc0341
+Status: Downloaded newer image for nginx:latest
+ ---> 62f816a209e6
+Step 8/10 : EXPOSE 3000
+ ---> Running in ec9bdbc8cc46
+ ---> 545626c24370
+Removing intermediate container ec9bdbc8cc46
+Step 9/10 : COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
+ ---> 1f7b6a9f0406
+Step 10/10 : COPY --from=builder /app/build /usr/share/nginx/html
+ ---> 202ee452889c
+Successfully built 202ee452889c
+Successfully tagged [secure]/multi-client:latest
+after_success.2
+0.22s$ docker build -t [secure]/multi-nginx ./nginx
+Sending build context to Docker daemon  4.096kB
+Step 1/2 : FROM nginx
+ ---> 62f816a209e6
+Step 2/2 : COPY ./default.conf /etc/nginx/conf.d/default.conf
+ ---> 94d357f238af
+Successfully built 94d357f238af
+Successfully tagged [secure]/multi-nginx:latest
+after_success.3
+9.79s$ docker build -t [secure]/multi-server ./server
+Sending build context to Docker daemon   7.68kB
+Step 1/6 : FROM node:alpine
+ ---> 4b3c025f5508
+Step 2/6 : WORKDIR /app
+ ---> Using cache
+ ---> 3aa5ffeb64d7
+Step 3/6 : COPY package.json .
+ ---> b13c5f776aff
+Step 4/6 : RUN npm install
+ ---> Running in 5534db3974aa
+> nodemon@1.18.3 postinstall /app/node_modules/nodemon
+> node bin/postinstall || exit 0
+Love nodemon? You can now support the project via the open collective:
+ > https://opencollective.com/nodemon/donate
+npm notice created a lockfile as package-lock.json. You should commit this file.
+npm WARN app No description
+npm WARN app No repository field.
+npm WARN app No license field.
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.4 (node_modules/fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.4: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+added 304 packages from 189 contributors and audited 2423 packages in 7.129s
+found 0 vulnerabilities
+ ---> 6686ff459d18
+Removing intermediate container 5534db3974aa
+Step 5/6 : COPY . .
+ ---> c6cc45682d4a
+Step 6/6 : CMD npm run start
+ ---> Running in 5fa68fc1ce3c
+ ---> accdede42364
+Removing intermediate container 5fa68fc1ce3c
+Successfully built accdede42364
+Successfully tagged [secure]/multi-server:latest
+after_success.4
+8.45s$ docker build -t [secure]/multi-worker ./worker
+Sending build context to Docker daemon  6.144kB
+Step 1/6 : FROM node:alpine
+ ---> 4b3c025f5508
+Step 2/6 : WORKDIR /app
+ ---> Using cache
+ ---> 3aa5ffeb64d7
+Step 3/6 : COPY package.json .
+ ---> e7e0674f2e82
+Step 4/6 : RUN npm install
+ ---> Running in 60e24a32ec93
+> nodemon@1.18.3 postinstall /app/node_modules/nodemon
+> node bin/postinstall || exit 0
+Love nodemon? You can now support the project via the open collective:
+ > https://opencollective.com/nodemon/donate
+npm notice created a lockfile as package-lock.json. You should commit this file.
+npm WARN app No description
+npm WARN app No repository field.
+npm WARN app No license field.
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.4 (node_modules/fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.4: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+added 237 packages from 140 contributors and audited 2256 packages in 6.146s
+found 0 vulnerabilities
+ ---> 3fe922b33a2b
+Removing intermediate container 60e24a32ec93
+Step 5/6 : COPY . .
+ ---> eacaa799abf0
+Step 6/6 : CMD npm run start
+ ---> Running in 570c3c4d317d
+ ---> ae7e4e8c1526
+Removing intermediate container 570c3c4d317d
+Successfully built ae7e4e8c1526
+Successfully tagged [secure]/multi-worker:latest
+after_success.5
+0.54s$ echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+Login Succeeded
+after_success.6
+4.36s$ docker push [secure]/multi-client
+The push refers to a repository [docker.io/[secure]/multi-client]
+5b12c7356fd3: Preparing
+6ac27bbdf7cf: Preparing
+ad9ac0e6043b: Preparing
+6ccbee34dd10: Preparing
+237472299760: Preparing
+ad9ac0e6043b: Layer already exists
+6ccbee34dd10: Layer already exists
+237472299760: Layer already exists
+5b12c7356fd3: Pushed
+6ac27bbdf7cf: Pushed
+latest: digest: sha256:6ea8ba3f030d6a7bc981db4b6c7a4fb8fdd71263ebacf7f443f07dbb3646baac size: 1365
+after_success.7
+4.70s$ docker push [secure]/multi-nginx
+The push refers to a repository [docker.io/[secure]/multi-nginx]
+0a547dd90fc1: Preparing
+ad9ac0e6043b: Preparing
+6ccbee34dd10: Preparing
+237472299760: Preparing
+237472299760: Layer already exists
+ad9ac0e6043b: Layer already exists
+6ccbee34dd10: Layer already exists
+0a547dd90fc1: Pushed
+latest: digest: sha256:ad7eb5a206a40bfa923f88b15f7d861913c0b9ac85809057e2bb10af2a3ae91c size: 1155
+after_success.8
+7.33s$ docker push [secure]/multi-server
+The push refers to a repository [docker.io/[secure]/multi-server]
+8e41d9baa027: Preparing
+f34e55132806: Preparing
+4a797ba6efac: Preparing
+eb65d3aac116: Preparing
+b718290f679e: Preparing
+8258ac963d2f: Preparing
+df64d3292fd6: Preparing
+8258ac963d2f: Waiting
+df64d3292fd6: Waiting
+b718290f679e: Layer already exists
+8258ac963d2f: Layer already exists
+df64d3292fd6: Layer already exists
+eb65d3aac116: Pushed
+8e41d9baa027: Pushed
+4a797ba6efac: Pushed
+f34e55132806: Pushed
+latest: digest: sha256:d3546dbf9f9231840f9f882e87dd8dc45d3cf139630cf1c68a436585c4b13ed5 size: 1783
+after_success.9
+5.47s$ docker push [secure]/multi-worker
+The push refers to a repository [docker.io/[secure]/multi-worker]
+da5c521d9c13: Preparing
+975c5831fb56: Preparing
+23bfc9d6e119: Preparing
+eb65d3aac116: Preparing
+b718290f679e: Preparing
+8258ac963d2f: Preparing
+df64d3292fd6: Preparing
+8258ac963d2f: Waiting
+df64d3292fd6: Waiting
+b718290f679e: Layer already exists
+8258ac963d2f: Layer already exists
+eb65d3aac116: Mounted from [secure]/multi-server
+df64d3292fd6: Layer already exists
+da5c521d9c13: Pushed
+23bfc9d6e119: Pushed
+975c5831fb56: Pushed
+latest: digest: sha256:a425b02ea45b7b9b246631630d3756fa0d87261f8cd3d99a3904ba9354d7ec6f size: 1782
+dpl_0
+1.37s$ rvm $(travis_internal_ruby) --fuzzy do ruby -S gem install dpl
+Successfully installed dpl-1.10.4
+1 gem installed
+9.85s
+dpl.1
+Installing deploy dependencies
+Successfully installed jmespath-1.4.0
+Successfully installed aws-sigv4-1.0.3
+Successfully installed aws-sdk-core-2.11.167
+Successfully installed aws-sdk-resources-2.11.167
+Successfully installed aws-sdk-2.11.167
+Successfully installed rubyzip-1.2.2
+Successfully installed dpl-elastic_beanstalk-1.10.4
+7 gems installed
+!!! AWS Elastic Beanstalk support is experimental !!!
+dpl.2
+Preparing deploy
+Cleaning up git repository with `git stash --all`. If you need build artifacts for deployment, set `deploy.skip_cleanup: true`. See https://docs.travis-ci.com/user/deployment#Uploading-Files-and-skip_cleanup.
+No local changes to save
+dpl.3
+Deploying application
+No stash entries found.
+Done. Your build exited with 0.
+```
+```
+2018-11-09 08:39:02 UTC+0000	INFO	Environment health has transitioned from Info to Ok. Application update completed 26 seconds ago and took 3 minutes.
+2018-11-09 08:37:48 UTC+0000	INFO	Environment update completed successfully.
+2018-11-09 08:37:48 UTC+0000	INFO	New application version was deployed to running EC2 instances.
+2018-11-09 08:37:07 UTC+0000	INFO	ECS task: arn:aws:ecs:us-east-1:972569889348:task/314a5845-de68-4171-b5a7-31fd19025835 is RUNNING.
+2018-11-09 08:36:02 UTC+0000	INFO	Environment health has transitioned from Ok to Info. Application update in progress on 1 instance. 0 out of 1 instance completed (running for 58 seconds).
+2018-11-09 08:35:56 UTC+0000	INFO	Starting new ECS task with awseb-MutiDocker-env-myzxc9aicp:4.
+2018-11-09 08:35:53 UTC+0000	INFO	ECS task: arn:aws:ecs:us-east-1:972569889348:task/0a5d047f-6b36-430e-b4ba-55824143c3a3 is STOPPED.
+2018-11-09 08:35:46 UTC+0000	INFO	Stopping ECS task arn:aws:ecs:us-east-1:972569889348:task/0a5d047f-6b36-430e-b4ba-55824143c3a3.
+2018-11-09 08:35:33 UTC+0000	INFO	Deploying new version to instance(s).
+2018-11-09 08:34:51 UTC+0000	INFO	Environment update is starting.
+```
+::: warning
+It wasn't working becuase the ElasticBeanstalk instance was not included on the security group.
+:::
+- After including it properly it works now correctly
+```
+2018-11-09 09:58:40 UTC+0000	INFO	Deleted log fragments for this environment.
+2018-11-09 09:44:57 UTC+0000	INFO	Environment health has transitioned from Severe to Ok.
+2018-11-09 09:43:42 UTC+0000	INFO	Pulled logs for environment instances.
+2018-11-09 09:43:40 UTC+0000	INFO	requestEnvironmentInfo is starting.
+2018-11-09 09:41:57 UTC+0000	WARN	Environment health has transitioned from Info to Severe. Configuration update completed 57 seconds ago and took 54 seconds. None of the instances are sending data.
+2018-11-09 09:41:57 UTC+0000	INFO	Removed instance [i-0758a53f730ad10d4] from your environment.
+2018-11-09 09:41:57 UTC+0000	INFO	Added instance [i-04983fe85b61b601d] to your environment.
+2018-11-09 09:40:42 UTC+0000	INFO	Environment update completed successfully.
+2018-11-09 09:40:42 UTC+0000	INFO	Successfully deployed new configuration to environment.
+2018-11-09 09:40:05 UTC+0000	INFO	Created Auto Scaling launch configuration named: awseb-e-myzxc9aicp-stack-AWSEBAutoScalingLaunchConfiguration-1SHNJIWIA171B
+2018-11-09 09:39:58 UTC+0000	INFO	Environment health has transitioned from Ok to Info. Configuration update in progress (running for 11 seconds).
+2018-11-09 09:39:48 UTC+0000	INFO	Updating environment MutiDocker-env's configuration settings.
+2018-11-09 09:39:42 UTC+0000	INFO	Environment update is starting.
+```
+11. Make a little change on the `App.js` file and deploy again 
+- Change `Welcome to React` by `Fib Calculator`
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   client/src/App.js
+
+no changes added to commit (use "git add" and/or "git commit -a")
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ git add .
+warning: LF will be replaced by CRLF in client/src/App.js.
+The file will have its original line endings in your working directory.
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ git commit -m "Updated App.js"
+[master cccdcca] Updated App.js
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ git push origin master
+Counting objects: 5, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (5/5), done.
+Writing objects: 100% (5/5), 445 bytes | 111.00 KiB/s, done.
+Total 5 (delta 4), reused 0 (delta 0)
+remote: Resolving deltas: 100% (4/4), completed with 4 local objects.
+To https://github.com/peelmicro/multi-docker.git
+   6a70bbd..cccdcca  master -> master
+```
+```sh
+  ✓ renders without crashing (2ms)
+------------------|----------|----------|----------|----------|-------------------|
+File              |  % Stmts | % Branch |  % Funcs |  % Lines | Uncovered Line #s |
+------------------|----------|----------|----------|----------|-------------------|
+All files         |        0 |        0 |        0 |        0 |                   |
+ App.js           |        0 |      100 |        0 |        0 |                10 |
+ Fib.js           |        0 |      100 |        0 |        0 |... 49,50,57,61,67 |
+ OtherPage.js     |        0 |      100 |        0 |        0 |                 5 |
+ index.js         |        0 |      100 |      100 |        0 |      1,2,3,4,5,12 |
+ serviceWorker.js |        0 |        0 |        0 |        0 |... 23,130,131,132 |
+------------------|----------|----------|----------|----------|-------------------|
+Test Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        2.278s
+Ran all test suites.
+The command "docker run [secure]/test-client npm run test -- --coverage" exited with 0.
+after_success.1
+64.81s$ docker build -t [secure]/multi-client ./client
+Sending build context to Docker daemon  340.5kB
+Step 1/10 : FROM node:alpine as builder
+ ---> 4b3c025f5508
+Step 2/10 : WORKDIR /app
+ ---> Using cache
+ ---> 98d3dfa87106
+Step 3/10 : COPY ./package.json ./
+ ---> d68ba19409b0
+Step 4/10 : RUN npm install
+ ---> Running in c6555d9bf04b
+npm WARN deprecated circular-json@0.3.3: CircularJSON is in maintenance only, flatted is its successor.
+npm notice created a lockfile as package-lock.json. You should commit this file.
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.4 (node_modules/fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.4: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+added 1684 packages from 666 contributors and audited 35723 packages in 34.471s
+found 0 vulnerabilities
+ ---> 9da083e40185
+Removing intermediate container c6555d9bf04b
+Step 5/10 : COPY . .
+ ---> ecf1328b047f
+Step 6/10 : RUN npm run build
+ ---> Running in 0ba0ae1385f4
+> client@0.1.0 build /app
+> react-scripts build
+Creating an optimized production build...
+Compiled successfully.
+File sizes after gzip:
+  47.24 KB  build/static/js/1.e5a12c45.chunk.js
+  1.37 KB   build/static/js/main.33dd28be.chunk.js
+  763 B     build/static/js/runtime~main.229c360f.js
+  510 B     build/static/css/main.0b4a1755.chunk.css
+The project was built assuming it is hosted at the server root.
+You can control this with the homepage field in your package.json.
+For example, add this to build it for GitHub Pages:
+  "homepage" : "http://myname.github.io/myapp",
+The build folder is ready to be deployed.
+You may serve it with a static server:
+  yarn global add serve
+  serve -s build
+Find out more about deployment here:
+  http://bit.ly/CRA-deploy
+ ---> be066851f56d
+Removing intermediate container 0ba0ae1385f4
+Step 7/10 : FROM nginx
+latest: Pulling from library/nginx
+f17d81b4b692: Pulling fs layer
+82dca86e04c3: Pulling fs layer
+046ccb106982: Pulling fs layer
+046ccb106982: Verifying Checksum
+046ccb106982: Download complete
+82dca86e04c3: Verifying Checksum
+82dca86e04c3: Download complete
+f17d81b4b692: Verifying Checksum
+f17d81b4b692: Download complete
+f17d81b4b692: Pull complete
+82dca86e04c3: Pull complete
+046ccb106982: Pull complete
+Digest: sha256:d59a1aa7866258751a261bae525a1842c7ff0662d4f34a355d5f36826abc0341
+Status: Downloaded newer image for nginx:latest
+ ---> 62f816a209e6
+Step 8/10 : EXPOSE 3000
+ ---> Running in 7641a9f29482
+ ---> bf858ecc8d04
+Removing intermediate container 7641a9f29482
+Step 9/10 : COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
+ ---> d2e703cb446d
+Step 10/10 : COPY --from=builder /app/build /usr/share/nginx/html
+ ---> a2feaa9ca7a3
+Successfully built a2feaa9ca7a3
+Successfully tagged [secure]/multi-client:latest
+after_success.2
+0.19s$ docker build -t [secure]/multi-nginx ./nginx
+Sending build context to Docker daemon  4.096kB
+Step 1/2 : FROM nginx
+ ---> 62f816a209e6
+Step 2/2 : COPY ./default.conf /etc/nginx/conf.d/default.conf
+ ---> b7a16c8df270
+Successfully built b7a16c8df270
+Successfully tagged [secure]/multi-nginx:latest
+after_success.3
+9.76s$ docker build -t [secure]/multi-server ./server
+Sending build context to Docker daemon   7.68kB
+Step 1/6 : FROM node:alpine
+ ---> 4b3c025f5508
+Step 2/6 : WORKDIR /app
+ ---> Using cache
+ ---> 98d3dfa87106
+Step 3/6 : COPY package.json .
+ ---> ce9b897fa537
+Step 4/6 : RUN npm install
+ ---> Running in ec622b0ccd32
+> nodemon@1.18.3 postinstall /app/node_modules/nodemon
+> node bin/postinstall || exit 0
+Love nodemon? You can now support the project via the open collective:
+ > https://opencollective.com/nodemon/donate
+npm notice created a lockfile as package-lock.json. You should commit this file.
+npm WARN app No description
+npm WARN app No repository field.
+npm WARN app No license field.
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.4 (node_modules/fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.4: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+added 304 packages from 189 contributors and audited 2423 packages in 7.125s
+found 0 vulnerabilities
+ ---> 842f93f4b5c6
+Removing intermediate container ec622b0ccd32
+Step 5/6 : COPY . .
+ ---> 3965f601bdd5
+Step 6/6 : CMD npm run start
+ ---> Running in 70f4b08524c0
+ ---> 7c8dc1c6f5ea
+Removing intermediate container 70f4b08524c0
+Successfully built 7c8dc1c6f5ea
+Successfully tagged [secure]/multi-server:latest
+after_success.4
+8.40s$ docker build -t [secure]/multi-worker ./worker
+Sending build context to Docker daemon  6.144kB
+Step 1/6 : FROM node:alpine
+ ---> 4b3c025f5508
+Step 2/6 : WORKDIR /app
+ ---> Using cache
+ ---> 98d3dfa87106
+Step 3/6 : COPY package.json .
+ ---> aa65c9ca687b
+Step 4/6 : RUN npm install
+ ---> Running in 4a53a6abb29b
+> nodemon@1.18.3 postinstall /app/node_modules/nodemon
+> node bin/postinstall || exit 0
+Love nodemon? You can now support the project via the open collective:
+ > https://opencollective.com/nodemon/donate
+npm notice created a lockfile as package-lock.json. You should commit this file.
+npm WARN app No description
+npm WARN app No repository field.
+npm WARN app No license field.
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.4 (node_modules/fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.4: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+added 237 packages from 140 contributors and audited 2256 packages in 6.108s
+found 0 vulnerabilities
+ ---> 2a4423b56c60
+Removing intermediate container 4a53a6abb29b
+Step 5/6 : COPY . .
+ ---> f2763bb62805
+Step 6/6 : CMD npm run start
+ ---> Running in a905648cfb3e
+ ---> 8575c8629967
+Removing intermediate container a905648cfb3e
+Successfully built 8575c8629967
+Successfully tagged [secure]/multi-worker:latest
+after_success.5
+0.55s$ echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+Login Succeeded
+after_success.6
+4.66s$ docker push [secure]/multi-client
+The push refers to a repository [docker.io/[secure]/multi-client]
+0d55a4c291c2: Preparing
+4c48ae2c2ed1: Preparing
+ad9ac0e6043b: Preparing
+6ccbee34dd10: Preparing
+237472299760: Preparing
+ad9ac0e6043b: Layer already exists
+6ccbee34dd10: Layer already exists
+237472299760: Layer already exists
+4c48ae2c2ed1: Pushed
+0d55a4c291c2: Pushed
+latest: digest: sha256:efe49c5636e5fc92013dff4835c2f26dedad0c75775d18488b8162d99d139baa size: 1365
+after_success.7
+4.01s$ docker push [secure]/multi-nginx
+The push refers to a repository [docker.io/[secure]/multi-nginx]
+524f4c53295b: Preparing
+ad9ac0e6043b: Preparing
+6ccbee34dd10: Preparing
+237472299760: Preparing
+ad9ac0e6043b: Layer already exists
+237472299760: Layer already exists
+6ccbee34dd10: Layer already exists
+524f4c53295b: Pushed
+latest: digest: sha256:e1a5488db1a237a1842d3d2ac755e0bb3f7ed795cebe4c34c868807d79531bd3 size: 1155
+after_success.8
+6.05s$ docker push [secure]/multi-server
+The push refers to a repository [docker.io/[secure]/multi-server]
+20742476b96d: Preparing
+c0050f6bc6f6: Preparing
+62d46a297763: Preparing
+ac4ddab3c028: Preparing
+b718290f679e: Preparing
+8258ac963d2f: Preparing
+df64d3292fd6: Preparing
+8258ac963d2f: Waiting
+df64d3292fd6: Waiting
+b718290f679e: Layer already exists
+8258ac963d2f: Layer already exists
+df64d3292fd6: Layer already exists
+ac4ddab3c028: Pushed
+c0050f6bc6f6: Pushed
+20742476b96d: Pushed
+62d46a297763: Pushed
+latest: digest: sha256:dbd144d315bf626e44bab312eae19fea18cb8e65bc30ccc184e224680f32c5a4 size: 1783
+after_success.9
+5.85s$ docker push [secure]/multi-worker
+The push refers to a repository [docker.io/[secure]/multi-worker]
+ff64efb96aef: Preparing
+e1b323280b34: Preparing
+62ec89306269: Preparing
+ac4ddab3c028: Preparing
+b718290f679e: Preparing
+8258ac963d2f: Preparing
+df64d3292fd6: Preparing
+8258ac963d2f: Waiting
+df64d3292fd6: Waiting
+b718290f679e: Layer already exists
+8258ac963d2f: Layer already exists
+ac4ddab3c028: Mounted from [secure]/multi-server
+df64d3292fd6: Layer already exists
+62ec89306269: Pushed
+ff64efb96aef: Pushed
+e1b323280b34: Pushed
+latest: digest: sha256:0127426ee375cf4ee2c7411f0f0fd75d233011072d5d3dc99450d49db01a11e9 size: 1782
+dpl_0
+1.44s$ rvm $(travis_internal_ruby) --fuzzy do ruby -S gem install dpl
+Successfully installed dpl-1.10.4
+1 gem installed
+10.03s
+dpl.1
+Installing deploy dependencies
+Successfully installed jmespath-1.4.0
+Successfully installed aws-sigv4-1.0.3
+Successfully installed aws-sdk-core-2.11.167
+Successfully installed aws-sdk-resources-2.11.167
+Successfully installed aws-sdk-2.11.167
+Successfully installed rubyzip-1.2.2
+Successfully installed dpl-elastic_beanstalk-1.10.4
+7 gems installed
+!!! AWS Elastic Beanstalk support is experimental !!!
+dpl.2
+Preparing deploy
+Cleaning up git repository with `git stash --all`. If you need build artifacts for deployment, set `deploy.skip_cleanup: true`. See https://docs.travis-ci.com/user/deployment#Uploading-Files-and-skip_cleanup.
+No local changes to save
+dpl.3
+Deploying application
+No stash entries found.
+Done. Your build exited with 0.
+```
+```
+2018-11-09 10:21:34 UTC+0000	INFO	Environment update completed successfully.
+2018-11-09 10:21:34 UTC+0000	INFO	New application version was deployed to running EC2 instances.
+2018-11-09 10:21:22 UTC+0000	INFO	ECS task: arn:aws:ecs:us-east-1:972569889348:task/ef684989-1262-4385-9f87-ce96b9217516 is RUNNING.
+2018-11-09 10:20:55 UTC+0000	INFO	Environment health has transitioned from Ok to Info. Application update in progress on 1 instance. 0 out of 1 instance completed (running for 16 seconds).
+2018-11-09 10:20:51 UTC+0000	INFO	Starting new ECS task with awseb-MutiDocker-env-myzxc9aicp:7.
+2018-11-09 10:20:48 UTC+0000	INFO	ECS task: arn:aws:ecs:us-east-1:972569889348:task/01361075-a091-44de-ba02-19f06c1abe68 is STOPPED.
+2018-11-09 10:20:47 UTC+0000	INFO	Stopping ECS task arn:aws:ecs:us-east-1:972569889348:task/01361075-a091-44de-ba02-19f06c1abe68.
+2018-11-09 10:20:46 UTC+0000	WARN	Failed to start ECS task, retrying...
+2018-11-09 10:20:46 UTC+0000	ERROR	Encountered error querying container instance status: Unable to locate credentials. You can configure credentials by running "aws configure".
+2018-11-09 10:20:22 UTC+0000	INFO	Deploying new version to instance(s).
+2018-11-09 10:20:11 UTC+0000	INFO	Environment update is starting.
+ ```
+ 12. Browse to http://mutidocker-env.ewrqsny4rf.us-east-1.elasticbeanstalk.com/
+ ```
+ logo
+Fib Calculator
+Home
+Other Page
+Enter your index:
+Submit
+Indexes I have seen:
+2, 3, 7
+Calculated Values:
+For index 2 I calculated 2
+For index 3 I calculated 3
+For index 7 I calculated 21
+```
+### Clean up the Multi-Container instances created on AWS.
+1. EB instance
+
+- Search for the `muti-Docker` environment, click on `Actions` on top left and then on `Delete Application`  
+```
+Delete Application
+Are you sure you want to delete the application: muti-docker?
+```
+- Click on `Delete`
+- After a while the environment is removed.
+
+2. RDS (Postgres)
+- Search for the `RDS` instances
+- Mark the `multi-docker-postgress` one 
+- Click on `Instance actions` and then `Delete`
+```
+This database has deletion protection option enabled
+
+To be able to delete the database, modify the database and disable deletion protection.
+```
+- Click on `Close`
+- On Details click on `Modify` 
+- Scrool down to `Deletion protection`
+```
+Enable deletion protection
+[X] Protects the database from being deleted accidentally. While this option is enabled, you can’t delete the database.
+```
+- Unmark `[ ] Protects the database from being deleted accidentally` and then click on `Continue`
+```
+Summary of modifications
+You are about to submit the following modifications. Only values that will change are displayed. Carefully verify your changes and click Modify DB Instance.
+Attribute
+Current value
+New value
+Deletion protection	Enabled	Disabled
+Scheduling of modifications
+When to apply modifications
+
+[ ] Apply during the next scheduled maintenance window
+Current maintenance window: fri:10:07-fri:10:37
+
+[X]  Apply immediately
+The modifications in this request and any pending modifications will be asynchronously applied as soon as possible, regardless of the maintenance window setting for this database instance.
+Potential unexpected downtime
+If you choose to apply changes immediately, please note that any changes in the pending modifications queue are also applied. If any of the pending modifications require downtime, choosing this option can cause unexpected downtime.
+```
+- Click on `Modify DB Instance`
+- Click again on `Instance actions` and then `Delete` 
+```
+Delete multi-docker-postgres instance?
+
+Are you sure you want to Delete the multi-docker-postgres DB Instance?
+
+[ ] - Create final snapshot?
+Determines whether a final DB Snapshot is created before the DB instance is deleted.
+
+[X] - I acknowledge that upon instance deletion, automated backups, including system snapshots and point-in-time recovery, will no longer be available.
+
+multi-docker-postgres-final-snapshot
+To confirm deletion, type delete me into the field
+```
+- Enter `delete me` on the last field and the click on `Delete`
+- It's deleted after a while.
+
+3. EC (Redis)
+- Search for `Elastic Cache`, then click on `Redis` on left menu 
+- Click on the `multi-docker-redis` cluster and then on the `Delete` butoon on the top
+```
+	Delete Cluster
+Are you sure you want to delete this Cluster?
+multi-docker-redis
+```
+- Click on `Delete`
+- It's deleted after a while
+
+4. (Optional) Security Group
+
+- Search for `VPC`, then on your `Security Groups` on the left menu
+- Select the `multi-docker` and `rds-launch-wizard` Groups and then `Security Group Actions` and then `Delete Security Group`
+```
+Delete Security Group
+Are you sure that you want to delete these security groups?
+sg-0297e8f3709327220 | multi-docker
+sg-043af040f67ef2437
+```
+- Click on `Yes, Delete`
+```
+We could not delete the following security group (sg-0297e8f3709327220 | multi-docker)
+resource sg-0297e8f3709327220 has a dependent object (Service: AmazonEC2; Status Code: 400; Error Code: DependencyViolation; Request ID: 51e4c426-acfe-4e14-98dc-69896949c211)
+	
+The following security group were deleted
+sg-043af040f67ef2437
+
+The multi-docker group cannot be deleted now because the the other stances may not be deleted yet.
+```
+- Trying it again, it is successfully removed.
+
+5. (Optional) IAM security users
+- Search for `IAM`, then click on `Users`  on the left menu.
+- mark the `docker-react-travis.ci` and `multi-docker-deployer` users and the click on `Delete user`
+```
+Delete user
+The following users will be permanently deleted, including all user data, user security credentials, and user inline policies. Deleted user data cannot be recovered. Are you sure that you want to delete the following users?
+User name Last activity
+docker-react-travis.ci
+4 days ago
+multi-docker-deployer
+50 minutes ago Note: Recent activity usually appears within 4 hours. Data is stored for a maximum of 365 days, depending when your region began supporting this feature. Learn more
+[X] One or more of these users have recently accessed AWS. Deleting them could affect running systems. Check the box to confirm that you want to delete these users.
+```
+- Click on `Yes, delete`
+- Both users are deleted.

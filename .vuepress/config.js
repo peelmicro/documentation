@@ -13,6 +13,9 @@ module.exports = ctx => ({
       ['@vuepress/google-analytics', {
         ga: 'UA-130949957-1'
       }],
+      ['@vuepress/search', {
+        searchMaxSuggestions: 10      
+      }]      
     ],      
     nav: [
       { text: 'Home', link: '/'},
@@ -159,7 +162,7 @@ module.exports = ctx => ({
           collapsable: false,
           children: [
             'visualstudio',
-            '/staticwebs/vuepress-how-to-use-vuepress-for-a-documentation-site',
+            '/staticwebs/markdown-easy-markdown-with-vs-code',
             'visualstudio-vs-resharper'  
           ]
         }
