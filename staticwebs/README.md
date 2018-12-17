@@ -3,3 +3,4 @@ This documentation section is about the use of `static site` generators and tool
 
 - [Markdown](markdown.md)
 - [VuePress](vuepress.md)
+- [VuePress](confluence.md)

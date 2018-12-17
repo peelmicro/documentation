@@ -4,6 +4,8 @@ The code is stored in [This GitHub Repository](https://github.com/peelmicro/purc
 
 Source code for the `.Net Core` version of the [How to create a Slack bot to automate tasks for you](https://www.udemy.com/how-to-create-a-slack-bot-to-automate-tasks-for-you) Udemy course
 
+You can find more information on [How to create a Slack bot to automate tasks for you](/other/bot-how-to-create-a-slack-bot-to-automate-tasks-for-you.md).
+
 Within the code you can see how to:
 - Create a Slack command for Slack with .Net Core API
 - Create a Slack interactive message with buttons

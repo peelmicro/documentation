@@ -82,7 +82,8 @@ module.exports = ctx => ({
           title: 'CSS',
           collapsable: false,
           children: [
-            'css'
+            'css',
+            'css-css-the-complete-guide-incl-flexbox-grid-sass'
           ]
         }
       ],
@@ -94,7 +95,8 @@ module.exports = ctx => ({
           children: [
             'nodejs',
             '/other/docker-multi-docker',
-            'nodejs-advanced-node-for-developers'
+            'nodejs-advanced-node-for-developers',
+            '/other/bot-how-to-create-a-slack-bot-to-automate-tasks-for-you'
           ]
         },
         {
@@ -125,7 +127,8 @@ module.exports = ctx => ({
             'dotnetcore',
             'dotnetcore-aplicaciones-web-en-tiempo-real-con-signalr-core',
             'dotnetcore-asp-net-core-angular-from-scratch',
-            'dotnetcore-aspnet-core-2-security-and-identity-management-with-c'
+            'dotnetcore-aspnet-core-2-security-and-identity-management-with-c',
+            '/projects/purchase-slack-command-dotnet.md'
           ]
         },
         {
@@ -153,6 +156,14 @@ module.exports = ctx => ({
           children: [
             'vuepress',
             'vuepress-how-to-use-vuepress-for-a-documentation-site',
+          ]
+        },
+        {
+          title: 'Confluence',
+          collapsable: false,
+          children: [
+            'confluence',
+            'confluence-understanding-confluence-for-users-managers-and-admins'
           ]
         }
       ],
@@ -183,13 +194,21 @@ module.exports = ctx => ({
           ]
         },
         {
-          title: 'RegEx',
+          title: 'Regular Expressions',
           collapsable: false,
           children: [
             'regex',
             'regex-regex-academy-an-introduction-to-text-parsing-sorcery'
           ]
-        }
+        },
+        {
+          title: 'Internet bot',
+          collapsable: false,
+          children: [
+            'bot',
+            'bot-how-to-create-a-slack-bot-to-automate-tasks-for-you'
+          ]
+        }        
       ]
     }
   } 
