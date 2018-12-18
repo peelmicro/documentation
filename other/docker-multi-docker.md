@@ -8201,3 +8201,5282 @@ multi-docker-deployer
 ```
 - Click on `Yes, delete`
 - Both users are deleted.
+
+## Onwards to Kubernetes!
+
+### First steps with Kubernetes
+![](/images/other/docker-multi-docker/Kubernetes.png)
+
+In the [Tutorial : Getting Started with Kubernetes on your Windows Laptop with Minikube](https://rominirani.com/tutorial-getting-started-with-kubernetes-on-your-windows-laptop-with-minikube-3269b54a226) is explained how to install the following tools.
+1. We need to install [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/). It is a `CLI` for interacting with our master.
+* Download the [kubectl CLI executable](http://storage.googleapis.com/kubernetes-release/release/v1.4.0/bin/windows/amd64/kubectl.exe) and copy in a shared folder. 
+
+![](/images/other/docker-multi-docker/Kubectl.png)
+
+* Create a PATH to that folder.
+
+![](/images/other/docker-multi-docker/Kubectl2.png)
+
+![](/images/other/docker-multi-docker/Kubectl3.png)
+
+* Ensure it works from any folder
+
+![](/images/other/docker-multi-docker/Kubectl4.png)
+
+::: danger
+Do not use the following solution. Hyper-V is needed to have Docker running on Windows
+:::
+2. We need to install the [VirtualBox](https://www.virtualbox.org/wiki/Downloads) VM driver. It is used to make a VM that will be our single node.
+If `Docker` is installed it's probably already installed.
+
+3. We need to install [Minikube](https://kubernetes.io/docs/setup/minikube/). It is used to run a single node on the VM created.
+
+* Download the [the minikube binary](https://github.com/kubernetes/minikube/releases)
+
+![](/images/other/docker-multi-docker/minikube.png)
+
+* Copy to a shared folder
+
+![](/images/other/docker-multi-docker/minikube2.png)
+
+* Rename the executable to minikube.exe.
+
+![](/images/other/docker-multi-docker/minikube3.png)
+
+* Create a PATH to that folder.
+
+![](/images/other/docker-multi-docker/minikube4.png)
+
+* Ensure it works from any folder
+
+![](/images/other/docker-multi-docker/minikube5.png)
+
+4. Start `minikube` executing the `minikube start` command
+
+![](/images/other/docker-multi-docker/minikube-start.png)
+
+* If the following error happens the `Hyper-V` must be uninstalled
+
+![](/images/other/docker-multi-docker/minikube-start2.png)
+
+* Go to `Windows features`
+
+![](/images/other/docker-multi-docker/minikube-start3.png)
+
+* Disable `Hyper-V Management Tools` and `Hyper-V Platform`
+
+![](/images/other/docker-multi-docker/minikube-start4.png)
+
+::: danger
+Do not use the previous solution. Hyper-V is needed to have Docker running on Windows
+:::
+
+* Instead of that solution use the solution explained on the [Local Kubernetes for Windows — MiniKube vs Docker Desktop](https://medium.com/containers-101/local-kubernetes-for-windows-minikube-vs-docker-desktop-25a1c6d3b766) tutorial.
+
+To start Minikube cluster with hyper-v support, you need to first create an external network switch based on physical network adapters (Ethernet or Wi-fi). The following steps must be followed:
+
+Step 1) Identify physical network adapters ( Ethernet and/or Wifi) using the `Get-NetAdapter` command
+
+![](/images/other/docker-multi-docker/minikube-start5.png)
+
+Step 2) Create external-virtual-switch using the following command
+
+`New-VMSwitch -Name MyMinikubeCluster -AllowManagement $True -NetAdapterName Wi-fi`
+
+![](/images/other/docker-multi-docker/minikube-start6.png)
+
+* if the previous error happens follow the instructions from [Microsoft Hyper-V](https://docs.docker.com/machine/drivers/hyper-v/) on how to create a Network Switch from `Virtual Switch Manager`
+
+I) Open Hyper-V Manager
+
+![](/images/other/docker-multi-docker/minikube-start7.png)
+
+II) Click on `Virtual Switch Manager...`
+
+![](/images/other/docker-multi-docker/minikube-start8.png)
+
+III) Click on `Create Virtual Switch`
+
+IV) Put the following values
+```
+Name:
+Notes:
+Connection type
+[X]External nerwork: `Intel(R) Dual Band Wirelesss-AC 8260`
+```
+V) Click on `Ok`
+
+![](/images/other/docker-multi-docker/minikube-start-9.png)
+
+VI) Click on `Yes`
+
+![](/images/other/docker-multi-docker/minikube-start-10.png)
+
+VII) Execute the following command:
+
+`minikube start --vm-driver=hyperv--hyperv-virtual-switch=MinikubeVirtualSwitch`
+```sh
+PS C:\WINDOWS\system32>  minikube start --vm-driver=hyperv --hyperv-virtual-switch=MinikubeVirtualSwitch
+Starting local Kubernetes v1.10.0 cluster...
+Starting VM...
+Getting VM IP address...
+Moving files into cluster...
+Downloading kubeadm v1.10.0
+Downloading kubelet v1.10.0
+Finished Downloading kubelet v1.10.0
+Finished Downloading kubeadm v1.10.0
+Setting up certs...
+Connecting to cluster...
+Setting up kubeconfig...
+Starting cluster components...
+Kubectl is now configured to use the cluster.
+Loading cached images from config file.
+```
+
+![](/images/other/docker-multi-docker/minikube-start-11.png)
+
+5. Check if `minikube` is running executing the `minikube status` command
+
+```sh
+PS C:\WINDOWS\system32> minikube status
+minikube: Running
+cluster: Running
+kubectl: Correctly Configured: pointing to minikube-vm at 192.168.0.114
+```
+
+![](/images/other/docker-multi-docker/minikube-status.png)
+
+6. Check if `kubectl` is working correctly as well executing the `kubectl cluster-info` command
+
+```sh
+PS C:\WINDOWS\system32> kubectl cluster-info
+Kubernetes master is running at https://192.168.0.114:8443
+CoreDNS is running at https://192.168.0.114:8443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+
+To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
+```
+
+![](/images/other/docker-multi-docker/kubectl-status.png)
+
+### Goal: Get the multi-client image running on our Kubernetes Cluster running as a container
+
+1. Similarities between `Docker Compose` and `Kubernetes`
+
+| Docker Compose  | Kubernetes  | Get a simple container running on our local Kubernetes Cluster running |
+|---|---|---|
+|Each entry can optionally get docker-compose to build an image   | Kubernetes expects all images to already be build   | Make sure our image is hosted on Docker Hub |
+| Each entry represents a container we want to create  | One config file per object we want to create  |Make one config file to create the container  |
+| Each entry defines the networking requirements (ports) |We have to manually set up all networking |Make one config file to set up networking  |
+
+2. Make sure our images are hosted on Docker Hub
+
+* Go to [Hub Docker](https://hub.docker.com/)
+
+![](/images/other/docker-multi-docker/hub-docker.png)
+
+* Ensure the NodeJs images are there
+
+3. Make one config file to create the container
+
+* Create the new `simplek8s`directory
+```
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ mkdir simplek8s
+
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ cd simplek8s/
+
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+```
+* Create the `client-pod.yaml` document
+```yml
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: client-pod
+  labels:
+    component: web
+spec:
+  containers:
+    - name: client
+      image: peelmicro/multi-client
+      ports: 
+        - containerPort: 3000
+```
+4. Make one config file to set up networking
+* Create the `client-node-port.yaml` document
+```yml
+apiVersion: v1
+kind: Service
+metadata: 
+  name: client-node-port
+spec:
+  type: NodePort
+  ports: 
+    - port: 3050
+      targetPort: 3000
+      nodePort: 31515
+  selector:
+    component: web
+```
+5. `Objects` in `Kubernetes`
+Objects serve different puposes like `running a container`, `monitoring a container`, `setting up networking`, etc:
+- StatefulSet
+- ReplicaController
+- Pod
+- Service
+6. `Apis` in `Kubernetes`
+Each API version defines a different set of `objects` we can use. Examples:
+
+`apiVersion: v1`
+- ComponentStatus
+- ConfigMap
+- EndPoints
+- Event
+- Namespace
+- Pod
+
+`apiVersion: apps/v1`
+- ControllerRevision
+- StatefulSet
+
+6. `Pods` in `Kubernetes`
+- A Pod is a grouping of containers with a very common purpose. 
+- In Kubernetes world there's not such a thing as creating a single container. The smallest thing is a `Pod`, that can have just a single container.
+- It's used to group the containers that must run together.
+- Example:
+
+![](/images/other/docker-multi-docker/pod-example.png)
+
+7. `Services` in `Kubernetes`
+- Services set up networking in a Kubernetes Cluster
+- There are different types:
+1. ClusterIP
+2. NodePort - Exposes a container to the outside world (only good for dev purposes!!!)
+3. LoadBalancer
+4. Ingress 
+
+![](/images/other/docker-multi-docker/NodePort.png)
+
+- The `selector: component: web` on the `client-node-port` is used to conect with the `client-pod` labeled with `component: web`
+- `ports`:
+1. `port: 3050`- Other Pod that needs multi-client Pod. At the moment can be ignored in dev.
+2. `targetPort: 3000` - Target Pod -> multi-client Pod
+3. `nodePort: 31515` - The one that we are going to access inside our browser to navigate. If we do not specify anyone in particular a random one is assigned.
+
+![](/images/other/docker-multi-docker/NodePort2.png)
+
+- The other types will be explained later.
+8. `kube-proxy` in `Kubernetes`
+Kube-proxy is the only one window to the external world from the VM created by Minikube
+
+![](/images/other/docker-multi-docker/kube-proxy.png)
+
+9. We use the `kubectl` command to feed a `config file` into `Kubernetes`
+
+![](/images/other/docker-multi-docker/KubectlUse.png)
+
+- `kubectl` - CLI we use to change our Kubernetes cluster
+- `apply` - **Change the current configuration** of our cluster
+- `f` - We want to specify a file that has the config changes
+- `<filename>` - Path to the file with the config 
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ cd simplek8s/
+
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+$ kubectl apply -f client-pod.yaml
+pod "client-pod" created
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+$ kubectl apply -f client-node-port.yaml
+service "client-node-port" created
+```
+* In order to get the status of the `kubernetes` cluster we use the `kubectl get` command
+
+![](/images/other/docker-multi-docker/KubectlUse2.png)
+
+- `get` - we want to retrieve information about a running object.
+- `pods` - Specifies the `object type` that we want to get information about
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+$ kubectl get pods
+NAME         READY     STATUS    RESTARTS   AGE
+client-pod   1/1       Running   0          6m
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+$ kubectl get services
+NAME               TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+client-node-port   NodePort    10.105.211.25   <none>        3050:31515/TCP   5m
+kubernetes         ClusterIP   10.96.0.1       <none>        443/TCP          1d
+```
+* The client is not available to access from the PC localhost
+
+![](/images/other/docker-multi-docker/KubectlUse3.png)
+
+* We need to access the `IP` where `Kubernetes` is running
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+$ minikube ip
+E1127 05:39:09.187642   88928 ip.go:48] Error getting IP:  Host is not running
+```
+* We need to start `minikube` first if we see the previous error
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+$ minikube start --vm-driver=hyperv --hyperv-virtual-switch=MinikubeVirtualSwitch
+Starting local Kubernetes v1.10.0 cluster...
+Starting VM...
+E1127 05:40:55.559124   66780 start.go:168] Error starting host: Error starting stopped host: exit status 1.
+
+Retrying.
+E1127 05:40:55.578128   66780 start.go:174] Error starting host:  Error starting stopped host: exit status 1
+================================================================================
+An error has occurred. Would you like to opt in to sending anonymized crash
+information to minikube to help prevent future errors?
+To opt out of these messages, run the command:
+        minikube config set WantReportErrorPrompt false
+================================================================================
+Please enter your response [Y/n]: y
+```
+- In order to solve this use we need to stop `minikube` from `Hyper-V Manager` and disable the '[ ]Enable Dynamyc Memory` as explained in [Minikube on Windows 10 with Hyper-V](https://medium.com/@JockDaRock/minikube-on-windows-10-with-hyper-v-6ef0f4dc158c)
+
+![](/images/other/docker-multi-docker/KubectlUse4.png)
+
+- minikube must be started again
+- If the same error happens, we have to remove the current minikube instance, as explained in [Setting up Kubernetes on Windows with Minikube](https://rharshad.com/kubernetes-minikube-windows-setup/)
+
+![](/images/other/docker-multi-docker/KubectlUse5.png)
+
+![](/images/other/docker-multi-docker/KubectlUse6.png)
+
+![](/images/other/docker-multi-docker/KubectlUse7.png)
+
+![](/images/other/docker-multi-docker/KubectlUse8.png)
+
+* We need to start `minikube` again
+```sh
+PS C:\WINDOWS\system32> minikube start --vm-driver=hyperv --hyperv-virtual-switch=MinikubeVirtualSwitch
+Starting local Kubernetes v1.10.0 cluster...
+Starting VM...
+Downloading Minikube ISO
+ 170.78 MB / 170.78 MB [============================================] 100.00% 0s
+Getting VM IP address...
+Moving files into cluster...
+Downloading kubeadm v1.10.0
+Downloading kubelet v1.10.0
+Finished Downloading kubeadm v1.10.0
+Finished Downloading kubelet v1.10.0
+Setting up certs...
+Connecting to cluster...
+Setting up kubeconfig...
+Starting cluster components...
+Kubectl is now configured to use the cluster.
+Loading cached images from config file.
+```
+```sh
+PS C:\WINDOWS\system32> minikube status
+minikube: Running
+cluster: Running
+kubectl: Correctly Configured: pointing to minikube-vm at 10.0.0.8
+```
+```sh
+PS C:\WINDOWS\system32> minikube ip
+10.0.0.8
+```
+- If you receive an error when executing `minikube stop`
+```sh
+PS C:\WINDOWS\system32> minikube status
+minikube: Running
+cluster: Running
+kubectl: Correctly Configured: pointing to minikube-vm at 10.0.0.8
+```
+```sh
+PS C:\WINDOWS\system32> minikube stop
+Stopping local Kubernetes cluster...
+Error stopping machine:  Error stopping host: minikube: exit status 1
+```
+- Execute `minikube ssh "sudo poweroff"` instead
+```sh
+PS C:\WINDOWS\system32> minikube ssh "sudo poweroff"
+PS C:\WINDOWS\system32>
+```
+```sh
+PS C:\WINDOWS\system32> minikube status
+minikube: Stopped
+cluster:
+kubectl:
+```
+- Start it again with `minikube start`
+```sh
+Starting local Kubernetes v1.10.0 cluster...
+Starting VM...
+Getting VM IP address...
+Moving files into cluster...
+Setting up certs...
+Connecting to cluster...
+Setting up kubeconfig...
+Starting cluster components...
+Kubectl is now configured to use the cluster.
+Loading cached images from config file.
+```
+```sh
+PS C:\WINDOWS\system32> minikube status
+minikube: Running
+cluster: Running
+kubectl: Correctly Configured: pointing to minikube-vm at 10.0.0.8
+```
+* Browse to http://10.0.0.8:31515/
+
+![](/images/other/docker-multi-docker/KubectlUse9.png)
+
+10. How `Kubernetes` works
+
+![](/images/other/docker-multi-docker/kube-apiserver.png)
+
+- We always work with the `Master` never with the `Nodes`. 
+- The `Master` is always watching the `Nodes` to ensure that `what is needed` `is running`
+- `Kubernetes` is a system to deploy containerized apps
+- `Nodes` are individual machines (or vm's) that run containers
+- `Masters` are machines (or vm's) with a set of programs to manage `nodes`
+- `Kubernetes` doesn't build our images - it get s them frome somewhere else
+- `Kubernetes (the master)` decides where to run each `container` - each `node` can run a dissimilar set of containers
+The most important:
+- To `deploy` something, we update the desire state of the master with a `config file`
+- The `master` works constantly to meet our desire state
+11. Ways of approaching deployments
+- `Imperative Deployments` - Do exactly these steps to arrive at this conatiner setup
+
+![](/images/other/docker-multi-docker/KubernetesDeployments.png)
+
+> You have to figure out the current state and customize your update with that state!
+
+![](/images/other/docker-multi-docker/KubernetesDeployments2.png)
+
+> You need to look for the containers that need to be update and update them manually.
+
+- `Declarative Deployments` - Our container setup should look like this, make it happen.
+
+![](/images/other/docker-multi-docker/KubernetesDeployments3.png)
+
+> We just need to update the **config file** with the changes and **Kubernetes** takes care of everything.
+
+![](/images/other/docker-multi-docker/KubernetesDeployments4.png)
+
+> **Kubernetes** can use both approaches, but the **Declarative** one is the recommended one.
+
+12. Check what `pods` are running
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+$ kubectl get pods
+Unable to connect to the server: dial tcp 10.0.0.8:8443: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because
+connected host has failed to respond.
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)$ minikube status
+minikube: Running
+cluster: Running
+kubectl: Misconfigured: pointing to stale minikube-vm.
+To fix the kubectl context, run minikube update-context
+```
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+$ minikube update-context
+Reconfigured kubeconfig IP, now pointing at 192.168.0.109
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+$ kubectl get pods
+Unable to connect to the server: dial tcp 192.168.0.109:8443: connectex: No connection could be made because the target machine actively refused it.
+```
+* Try adding the `KUBECONFIG` environment variable as explain on [Kubernetes on Windows Error: Unable to connect to the server: dial tcp [::1]:6445: connectex: No connection could be made because the target machine actively refused it](https://www.ntweekly.com/2018/05/08/kubernetes-windows-error-unable-connect-server-dial-tcp-16445-connectex-no-connection-made-target-machine-actively-refused/)
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+$ kubectl get pods
+Unable to connect to the server: x509: certificate is valid for 10.0.0.8, 10.96.0.1, 10.0.0.1, not 192.168.0.109
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+$ minikube status
+minikube: Running
+cluster: Running
+kubectl: Correctly Configured: pointing to minikube-vm at 192.168.0.109
+```
+* change the wifi connection
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+$ minikube status
+minikube: Running
+cluster: Running
+kubectl: Misconfigured: pointing to stale minikube-vm.
+To fix the kubectl context, run minikube update-context
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ minikube ssh "sudo poweroff"
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ minikube status
+E1129 17:18:42.844388   23924 status.go:80] Error getting cluster bootstrapper: getting kubeadm bootstrapper: getting ssh client: Error creating new ssh host from driver: Error getting ssh host name for driver: Host is not running
+```
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ minikube start
+Starting local Kubernetes v1.10.0 cluster...
+Starting VM...
+Getting VM IP address...
+Moving files into cluster...
+Setting up certs...
+Connecting to cluster...
+Setting up kubeconfig...
+Starting cluster components...
+Kubectl is now configured to use the cluster.
+Loading cached images from config file.
+```
+```sh
+$ minikube status
+minikube: Running
+cluster: Running
+kubectl: Correctly Configured: pointing to minikube-vm at 192.168.0.109
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ kubectl get pods
+NAME         READY     STATUS    RESTARTS   AGE
+client-pod   1/1       Running   2          1d
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ kubectl get services
+NAME               TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+client-node-port   NodePort    10.107.142.176   <none>        3050:31515/TCP   1d
+kubernetes         ClusterIP   10.96.0.1        <none>        443/TCP          1d
+```
+13. How to remove the `pods` and `services` from running
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ kubectl delete pod client-pod
+pod "client-pod" deleted
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ kubectl get pods
+No resources found.
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ kubectl delete service client-node-port
+service "client-node-port" deleted
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ kubectl get services
+NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   1d
+```
+14. Modify `.travis.yml` to avoid it deploys to `AWS Elastic Beanstalk`
+```yaml
+sudo: required
+language: node_js
+node_js: 
+  - "8"
+services:
+  - docker
+before_install:
+  - docker build -t peelmicro/test-client -f ./client/Dockerfile.dev ./client
+script:
+  - docker run peelmicro/test-client npm run test -- --coverage
+after_success:
+  - docker build -t peelmicro/multi-client ./client
+  - docker build -t peelmicro/multi-nginx ./nginx
+  - docker build -t peelmicro/multi-server ./server
+  - docker build -t peelmicro/multi-worker ./worker
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
+  - docker push peelmicro/multi-client
+  - docker push peelmicro/multi-nginx
+  - docker push peelmicro/multi-server
+  - docker push peelmicro/multi-worker
+# Commented out for Kubernettes
+# deploy:
+#   provider: elasticbeanstalk
+#   region: "us-east-1"
+#   app: "muti-docker"
+#   env: "MutiDocker-env"
+#   bucket_name: "elasticbeanstalk-us-east-1-972569889348"
+#   #bucket_path: ""
+#   on:
+#     branch: "master"
+#   access_key_id: $AWS_ACCESS_KEY
+#   secret_access_key:
+#     secure: "$AWS_SECRET_KEY"
+```
+15. Update `README.md`
+```md
+### This project is created as part of the "Docker and Kubernetes: The Complete Guide" Udemy Course 
+
+Follow the course on https://www.udemy.com/docker-and-kubernetes-the-complete-guide
+```
+16. Commit and push the changes to the `Github` repository
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+$ git add .
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        new file:   client-node-port.yaml
+        new file:   client-pod.yaml
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   ../.travis.yml
+        modified:   ../README.md
+        modified:   ../client/nginx/default.conf
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+$ git commit -m "Onwards to Kubernetes!"
+[master 7b25a4a] Onwards to Kubernetes!
+ 2 files changed, 24 insertions(+)
+ create mode 100644 simplek8s/client-node-port.yaml
+ create mode 100644 simplek8s/client-pod.yaml
+
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+$ git status
+On branch master
+Your branch is ahead of 'origin/master' by 1 commit.
+  (use "git push" to publish your local commits)
+
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        modified:   ../.travis.yml
+        modified:   ../README.md
+        modified:   ../client/nginx/default.conf
+
+
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+$ git commit -m "Onwards to Kubernetes!"
+[master 9ea7131] Onwards to Kubernetes!
+ 3 files changed, 15 insertions(+), 15 deletions(-)
+ ```
+ ```sh
+ Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+$ git push origin HEAD
+Counting objects: 12, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (11/11), done.
+Writing objects: 100% (12/12), 1.35 KiB | 346.00 KiB/s, done.
+Total 12 (delta 6), reused 0 (delta 0)
+remote: Resolving deltas: 100% (6/6), completed with 5 local objects.
+To https://github.com/peelmicro/multi-docker.git
+   cccdcca..9ea7131  HEAD -> master
+ ```
+
+### Updating Existing Objects
+ - New Goal: Update our existing pod to use the multi-worker image.
+ 
+ 1. Update the current `pod` config file.
+|Imperative  | Declarative  |
+|------- | ------- |
+|Run a command to list out current running pods | Update our config file that originally created the pod  |
+|Run a command to update the current pod to use a new image |Throw the update config file into `kubectl`  |
+
+- We are normally going to use the `declarative` approach
+
+![](/images/other/docker-multi-docker/UpdatingAnObject.png)
+
+> `client-pod.yaml`
+```yml
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: client-pod
+  labels:
+    component: web
+spec:
+  containers:
+    - name: client
+      image: peelmicro/multi-worker
+      ports:
+        - containerPort: 3000
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+$ kubectl apply -f client-pod.yaml
+pod "client-pod" configured
+```
+- `configured` means it has updated the configuration.
+
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+$ kubectl get pods
+NAME         READY     STATUS    RESTARTS   AGE
+client-pod   1/1       Running   1          1m
+```
+* In order to get detailed info about an object we need to use the `describe` command
+
+![](/images/other/docker-multi-docker/GetDetailedInfoAboutAnObject.png)
+
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+$ kubectl describe pod client-pod
+Name:         client-pod
+Namespace:    default
+Node:         minikube/192.168.0.109
+Start Time:   Fri, 30 Nov 2018 05:56:21 +0000
+Labels:       component=web
+Annotations:  kubectl.kubernetes.io/last-applied-configuration={"apiVersion":"v1","kind":"Pod","metadata":{"annotations":{},"labels":{"component":"web"},"name":"client-pod","namespace":"default"},"spec":{"container...
+Status:       Running
+IP:           172.17.0.4
+Containers:
+  client:
+    Container ID:   docker://9837ebfc5f103c85f5f2e73560918f40c1ebf68da4e941924c1f853b5f8bb0a1
+    Image:          peelmicro/multi-worker
+    Image ID:       docker-pullable://peelmicro/multi-worker@sha256:eb0a0cdb16e30ea5abde8d11b5a7665afeb4dcb53afd7b6c9fd85158e9c9ed74
+    Port:           3000/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Fri, 30 Nov 2018 05:57:07 +0000
+    Last State:     Terminated
+      Reason:       Completed
+      Exit Code:    0
+      Started:      Fri, 30 Nov 2018 05:56:38 +0000
+      Finished:     Fri, 30 Nov 2018 05:56:39 +0000
+    Ready:          True
+    Restart Count:  1
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from default-token-6gfdz (ro)
+Conditions:
+  Type           Status
+  Initialized    True
+  Ready          True
+  PodScheduled   True
+Volumes:
+  default-token-6gfdz:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  default-token-6gfdz
+    Optional:    false
+QoS Class:       BestEffort
+Node-Selectors:  <none>
+Tolerations:     node.kubernetes.io/not-ready:NoExecute for 300s
+                 node.kubernetes.io/unreachable:NoExecute for 300s
+Events:
+  Type    Reason                 Age              From               Message
+  ----    ------                 ----             ----               -------
+  Normal  Scheduled              5m               default-scheduler  Successfully assigned client-pod to minikube
+  Normal  SuccessfulMountVolume  5m               kubelet, minikube  MountVolume.SetUp succeeded for volume "default-token-6gfdz"
+  Normal  Pulling                5m               kubelet, minikube  pulling image "peelmicro/multi-client"
+  Normal  Pulled                 5m               kubelet, minikube  Successfully pulled image "peelmicro/multi-client"
+  Normal  Killing                5m               kubelet, minikube  Killing container with id docker://client:Container spec hash changed (1530414485 vs 1174731426).. Container will be killed and recreated.
+  Normal  Pulling                5m               kubelet, minikube  pulling image "peelmicro/multi-worker"
+  Normal  Created                5m (x2 over 5m)  kubelet, minikube  Created container
+  Normal  Pulled                 5m               kubelet, minikube  Successfully pulled image "peelmicro/multi-worker"
+  Normal  Started                5m (x2 over 5m)  kubelet, minikube  Started container
+  ```
+  2. Make another change to the `pod` config file to update the `containerPort`
+  > `client-pod.yaml`
+  ```yml
+  apiVersion: v1
+kind: Pod
+metadata: 
+  name: client-pod
+  labels:
+    component: web
+spec:
+  containers:
+    - name: client
+      image: peelmicro/multi-worker
+      ports: 
+        - containerPort: 9999
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+$ kubectl apply -f client-pod.yaml
+The Pod "client-pod" is invalid: spec: Forbidden: pod updates may not change fields other than `spec.containers[*].image`, `spec.initContainers[*].image`, `spec.activeDeadlineSeconds` or `spec.tolerations` (only additions to existing tolerations)
+{"Volumes":[{"Name":"default-token-6gfdz","HostPath":null,"EmptyDir":null,"GCEPersistentDisk":null,"AWSElasticBlockStore":null,"GitRepo":null,"Secret":{"SecretName":"default-token-6gfdz","Items":null,"DefaultMode":420,"Optional":null},"NFS":null,"ISCSI":null,"Glusterfs":null,"PersistentVolumeClaim":null,"RBD":null,"Quobyte":null,"FlexVolume":null,"Cinder":null,"CephFS":null,"Flocker":null,"DownwardAPI":null,"FC":null,"AzureFile":null,"ConfigMap":null,"VsphereVolume":null,"AzureDisk":null,"PhotonPersistentDisk":null,"Projected":null,"PortworxVolume":null,"ScaleIO":null,"StorageOS":null}],"InitContainers":null,"Containers":[{"Name":"client","Image":"peelmicro/multi-worker","Command":null,"Args":null,"WorkingDir":"","Ports":[{"Name":"","HostPort":0,"ContainerPort":
+
+A: 9999,"Protocol":"TCP","HostIP":""}],"EnvFrom":null,"Env":null,"Resources":{"Limits":null,"Requests":null},"VolumeMounts":[{"Name":"default-token-6gfdz","ReadOnly":true,"MountPath":"/var/run/secrets/kubernetes.io/serviceaccount","SubPath":"","MountPropagation":null}],"VolumeDevices":null,"LivenessProbe":null,"ReadinessProbe":null,"Lifecycle":null,"TerminationMessagePath":"/dev/termination-log","TerminationMessagePolicy":"File","ImagePullPolicy":"Always","SecurityContext":null,"Stdin":false,"StdinOnce":false,"TTY":false}],"RestartPolicy":"Always","TerminationGracePeriodSeconds":30,"ActiveDeadlineSeconds":null,"DNSPolicy":"ClusterFirst","NodeSelector":null,"ServiceAccountName":"default","AutomountServiceAccountToken":null,"NodeName":"minikube","SecurityContext":{"HostNetwork":false,"HostPID":false,"HostIPC":false,"ShareProcessNamespace":null,"SELinuxOptions":null,"RunAsUser":null,"RunAsGroup":null,"RunAsNonRoot":null,"SupplementalGroups":null,"FSGroup":null},"ImagePullSecrets":null,"Hostname":"","Subdomain":"","Affinity":null,"SchedulerName":"default-scheduler","Tolerations":[{"Key":"node.kubernetes.io/not-ready","Operator":"Exists","Value":"","Effect":"NoExecute","TolerationSeconds":300},{"Key":"node.kubernetes.io/unreachable","Operator":"Exists","Value":"","Effect":"NoExecute","TolerationSeconds":300}],"HostAliases":null,"PriorityClassName":"","Priority":null,"DNSConfig":null}
+
+B: 3000,"Protocol":"TCP","HostIP":""}],"EnvFrom":null,"Env":null,"Resources":{"Limits":null,"Requests":null},"VolumeMounts":[{"Name":"default-token-6gfdz","ReadOnly":true,"MountPath":"/var/run/secrets/kubernetes.io/serviceaccount","SubPath":"","MountPropagation":null}],"VolumeDevices":null,"LivenessProbe":null,"ReadinessProbe":null,"Lifecycle":null,"TerminationMessagePath":"/dev/termination-log","TerminationMessagePolicy":"File","ImagePullPolicy":"Always","SecurityContext":null,"Stdin":false,"StdinOnce":false,"TTY":false}],"RestartPolicy":"Always","TerminationGracePeriodSeconds":30,"ActiveDeadlineSeconds":null,"DNSPolicy":"ClusterFirst","NodeSelector":null,"ServiceAccountName":"default","AutomountServiceAccountToken":null,"NodeName":"minikube","SecurityContext":{"HostNetwork":false,"HostPID":false,"HostIPC":false,"ShareProcessNamespace":null,"SELinuxOptions":null,"RunAsUser":null,"RunAsGroup":null,"RunAsNonRoot":null,"SupplementalGroups":null,"FSGroup":null},"ImagePullSecrets":null,"Hostname":"","Subdomain":"","Affinity":null,"SchedulerName":"default-scheduler","Tolerations":[{"Key":"node.kubernetes.io/not-ready","Operator":"Exists","Value":"","Effect":"NoExecute","TolerationSeconds":300},{"Key":"node.kubernetes.io/unreachable","Operator":"Exists","Value":"","Effect":"NoExecute","TolerationSeconds":300}],"HostAliases":null,"PriorityClassName":"","Priority":null,"DNSConfig":null}
+```
+- Only those `four` configuration properties are allowed to be changed on a `pod`
+
+![](/images/other/docker-multi-docker/OnlySomeConfigurationValuesCanBeChanged.png)
+
+3. Creation of a `deployment` object.
+- We need to use the `deployment` configuration object to make additional changes.
+
+![](/images/other/docker-multi-docker/ObjectTypes.png)
+
+- These are the diferences between `Pods` and `Deployments`
+
+![](/images/other/docker-multi-docker/PodsVsDeployments.png)
+
+- In order to use `Deployment` we need to use a `pod` template
+
+![](/images/other/docker-multi-docker/PodTemplate.png)
+
+- We can make changes just updating the `pod` template
+> `client-deployment.yaml`
+```yml
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: client-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: web
+  template:
+    metadata:
+      labels:
+        component: web
+    spec:
+      containers: 
+        - name: client
+          image: peelmicro/multi-client
+          ports: 
+            - containerPort: 3000
+```
+- `replicas` is the number of different `pods` that the deployment is supposed to make.
+- `selector` contains the name of the `pod` and `service` that must be run
+
+![](/images/other/docker-multi-docker/DeploymentSelector.png)
+
+4. Applying a `deployment`
+
+- To remove an object we need to use the `delete` command.
+
+![](/images/other/docker-multi-docker/RemoveAnObject.png)
+
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+$ kubectl get pods
+NAME         READY     STATUS    RESTARTS   AGE
+client-pod   1/1       Running   1          57m
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+$ kubectl delete -f client-pod
+error: the path "client-pod" does not exist
+```
+- The `extension` must be used to be able to use the `delete` command
+```
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+$ kubectl delete -f client-pod.yaml
+pod "client-pod" deleted
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+$ kubectl get pods
+No resources found.
+```
+- Apply the new `deployment` object
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+$ kubectl apply -f client-deployment.yaml
+deployment.apps "client-deployment" created
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+$ kubectl get pods
+NAME                                 READY     STATUS    RESTARTS   AGE
+client-deployment-59b84dbbf6-4bmlq   1/1       Running   0          25s
+```
+- We can use the `get` command to obtain information about the `deployment` object
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+$ kubectl get deployments
+NAME                DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+client-deployment   1         1         1            1           1m
+```
+- `DESIRED`: Number of `replicas` we requested to create
+- `CURRENT`: Number of `replicas` currently up and running
+- `UP-TO-DATE`: Number of `replicas` up-to-date running
+- `AVAILABLE`: Number of `pods` currently up and running
+
+5. Browse the `client` container that is currently running 
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+$ minikube ip
+192.168.0.109
+```
+
+- Browse to http://192.168.0.109:31515/
+
+![](/images/other/docker-multi-docker/BrowseDeploymentClientContainerRunning.png)
+
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)$ kubectl get pods -o wide
+NAME                                 READY     STATUS    RESTARTS   AGE       IP           NODE
+client-deployment-59b84dbbf6-4bmlq   1/1       Running   0          15m       172.17.0.4   minikube
+```
+- `IP`: Every single `pod` that we create gets its own IP address assign to it. It's internal to the Node (Virtual machine).
+
+6. Update the `port` from the current `pod` and other config values
+- Change the port inside the `client-deployment.yaml` config file
+```yml
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: client-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: web
+  template:
+    metadata:
+      labels:
+        component: web
+    spec:
+      containers: 
+        - name: client
+          image: peelmicro/multi-client
+          ports: 
+            - containerPort: 9999
+```
+- Update the config file
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+$ kubectl apply -f client-deployment.yaml
+deployment.apps "client-deployment" configured
+```
+- This time it has been configured without giving any error
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+$ kubectl get deployments
+NAME                DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+client-deployment   1         1         1            1           24m
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+$ kubectl get pods -o wide
+NAME                                 READY     STATUS    RESTARTS   AGE       IP           NODE
+client-deployment-6ff5c58945-d2cv5   1/1       Running   0          1m        172.17.0.6   minikube
+```
+- Kubernates delete the pod and create a new one. Check out the `AGE` value
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+$ kubectl describe  pods
+Name:           client-deployment-6ff5c58945-d2cv5
+Namespace:      default
+Node:           minikube/192.168.0.109
+Start Time:     Fri, 30 Nov 2018 07:26:24 +0000
+Labels:         component=web
+                pod-template-hash=2991714501
+Annotations:    <none>
+Status:         Running
+IP:             172.17.0.6
+Controlled By:  ReplicaSet/client-deployment-6ff5c58945
+Containers:
+  client:
+    Container ID:   docker://4d48c4ce33c7fce915d2d2da194f4d6c4748b3077d0ff6f22479019229b22f5f
+    Image:          peelmicro/multi-client
+    Image ID:       docker-pullable://peelmicro/multi-client@sha256:9e4aec59d66a95cdcac94bebdd9ae7a81ea3ca64434fd83e7f583604bf503734
+    Port:           9999/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Fri, 30 Nov 2018 07:26:27 +0000
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from default-token-6gfdz (ro)
+Conditions:
+  Type           Status
+  Initialized    True
+  Ready          True
+  PodScheduled   True
+Volumes:
+  default-token-6gfdz:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  default-token-6gfdz
+    Optional:    false
+QoS Class:       BestEffort
+Node-Selectors:  <none>
+Tolerations:     node.kubernetes.io/not-ready:NoExecute for 300s
+                 node.kubernetes.io/unreachable:NoExecute for 300s
+Events:
+  Type    Reason                 Age   From               Message
+  ----    ------                 ----  ----               -------
+  Normal  Scheduled              3m    default-scheduler  Successfully assigned client-deployment-6ff5c58945-d2cv5 to minikube
+  Normal  SuccessfulMountVolume  3m    kubelet, minikube  MountVolume.SetUp succeeded for volume "default-token-6gfdz"
+  Normal  Pulling                3m    kubelet, minikube  pulling image "peelmicro/multi-client"
+  Normal  Pulled                 3m    kubelet, minikube  Successfully pulled image "peelmicro/multi-client"
+  Normal  Created                3m    kubelet, minikube  Created container
+  Normal  Started                3m    kubelet, minikube  Started container
+```
+- The port assigned is `Port: 9999/TCP`
+
+* Change the `client-deployment.yaml` again to put more `replicas`
+```yml
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: client-deployment
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      component: web
+  template:
+    metadata:
+      labels:
+        component: web
+    spec:
+      containers: 
+        - name: client
+          image: peelmicro/multi-client
+          ports: 
+            - containerPort: 9999
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+$ kubectl apply -f client-deployment.yaml
+deployment.apps "client-deployment" configured
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+$ kubectl get deployments
+NAME                DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+client-deployment   5         5         5            5           9h
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+$ kubectl get pods
+NAME                                 READY     STATUS    RESTARTS   AGE
+client-deployment-6ff5c58945-5gk92   1/1       Running   0          1m
+client-deployment-6ff5c58945-8dp2g   1/1       Running   0          1m
+client-deployment-6ff5c58945-d2cv5   1/1       Running   0          9h
+client-deployment-6ff5c58945-gmzlw   1/1       Running   0          1m
+client-deployment-6ff5c58945-j9vp7   1/1       Running   0          1m
+```
+* Change the `client-deployment.yaml` again to use another `image`
+```yml
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: client-deployment
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      component: web
+  template:
+    metadata:
+      labels:
+        component: web
+    spec:
+      containers: 
+        - name: client
+          image: peelmicro/multi-worker
+          ports: 
+            - containerPort: 9999
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+$ kubectl apply -f client-deployment.yaml
+deployment.apps "client-deployment" configured
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+$ kubectl get deployments
+NAME                DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+client-deployment   5         7         3            4           9h
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+$ kubectl get pods
+NAME                                 READY     STATUS    RESTARTS   AGE
+client-deployment-78cf7b9dfb-gjpqz   1/1       Running   0          1m
+client-deployment-78cf7b9dfb-mntrd   1/1       Running   0          1m
+client-deployment-78cf7b9dfb-pzv2z   1/1       Running   0          1m
+client-deployment-78cf7b9dfb-rzkfs   1/1       Running   0          1m
+client-deployment-78cf7b9dfb-t4hb9   1/1       Running   0          1m
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+$ kubectl get deployments
+NAME                DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+client-deployment   5         5         5            5           9h
+```
+7. Change the `image` version
+
+![](/images/other/docker-multi-docker/ChangeImage.png)
+
+I) Modify the `client-deployment.yaml` config file to use the `multi-client` image again
+```yml
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: client-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: web
+  template:
+    metadata:
+      labels:
+        component: web
+    spec:
+      containers: 
+        - name: client
+          image: peelmicro/multi-client
+          ports: 
+            - containerPort: 3000
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+$ kubectl apply -f client-deployment.yaml
+deployment.apps "client-deployment" configured
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+$ kubectl get deployments
+NAME                DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+client-deployment   1         1         1            1           10h
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+$ kubectl get pods
+NAME                                 READY     STATUS    RESTARTS   AGE
+client-deployment-59b84dbbf6-dc279   1/1       Running   0          50s
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+$ minikube ip
+192.168.0.109
+```
+* Browse to http://192.168.0.109:31515/
+
+![](/images/other/docker-multi-docker/ChangeImageVersion.png)
+
+II) Update the `multi-client` image and push it to `Docker Hub`
+
+* Change the `App.js` to put another header to identify the version
+```js
+import React, { Component } from 'react';
+import logo from './logo.svg';
+import './App.css';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import OtherPage from './OtherPage';
+import Fib from './Fib';
+
+class App extends Component {
+  render() {
+    return (
+      <Router>
+        <div className="App">
+          <header className="App-header">
+            <img src={logo} className="App-logo" alt="logo" />
+            <h1 className="App-title">Fib Calculator vesion 2</h1>
+            <Link to="/">Home</Link>
+            <Link to="/otherpage">Other Page</Link>
+          </header>
+          <div>
+            <Route exact path="/" component={Fib} />
+            <Route path="/otherpage" component={OtherPage} />
+          </div>
+        </div>
+      </Router>
+    );
+  }
+}
+
+export default App;
+```
+* Rebuild the `multi-client` image
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ docker build -t peelmicro/multi-client ./client
+Sending build context to Docker daemon    341kB
+Step 1/10 : FROM node:alpine as builder
+ ---> 4b3c025f5508
+Step 2/10 : WORKDIR /app
+ ---> Using cache
+ ---> 1a05d05e0b5b
+Step 3/10 : COPY ./package.json ./
+ ---> Using cache
+ ---> 829609b8e407
+Step 4/10 : RUN npm install
+ ---> Using cache
+ ---> a2ca727a111e
+Step 5/10 : COPY . .
+ ---> d9b8311b417a
+Step 6/10 : RUN npm run build
+ ---> Running in 0d52a8bd0ab7
+
+> client@0.1.0 build /app
+> react-scripts build
+
+Creating an optimized production build...
+Compiled successfully.
+
+File sizes after gzip:
+
+  47.2 KB  build/static/js/1.7b85cb19.chunk.js
+  1.37 KB  build/static/js/main.4bd87b42.chunk.js
+  763 B    build/static/js/runtime~main.229c360f.js
+  510 B    build/static/css/main.0b4a1755.chunk.css
+
+The project was built assuming it is hosted at the server root.
+You can control this with the homepage field in your package.json.
+For example, add this to build it for GitHub Pages:
+
+  "homepage" : "http://myname.github.io/myapp",
+
+The build folder is ready to be deployed.
+You may serve it with a static server:
+
+  yarn global add serve
+  serve -s build
+
+Find out more about deployment here:
+
+  http://bit.ly/CRA-deploy
+
+Removing intermediate container 0d52a8bd0ab7
+ ---> 0a5cbc881d07
+Step 7/10 : FROM nginx
+ ---> e81eb098537d
+Step 8/10 : EXPOSE 3000
+ ---> Using cache
+ ---> 021956dfacb6
+Step 9/10 : COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
+ ---> Using cache
+ ---> bb5bf32d71ca
+Step 10/10 : COPY --from=builder /app/build /usr/share/nginx/html
+ ---> 47577da1f5ee
+Successfully built 47577da1f5ee
+Successfully tagged peelmicro/multi-client:latest
+SECURITY WARNING: You are building a Docker image from Windows against a non-Windows Docker host. All files and directories added to build context will have '-rwxr-xr-x' permissions. It is recommended to double check and reset permissions for sensitive files and directories.
+```
+* Push the `multi-client` image to `Docker Hub`
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ docker push peelmicro/multi-client
+The push refers to repository [docker.io/peelmicro/multi-client]
+6b2a185eccae: Pushed
+b439c254b1a6: Layer already exists
+9a8f339aeebe: Layer already exists
+876456b96423: Layer already exists
+ef68f6734aa4: Layer already exists
+latest: digest: sha256:038514b50e1b2c8511175dc516554aace22daf21f263c46231201889ce7ddb3f size: 1365
+```
+III) Recreate our `pods` with the `lastest version` of the `multi-client` image
+* As it can be seen on [Force pods to re-pull an image without changing the image tag #33664](https://github.com/kubernetes/kubernetes/issues/33664), this is not easy to get.
+* If we try to use `kubectl apply` to get the lastest image it won't work because there have been no changes on the `client-deployment.yaml` config file.
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+$ kubectl apply -f client-deployment.yaml
+deployment.apps "client-deployment" unchanged
+```
+* There are 3 possible solutions:
+I) **Manually delete pods to get the deployment to recreate them with the latest version**: `Deleting pods manually seems silly`
+II) **Tag built images with a real version number and specify that version in the config file**: `Adds an extra step in the production deployment process`
+III) **Use an imperative command to update the image version the deployment should use**: `Uses an imperative command`
+
+- The third solution seems to be `the lesser evil`. It requires 2 steps:
+I) `Tag` the image with a `version number`, push to `Docker Hub`
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ docker build -t peelmicro/multi-client:v2 ./client
+Sending build context to Docker daemon    341kB
+Step 1/10 : FROM node:alpine as builder
+ ---> 4b3c025f5508
+Step 2/10 : WORKDIR /app
+ ---> Using cache
+ ---> 1a05d05e0b5b
+Step 3/10 : COPY ./package.json ./
+ ---> Using cache
+ ---> 829609b8e407
+Step 4/10 : RUN npm install
+ ---> Using cache
+ ---> a2ca727a111e
+Step 5/10 : COPY . .
+ ---> Using cache
+ ---> d9b8311b417a
+Step 6/10 : RUN npm run build
+ ---> Using cache
+ ---> 0a5cbc881d07
+Step 7/10 : FROM nginx
+ ---> e81eb098537d
+Step 8/10 : EXPOSE 3000
+ ---> Using cache
+ ---> 021956dfacb6
+Step 9/10 : COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
+ ---> Using cache
+ ---> bb5bf32d71ca
+Step 10/10 : COPY --from=builder /app/build /usr/share/nginx/html
+ ---> Using cache
+ ---> 47577da1f5ee
+Successfully built 47577da1f5ee
+Successfully tagged peelmicro/multi-client:v2
+SECURITY WARNING: You are building a Docker image from Windows against a non-Windows Docker host. All files and directories added to build context will have '-rwxr-xr-x' permissions. It is recommended to double check and reset permissions for sensitive files and directories.
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ docker push peelmicro/multi-client:v2
+The push refers to repository [docker.io/peelmicro/multi-client]
+6b2a185eccae: Layer already exists
+b439c254b1a6: Layer already exists
+9a8f339aeebe: Layer already exists
+876456b96423: Layer already exists
+ef68f6734aa4: Layer already exists
+v2: digest: sha256:038514b50e1b2c8511175dc516554aace22daf21f263c46231201889ce7ddb3f size: 1365
+```
+II) `Run` a specific `kubectl` command forcing the deployment to use the the `image version`
+
+![](/images/other/docker-multi-docker/RecreatePodWithLatestImage.png)
+
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+$ kubectl set image deployment/client-deployment client=peelmicro/multi-client:v2
+deployment.apps "client-deployment" image updated
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+$ kubectl get pods
+NAME                                READY     STATUS    RESTARTS   AGE
+client-deployment-8846f9858-cvg8t   1/1       Running   0          41s
+```
+* Browse http://192.168.0.109:31515/
+
+![](/images/other/docker-multi-docker/RecreatePodWithLatestImage2.png)
+
+8. Reconfiguring `Docker Client` to talk to the `Virtual Machine (Node)` used by `Kubernetes`
+- Execute `Docker ps` 
+```
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
+$ docker ps
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+```
+
+![](/images/other/docker-multi-docker/ConfigureDockerClient.png)
+
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ eval $(minikube docker-env)
+bash: syntax error near unexpected token `('
+```
+- It doesn't work in Windows. We need to run the following inside `PowerShell`
+```sh
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+PS C:\WINDOWS\system32> minikube docker-env --shell powershell
+$Env:DOCKER_TLS_VERIFY = "1"
+$Env:DOCKER_HOST = "tcp://192.168.0.109:2376"
+$Env:DOCKER_CERT_PATH = "C:\Users\juan.pablo.perez\.minikube\certs"
+$Env:DOCKER_API_VERSION = "1.35"
+# Run this command to configure your shell:
+# & minikube docker-env | Invoke-Expression
+```
+```sh
+PS C:\WINDOWS\system32> $Env:DOCKER_TLS_VERIFY = "1"
+PS C:\WINDOWS\system32> $Env:DOCKER_HOST = "tcp://192.168.0.109:2376"
+PS C:\WINDOWS\system32> $Env:DOCKER_CERT_PATH = "C:\Users\juan.pablo.perez\.minikube\certs"
+PS C:\WINDOWS\system32> $Env:DOCKER_API_VERSION = "1.35"
+```
+```sh
+PS C:\WINDOWS\system32> docker ps
+CONTAINER ID        IMAGE                        COMMAND                  CREATED             STATUS              PORTS               NAMES
+0a99c1cb32a3        peelmicro/multi-client       "nginx -g 'daemon of…"   26 minutes ago      Up 26 minutes                           k8s_client_client-deployment-8846f9858-cvg8t_default_4ec3b4fd-f4cc-11e8-b3dd-00155dc00118_0
+5585ecfeb457        k8s.gcr.io/pause-amd64:3.1   "/pause"                 26 minutes ago      Up 26 minutes                           k8s_POD_client-deployment-8846f9858-cvg8t_default_4ec3b4fd-f4cc-11e8-b3dd-00155dc00118_0
+b275f6a054c2        af20925d51a3                 "kube-apiserver --ad…"   2 hours ago         Up 2 hours                              k8s_kube-apiserver_kube-apiserver-minikube_kube-system_0df2ebb4fc765e127c7c294db5a0e865_95
+11a23992d001        704ba848e69a                 "kube-scheduler --ku…"   2 hours ago         Up 2 hours                              k8s_kube-scheduler_kube-scheduler-minikube_kube-system_2acb197d598c4730e3f5b159b241a81b_54
+971c28567426        ad86dbed1555                 "kube-controller-man…"   2 hours ago         Up 2 hours                              k8s_kube-controller-manager_kube-controller-manager-minikube_kube-system_dde005f4fe3533d3931c0406031b5fd9_56
+190c53422207        4689081edb10                 "/storage-provisioner"   25 hours ago        Up 25 hours                             k8s_storage-provisioner_storage-provisioner_kube-system_ae5c72e9-f270-11e8-bb1e-00155dc00118_6
+65d5f69a993f        0dab2435c100                 "/dashboard --insecu…"   25 hours ago        Up 25 hours                             k8s_kubernetes-dashboard_kubernetes-dashboard-6f4cfc5d87-6pvlf_kube-system_adb0b5d6-f270-11e8-bb1e-00155dc00118_6
+7b903aaf4cda        80cc5ea4b547                 "/kube-dns --domain=…"   25 hours ago        Up 25 hours                             k8s_kubedns_kube-dns-86f4d74b45-c2862_kube-system_abfaf66d-f270-11e8-bb1e-00155dc00118_4
+9962088a0471        bfc21aadc7d3                 "/usr/local/bin/kube…"   25 hours ago        Up 25 hours                             k8s_kube-proxy_kube-proxy-k7tpw_kube-system_48306f5f-f3fb-11e8-bab5-00155dc00118_0
+c4800fcc4fa7        k8s.gcr.io/pause-amd64:3.1   "/pause"                 25 hours ago        Up 25 hours                             k8s_POD_kube-proxy-k7tpw_kube-system_48306f5f-f3fb-11e8-bab5-00155dc00118_0
+6e570b1dbb8f        367cdc8433a4                 "/coredns -conf /etc…"   25 hours ago        Up 25 hours                             k8s_coredns_coredns-c4cffd6dc-sclh4_kube-system_ae4082ad-f270-11e8-bb1e-00155dc00118_2
+1c740a0c5547        6f7f2dc7fab5                 "/sidecar --v=2 --lo…"   25 hours ago        Up 25 hours                             k8s_sidecar_kube-dns-86f4d74b45-c2862_kube-system_abfaf66d-f270-11e8-bb1e-00155dc00118_2
+a2e99c0cd9cf        k8s.gcr.io/pause-amd64:3.1   "/pause"                 25 hours ago        Up 25 hours                             k8s_POD_coredns-c4cffd6dc-sclh4_kube-system_ae4082ad-f270-11e8-bb1e-00155dc00118_2
+8cc313e7eb33        c2ce1ffb51ed                 "/dnsmasq-nanny -v=2…"   25 hours ago        Up 25 hours                             k8s_dnsmasq_kube-dns-86f4d74b45-c2862_kube-system_abfaf66d-f270-11e8-bb1e-00155dc00118_2
+a68169b8064e        k8s.gcr.io/pause-amd64:3.1   "/pause"                 25 hours ago        Up 25 hours                             k8s_POD_storage-provisioner_kube-system_ae5c72e9-f270-11e8-bb1e-00155dc00118_2
+581dcd721bf4        k8s.gcr.io/pause-amd64:3.1   "/pause"                 25 hours ago        Up 25 hours                             k8s_POD_kubernetes-dashboard-6f4cfc5d87-6pvlf_kube-system_adb0b5d6-f270-11e8-bb1e-00155dc00118_2
+97e39d9b331e        k8s.gcr.io/pause-amd64:3.1   "/pause"                 25 hours ago        Up 25 hours                             k8s_POD_kube-dns-86f4d74b45-c2862_kube-system_abfaf66d-f270-11e8-bb1e-00155dc00118_2
+39dd0a69074e        52920ad46f5b                 "etcd --cert-file=/v…"   25 hours ago        Up 25 hours                             k8s_etcd_etcd-minikube_kube-system_20370018eab9174f884d18239b68411c_0
+02684a90bf4d        9c16409588eb                 "/opt/kube-addons.sh"    25 hours ago        Up 25 hours                             k8s_kube-addon-manager_kube-addon-manager-minikube_kube-system_8b52f08746ac78d32737b5f7fdffec52_2
+1d3ed907a323        k8s.gcr.io/pause-amd64:3.1   "/pause"                 25 hours ago        Up 25 hours                             k8s_POD_kube-scheduler-minikube_kube-system_2acb197d598c4730e3f5b159b241a81b_0
+507992a6702c        k8s.gcr.io/pause-amd64:3.1   "/pause"                 25 hours ago        Up 25 hours                             k8s_POD_kube-apiserver-minikube_kube-system_0df2ebb4fc765e127c7c294db5a0e865_0
+53ba900a3da7        k8s.gcr.io/pause-amd64:3.1   "/pause"                 25 hours ago        Up 25 hours                             k8s_POD_kube-controller-manager-minikube_kube-system_dde005f4fe3533d3931c0406031b5fd9_0
+1105703f6f77        k8s.gcr.io/pause-amd64:3.1   "/pause"                 25 hours ago        Up 25 hours                             k8s_POD_etcd-minikube_kube-system_20370018eab9174f884d18239b68411c_0
+ad9d52e5db7f        k8s.gcr.io/pause-amd64:3.1   "/pause"                 25 hours ago        Up 25 hours                             k8s_POD_kube-addon-manager-minikube_kube-system_8b52f08746ac78d32737b5f7fdffec52_2
+```
+
+![](/images/other/docker-multi-docker/ConfigureDockerClient2.png)
+
+```sh
+PS C:\WINDOWS\system32> docker logs 0a99c1cb32a3
+172.17.0.1 - - [30/Nov/2018:18:19:57 +0000] "GET / HTTP/1.1" 200 2057 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36" "-"
+172.17.0.1 - - [30/Nov/2018:18:19:57 +0000] "GET /static/js/main.4bd87b42.chunk.js HTTP/1.1" 200 3852 "http://192.168.0.109:31515/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36" "-"
+2018/11/30 18:19:58 [error] 5#5: *1 open() "/usr/share/nginx/html/api/values/current" failed (2: No such file or directory), client: 172.17.0.1, server: , request: "GET /api/values/current HTTP/1.1", host: "192.168.0.109:31515", referrer: "http://192.168.0.109:31515/"
+172.17.0.1 - - [30/Nov/2018:18:19:58 +0000] "GET /api/values/current HTTP/1.1" 404 555 "http://192.168.0.109:31515/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36" "-"
+2018/11/30 18:19:58 [error] 5#5: *2 open() "/usr/share/nginx/html/api/values/all" failed (2: No such file or directory), client: 172.17.0.1, server: , request: "GET /api/values/all HTTP/1.1", host: "192.168.0.109:31515", referrer: "http://192.168.0.109:31515/"
+172.17.0.1 - - [30/Nov/2018:18:19:58 +0000] "GET /api/values/all HTTP/1.1" 404 555 "http://192.168.0.109:31515/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36" "-"
+172.17.0.1 - - [30/Nov/2018:18:19:58 +0000] "GET /favicon.ico HTTP/1.1" 200 3870 "http://192.168.0.109:31515/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36" "-"
+```
+```sh
+PS C:\WINDOWS\system32> docker exec -it 0a99c1cb32a3 sh
+# ls
+bin   dev  home  lib64  mnt  proc  run   srv  tmp  var
+boot  etc  lib   media  opt  root  sbin  sys  usr
+# exit
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ kubectl get pods
+NAME                                READY     STATUS    RESTARTS   AGE
+client-deployment-8846f9858-cvg8t   1/1       Running   0          39m
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ kubectl logs client-deployment-8846f9858-cvg8t
+172.17.0.1 - - [30/Nov/2018:18:19:57 +0000] "GET / HTTP/1.1" 200 2057 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36" "-"
+172.17.0.1 - - [30/Nov/2018:18:19:57 +0000] "GET /static/js/main.4bd87b42.chunk.js HTTP/1.1" 200 3852 "http://192.168.0.109:31515/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)
+Chrome/70.0.3538.110 Safari/537.36" "-"
+2018/11/30 18:19:58 [error] 5#5: *1 open() "/usr/share/nginx/html/api/values/current" failed (2: No such file or directory), client: 172.17.0.1, server: , request: "GET /api/values/current HTTP/1.1", host: "192.168.0.109:31515", referrer: "http://192.168.0.109:31515/"
+172.17.0.1 - - [30/Nov/2018:18:19:58 +0000] "GET /api/values/current HTTP/1.1" 404 555 "http://192.168.0.109:31515/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36" "-"
+2018/11/30 18:19:58 [error] 5#5: *2 open() "/usr/share/nginx/html/api/values/all" failed (2: No such file or directory), client: 172.17.0.1, server: , request: "GET /api/values/all HTTP/1.1", host: "192.168.0.109:31515", referrer: "http://192.168.0.109:31515/"
+172.17.0.1 - - [30/Nov/2018:18:19:58 +0000] "GET /api/values/all HTTP/1.1" 404 555 "http://192.168.0.109:31515/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36" "-"
+172.17.0.1 - - [30/Nov/2018:18:19:58 +0000] "GET /favicon.ico HTTP/1.1" 200 3870 "http://192.168.0.109:31515/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110
+Safari/537.36" "-"
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ kubectl exec -it  client-deployment-8846f9858-cvg8t sh
+# ls
+bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+# exit
+```
+```sh
+PS C:\WINDOWS\system32> docker system prune -a
+WARNING! This will remove:
+        - all stopped containers
+        - all networks not used by at least one container
+        - all images without at least one container associated to them
+        - all build cache
+Are you sure you want to continue? [y/N] N
+```
+9. `Commit` and `Push` changes to Github Repository
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ git add .
+warning: LF will be replaced by CRLF in client/src/App.js.
+The file will have its original line endings in your working directory.
+
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+```
+```sh
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        modified:   README.md
+        modified:   client/src/App.js
+        new file:   simplek8s/client-deployment.yaml
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ git commit -m "Maintaining Sets of Containers with Deployments"
+[master 6fdf00d] Maintaining Sets of Containers with Deployments
+ 3 files changed, 21 insertions(+), 2 deletions(-)
+ create mode 100644 simplek8s/client-deployment.yaml
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$  git push origin HEAD
+Counting objects: 8, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (8/8), done.
+Writing objects: 100% (8/8), 884 bytes | 221.00 KiB/s, done.
+Total 8 (delta 5), reused 0 (delta 0)
+remote: Resolving deltas: 100% (5/5), completed with 5 local objects.
+To https://github.com/peelmicro/multi-docker.git
+   9ea7131..6fdf00d  HEAD -> master
+```
+### A Multi-Container App with Kubernetes
+
+![](/images/other/docker-multi-docker/MultiContainerKubernetes.png)
+
+![](/images/other/docker-multi-docker/MultiContainerKubernetes2.png)
+
+1. Build the `docker-compose` images 
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ docker-compose up --build
+Creating network "complex_default" with the default driver
+Building nginx
+Step 1/2 : FROM nginx
+ ---> e81eb098537d
+Step 2/2 : COPY ./default.conf /etc/nginx/conf.d/default.conf
+ ---> Using cache
+ ---> a94da78131c1
+Successfully built a94da78131c1
+Successfully tagged complex_nginx:latest
+Building api
+Step 1/6 : FROM node:alpine
+ ---> 4b3c025f5508
+Step 2/6 : WORKDIR /app
+ ---> Using cache
+ ---> 1a05d05e0b5b
+Step 3/6 : COPY package.json .
+ ---> 353767802d4a
+Step 4/6 : RUN npm install
+ ---> Running in 76e10e6b09f7
+
+> nodemon@1.18.3 postinstall /app/node_modules/nodemon
+> node bin/postinstall || exit 0
+
+Love nodemon? You can now support the project via the open collective:
+ > https://opencollective.com/nodemon/donate
+
+npm notice created a lockfile as package-lock.json. You should commit this file.
+npm WARN app No description
+npm WARN app No repository field.
+npm WARN app No license field.
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.4 (node_modules/fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.4: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+
+added 296 packages from 185 contributors and audited 2409 packages in 17.687s
+found 0 vulnerabilities
+
+Removing intermediate container 76e10e6b09f7
+ ---> 5e06c97d8967
+Step 5/6 : COPY . .
+ ---> d1c61aa228e0
+Step 6/6 : CMD ["npm", "run", "dev"]
+ ---> Running in 1e3e852eac3a
+Removing intermediate container 1e3e852eac3a
+ ---> db3cd30142b3
+Successfully built db3cd30142b3
+Successfully tagged complex_api:latest
+Building client
+Step 1/6 : FROM node:alpine
+ ---> 4b3c025f5508
+Step 2/6 : WORKDIR /app
+ ---> Using cache
+ ---> 1a05d05e0b5b
+Step 3/6 : COPY package.json .
+ ---> Using cache
+ ---> 15dd7c6bc9bd
+Step 4/6 : RUN npm install
+ ---> Using cache
+ ---> 810576e9d194
+Step 5/6 : COPY . .
+ ---> 6903be0ca51e
+Step 6/6 : CMD ["npm", "run", "start"]
+ ---> Running in 503a667e42a2
+Removing intermediate container 503a667e42a2
+ ---> b2897b22b69b
+Successfully built b2897b22b69b
+Successfully tagged complex_client:latest
+Building worker
+Step 1/6 : FROM node:alpine
+ ---> 4b3c025f5508
+Step 2/6 : WORKDIR /app
+ ---> Using cache
+ ---> 1a05d05e0b5b
+Step 3/6 : COPY package.json .
+ ---> c3d48126a7bf
+Step 4/6 : RUN npm install
+ ---> Running in e81e9ccb50cb
+
+> nodemon@1.18.3 postinstall /app/node_modules/nodemon
+> node bin/postinstall || exit 0
+
+Love nodemon? You can now support the project via the open collective:
+ > https://opencollective.com/nodemon/donate
+
+npm notice created a lockfile as package-lock.json. You should commit this file.
+npm WARN app No description
+npm WARN app No repository field.
+npm WARN app No license field.
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.4 (node_modules/fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.4: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+
+added 227 packages from 134 contributors and audited 2242 packages in 13.709s
+found 0 vulnerabilities
+
+Removing intermediate container e81e9ccb50cb
+ ---> cf872f68572e
+Step 5/6 : COPY . .
+ ---> f22533f9c170
+Step 6/6 : CMD ["npm", "run", "dev"]
+ ---> Running in 49bcc6ea590e
+Removing intermediate container 49bcc6ea590e
+ ---> 6007affa6032
+Successfully built 6007affa6032
+Successfully tagged complex_worker:latest
+Creating complex_client_1   ... done
+Creating complex_nginx_1    ... done
+Creating complex_postgres_1 ... done
+Creating complex_redis_1    ... done
+Creating complex_api_1      ... done
+Creating complex_worker_1   ... done
+Attaching to complex_nginx_1, complex_redis_1, complex_postgres_1, complex_api_1, complex_worker_1, complex_client_1
+nginx_1     | 2018/12/01 10:34:35 [emerg] 1#1: host not found in upstream "client:3000" in /etc/nginx/conf.d/default.conf:2
+nginx_1     | nginx: [emerg] host not found in upstream "client:3000" in /etc/nginx/conf.d/default.conf:2
+redis_1     | 1:C 01 Dec 2018 10:34:36.060 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+redis_1     | 1:C 01 Dec 2018 10:34:36.060 # Redis version=5.0.1, bits=64, commit=00000000, modified=0, pid=1, just started
+redis_1     | 1:C 01 Dec 2018 10:34:36.060 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+redis_1     | 1:M 01 Dec 2018 10:34:36.071 * Running mode=standalone, port=6379.
+redis_1     | 1:M 01 Dec 2018 10:34:36.071 # WARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.
+redis_1     | 1:M 01 Dec 2018 10:34:36.071 # Server initialized
+redis_1     | 1:M 01 Dec 2018 10:34:36.071 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command 'echo never > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled.
+redis_1     | 1:M 01 Dec 2018 10:34:36.071 * Ready to accept connections
+postgres_1  | The files belonging to this database system will be owned by user "postgres".
+postgres_1  | This user must also own the server process.
+postgres_1  |
+postgres_1  | The database cluster will be initialized with locale "en_US.utf8".
+postgres_1  | The default database encoding has accordingly been set to "UTF8".
+postgres_1  | The default text search configuration will be set to "english".
+postgres_1  |
+postgres_1  | Data page checksums are disabled.
+postgres_1  |
+postgres_1  | fixing permissions on existing directory /var/lib/postgresql/data ... ok
+postgres_1  | creating subdirectories ... ok
+postgres_1  | selecting default max_connections ... 100
+postgres_1  | selecting default shared_buffers ... 128MB
+postgres_1  | selecting dynamic shared memory implementation ... posix
+postgres_1  | creating configuration files ... ok
+postgres_1  | running bootstrap script ... ok
+postgres_1  | performing post-bootstrap initialization ... ok
+postgres_1  | syncing data to disk ... ok
+postgres_1  |
+postgres_1  | Success. You can now start the database server using:
+postgres_1  |
+postgres_1  |     pg_ctl -D /var/lib/postgresql/data -l logfile start
+postgres_1  |
+postgres_1  |
+postgres_1  | WARNING: enabling "trust" authentication for local connections
+postgres_1  | You can change this by editing pg_hba.conf or using the option -A, or
+postgres_1  | --auth-local and --auth-host, the next time you run initdb.
+postgres_1  | ****************************************************
+postgres_1  | WARNING: No password has been set for the database.
+postgres_1  |          This will allow anyone with access to the
+postgres_1  |          Postgres port to access your database. In
+postgres_1  |          Docker's default configuration, this is
+postgres_1  |          effectively any other container on the same
+postgres_1  |          system.
+postgres_1  |
+postgres_1  |          Use "-e POSTGRES_PASSWORD=password" to set
+postgres_1  |          it in "docker run".
+postgres_1  | ****************************************************
+postgres_1  | waiting for server to start....2018-12-01 10:34:46.398 UTC [42] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+postgres_1  | 2018-12-01 10:34:46.586 UTC [43] LOG:  database system was shut down at 2018-12-01 10:34:43 UTC
+postgres_1  | 2018-12-01 10:34:46.613 UTC [42] LOG:  database system is ready to accept connections
+postgres_1  |  done
+postgres_1  | server started
+postgres_1  |
+postgres_1  | /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
+postgres_1  |
+postgres_1  | waiting for server to shut down....2018-12-01 10:34:46.694 UTC [42] LOG:  received fast shutdown request
+postgres_1  | 2018-12-01 10:34:46.704 UTC [42] LOG:  aborting any active transactions
+postgres_1  | 2018-12-01 10:34:46.709 UTC [42] LOG:  background worker "logical replication launcher" (PID 49) exited with exit code 1
+postgres_1  | 2018-12-01 10:34:46.709 UTC [44] LOG:  shutting down
+postgres_1  | 2018-12-01 10:34:47.066 UTC [42] LOG:  database system is shut down
+postgres_1  |  done
+postgres_1  | server stopped
+postgres_1  |
+postgres_1  | PostgreSQL init process complete; ready for start up.
+postgres_1  |
+postgres_1  | 2018-12-01 10:34:47.141 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+postgres_1  | 2018-12-01 10:34:47.141 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+postgres_1  | 2018-12-01 10:34:47.193 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+postgres_1  | 2018-12-01 10:34:47.256 UTC [51] LOG:  database system was shut down at 2018-12-01 10:34:47 UTC
+postgres_1  | 2018-12-01 10:34:47.263 UTC [1] LOG:  database system is ready to accept connections
+api_1       | npm ERR! path /app/package.json
+api_1       | npm ERR! code ENOENT
+api_1       | npm ERR! errno -2
+api_1       | npm ERR! syscall open
+api_1       | npm ERR! enoent ENOENT: no such file or directory, open '/app/package.json'
+api_1       | npm ERR! enoent This is related to npm not being able to find a file.
+api_1       | npm ERR! enoent
+api_1       |
+worker_1    | npm ERR! path /app/package.json
+worker_1    | npm ERR! code ENOENT
+worker_1    | npm ERR! errno -2
+worker_1    | npm ERR! syscall open
+worker_1    | npm ERR! enoent ENOENT: no such file or directory, open '/app/package.json'
+worker_1    | npm ERR! enoent This is related to npm not being able to find a file.
+api_1       | npm ERR! A complete log of this run can be found in:
+worker_1    | npm ERR! enoent
+api_1       | npm ERR!     /root/.npm/_logs/2018-12-01T10_34_38_660Z-debug.log
+worker_1    |
+worker_1    | npm ERR! A complete log of this run can be found in:
+worker_1    | npm ERR!     /root/.npm/_logs/2018-12-01T10_34_38_627Z-debug.log
+complex_worker_1 exited with code 254
+complex_api_1 exited with code 254
+client_1    | npm ERR! path /app/package.json
+client_1    | npm ERR! code ENOENT
+client_1    | npm ERR! errno -2
+client_1    | npm ERR! syscall open
+client_1    | npm ERR! enoent ENOENT: no such file or directory, open '/app/package.json'
+client_1    | npm ERR! enoent This is related to npm not being able to find a file.
+client_1    | npm ERR! enoent
+client_1    |
+client_1    | npm ERR! A complete log of this run can be found in:
+client_1    | npm ERR!     /root/.npm/_logs/2018-12-01T10_35_29_120Z-debug.log
+complex_client_1 exited with code 254
+complex_nginx_1 exited with code 1
+Gracefully stopping... (press Ctrl+C again to force)
+Stopping complex_nginx_1    ... done
+Stopping complex_postgres_1 ... done
+Stopping complex_redis_1    ... done
+```
+- If there are errors execute `docker-compose up` again and if there are still error execute `docker system prune`.
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ docker system prune
+WARNING! This will remove:
+        - all stopped containers
+        - all networks not used by at least one container
+        - all dangling images
+        - all dangling build cache
+Are you sure you want to continue? [y/N] y
+Deleted Containers:
+b62a996fed7439313117602871f0f17a39d63e769abf287b5ced1d5b6d0a6a40
+e1c167864ce045aa5a23b9d55754df7f95aecdbfd9453585e97fcb7ce230a602
+4817fc2253badce968bda2a0c0ab4b86b628f3fa3fde982d3e88071fb1f7ec05
+99f0efabc9374fdd350b216e88936c9ef7faaffa081bc8ec597310a45095ce3e
+d0a8a073117ef8e7d09ff886c1e6b28e63e572840bbe38cb2b34318666d1b421
+1ec18f8841fee94a9f0d03d2f886a272c32e98abe8b25591022c433be317d102
+2cad54e9728af87611325594fc3a06a84ea69015313cb6fe026714cef56c5661
+a39bdddcce5a4e32c9b5054f846a8803f40b8878f2b6f4db3ad5d38aec5115f8
+d07e67ba14d4b85c77ab2e82d861601aecb2687e4b561ef7db715f5e0b9ebcd3
+382bda1efb574005e4f39fc52f27ca58e3a6f3d0de4bb7bb2ac775c912b30eba
+19865d97f7a107a7186f54e6cb84c70f76021063faef57009a0f234827ea8f81
+a417d0eef9e3719474a40c59c5d38ac2dd9be3e3b37ee8a3f0b48ffa017a0e35
+834c85a49e5ec475977f63c344506198377d6ed070a54ddafc4525a89c6e9b3a
+b6ad9ce79ae466d432394e67e4d0c1b1846a63d6f5333c50225c83cf17aeb251
+42f6c5b488f2812d16979b3abb08c5a277b85654eaf7a7d37c7b1ce19933c4b5
+1025e1542ce0fa5d0a1aedfa6a09587568ccdc6f53d4ceed8ea01750fb0f89c0
+088d59b47f30e2b021cf25a331c552e2a88a5b43d6d9194c95a8efbff813e2bc
+ec2e594269d3c8b4fe5fe0870a88308dd7b2af580e6220dcd1e0f8ed1cd58fc1
+7a637633c6611d256963339ae978c210d808138104d78910b91948c5f771d102
+8792dbe6a8d0c927484e419a672e276ddb4101dd03acd92588232de8b0bd7f6a
+51b00ca347342c360a6ea1ec881df8aeb279c680ca7f138b2da6ae0da2ab0102
+ddf9a230898531f55c9bd9ba99c8e95787f5c2cf492e685cc80b0f3002673871
+
+Deleted Networks:
+python-complex_default
+complex_default
+
+Deleted Images:
+untagged: peelmicro/multi-client@sha256:c5327e2204d451f3f3bbe1a892a5e6fac8a33915d8bbd8011f796ab9f135543f
+deleted: sha256:0345ad1ffc6770e778a70e62ada91ef40403875803512d1d28ec740ebe7e7490
+deleted: sha256:3aaca452f3c668e62d3242dd500fef616139b0ee4e202710e38ac481fd19dd6e
+deleted: sha256:e504d55df43968c850865505d5730c2208210da0a8dd3bc9677d08beab6450e0
+deleted: sha256:c35008d3707d09eb0ab09d740a907f9022a7d04941779ae9e44a165c8e6b2ba4
+deleted: sha256:a525a727ac3b670d4e8130b03565ee1d49eab257694988da3ae10366feaec115
+deleted: sha256:78da055fbf64b77461d5a5c90adfeebe13614b537768f8b3fca98de73a83826c
+deleted: sha256:35f15f2c8493e26d697eba144babc5d37ece8f2d34ce9215cd150692ed4ae407
+deleted: sha256:5075e6f95758e0da736ebf9a6417f3fa80d777f8852586f88e5781279eff756b
+deleted: sha256:3578ed08603359f94f6a562770f7d26b779f3cefc618ee8cf0d3fc3a693ea7c0
+deleted: sha256:e71a3fe60613c27c06eb8d357350efa57915ae272f02f698b8ee0fbad5eb8897
+deleted: sha256:7d1a65aafc8bb6db6648eb721f570492e003228feac0c337ff5fe193008d1a9a
+deleted: sha256:eed9b471ad49d23a9d5ddc01961d577dfcde3f0fd36fba1598b3f1725dec40db
+deleted: sha256:f43d63e25f1081d2347807fb3abf1ca12eb334523444ef34865a8f065d3ceff5
+deleted: sha256:fbdca0c3bbda904a98533b27086eab4f8cadc4adbc243dc531a0c0a7eeb56bf2
+deleted: sha256:1f8a407dbe02e0ccb6a44e8f88abb72f6da0239e855f982b8b9dbb0be5fb263c
+deleted: sha256:a2780c7a5452b3a4cce7f03340ec5c4103b71e43a80ee2c6425f7e823b2f54cc
+deleted: sha256:f0345cefcd7b5475656970a0bb892bd09e683ecba18f33ae02d58c65c10117e7
+deleted: sha256:5bc6844d029c240e934c514e27d80d999e60300cfd4c1c1b98f295927ef3da5a
+deleted: sha256:c9c95f1aee632afc5a3e0621f060eb36d1dad81388bcee5688c494bd7c9f869a
+deleted: sha256:5067d8b55ee740a77a61a90cb0ce0b3561ccee66df09662a8ec5c63063d79a34
+deleted: sha256:0190632b1cc1030c5a8aaff6141238f20b0a3bb7b4bb4e0282faa09a0b6f4d67
+deleted: sha256:643f33f531bd16e04660b1e29319a492654a305b71b76c627107e6ae12868b3b
+deleted: sha256:9946b2658aa4c9d0b8278edfdfeaaf4630d70e40c0a1d8fd473e726fa4e7308a
+deleted: sha256:a832295949b3b4c17870eaa4913670228401f2e48849d5782d3cdf5de30f99d3
+deleted: sha256:c9ca770ee33083d5d87ffc11650ce7543e0f2e706ac99b81b544d8b181ee5298
+deleted: sha256:8994a63e18a959ed26da2adc489f9b09586c904a476b1b1f6142c0a0346bb629
+deleted: sha256:f7fd3eb05f81aeb17d85216b4b65ab44afe7baa3ab4c650c53e83addf134b71e
+deleted: sha256:9e19cae4893ea972d4fed1ee21d1c783940cfc1d3a27de269b5e0f0cbd8e1467
+deleted: sha256:76a557b982d53344ab18633389cacf5f9660749607eeb8378f27d84a37a011de
+deleted: sha256:1adaf150ec89cfae2888056de4622585ece31358d208a27373e405855a1413e5
+deleted: sha256:3528c30c677209ad8bfbe9c1695cd2533e28007f6f46baa7c15d796af5e72d35
+deleted: sha256:ad798d49ec6595b3970cfd4a5212213a24512562afad2b48023113573e49f4fb
+deleted: sha256:e522e8f1a4cad81c0d6b0fc79fb7053b2caa595bfd5e03866d45ffdb45e5df84
+deleted: sha256:577f6786639e057a488d9c11e2eff1aa895c708203b26d6d3ab00a1bbb48f694
+deleted: sha256:32fb91ba8d451e8e32ddb7da521c3ee371594c45ebc5fdcfe3040f53a7094ce2
+deleted: sha256:9d3e1e8d3bdb2cca82752b49902a3cf3c2dfe641f84d02fe4258373043efae7a
+deleted: sha256:7a9b4a18499d362e5b59c9bc539323bd3ac4537f41be8c23fcdeab430b3b0911
+deleted: sha256:2172a22958f63ae6107a245619f6428d37343d4fdd4af6274f7ffb7f94ca5d60
+deleted: sha256:76b742b17a4fb30e786109b339fd980aa65f6f12916cc378ac9154a74daacb97
+deleted: sha256:36ab04cab8d99d35c3ed5d1d5c27327b766ed4899a7e2e33daf2b4e7463cfbe3
+deleted: sha256:b79e37d7958bfede0b140190b28b5804488a04f4496ff7de21f458f0915dc4e6
+deleted: sha256:fa091ff653168f227c314c9db9eccf43edf1933be3831330d82eb2b82e9ebd5f
+deleted: sha256:c7011c17b2b84c3ee3fbd40d69adf3fb0089b380659944f1b99f91eb92c755c5
+deleted: sha256:7b21f20de6636d7fa3ffee4aa201b69184b57c82bef2b28d33ce60dd52a2b74a
+deleted: sha256:dda30b7d6fc159f3c757b641c5642ae6b93d67438577060add4a7aefb81b032d
+deleted: sha256:50d10a957186f75ba30ef157fd31378f47702cc1bb275dca8c7c36ee9dbbfe18
+deleted: sha256:a2f98913d14a06fc1789b51b3409e21bdecbbfde19deb4188b3d765ee6c9d566
+deleted: sha256:ebf6d81e5d1f2025848c4039c2bbc4fec717554013a7f65ed2e94169a67a12fe
+deleted: sha256:24df820f65174bbb87d8205aa28b967c47128207d37144a2e22c1b500da3673a
+deleted: sha256:1007816db89edd598f7a193f85350937b376facd08baaec7896c5b186340e8d0
+deleted: sha256:709fae05e09b3569c010ddb19d1aebdee8c0841bc24157f9ed46020833de39b9
+deleted: sha256:3d4da674f53e1eadcc4769668887757c728ea4c3622e58ad2028703ed42d4d48
+deleted: sha256:d0bb812840490a454064d48ac4f89ecca3271b5bd3ddd64c3f8a06cb1329eea2
+deleted: sha256:5191a5c76f1e37d15795d9ce3081e5cbd246c0a88ade9127868ce691d1fa2ed2
+deleted: sha256:57cf79ce8be300d91876eca586036405a5c57d3809255270e5c4046c32b953c9
+deleted: sha256:6acfa2d32fa0062a96d46cd8e983b2273bd41296ec4354912c7361d01fb934b3
+deleted: sha256:0043eeeb990511489e1afad3d33d3efd4e9cc8667be570d8749d574b4373d0aa
+deleted: sha256:a66321de1e83f9a881713b07c35f9e488d51b42128d9f260630c247e671b457a
+deleted: sha256:5a777688c0153949cb3ba243cd806f67060c4bcf14463ec8f814002b7ac3be35
+deleted: sha256:a5fcec1063e9dafcefdd2c55f529a72827ca980fb0371d9b0d7f13eec00015e0
+deleted: sha256:831492feace35a244c5707ab6e15563b01e2531c6f7a6595a2e98fb10e8b6ca9
+deleted: sha256:a79715975ab7947294d86281137d10204b87cc72e58b8d5a9d8084fbddb3fe21
+deleted: sha256:969bc09891b06393a2a4c479a5a6f59eed605be991d68b9f02fa6f6bbc519e71
+deleted: sha256:0392d3cc41b792377a82f1ddb28cd3acc33c33445510bec17b84e42cab5d0461
+deleted: sha256:19f670028afded8a8171e39ab48cb4125c428ff98feeaa333a84c031f7bfabe6
+deleted: sha256:8d1cbe2557628cf5302e9757bf6d25bb21ec948ed5e25464c94f84480b3de677
+deleted: sha256:03806e000f0142919df782feaa8ddc3ff07bed2500e4184129b89c7e51adb043
+deleted: sha256:bb231909ebf501887334f79088a758aadac0a5137c1efa9547fb3dea1e0b120a
+deleted: sha256:38be63410f94eb0c10e862bb5ec25fc4da7f2f6046bfac36d8a4ce4037b087e9
+deleted: sha256:6ad1fec1215525e18b7937985057be0a35336e4515c4dc2a62d3d0a2865a60ac
+deleted: sha256:15f4c48159b4002770f2d682ddc08b753980d90f2f610b403feba7fa3b5f1860
+deleted: sha256:c79c7cc534fb310ab6d3a6cd09637d0aafeaab122fecdc44b4ae2d408439ad63
+deleted: sha256:c327ffc68d844a1c66c2084a16782586e15c23b4937306e79f9827fc363d1bce
+deleted: sha256:a804e0b71065b36c5569971bd54a5a74df2c422cc4ae828f4751fb440cbc6a1c
+deleted: sha256:ec9be5dfad2226555edef97d47a6082ea7a78ebc1acc0eca6bce412617d887ce
+deleted: sha256:dbb856fffe55d29b645966a02fe8a8015dbff7d40ca870470b77644d7a2b0495
+deleted: sha256:1ba1cda602dea1773564ef669dd9c48023a695e575f698f105ebc4b080d3271a
+deleted: sha256:f97a3f7fec67f6c3b156bfca5b2cf9f55e6c150e6991e65cedd439b256adaee4
+deleted: sha256:7c7c0b49158f0dff08f0b3f68d5c79daf25c27562193b08b29daedcb7532a1fb
+deleted: sha256:0a5cbc881d07b40072e9b9e7dba2cce65a9f25a89dff3702e360d2e66fe062a0
+deleted: sha256:265c931af2139b6b0784a76c0ef5a7aab367be202919894cbb8f84fbffe9e068
+deleted: sha256:d9b8311b417a867f190cdcaff9e4949253a554d334e143697c22cf5a2da2af2b
+deleted: sha256:24e0b35b0e01a76287f0e91f3b0de27ad260aa8dae201ec19f5a7dad1c5f7aa5
+deleted: sha256:a2ca727a111e5024ae338b259d7d7cb83e81b957e99cd4c0c156cc3efe920d21
+deleted: sha256:049fdf1a4cbc1bb902a882a84916613c5758074d3a874da8842300265c7778d3
+deleted: sha256:829609b8e40723517f0a1dae505b6b751adea1d8b0faf2cd132c776d5b87ba2a
+deleted: sha256:122442cca856d65515514a7cd3df8f6c813532bf05da1a1abd9d8e0ea5728381
+
+Total reclaimed space: 325.7MB
+```
+- If there are still errors like `exited with code 254` then `Docker` must be restarted.
+
+![](/images/other/docker-multi-docker/MultiContainerKubernetes3.png)
+
+![](/images/other/docker-multi-docker/MultiContainerKubernetes4.png)
+
+- If the error persists `Reset Docker to factory defaults`
+
+![](/images/other/docker-multi-docker/MultiContainerKubernetes5.png)
+
+```sh
+Successfully tagged complex_worker:latest
+Creating complex_postgres_1 ... done
+Creating complex_redis_1    ... done
+Creating complex_worker_1   ... done
+Creating complex_api_1      ... done
+Creating complex_nginx_1    ... done
+Creating complex_client_1   ... done
+Attaching to complex_redis_1, complex_nginx_1, complex_postgres_1, complex_worker_1, complex_api_1, complex_client_1
+redis_1     | 1:C 01 Dec 2018 12:12:14.708 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+redis_1     | 1:C 01 Dec 2018 12:12:14.708 # Redis version=5.0.2, bits=64, commit=00000000, modified=0, pid=1, just started
+redis_1     | 1:C 01 Dec 2018 12:12:14.708 # Warning: no config file specified, using
+the default config. In order to specify a config file use redis-server /path/to/redis.conf
+redis_1     | 1:M 01 Dec 2018 12:12:14.712 * Running mode=standalone, port=6379.
+redis_1     | 1:M 01 Dec 2018 12:12:14.712 # WARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.
+redis_1     | 1:M 01 Dec 2018 12:12:14.712 # Server initialized
+redis_1     | 1:M 01 Dec 2018 12:12:14.713 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues
+with Redis. To fix this issue run the command 'echo never > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled.
+redis_1     | 1:M 01 Dec 2018 12:12:14.713 * Ready to accept connections
+nginx_1     | 2018/12/01 12:12:14 [emerg] 1#1: host not found in upstream "client:3000" in /etc/nginx/conf.d/default.conf:2
+nginx_1     | nginx: [emerg] host not found in upstream "client:3000" in /etc/nginx/conf.d/default.conf:2
+worker_1    |
+worker_1    | > @ dev /app
+worker_1    | > nodemon
+worker_1    |
+worker_1    | [nodemon] 1.18.3
+worker_1    | [nodemon] to restart at any time, enter `rs`
+worker_1    | [nodemon] watching: *.*
+worker_1    | [nodemon] starting `node index.js`
+postgres_1  | The files belonging to this database system will be owned by user "postgres".
+postgres_1  | This user must also own the server process.
+postgres_1  |
+api_1       |
+api_1       | > @ dev /app
+api_1       | > nodemon
+api_1       |
+postgres_1  | The database cluster will be initialized with locale "en_US.utf8".
+postgres_1  | The default database encoding has accordingly been set to "UTF8".
+postgres_1  | The default text search configuration will be set to "english".
+postgres_1  |
+postgres_1  | Data page checksums are disabled.
+api_1       | [nodemon] 1.18.3
+api_1       | [nodemon] to restart at any time, enter `rs`
+postgres_1  |
+postgres_1  | fixing permissions on existing directory /var/lib/postgresql/data ... ok
+api_1       | [nodemon] watching: *.*
+api_1       | [nodemon] starting `node index.js`
+api_1       | Listening
+postgres_1  | creating subdirectories ... ok
+postgres_1  | selecting default max_connections ... 100
+postgres_1  | selecting default shared_buffers ... 128MB
+postgres_1  | selecting dynamic shared memory implementation ... posix
+postgres_1  | creating configuration files ... ok
+postgres_1  | running bootstrap script ... ok
+postgres_1  | performing post-bootstrap initialization ... ok
+postgres_1  | syncing data to disk ... ok
+postgres_1  |
+postgres_1  | Success. You can now start the database server using:
+postgres_1  |
+postgres_1  |     pg_ctl -D /var/lib/postgresql/data -l logfile start
+postgres_1  |
+postgres_1  |
+postgres_1  | WARNING: enabling "trust" authentication for local connections
+postgres_1  | You can change this by editing pg_hba.conf or using the option -A, or
+postgres_1  | --auth-local and --auth-host, the next time you run initdb.
+postgres_1  | ****************************************************
+postgres_1  | WARNING: No password has been set for the database.
+postgres_1  |          This will allow anyone with access to the
+postgres_1  |          Postgres port to access your database. In
+postgres_1  |          Docker's default configuration, this is
+postgres_1  |          effectively any other container on the same
+postgres_1  |          system.
+postgres_1  |
+postgres_1  |          Use "-e POSTGRES_PASSWORD=password" to set
+postgres_1  |          it in "docker run".
+postgres_1  | ****************************************************
+postgres_1  | waiting for server to start....2018-12-01 12:12:18.986 UTC [41] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+postgres_1  | 2018-12-01 12:12:19.040 UTC [42] LOG:  database system was shut down at
+2018-12-01 12:12:17 UTC
+postgres_1  | 2018-12-01 12:12:19.061 UTC [41] LOG:  database system is ready to accept connections
+postgres_1  |  done
+postgres_1  | server started
+postgres_1  |
+postgres_1  | /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
+postgres_1  |
+postgres_1  | 2018-12-01 12:12:19.157 UTC [41] LOG:  received fast shutdown request
+postgres_1  | waiting for server to shut down....2018-12-01 12:12:19.170 UTC [41] LOG:  aborting any active transactions
+postgres_1  | 2018-12-01 12:12:19.172 UTC [41] LOG:  background worker "logical replication launcher" (PID 48) exited with exit code 1
+postgres_1  | 2018-12-01 12:12:19.174 UTC [43] LOG:  shutting down
+postgres_1  | 2018-12-01 12:12:19.284 UTC [41] LOG:  database system is shut down
+postgres_1  |  done
+postgres_1  | server stopped
+postgres_1  |
+postgres_1  | PostgreSQL init process complete; ready for start up.
+postgres_1  |
+postgres_1  | 2018-12-01 12:12:19.388 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+postgres_1  | 2018-12-01 12:12:19.388 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+postgres_1  | 2018-12-01 12:12:19.396 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+postgres_1  | 2018-12-01 12:12:19.418 UTC [50] LOG:  database system was shut down at
+2018-12-01 12:12:19 UTC
+postgres_1  | 2018-12-01 12:12:19.425 UTC [1] LOG:  database system is ready to accept connections
+client_1    |
+client_1    | > client@0.1.0 start /app
+client_1    | > react-scripts start
+client_1    |
+client_1    | Starting the development server...
+client_1    |
+client_1    | Compiled successfully!
+client_1    |
+client_1    | You can now view client in the browser.
+client_1    |
+client_1    |   Local:            http://localhost:3000/
+client_1    |   On Your Network:  http://172.18.0.6:3000/
+client_1    |
+client_1    | Note that the development build is not optimized.
+client_1    | To create a production build, use yarn build.
+client_1    |
+```
+- Browse on http://localhost:3050/
+
+![](/images/other/docker-multi-docker/MultiContainerKubernetes6.png)
+
+2. Make a copy of the solution to a new folder called `elastic-beanstalk` inside the own soluction.
+
+![](/images/other/docker-multi-docker/ElasticBeanstalkCopy.png)
+
+![](/images/other/docker-multi-docker/ElasticBeanStalkCopy2.png)
+
+3. Remove the `.travis.yml`, `docker-compose.yml` and `Dockerrun.aws.json` configuration files.
+
+![](/images/other/docker-multi-docker/RemoveConfigurationFiles.png)
+
+![](/images/other/docker-multi-docker/RemoveConfigurationFiles2.png)
+
+4. Remove the `nginx` folder.
+
+![](/images/other/docker-multi-docker/RemoveNginxFolder.png)
+
+![](/images/other/docker-multi-docker/RemoveNginxFolder2.png)
+
+5. Remove the `simplek8s` folder.
+
+![](/images/other/docker-multi-docker/RemoveSimplek8sFolder.png)
+
+![](/images/other/docker-multi-docker/RemoveSimplek8sFolder2.png)
+
+6. Create the new `k8s` folder
+
+![](/images/other/docker-multi-docker/K8sFolder.png)
+
+7. Node Schema
+
+![](/images/other/docker-multi-docker/KubernetesNodeSchema.png)
+
+8. Create the `client-deployment.yaml` configuration file that includes 3 `multi-client` images.
+```yml
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: client-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      component: web
+  template:
+    metadata:
+      labels:
+        component: web
+    spec:
+      containers: 
+        - name: client
+          image: peelmicro/multi-client
+          ports: 
+            - containerPort: 3000
+```
+9. Create a `ClusterIP Service`for the `multi-client` deployment.
+- A `ClusterIP` is used to expose a `set of pods` to `other objects` in the cluster. It only works inside the cluster.
+- A `NodePort` is used to expose a `set of pods` to the `outside world`. It's only good for `dev purposes!!!`
+- An `Ingress Service` is used to allow traffic `from outside` the Node `to inside` the Node.
+> `client-cluster-ip-service.yaml`
+```yml
+apiVersion: v1
+kind: Service
+metadata:
+  name: client-cluster-ip-service
+spec: 
+  type: ClusterIP
+  selector:
+    component: web
+  ports: 
+    - port: 3000
+      targetPort: 3000
+```
+10. Delete old deployments
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ kubectl get deployments
+Unable to connect to the server: dial tcp 192.168.0.109:8443: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ minikube status
+minikube: Running
+cluster: Running
+kubectl: Misconfigured: pointing to stale minikube-vm.
+To fix the kubectl context, run minikube update-context
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ minikube update-context
+Reconfigured kubeconfig IP, now pointing at 192.168.0.107
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ kubectl get deployments
+Unable to connect to the server: dial tcp 192.168.0.107:8443: connectex: No connection could be made because the target machine actively refused it.
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ minikube status
+minikube: Running
+cluster: Running
+kubectl: Correctly Configured: pointing to minikube-vm at 192.168.0.107
+```
+```sh
+ Shutting Down
+    0%
+    [                                                                                                                                                                                                          ]
+
+$ minikube stop
+Stopping local Kubernetes cluster...
+Error stopping machine:  Error stopping host: minikube: exit status 1
+```
+- Execute `minikube ssh "sudo poweroff"` instead
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ minikube ssh "sudo poweroff"
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ minikube start
+Starting local Kubernetes v1.10.0 cluster...
+Starting VM...
+Getting VM IP address...
+Moving files into cluster...
+Setting up certs...
+Connecting to cluster...
+Setting up kubeconfig...
+Starting cluster components...
+Kubectl is now configured to use the cluster.
+Loading cached images from config file.
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ kubectl get deployments
+NAME                       DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+python-client-deployment   1         1         1            1           5h
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ kubectl delete deployment python-client-deployment
+deployment.extensions "python-client-deployment" deleted
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ kubectl get deployments
+No resources found.
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ kubectl get services
+NAME                      TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE
+kubernetes                ClusterIP   10.96.0.1      <none>        443/TCP          3d
+python-client-node-port   NodePort    10.99.122.33   <none>        3050:31515/TCP   5h
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ kubectl delete service python-client-node-port
+service "python-client-node-port" deleted
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ kubectl get services
+NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   3d
+```
+11. Apply the new `client-cluster-ip-service` ClusterIP and the new `client-deployment` deployment
+- We can apply all the `config` files from a directory
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ kubectl apply -f k8s
+service "client-cluster-ip-service" created
+deployment.apps "client-deployment" created
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ kubectl get deployments
+NAME                DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+client-deployment   3         3         3            3           50s
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ kubectl get services
+NAME                        TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)    AGE
+client-cluster-ip-service   ClusterIP   10.96.200.46   <none>        3000/TCP   1m
+kubernetes                  ClusterIP   10.96.0.1      <none>        443/TCP    3d
+```
+12. Create the `server-deployment` deployment along with the `server-cluster-ip-service` ClusterIP.
+
+![](/images/other/docker-multi-docker/CreateMultiServerDeployment.png)
+
+> `server-deployment.yaml`
+```yml
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: server-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      component: server
+  template:
+    metadata:
+      labels:
+        component: server
+    spec:
+      containers: 
+        - name: server
+          image: peelmicro/multi-server
+          ports: 
+            - containerPort: 5000
+```
+> `serve-cluster-ip-service.yaml`
+```yml
+apiVersion: v1
+kind: Service
+metadata:
+  name: server-cluster-ip-service
+spec: 
+  type: ClusterIP
+  selector:
+    component: server
+  ports: 
+    - port: 5000
+      targetPort: 5000
+```
+- It could be put the two together in a single file like `server-congif.yaml` separated by `---`
+```yml
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: server-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      component: server
+  template:
+    metadata:
+      labels:
+        component: server
+    spec:
+      containers: 
+        - name: server
+          image: peelmicro/multi-server
+          ports: 
+            - containerPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: server-cluster-ip-service
+spec: 
+  type: ClusterIP
+  selector:
+    component: server
+  ports: 
+    - port: 5000
+      targetPort: 5000
+```
+13. Create the 'worker-deployment` deployment file.
+> `worker-deployment.yaml`
+```yml
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: worker-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: worker
+  template:
+    metadata:
+      labels:
+        component: worker
+    spec:
+      containers: 
+        - name: worker
+          image: peelmicro/multi-worker
+```
+14. Apply the `server` and `worker` config files
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ kubectl apply -f k8s
+service "client-cluster-ip-service" unchanged
+deployment.apps "client-deployment" unchanged
+service "server-cluster-ip-service" created
+deployment.apps "server-deployment" created
+deployment.apps "worker-deployment" created
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ kubectl get pods
+NAME                                 READY     STATUS              RESTARTS   AGE
+client-deployment-59b84dbbf6-5mnrp   1/1       Running             0          1h
+client-deployment-59b84dbbf6-dswvz   1/1       Running             0          1h
+client-deployment-59b84dbbf6-j4v7d   1/1       Running             0          1h
+server-deployment-6d557d9f77-7zltx   0/1       ContainerCreating   0          37s
+server-deployment-6d557d9f77-h8trp   1/1       Running             0          37s
+server-deployment-6d557d9f77-v56hs   0/1       ContainerCreating   0          37s
+worker-deployment-7c8bc558-nnpgp     0/1       ContainerCreating   0          37s
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ kubectl get deployments
+NAME                DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+client-deployment   3         3         3            3           1h
+server-deployment   3         3         3            3           1m
+worker-deployment   1         1         1            1           1m
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ kubectl get services
+NAME                        TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+client-cluster-ip-service   ClusterIP   10.96.200.46    <none>        3000/TCP   1h
+kubernetes                  ClusterIP   10.96.0.1       <none>        443/TCP    3d
+server-cluster-ip-service   ClusterIP   10.97.173.225   <none>        5000/TCP   2m
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ kubectl get pods
+NAME                                 READY     STATUS    RESTARTS   AGE
+client-deployment-59b84dbbf6-5mnrp   1/1       Running   0          1h
+client-deployment-59b84dbbf6-dswvz   1/1       Running   0          1h
+client-deployment-59b84dbbf6-j4v7d   1/1       Running   0          1h
+server-deployment-6d557d9f77-7zltx   1/1       Running   0          2m
+server-deployment-6d557d9f77-h8trp   1/1       Running   0          2m
+server-deployment-6d557d9f77-v56hs   1/1       Running   0          2m
+worker-deployment-7c8bc558-nnpgp     1/1       Running   0          2m
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ kubectl logs server-deployment-6d557d9f77-7zltx
+
+> @ start /app
+> node index.js
+
+Listening
+{ Error: connect ECONNREFUSED 127.0.0.1:5432
+    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1121:14)
+  errno: 'ECONNREFUSED',
+  code: 'ECONNREFUSED',
+  syscall: 'connect',
+  address: '127.0.0.1',
+  port: 5432 }
+```  
+- This is normal because we haven't applied the `environment variables` yet
+```sh
+  Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ kubectl logs worker-deployment-7c8bc558-nnpgp
+
+> @ start /app
+> node index.js
+```
+15. Create and apply the `redis` config files.
+> `redis-deployment.yaml`
+
+```yml
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: redis-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: redis
+  template:
+    metadata:
+      labels:
+        component: redis
+    spec:
+      containers: 
+        - name: redis
+          image: redis
+          ports: 
+            - containerPort: 6379
+```
+> `redis-cluster-ip-service.yaml`
+```yml
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-cluster-ip-service
+spec: 
+  type: ClusterIP
+  selector:
+    component: redis
+  ports: 
+    - port: 6379
+      targetPort: 6379
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ kubectl apply -f k8s
+service "client-cluster-ip-service" unchanged
+deployment.apps "client-deployment" unchanged
+service "redis-cluster-ip-service" created
+deployment.apps "redis-deployment" created
+service "server-cluster-ip-service" unchanged
+deployment.apps "server-deployment" unchanged
+deployment.apps "worker-deployment" unchanged
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ kubectl get pods
+NAME                                 READY     STATUS    RESTARTS   AGE
+client-deployment-59b84dbbf6-5mnrp   1/1       Running   0          1h
+client-deployment-59b84dbbf6-dswvz   1/1       Running   0          1h
+client-deployment-59b84dbbf6-j4v7d   1/1       Running   0          1h
+redis-deployment-666bf96bdd-rtnd4    1/1       Running   0          44s
+server-deployment-6d557d9f77-7zltx   1/1       Running   0          22m
+server-deployment-6d557d9f77-h8trp   1/1       Running   0          22m
+server-deployment-6d557d9f77-v56hs   1/1       Running   0          22m
+worker-deployment-7c8bc558-nnpgp     1/1       Running   0          22m
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ kubectl get services
+NAME                        TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+client-cluster-ip-service   ClusterIP   10.96.200.46    <none>        3000/TCP   1h
+kubernetes                  ClusterIP   10.96.0.1       <none>        443/TCP    3d
+redis-cluster-ip-service    ClusterIP   10.105.219.66   <none>        6379/TCP   1m
+server-cluster-ip-service   ClusterIP   10.97.173.225   <none>        5000/TCP   23m
+```
+16. Create and apply the `postgres` config files.
+> `postgres-deployment.yaml`
+```yml
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: postgres-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: postgres
+  template:
+    metadata:
+      labels:
+        component: postgres
+    spec:
+      containers: 
+        - name: postgres
+          image: postgres
+          ports: 
+            - containerPort: 5432
+```
+> `postgres-cluster-ip-service.yaml`
+```yml
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-cluster-ip-service
+spec: 
+  type: ClusterIP
+  selector:
+    component: postgres
+  ports: 
+    - port: 5432
+      targetPort: 5432
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ kubectl apply -f k8s
+service "client-cluster-ip-service" unchanged
+deployment.apps "client-deployment" unchanged
+service "postgres-cluster-ip-service" created
+deployment.apps "postgres-deployment" created
+service "redis-cluster-ip-service" unchanged
+deployment.apps "redis-deployment" unchanged
+service "server-cluster-ip-service" unchanged
+deployment.apps "server-deployment" unchanged
+deployment.apps "worker-deployment" unchanged
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ kubectl get pods
+NAME                                   READY     STATUS    RESTARTS   AGE
+client-deployment-59b84dbbf6-5mnrp     1/1       Running   0          1h
+client-deployment-59b84dbbf6-dswvz     1/1       Running   0          1h
+client-deployment-59b84dbbf6-j4v7d     1/1       Running   0          1h
+postgres-deployment-599f4f6bf7-vr24k   1/1       Running   0          1m
+redis-deployment-666bf96bdd-rtnd4      1/1       Running   0          9m
+server-deployment-6d557d9f77-7zltx     1/1       Running   0          31m
+server-deployment-6d557d9f77-h8trp     1/1       Running   0          31m
+server-deployment-6d557d9f77-v56hs     1/1       Running   0          31m
+worker-deployment-7c8bc558-nnpgp       1/1       Running   0          31m
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ kubectl get services
+NAME                          TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+client-cluster-ip-service     ClusterIP   10.96.200.46     <none>        3000/TCP   1h
+kubernetes                    ClusterIP   10.96.0.1        <none>        443/TCP    3d
+postgres-cluster-ip-service   ClusterIP   10.108.255.118   <none>        5432/TCP   2m
+redis-cluster-ip-service      ClusterIP   10.105.219.66    <none>        6379/TCP   10m
+server-cluster-ip-service     ClusterIP   10.97.173.225    <none>        5000/TCP   31m
+```
+17. Create the `Postgres PVC` (Persistent Volume Claim)
+- The `pod` container for `postgres` that we're creating has its own `file system`
+
+![](/images/other/docker-multi-docker/PostgresPVC.png)
+
+- When we write data it would be `stored` in that `file system`
+
+![](/images/other/docker-multi-docker/PostgresPVC2.png)
+
+- But if we restart the `conatiner` or create `different instances` of it, the data stored is `lost`.
+
+![](/images/other/docker-multi-docker/PostgresPVC3.png)
+
+- We need to create a `volume` outside the `container` and inside the `host` machine to store the data
+
+![](/images/other/docker-multi-docker/PostgresPVC4.png)
+
+- So, if the `pod` is recreated nothing is lost
+
+![](/images/other/docker-multi-docker/PostgresPVC5.png)
+
+- `Volumes` in `Kubernetes` is a type of `object`
+
+![](/images/other/docker-multi-docker/PostgresPVC6.png)
+
+- So it's different to the `generic` container terminology
+
+![](/images/other/docker-multi-docker/PostgresPVC7.png)
+
+- `Kubernetes Volume` is a data storage package that is `tied` directly to a very specific `pod` container
+
+![](/images/other/docker-multi-docker/PostgresPVC8.png)
+
+- If the original `pod` container is restarted the new `pod` container has access to the `kubernetes volume` and no data is lost.
+
+![](/images/other/docker-multi-docker/PostgresPVC9.png)
+
+- But the `downside` is that, as the `volume` is tied to the `pod`, if the `pod` dies the `volume` dies as well. So, it's `not appropriate` to `store data`.
+- A `Persintent Volume` is a long term durable storage that is not tied to any specific `pod` or `container`
+
+![](/images/other/docker-multi-docker/PostgresPVC10.png)
+
+- A `Persistent Volume Claim` is what we need. 
+
+![](/images/other/docker-multi-docker/PostgresPVC11.png)
+
+- If it's available it's `deployed` in that moment, if it is not, the one is `needed` is `provisioned` and then `created on the fly`.
+
+![](/images/other/docker-multi-docker/PostgresPVC12.png)
+
+> `database-persistent-volume-claim.yaml`
+```yml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: database-persistent-volume-claim
+spec: 
+  accessModes: 
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+```
+- There are 3 types of `Access Modes`
+
+![](/images/other/docker-multi-docker/PostgresPVC13.png)
+
+- Other options that can be applied to PVC
+
+![](/images/other/docker-multi-docker/PostgresPVC14.png)
+
+- We use `kubectl get storageclass` to get to know the different `options` on our computer that kubernetes has to create a `persintent volume`
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ kubectl get storageclass
+NAME                 PROVISIONER                AGE
+standard (default)   k8s.io/minikube-hostpath   4d
+```
+```sh
+$ kubectl describe storageclass
+Name:            standard
+IsDefaultClass:  Yes
+Annotations:     kubectl.kubernetes.io/last-applied-configuration={"apiVersion":"storage.k8s.io/v1","kind":"StorageClass","metadata":{"annotations":{"storageclass.beta.kubernetes.io/is-default-class":"true"},"labels":{"addonmanager.kubernetes.io/mode":"Reconcile"},"name":"standard","namespace":""},"provisioner":"k8s.io/minikube-hostpath"}
+,storageclass.beta.kubernetes.io/is-default-class=true
+Provisioner:           k8s.io/minikube-hostpath
+Parameters:            <none>
+AllowVolumeExpansion:  <unset>
+MountOptions:          <none>
+ReclaimPolicy:         Delete
+VolumeBindingMode:     Immediate
+Events:                <none>
+```
+- On a cloud environment it works differently.
+
+![](/images/other/docker-multi-docker/PostgresPVC15.png)
+
+- On [Kubernetes Storage Classes](https://kubernetes.io/docs/concepts/storage/storage-classes/) you can see some other options available on cloud environments
+- Each one of them has a different `provisioner` that we can put on the `config` file. 
+- We normally are ok using the `default` options for it.
+- The `postgres-deployment.yaml` must be updated to configure the `PVC` defined.
+```yml
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: postgres-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: postgres
+  template:
+    metadata:
+      labels:
+        component: postgres
+    spec:
+      volumes:
+        - name: postgres-storage
+          persistentVolumeClaim: 
+            claimName: database-persistent-volume-claim
+      containers: 
+        - name: postgres
+          image: postgres
+          ports: 
+            - containerPort: 5432
+          volumeMounts: 
+            - name: postgres-storage
+              mountPath: /var/lib/postgresql/data
+              subPath: postgres
+```
+- Apply the `config` files created and changed.
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ kubectl apply -f k8s
+service "client-cluster-ip-service" unchanged
+deployment.apps "client-deployment" unchanged
+persistentvolumeclaim "database-persistent-volume-claim" created
+service "postgres-cluster-ip-service" unchanged
+service "redis-cluster-ip-service" unchanged
+deployment.apps "redis-deployment" unchanged
+service "server-cluster-ip-service" unchanged
+deployment.apps "server-deployment" unchanged
+deployment.apps "worker-deployment" unchanged
+error: error validating "k8s\\postgres-deployment.yaml": error validating data: ValidationError(Deployment.spec.template.spec.volumes[0]): unknown field "PersistentVolumeClaim" in io.k8s.api.core.v1.Volume; if you
+choose to ignore these errors, turn validation off with --validate=false
+
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ kubectl apply -f k8s
+service "client-cluster-ip-service" unchanged
+deployment.apps "client-deployment" unchanged
+persistentvolumeclaim "database-persistent-volume-claim" unchanged
+service "postgres-cluster-ip-service" unchanged
+deployment.apps "postgres-deployment" configured
+service "redis-cluster-ip-service" unchanged
+deployment.apps "redis-deployment" unchanged
+service "server-cluster-ip-service" unchanged
+deployment.apps "server-deployment" unchanged
+deployment.apps "worker-deployment" unchanged
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ kubectl get pods
+NAME                                  READY     STATUS    RESTARTS   AGE
+client-deployment-59b84dbbf6-5mnrp    1/1       Running   0          3h
+client-deployment-59b84dbbf6-dswvz    1/1       Running   0          3h
+client-deployment-59b84dbbf6-j4v7d    1/1       Running   0          3h
+postgres-deployment-fdd46dbc8-8np7v   1/1       Running   0          1m
+redis-deployment-666bf96bdd-rtnd4     1/1       Running   0          1h
+server-deployment-6d557d9f77-7zltx    1/1       Running   2          2h
+server-deployment-6d557d9f77-h8trp    1/1       Running   2          2h
+server-deployment-6d557d9f77-v56hs    1/1       Running   2          2h
+worker-deployment-7c8bc558-nnpgp      1/1       Running   2          2h
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ kubectl get pv
+NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS    CLAIM                                      STORAGECLASS   REASON    AGE
+pvc-95d69064-f59d-11e8-aa19-00155dc00118   2Gi        RWO            Delete           Bound     default/database-persistent-volume-claim   standard                 4m
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ kubectl get pvc
+NAME                               STATUS    VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+database-persistent-volume-claim   Bound     pvc-95d69064-f59d-11e8-aa19-00155dc00118   2Gi        RWO            standard       5m
+```
+18. Adding the `Environment Variables`
+
+![](/images/other/docker-multi-docker/EnvironmentVariables.png)
+
+- They can be divided in `Host`, where we need to tell the containers how to connect, `Constant` and `Sensible`.
+
+![](/images/other/docker-multi-docker/EnvironmentVariables2.png)
+
+- `Host`: We need to put a value of the `ClusterIP` service name where they have to connect to.
+
+![](/images/other/docker-multi-docker/EnvironmentVariables3.png)
+
+- Modify the `worker-deployment.yaml` file to include the `Environment Variables`
+```yml
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: worker-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: worker
+  template:
+    metadata:
+      labels:
+        component: worker
+    spec:
+      containers: 
+        - name: worker
+          image: peelmicro/multi-worker
+        env:
+            - name: REDIS_HOST
+              value: redis-cluster-ip-service
+            - name: REDIS_PORT
+              value: 6379
+```
+- Modify the `server-deployment.yaml` file to include the `Environment Variables`
+```yml
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: server-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      component: server
+  template:
+    metadata:
+      labels:
+        component: server
+    spec:
+      containers: 
+        - name: server
+          image: peelmicro/multi-server
+          ports: 
+            - containerPort: 5000
+          env:
+            - name: REDIS_HOST
+              value: redis-cluster-ip-service
+            - name: REDIS_PORT
+              value: 6379     
+            - name: PGUSER
+              value: postgres
+            - name: PGHOST
+              value: postgres-cluster-ip-service
+            - name: PGDATABASE
+              value: postgres
+            - name: PGPORT
+              value: 5432
+```
+- `Secrets` is a new type of Kubernetes `object`. It is used to `securely store` a piece of information in the cluster, such a databae password.
+- We can use a `config` to create a secret or run an `imperative command`. 
+
+![](/images/other/docker-multi-docker/EnvironmentVariables4.png)
+
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ kubectl create secret generic pgpassword --from-literal PGPASSWORD=postgres_password
+secret "pgpassword" created
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ kubectl get secrets
+NAME                  TYPE                                  DATA      AGE
+default-token-6gfdz   kubernetes.io/service-account-token   3         4d
+pgpassword            Opaque                                1         43s
+```
+- Modify the `server-deployment.yaml` file to include the PGPASSWORD `Environment Variable`
+```yml
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: server-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      component: server
+  template:
+    metadata:
+      labels:
+        component: server
+    spec:
+      containers: 
+        - name: server
+          image: peelmicro/multi-server
+          ports: 
+            - containerPort: 5000
+          env:
+            - name: REDIS_HOST
+              value: redis-cluster-ip-service
+            - name: REDIS_PORT
+              value: 6379
+            - name: PGUSER
+              value: postgres
+            - name: PGHOST
+              value: postgres-cluster-ip-service
+            - name: PGDATABASE
+              value: postgres
+            - name: PGPORT
+              value: 5432
+            - name: PGPASSWORD
+              valueFrom: 
+                secretKeyRef:
+                  name: pgpassword
+                  key: PGPASSWORD
+```
+- Modify the `postgres-deployment.yaml` config file to let `Postgres` know the password we're using that can `overwrite` the `default one`.
+```yml
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: postgres-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: postgres
+  template:
+    metadata:
+      labels:
+        component: postgres
+    spec:
+      volumes:
+        - name: postgres-storage
+          persistentVolumeClaim: 
+            claimName: database-persistent-volume-claim
+      containers: 
+        - name: postgres
+          image: postgres
+          ports: 
+            - containerPort: 5432
+          volumeMounts: 
+            - name: postgres-storage
+              mountPath: /var/lib/postgresql/data
+              subPath: postgres
+          env:
+            - name: PGPASSWORD
+              valueFrom: 
+                secretKeyRef:
+                  name: pgpassword
+                  key: PGPASSWORD 
+```
+- Apply all the config files again.
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ kubectl apply -f k8s
+service "client-cluster-ip-service" unchanged
+deployment.apps "client-deployment" unchanged
+persistentvolumeclaim "database-persistent-volume-claim" unchanged
+service "postgres-cluster-ip-service" unchanged
+deployment.apps "postgres-deployment" configured
+service "redis-cluster-ip-service" unchanged
+deployment.apps "redis-deployment" unchanged
+service "server-cluster-ip-service" unchanged
+Error from server: error when applying patch:
+{"metadata":{"annotations":{"kubectl.kubernetes.io/last-applied-configuration":"{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"name\":\"server-deployment\",\"namespace\":\"default\"},\"spec\":{\"replicas\":3,\"selector\":{\"matchLabels\":{\"component\":\"server\"}},\"template\":{\"metadata\":{\"labels\":{\"component\":\"server\"}},\"spec\":{\"containers\":[{\"env\":[{\"name\":\"REDIS_HOST\",\"value\":\"redis-cluster-ip-service\"},{\"name\":\"REDIS_PORT\",\"value\":6379},{\"name\":\"PGUSER\",\"value\":\"postgres\"},{\"name\":\"PGHOST\",\"value\":\"postgres-cluster-ip-service\"},{\"name\":\"PGDATABASE\",\"value\":\"postgres\"},{\"name\":\"PGPORT\",\"value\":5432},{\"name\":\"PGPASSWORD\",\"valueFrom\":{\"secretKeyRef\":{\"key\":\"PGPASSWORD\",\"name\":\"pgpassword\"}}}],\"image\":\"peelmicro/multi-server\",\"name\":\"server\",\"ports\":[{\"containerPort\":5000}]}]}}}}\n"}},"spec":{"template":{"spec":{"$setElementOrder/containers":[{"name":"server"}],"containers":[{"env":[{"name":"REDIS_HOST","value":"redis-cluster-ip-service"},{"name":"REDIS_PORT","value":6379},{"name":"PGUSER","value":"postgres"},{"name":"PGHOST","value":"postgres-cluster-ip-service"},{"name":"PGDATABASE","value":"postgres"},{"name":"PGPORT","value":5432},{"name":"PGPASSWORD","valueFrom":{"secretKeyRef":{"key":"PGPASSWORD","name":"pgpassword"}}}],"name":"server"}]}}}}
+to:
+&{0xc0421c8f00 0xc04215b1f0 default server-deployment k8s\server-deployment.yaml 0xc0420701c0 182449 false}
+for: "k8s\\server-deployment.yaml": cannot convert int64 to string
+error converting YAML to JSON: yaml: line 17: did not find expected '-' indicator
+```
+- In order to fix the previous error we need to modify the config files to manage the `Integer` values.
+> `worker-deployment.yaml`
+```yml
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: worker-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: worker
+  template:
+    metadata:
+      labels:
+        component: worker
+    spec:
+      containers: 
+        - name: worker
+          image: peelmicro/multi-worker
+        env:
+            - name: REDIS_HOST
+              value: redis-cluster-ip-service
+            - name: REDIS_PORT
+              value: '6379'
+```
+> `server-deployment.yaml`
+```yml
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: server-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      component: server
+  template:
+    metadata:
+      labels:
+        component: server
+    spec:
+      containers: 
+        - name: server
+          image: peelmicro/multi-server
+          ports: 
+            - containerPort: 5000
+          env:
+            - name: REDIS_HOST
+              value: redis-cluster-ip-service
+            - name: REDIS_PORT
+              value: '6379'     
+            - name: PGUSER
+              value: postgres
+            - name: PGHOST
+              value: postgres-cluster-ip-service
+            - name: PGDATABASE
+              value: postgres
+            - name: PGPORT
+              value: '5432'
+            - name: PGPASSWORD
+              valueFrom: 
+                secretKeyRef:
+                  name: pgpassword
+                  key: PGPASSWORD
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ kubectl apply -f k8s
+service "client-cluster-ip-service" unchanged
+deployment.apps "client-deployment" unchanged
+persistentvolumeclaim "database-persistent-volume-claim" unchanged
+service "postgres-cluster-ip-service" unchanged
+deployment.apps "postgres-deployment" unchanged
+service "redis-cluster-ip-service" unchanged
+deployment.apps "redis-deployment" unchanged
+service "server-cluster-ip-service" unchanged
+deployment.apps "server-deployment" configured
+error: error converting YAML to JSON: yaml: line 17: did not find expected '-' indicator
+```
+- The `worker-deployment.yaml` config files must be changed to put the proper `indentation`. 
+```yml
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: worker-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: worker
+  template:
+    metadata:
+      labels:
+        component: worker
+    spec:
+      containers: 
+        - name: worker
+          image: peelmicro/multi-worker
+          env:
+              - name: REDIS_HOST
+                value: redis-cluster-ip-service
+              - name: REDIS_PORT
+                value: '6379'
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ kubectl apply -f k8s
+service "client-cluster-ip-service" unchanged
+deployment.apps "client-deployment" unchanged
+persistentvolumeclaim "database-persistent-volume-claim" unchanged
+service "postgres-cluster-ip-service" unchanged
+deployment.apps "postgres-deployment" unchanged
+service "redis-cluster-ip-service" unchanged
+deployment.apps "redis-deployment" unchanged
+service "server-cluster-ip-service" unchanged
+deployment.apps "server-deployment" unchanged
+deployment.apps "worker-deployment" configured
+```
+19. Adding the `Ingress` service
+- We are not going to use the `LoadBalancer` service because it is a `Legacy` way of getting network traffic into a cluster. It is not used anymore because we only give access to just one set of `pods`.
+
+![](/images/other/docker-multi-docker/AddingIngressService.png)
+
+- We are going to use the `Ingress` service that exposes a set of services to the outside world. This service replaces the `LoadBalancer` one.
+* We are using [NGINX Ingress Controller for Kubernetes](https://github.com/kubernetes/ingress-nginx), we're not using [NGINX and NGINX Plus Ingress Controllers for Kubernetes](https://github.com/nginxinc/kubernetes-ingress).
+
+![](/images/other/docker-multi-docker/AddingIngressService2.png)
+
+* The `setup` of `ingress-nginx` changes depending on the environment
+
+![](/images/other/docker-multi-docker/AddingIngressService3.png)
+
+* We're making `config`files that contains the `desired` state for the application.
+
+![](/images/other/docker-multi-docker/AddingIngressService4.png)
+
+* A `controller` is any type of object that actually works to make some desired state a reality inside our cluster.
+* We need to create a `config` file that describes a set of rules to take incoming traffic and send it off to the appropriate service side of our cluster.
+
+![](/images/other/docker-multi-docker/AddingIngressService5.png)
+
+![](/images/other/docker-multi-docker/AddingIngressService6.png)
+
+![](/images/other/docker-multi-docker/AddingIngressService7.png)
+
+* `Google Cloud` implementation is the easiest to understand
+
+![](/images/other/docker-multi-docker/AddingIngressService8.png)
+
+* It uses the standard [GOOGLE CLOUD LOAD BALANCING](https://cloud.google.com/load-balancing/)
+* It uses the `Legacy` `Load Balancer` service.
+* We need to set up a `default-backend` pod that it's used for health checks.
+
+* Optional Reading on `Ingress Nginx`:
+Just in case we wanted to understand ingress-nginx a bit better, we can check out this article by Hongli Lai - [Studying the Kubernetes Ingress system](https://www.joyfulbikeshedding.com/blog/2018-03-26-studying-the-kubernetes-ingress-system.html).  Hongli is an absolute genius, he co-created Phusion Passenger, an extremely popular webserver that integrates with Nginx.
+* The `kubectl apply -f  https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/mandatory.yaml` command must be executed when using `Ingress Controller`
+```yml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ingress-nginx
+
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: nginx-configuration
+  namespace: ingress-nginx
+  labels:
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/part-of: ingress-nginx
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: nginx-ingress-serviceaccount
+  namespace: ingress-nginx
+  labels:
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/part-of: ingress-nginx
+
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRole
+metadata:
+  name: nginx-ingress-clusterrole
+  labels:
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/part-of: ingress-nginx
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps
+      - endpoints
+      - nodes
+      - pods
+      - secrets
+    verbs:
+      - list
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - nodes
+    verbs:
+      - get
+  - apiGroups:
+      - ""
+    resources:
+      - services
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - "extensions"
+    resources:
+      - ingresses
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - events
+    verbs:
+      - create
+      - patch
+  - apiGroups:
+      - "extensions"
+    resources:
+      - ingresses/status
+    verbs:
+      - update
+
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: Role
+metadata:
+  name: nginx-ingress-role
+  namespace: ingress-nginx
+  labels:
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/part-of: ingress-nginx
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps
+      - pods
+      - secrets
+      - namespaces
+    verbs:
+      - get
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps
+    resourceNames:
+      # Defaults to "<election-id>-<ingress-class>"
+      # Here: "<ingress-controller-leader>-<nginx>"
+      # This has to be adapted if you change either parameter
+      # when launching the nginx-ingress-controller.
+      - "ingress-controller-leader-nginx"
+    verbs:
+      - get
+      - update
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps
+    verbs:
+      - create
+  - apiGroups:
+      - ""
+    resources:
+      - endpoints
+    verbs:
+      - get
+
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: RoleBinding
+metadata:
+  name: nginx-ingress-role-nisa-binding
+  namespace: ingress-nginx
+  labels:
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/part-of: ingress-nginx
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: nginx-ingress-role
+subjects:
+  - kind: ServiceAccount
+    name: nginx-ingress-serviceaccount
+    namespace: ingress-nginx
+
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: nginx-ingress-clusterrole-nisa-binding
+  labels:
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/part-of: ingress-nginx
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: nginx-ingress-clusterrole
+subjects:
+  - kind: ServiceAccount
+    name: nginx-ingress-serviceaccount
+    namespace: ingress-nginx
+
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: nginx-ingress-controller
+  namespace: ingress-nginx
+  labels:
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/part-of: ingress-nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ingress-nginx
+      app.kubernetes.io/part-of: ingress-nginx
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ingress-nginx
+        app.kubernetes.io/part-of: ingress-nginx
+      annotations:
+        prometheus.io/port: "10254"
+        prometheus.io/scrape: "true"
+    spec:
+      serviceAccountName: nginx-ingress-serviceaccount
+      containers:
+        - name: nginx-ingress-controller
+          image: quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.21.0
+          args:
+            - /nginx-ingress-controller
+            - --configmap=$(POD_NAMESPACE)/nginx-configuration
+            - --tcp-services-configmap=$(POD_NAMESPACE)/tcp-services
+            - --udp-services-configmap=$(POD_NAMESPACE)/udp-services
+            - --publish-service=$(POD_NAMESPACE)/ingress-nginx
+            - --annotations-prefix=nginx.ingress.kubernetes.io
+          securityContext:
+            capabilities:
+              drop:
+                - ALL
+              add:
+                - NET_BIND_SERVICE
+            # www-data -> 33
+            runAsUser: 33
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+          ports:
+            - name: http
+              containerPort: 80
+            - name: https
+              containerPort: 443
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /healthz
+              port: 10254
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /healthz
+              port: 10254
+              scheme: HTTP
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+---
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/mandatory.yaml
+namespace "ingress-nginx" created
+configmap "nginx-configuration" created
+serviceaccount "nginx-ingress-serviceaccount" created
+clusterrole.rbac.authorization.k8s.io "nginx-ingress-clusterrole" created
+role.rbac.authorization.k8s.io "nginx-ingress-role" created
+rolebinding.rbac.authorization.k8s.io "nginx-ingress-role-nisa-binding" created
+clusterrolebinding.rbac.authorization.k8s.io "nginx-ingress-clusterrole-nisa-binding" created
+deployment.extensions "nginx-ingress-controller" created
+```
+- For standard usage we need to execute `minikube addons enable ingress`
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ minikube addons enable ingress
+ingress was successfully enabled
+```
+- For `Google Cloud` the `kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/provider/cloud-generic.yaml` command must be executed
+```yml
+kind: Service
+apiVersion: v1
+metadata:
+  name: ingress-nginx
+  namespace: ingress-nginx
+  labels:
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/part-of: ingress-nginx
+spec:
+  externalTrafficPolicy: Local
+  type: LoadBalancer
+  selector:
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/part-of: ingress-nginx
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+    - name: https
+      port: 443
+      targetPort: https
+---
+```
+- We need to create the `ingress-service.yaml` config file.
+
+![](/images/other/docker-multi-docker/AddingIngressService9.png)
+
+```yml
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-service
+  annotations: 
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec: 
+  rules:
+    - http:
+        paths:
+          - path: /
+            backend: 
+              serviceName: client-cluster-ip-service
+              servicePort: 3000
+          - path: /api/
+            backend: 
+              serviceName: server-cluster-ip-service
+              servicePort: 5000
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ kubectl apply -f k8s
+service "client-cluster-ip-service" unchanged
+deployment.apps "client-deployment" unchanged
+persistentvolumeclaim "database-persistent-volume-claim" unchanged
+ingress.extensions "ingress-service" created
+service "postgres-cluster-ip-service" unchanged
+deployment.apps "postgres-deployment" unchanged
+service "redis-cluster-ip-service" unchanged
+deployment.apps "redis-deployment" unchanged
+service "server-cluster-ip-service" unchanged
+deployment.apps "server-deployment" unchanged
+deployment.apps "worker-deployment" unchanged
+```
+20. Run `minikube` locally to see if everything is working
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ minikube ip
+192.168.0.107
+```
+- Browse to https://192.168.0.107/
+
+![](/images/other/docker-multi-docker/RunMinikube.png)
+
+- Click on `ADVANCED`
+
+![](/images/other/docker-multi-docker/RunMinikube2.png)
+
+- Click on `Proceed to 192.168.0.107 (unsafe)`
+
+![](/images/other/docker-multi-docker/RunMinikube3.png)
+
+![](/images/other/docker-multi-docker/RunMinikube4.png)
+
+- The error is because of the invalid certificate.
+
+![](/images/other/docker-multi-docker/RunMinikube5.png)
+
+![](/images/other/docker-multi-docker/RunMinikube6.png)
+
+21. Have a look at the `Minikube Dashboard'
+- Execute the `minikube dashboard` command
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ minikube dashboard
+Opening http://127.0.0.1:52302/api/v1/namespaces/kube-system/services/http:kubernetes-dashboard:/proxy/ in your default browser...
+```
+- It opens the `dashboard` automatically
+
+![](/images/other/docker-multi-docker/MinukubeDasboard.png)
+
+22. `Commit` and `Push` the changes to Github Repository
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)$ git add .warning: LF will be replaced by CRLF in elastic-beanstalk/.gitignore.The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in elastic-beanstalk/client/.gitignore.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in elastic-beanstalk/client/README.md.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in elastic-beanstalk/client/package.json.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in elastic-beanstalk/client/public/index.html.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in elastic-beanstalk/client/public/manifest.json.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in elastic-beanstalk/client/src/App.css.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in elastic-beanstalk/client/src/App.js.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in elastic-beanstalk/client/src/App.test.js.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in elastic-beanstalk/client/src/Fib.js.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in elastic-beanstalk/client/src/OtherPage.js.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in elastic-beanstalk/client/src/index.css.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in elastic-beanstalk/client/src/index.js.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in elastic-beanstalk/client/src/logo.svg.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in elastic-beanstalk/client/src/serviceWorker.js.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in elastic-beanstalk/client/yarn.lock.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in elastic-beanstalk/server/index.js.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in elastic-beanstalk/server/keys.js.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in elastic-beanstalk/server/package.json.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in elastic-beanstalk/worker/index.js.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in elastic-beanstalk/worker/keys.js.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in elastic-beanstalk/worker/package.json.
+The file will have its original line endings in your working directory.
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        new file:   elastic-beanstalk/.gitignore
+        renamed:    .travis.yml -> elastic-beanstalk/.travis.yml
+        renamed:    Dockerrun.aws.json -> elastic-beanstalk/Dockerrun.aws.json
+        new file:   elastic-beanstalk/README.md
+        new file:   elastic-beanstalk/client/.gitignore
+        new file:   elastic-beanstalk/client/Dockerfile
+        new file:   elastic-beanstalk/client/Dockerfile.dev
+        new file:   elastic-beanstalk/client/README.md
+        new file:   elastic-beanstalk/client/nginx/default.conf
+        new file:   elastic-beanstalk/client/package.json
+        new file:   elastic-beanstalk/client/public/favicon.ico
+        new file:   elastic-beanstalk/client/public/index.html
+        new file:   elastic-beanstalk/client/public/manifest.json
+        new file:   elastic-beanstalk/client/src/App.css
+        new file:   elastic-beanstalk/client/src/App.js
+        new file:   elastic-beanstalk/client/src/App.test.js
+        new file:   elastic-beanstalk/client/src/Fib.js
+        new file:   elastic-beanstalk/client/src/OtherPage.js
+        new file:   elastic-beanstalk/client/src/index.css
+        new file:   elastic-beanstalk/client/src/index.js
+        new file:   elastic-beanstalk/client/src/logo.svg
+        new file:   elastic-beanstalk/client/src/serviceWorker.js
+        new file:   elastic-beanstalk/client/yarn.lock
+        renamed:    docker-compose.yml -> elastic-beanstalk/docker-compose.yml
+        renamed:    nginx/Dockerfile -> elastic-beanstalk/nginx/Dockerfile
+        renamed:    nginx/Dockerfile.dev -> elastic-beanstalk/nginx/Dockerfile.dev
+        renamed:    nginx/default.conf -> elastic-beanstalk/nginx/default.conf
+        new file:   elastic-beanstalk/server/Dockerfile
+        new file:   elastic-beanstalk/server/Dockerfile.dev
+        new file:   elastic-beanstalk/server/index.js
+        new file:   elastic-beanstalk/server/keys.js
+        new file:   elastic-beanstalk/server/package.json
+        renamed:    simplek8s/client-deployment.yaml -> elastic-beanstalk/simplek8s/client-deployment.yaml
+        renamed:    simplek8s/client-node-port.yaml -> elastic-beanstalk/simplek8s/client-node-port.yaml
+        renamed:    simplek8s/client-pod.yaml -> elastic-beanstalk/simplek8s/client-pod.yaml
+        new file:   elastic-beanstalk/worker/Dockerfile
+        new file:   elastic-beanstalk/worker/Dockerfile.dev
+        new file:   elastic-beanstalk/worker/index.js
+        new file:   elastic-beanstalk/worker/keys.js
+        new file:   elastic-beanstalk/worker/package.json
+        new file:   k8s/client-cluster-ip-service.yaml
+        new file:   k8s/client-deployment.yaml
+        new file:   k8s/database-persistent-volume-claim.yaml
+        new file:   k8s/ingress-service.yaml
+        new file:   k8s/postgres-cluster-ip-service.yaml
+        new file:   k8s/postgres-deployment.yaml
+        new file:   k8s/redis-cluster-ip-service.yaml
+        new file:   k8s/redis-deployment.yaml
+        new file:   k8s/server-cluster-ip-service.yaml
+        new file:   k8s/server-deployment.yaml
+        new file:   k8s/worker-deployment.yaml
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ git commit -m "A Multi-Container App with Kubernetes"
+[master 2124cea] A Multi-Container App with Kubernetes
+ 51 files changed, 9398 insertions(+)
+ create mode 100644 elastic-beanstalk/.gitignore
+ rename .travis.yml => elastic-beanstalk/.travis.yml (100%)
+ rename Dockerrun.aws.json => elastic-beanstalk/Dockerrun.aws.json (100%)
+ create mode 100644 elastic-beanstalk/README.md
+ create mode 100644 elastic-beanstalk/client/.gitignore
+ create mode 100644 elastic-beanstalk/client/Dockerfile
+ create mode 100644 elastic-beanstalk/client/Dockerfile.dev
+ create mode 100644 elastic-beanstalk/client/README.md
+ create mode 100644 elastic-beanstalk/client/nginx/default.conf
+ create mode 100644 elastic-beanstalk/client/package.json
+ create mode 100644 elastic-beanstalk/client/public/favicon.ico
+ create mode 100644 elastic-beanstalk/client/public/index.html
+ create mode 100644 elastic-beanstalk/client/public/manifest.json
+ create mode 100644 elastic-beanstalk/client/src/App.css
+ create mode 100644 elastic-beanstalk/client/src/App.js
+ create mode 100644 elastic-beanstalk/client/src/App.test.js
+ create mode 100644 elastic-beanstalk/client/src/Fib.js
+ create mode 100644 elastic-beanstalk/client/src/OtherPage.js
+ create mode 100644 elastic-beanstalk/client/src/index.css
+ create mode 100644 elastic-beanstalk/client/src/index.js
+ create mode 100644 elastic-beanstalk/client/src/logo.svg
+ create mode 100644 elastic-beanstalk/client/src/serviceWorker.js
+ create mode 100644 elastic-beanstalk/client/yarn.lock
+ rename docker-compose.yml => elastic-beanstalk/docker-compose.yml (100%)
+ rename {nginx => elastic-beanstalk/nginx}/Dockerfile (100%)
+ rename {nginx => elastic-beanstalk/nginx}/Dockerfile.dev (100%)
+ rename {nginx => elastic-beanstalk/nginx}/default.conf (100%)
+ create mode 100644 elastic-beanstalk/server/Dockerfile
+ create mode 100644 elastic-beanstalk/server/Dockerfile.dev
+ create mode 100644 elastic-beanstalk/server/index.js
+ create mode 100644 elastic-beanstalk/server/keys.js
+ create mode 100644 elastic-beanstalk/server/package.json
+ rename {simplek8s => elastic-beanstalk/simplek8s}/client-deployment.yaml (100%)
+ rename {simplek8s => elastic-beanstalk/simplek8s}/client-node-port.yaml (100%)
+ rename {simplek8s => elastic-beanstalk/simplek8s}/client-pod.yaml (100%)
+ create mode 100644 elastic-beanstalk/worker/Dockerfile
+ create mode 100644 elastic-beanstalk/worker/Dockerfile.dev
+ create mode 100644 elastic-beanstalk/worker/index.js
+ create mode 100644 elastic-beanstalk/worker/keys.js
+ create mode 100644 elastic-beanstalk/worker/package.json
+ create mode 100644 k8s/client-cluster-ip-service.yaml
+ create mode 100644 k8s/client-deployment.yaml
+ create mode 100644 k8s/database-persistent-volume-claim.yaml
+ create mode 100644 k8s/ingress-service.yaml
+ create mode 100644 k8s/postgres-cluster-ip-service.yaml
+ create mode 100644 k8s/postgres-deployment.yaml
+ create mode 100644 k8s/redis-cluster-ip-service.yaml
+ create mode 100644 k8s/redis-deployment.yaml
+ create mode 100644 k8s/server-cluster-ip-service.yaml
+ create mode 100644 k8s/server-deployment.yaml
+ create mode 100644 k8s/worker-deployment.yaml
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ git push origin HEAD
+Counting objects: 14, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (14/14), done.
+Writing objects: 100% (14/14), 2.39 KiB | 129.00 KiB/s, done.
+Total 14 (delta 5), reused 0 (delta 0)
+remote: Resolving deltas: 100% (5/5), done.
+To https://github.com/peelmicro/multi-docker.git
+   6fdf00d..2124cea  HEAD -> master
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
+$ git push origin HEAD
+Counting objects: 15, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (15/15), done.
+Writing objects: 100% (15/15), 2.95 KiB | 81.00 KiB/s, done.
+Total 15 (delta 6), reused 0 (delta 0)
+remote: Resolving deltas: 100% (6/6), completed with 1 local object.
+To https://github.com/peelmicro/java-multi-docker.git
+   a6b03c6..02e2138  HEAD -> master
+```
+### Kubernetes Production Deployment
+1. Steps to deploy the solution to Production
+
+![](/images/other/docker-multi-docker/ProdDeployment.png)
+
+- We need to go to [Google Cloud Platform Pricing Calculator](https://cloud.google.com/products/calculator/) to have an idea of the cost
+
+![](/images/other/docker-multi-docker/GoogleCost.png)
+
+- Click on `KUBERNETES ENGINE`
+- Number of Nodes: 3
+
+![](/images/other/docker-multi-docker/GoogleCost2.png)
+
+- Click on `ADD TO ESTIMATE`
+
+- Persistent disk storage: 2 GB
+
+![](/images/other/docker-multi-docker/GoogleCost3.png)
+
+- Click on `ADD TO ESTIMATE`
+- Number of Forwarding Rules: 1
+- Number of Traffic Processed: 1 GB
+
+![](/images/other/docker-multi-docker/GoogleCost4.png)
+
+![](/images/other/docker-multi-docker/GoogleCost5.png)
+
+2. Why Google Cloud against AWS for Kubernetes
+
+![](/images/other/docker-multi-docker/WhyCoogleCloud.png)
+
+3. Apply for Google Cloud Platform for free
+- Browse to [Try Cloud Platform for free](https://console.cloud.google.com/freetrial/signup/0?pli=1)
+
+![](/images/other/docker-multi-docker/TryCloudPlatform.png)
+
+- Click on `AGREEE AND CONTINUE`
+
+![](/images/other/docker-multi-docker/TryCloudPlatform2.png)
+
+- Click on `START MY FREE TRIAL`
+
+![](/images/other/docker-multi-docker/TryCloudPlatform3.png)
+
+4. Create a Google Project
+
+- Browse to [Google Cloud Plaform](https://console.cloud.google.com)
+
+![](/images/other/docker-multi-docker/NewGoogleProject.png)
+
+- If we have already created a project with Google we need to click on that project.
+
+![](/images/other/docker-multi-docker/NewGoogleProject2.png)
+
+- Click on `NEW PROJECT`
+
+![](/images/other/docker-multi-docker/NewGoogleProject3.png)
+
+- Click on `CREATE`
+
+![](/images/other/docker-multi-docker/NewGoogleProject4.png)
+
+- Click on `SEE ALL ACTIVITIES`
+
+![](/images/other/docker-multi-docker/NewGoogleProject5.png)
+
+- Click on the current selected project
+
+![](/images/other/docker-multi-docker/NewGoogleProject6.png)
+
+- Select the `multi-k8s` project
+
+![](/images/other/docker-multi-docker/NewGoogleProject7.png)
+
+- Click on `Billing`
+
+![](/images/other/docker-multi-docker/NewGoogleProject8.png)
+
+- Ensure the Billing account is assigned
+5. Set up the Kubernetes Engine
+
+![](/images/other/docker-multi-docker/SetUpKubernetesEngine.png)
+
+![](/images/other/docker-multi-docker/SetUpKubernetesEngine2.png)
+
+- We have to wait until the initial setup is ready. We maybe need to refresh the page if the spinner doesn't disappear.
+
+![](/images/other/docker-multi-docker/SetUpKubernetesEngine3.png)
+
+- Click on `Create cluster`
+- Name: multi-cluster
+- Number of nodes: 3 (the default is fine)
+- Machine: 1 vCPU - 3.75 GB memory (this will be fine, with less it could work as well)
+
+![](/images/other/docker-multi-docker/SetUpKubernetesEngine4.png)
+
+- Click on `Create`
+* `From now on it will cost money`
+
+![](/images/other/docker-multi-docker/SetUpKubernetesEngine5.png)
+
+![](/images/other/docker-multi-docker/SetUpKubernetesEngine6.png)
+
+- Click on the `multi-cluster` link
+
+![](/images/other/docker-multi-docker/SetUpKubernetesEngine7.png)
+
+- Scroll down
+
+![](/images/other/docker-multi-docker/SetUpKubernetesEngine8.png)
+
+- Click on `Clusters`
+
+![](/images/other/docker-multi-docker/SetUpKubernetesEngine9.png)
+
+- Click on `Workloads`
+
+![](/images/other/docker-multi-docker/SetUpKubernetesEngine10.png)
+
+- Click on `Services`
+
+![](/images/other/docker-multi-docker/SetUpKubernetesEngine11.png)
+
+- Click on `Applications`
+
+- It is related to plugins or other apps. We won't use it.
+
+![](/images/other/docker-multi-docker/SetUpKubernetesEngine12.png)
+
+- Click on `Configuration`
+
+![](/images/other/docker-multi-docker/SetUpKubernetesEngine13.png)
+
+- Click on `Storage`
+
+![](/images/other/docker-multi-docker/SetUpKubernetesEngine14.png)
+
+- Click on `Storage classes`
+
+![](/images/other/docker-multi-docker/SetUpKubernetesEngine15.png)
+
+It shows that it's using [Google Cloud Persistent Disk](https://cloud.google.com/persistent-disk/)
+
+![](/images/other/docker-multi-docker/SetUpKubernetesEngine16.png)
+
+6. Create the Google Service Account
+
+![](/images/other/docker-multi-docker/GoogleServiceAccount.png)
+
+- Browse to [Google Cloud Plaform](https://console.cloud.google.com)
+
+![](/images/other/docker-multi-docker/CreateGoogleServiceAccount.png)
+
+- Click on `IAM & admin`
+
+![](/images/other/docker-multi-docker/CreateGoogleServiceAccount2.png)
+
+- Click on `Service accounts`
+
+![](/images/other/docker-multi-docker/CreateGoogleServiceAccount3.png)
+
+- Click on `CREATE SERVICE ACCOUNT`
+
+Service account name: `travis-deployer`
+Service account ID: `travis-deployer` for @multi-k8s-224518.iam.gserviceaccount.comService account ID
+Service account description: `Account used by Travis CI to deploy the app`
+
+![](/images/other/docker-multi-docker/CreateGoogleServiceAccount4.png)
+
+- Click on `CREATE`
+
+![](/images/other/docker-multi-docker/CreateGoogleServiceAccount5.png)
+
+- Select `Kubernetes Engine Admin`
+
+![](/images/other/docker-multi-docker/CreateGoogleServiceAccount6.png)
+
+- Click on `CONTINUE`
+
+![](/images/other/docker-multi-docker/CreateGoogleServiceAccount7.png)
+
+- Click on `+CREATE KEY`
+
+![](/images/other/docker-multi-docker/CreateGoogleServiceAccount8.png)
+
+- Select `(*)JSON` and click on `CREATE`
+
+![](/images/other/docker-multi-docker/CreateGoogleServiceAccount9.png)
+
+- Click on `CLOSE`
+
+![](/images/other/docker-multi-docker/CreateGoogleServiceAccount10.png)
+
+- The Key has been dowloaded to the local computer
+
+![](/images/other/docker-multi-docker/CreateGoogleServiceAccount11.png)
+
+- Click on `DONE`
+
+![](/images/other/docker-multi-docker/CreateGoogleServiceAccount12.png)
+
+7. Download and install `Travis CI CLI`
+
+![](/images/other/docker-multi-docker/TravisCICli.png)
+
+- On Windows `Ruby` is not installed and it's also not easy to install
+
+![](/images/other/docker-multi-docker/TravisCICli2.png)
+
+![](/images/other/docker-multi-docker/TravisCICli3.png)
+
+- Install Ruby on the /app folder on the application using the `docker run -it -v ${pwd}:/app ruby:2.3 sh` command
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ docker run -it -v ${pwd}:/app ruby:2.3 sh
+Unable to find image 'ruby:2.3' locally
+2.3: Pulling from library/ruby
+54f7e8ac135a: Downloading [======================================>            ]  34.88MB/45.32MB
+d6341e30912f: Download complete
+087a57faf949: Download complete
+5d71636fb824: Downloading [========================>                          ]  24.37MB/50.06MB
+0c1db9598990: Downloading [=========>                                         ]  39.76MB/213.2MB
+a054b67f1226: Waiting
+03b77d781ee0: Waiting
+662ffcc38466: Waiting
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ docker run -it -v ${pwd}:/app ruby:2.3 sh
+Unable to find image 'ruby:2.3' locally
+2.3: Pulling from library/ruby
+54f7e8ac135a: Pull complete
+d6341e30912f: Pull complete
+087a57faf949: Pull complete
+5d71636fb824: Pull complete
+0c1db9598990: Pull complete
+a054b67f1226: Pull complete
+03b77d781ee0: Pull complete
+662ffcc38466: Pull complete
+Digest: sha256:0ff11ba98f96d8f5667aa7e2de24c3877c750c6c943811c4b73c5022c2dab33d
+Status: Downloaded newer image for ruby:2.3
+#
+```
+```sh
+Status: Downloaded newer image for ruby:2.3
+# ls
+:  bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+# cd app
+sh: 2: cd: can't cd to app
+# cd
+# ls
+# pwd
+/root
+# ls
+# cd app
+sh: 7: cd: can't cd to app
+#
+```
+```sh
+C:\Users\juan.pablo.perez\OneDrive\Training\Docker\DockerAndKubernetes.TheCompleteGuide\complex>docker run -it -v ${pwd}:/app ruby:2.3 sh
+docker: Error response from daemon: create ${pwd}: "${pwd}" includes invalid characters for a local volume name, only "[a-zA-Z0-9][a-zA-Z0-9_.-]" are allowed. If you intended to pass a host directory, use absolute path.
+See 'docker run --help'.
+```
+- **It only works with PowerShell!!!**
+```sh
+PS C:\Users\juan.pablo.perez\OneDrive\Training\Docker\DockerAndKubernetes.TheCompleteGuide\complex> docker run -it -v ${pwd}:/app ruby:2.3 sh
+# ls
+app  bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+# cd app
+# ls
+README.md  client  elastic-beanstalk  k8s  multi-k8s-224518-4310841fc6ab.json  server  worker
+```
+- Install `Travis CI CL` inside the container with the `gem install travis --no-rdoc --no-ri` command. `--no-rdoc --no-ri` is used to avoid installing any documentation.
+```sh
+# gem install travis --no-rdoc --no-ri
+Fetching: multipart-post-2.0.0.gem (100%)
+Successfully installed multipart-post-2.0.0
+Fetching: faraday-0.15.4.gem (100%)
+Successfully installed faraday-0.15.4
+Fetching: faraday_middleware-0.12.2.gem (100%)
+Successfully installed faraday_middleware-0.12.2
+Fetching: highline-1.7.10.gem (100%)
+Successfully installed highline-1.7.10
+Fetching: backports-3.11.4.gem (100%)
+Successfully installed backports-3.11.4
+Fetching: multi_json-1.13.1.gem (100%)
+Successfully installed multi_json-1.13.1
+Fetching: addressable-2.4.0.gem (100%)
+Successfully installed addressable-2.4.0
+Fetching: net-http-persistent-2.9.4.gem (100%)
+Successfully installed net-http-persistent-2.9.4
+Fetching: net-http-pipeline-1.0.1.gem (100%)
+Successfully installed net-http-pipeline-1.0.1
+Fetching: gh-0.15.1.gem (100%)
+Successfully installed gh-0.15.1
+Fetching: launchy-2.4.3.gem (100%)
+Successfully installed launchy-2.4.3
+Fetching: ffi-1.9.25.gem (100%)
+Building native extensions. This could take a while...
+Successfully installed ffi-1.9.25
+Fetching: ethon-0.11.0.gem (100%)
+Successfully installed ethon-0.11.0
+Fetching: typhoeus-0.8.0.gem (100%)
+Successfully installed typhoeus-0.8.0
+Fetching: websocket-1.2.8.gem (100%)
+Successfully installed websocket-1.2.8
+Fetching: pusher-client-0.6.2.gem (100%)
+Successfully installed pusher-client-0.6.2
+Fetching: travis-1.8.9.gem (100%)
+Successfully installed travis-1.8.9
+17 gems installed
+```
+```sh
+# travis
+Shell completion not installed. Would you like to install it now? |y| n
+Usage: travis COMMAND ...
+
+Available commands:
+
+        accounts       displays accounts and their subscription status
+        branches       displays the most recent build for each branch
+        cache          lists or deletes repository caches
+        cancel         cancels a job or build
+        console        interactive shell
+        disable        disables a project
+        enable         enables a project
+        encrypt        encrypts values for the .travis.yml
+        encrypt-file   encrypts a file and adds decryption steps to .travis.yml
+        endpoint       displays or changes the API endpoint
+        env            show or modify build environment variables
+        help           helps you out when in dire need of information
+        history        displays a projects build history
+        init           generates a .travis.yml and enables the project
+        lint           display warnings for a .travis.yml
+        login          authenticates against the API and stores the token
+        logout         deletes the stored API token
+        logs           streams test logs
+        monitor        live monitor for what's going on
+        open           opens a build or job in the browser
+        pubkey         prints out a repository's public key
+        raw            makes an (authenticated) API call and prints out the result
+        report         generates a report useful for filing issues
+        repos          lists repositories the user has certain permissions on
+        requests       lists recent requests
+        restart        restarts a build or job
+        settings       access repository settings
+        setup          sets up an addon or deploy target
+        show           displays a build or job
+        sshkey         checks, updates or deletes an SSH key
+        status         checks status of the latest build
+        sync           triggers a new sync with GitHub
+        token          outputs the secret API token
+        version        outputs the client version
+        whatsup        lists most recent builds
+        whoami         outputs the current user
+
+run `/usr/local/bundle/bin/travis help COMMAND` for more infos
+```
+```sh
+# travis login
+We need your GitHub login to identify you.
+This information will not be sent to Travis CI, only to api.github.com.
+The password will not be displayed.
+
+Try running with --github-token or --auto if you don't want to enter your password anyway.
+
+Username: peelmicro
+Password for peelmicro: *********************
+Successfully logged in as peelmicro!
+```
+
+![](/images/other/docker-multi-docker/TravisCICli4.png)
+
+- Copy the `multi-k8s-224518-4310841fc6ab.json` json file generated by Google into the `complex` directory.
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ ls
+client  elastic-beanstalk  k8s  multi-k8s-224518-4310841fc6ab.json  README.md  server  worker
+```
+```sh
+# ls
+README.md  client  elastic-beanstalk  k8s  multi-k8s-224518-4310841fc6ab.json  server  worker
+```
+- Rename the file to `service-account.json`
+```sh
+# ls
+README.md  client  elastic-beanstalk  k8s  server  service-account.json  worker
+```
+```sh
+# travis encrypt-file service-account.json -r peelmicro/multi-docker
+encrypting service-account.json for peelmicro/multi-docker
+storing result as service-account.json.enc
+storing secure env variables for decryption
+
+Please add the following to your build script (before_install stage in your .travis.yml, for instance):
+
+    openssl aes-256-cbc -K $encrypted_0c35eebf403c_key -iv $encrypted_0c35eebf403c_iv -in service-account.json.enc -out service-account.json -d
+
+Pro Tip: You can add it automatically by running with --add.
+
+Make sure to add service-account.json.enc to the git repository.
+Make sure not to add service-account.json to the git repository.
+Commit all changes to your .travis.yml.
+```
+- Copy the line above inside the `.travis.yml` file
+```yml
+sudo: required
+language: node_js
+node_js: 
+  - "8"
+services:
+  - docker
+before_install:
+  - openssl aes-256-cbc -K $encrypted_0c35eebf403c_key -iv $encrypted_0c35eebf403c_iv -in service-account.json.enc -out service-account.json -d
+  - curl https://sdk.cloud.google.com | bash > /dev/null;
+  - source $HOME/google-cloud-sdk/path.bash.inc
+  - gcloud componets update kubectl
+  - gcloud auth activate-service-account --key-file service-account.json
+```
+- Check if we have the `service-account.json.enc` file created.
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ ls
+client  elastic-beanstalk  k8s  README.md  server  service-account.json  service-account.json.enc  worker
+```
+- Add the service-account.json file to `.gitignore`
+```git
+/client/node_modules
+/server/node_modules
+/worker/node_modules
+/README.md
+/service-account.json
+```
+
+![](/images/other/docker-multi-docker/TravisCICli5.png)
+
+```sh
+# exit
+PS C:\Users\juan.pablo.perez\OneDrive\Training\Docker\DockerAndKubernetes.TheCompleteGuide\complex>
+```
+8. Add `Travis CI` deployment scripts.
+
+![](/images/other/docker-multi-docker/TravisCIDeploymentScripts.png)
+
+- Obtain the `Project ID` of the Google project
+- Browse to [Google Cloud Platform](https://console.cloud.google.com/home/dashboard)
+
+![](/images/other/docker-multi-docker/TravisCIDeploymentScripts2.png)
+
+Project ID: `multi-k8s-224518`
+- Obtain the Kubernatis Cluster `Name` and  `Location`
+
+![](/images/other/docker-multi-docker/TravisCIDeploymentScripts3.png)
+
+- Go to `Kubernatis Engine -> Clusters`
+
+![](/images/other/docker-multi-docker/TravisCIDeploymentScripts4.png)
+
+Name: `multi-cluster`  
+Location: `us-central1-a`
+
+- We have to ensure we deploy the `latest` images
+
+![](/images/other/docker-multi-docker/TravisCIDeploymentScripts5.png)
+
+- Locally we were putting the version of the image.
+
+![](/images/other/docker-multi-docker/TravisCIDeploymentScripts6.png)
+
+- Here we're adding the `GIT_SHA` unique value to avoid having to put the version manually (the SHA value that GIT assigns to the commit).
+```sh
+$ git rev-parse HEAD
+2124cea105a313aa938b802e657692a6c28f6db7
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ git log
+commit 2124cea105a313aa938b802e657692a6c28f6db7 (HEAD -> master, origin/master)
+Author: Juan Pablo Perez <Juan.Pablo.Perez@retailinmotion.com>
+Date:   Mon Dec 3 05:09:10 2018 +0000
+
+    A Multi-Container App with Kubernetes
+
+commit 6fdf00d202566185651965574c92e2616b529ab4
+Author: Juan Pablo Perez <Juan.Pablo.Perez@retailinmotion.com>
+Date:   Sat Dec 1 06:45:36 2018 +0000
+
+    Maintaining Sets of Containers with Deployments
+
+commit 9ea7131a87d6550b97cce77a8a40bf761c5473a8
+Author: Juan Pablo Perez <Juan.Pablo.Perez@retailinmotion.com>
+Date:   Thu Nov 29 18:16:56 2018 +0000
+
+    Onwards to Kubernetes!
+
+:...skipping...
+commit 2124cea105a313aa938b802e657692a6c28f6db7 (HEAD -> master, origin/master)
+Author: Juan Pablo Perez <Juan.Pablo.Perez@retailinmotion.com>
+Date:   Mon Dec 3 05:09:10 2018 +0000
+
+    A Multi-Container App with Kubernetes
+
+commit 6fdf00d202566185651965574c92e2616b529ab4
+Author: Juan Pablo Perez <Juan.Pablo.Perez@retailinmotion.com>
+Date:   Sat Dec 1 06:45:36 2018 +0000
+
+    Maintaining Sets of Containers with Deployments
+
+commit 9ea7131a87d6550b97cce77a8a40bf761c5473a8
+Author: Juan Pablo Perez <Juan.Pablo.Perez@retailinmotion.com>
+Date:   Thu Nov 29 18:16:56 2018 +0000
+
+    Onwards to Kubernetes!
+
+commit 7b25a4a6d486b30570fa52efa88b58eb75438b7f
+Author: Juan Pablo Perez <Juan.Pablo.Perez@retailinmotion.com>
+Date:   Thu Nov 29 18:16:11 2018 +0000
+
+    Onwards to Kubernetes!
+
+commit cccdccab51062b2833d53d5bf948ebc6a2810423
+Author: Juan Pablo Perez <Juan.Pablo.Perez@retailinmotion.com>
+Date:   Fri Nov 9 10:15:57 2018 +0000
+
+    Updated App.js
+
+commit 6a70bbd1257e9e742d7de88e07900a5043ffc0c9
+Author: Juan Pablo Perez <Juan.Pablo.Perez@retailinmotion.com>
+Date:   Fri Nov 9 08:30:42 2018 +0000
+
+    added memory to the AWS Dockerrun.aws.json file
+:
+```
+
+![](/images/other/docker-multi-docker/TravisCIDeploymentScripts7.png)
+
+- It also helps when we have any issue with a deployment
+
+![](/images/other/docker-multi-docker/TravisCIDeploymentScripts8.png)
+
+- We need to generate the latest as well to avoid having to put the `sha` value when we download the implicit image.
+- Add a new `deploy.sh` file
+```sh
+# Create the Docker Images
+docker build -t peelmicro/multi-client:lastest peelmicro/multi-client:$SHA ./client
+docker build -t peelmicro/multi-server:lastest peelmicro/multi-server:$SHA ./server
+docker build -t peelmicro/multi-worker:lastest peelmicro/multi-worker:$SHA ./worker
+# Take those images and push them to docker hub
+docker push peelmicro/multi-client:latest
+docker push peelmicro/multi-client:$SHA
+docker push peelmicro/multi-server:latest
+docker push peelmicro/multi-server:$SHA
+docker push peelmicro/multi-worker:latest
+docker push peelmicro/multi-worker:$SHA
+# Apply all configs in the 'k8s' folder
+kubectl apply -f k8s
+# Imperatively set lastest images on each deployment
+kubectl set image deployments/client-deployment client=peelmicro/multi-client:$SHA
+kubectl set image deployments/server-deployment server=peelmicro/multi-server:$SHA
+kubectl set image deployments/worker-deployment worker=peelmicro/multi-worker:$SHA
+```
+- Add a new `.travis.yml` file
+```yml
+sudo: required
+language: node_js
+node_js: 
+  - "8"
+services:
+  - docker
+* env: 
+  global:
+    # Get an unique value of the latest commit to be used to identify the images
+    - SHA=$(git rev-parse HEAD)
+    # Tell Google Cloud CLI not to display any prompts
+    - CLOUDSKD_CORE_DISABLE_PROMPTS=1
+before_install:
+  # Decrypt the encrypted Google Cloud Keys and copy locally
+  - openssl aes-256-cbc -K $encrypted_0c35eebf403c_key -iv $encrypted_0c35eebf403c_iv -in service-account.json.enc -out service-account.json -d
+  # Install the Google Cloud SDK CLI
+  - curl https://sdk.cloud.google.com | bash > /dev/null;
+  # Apply additional configuration inside Travis CI instance
+  - source $HOME/google-cloud-sdk/path.bash.inc
+  # Install kubectl
+  - gcloud components update kubectl
+  # Authentication with Google Cloud using the decrypted json key file
+  - gcloud auth activate-service-account --key-file service-account.json
+  # Select the Google Cloud project that we're going to use
+  - gcloud config set project multi-k8s-224518
+  # Select the zone where the Kubernetes Cluster is installed
+  - gcloud config set compute/zone us-central1-a
+  # Select the Google Kubernetes Cluster
+  - gcloud container clusters get-credentials multi-cluster
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Build the 'test' version of multi-client
+  - docker build -t peelmicro/test-client -f ./client/Dockerfile.dev ./client
+script:
+  # Run the current test
+  - docker run peelmicro/test-client npm run test -- --coverage
+# Exceute an external script to do the deployment to Google Cloud
+deploy:
+    provider: script
+    script: bash ./deploy.sh
+  on:
+    branch: master
+```
+9. Configure Google Cloud CLI on Cloud Console
+
+- Browse to [Google Cloud Platform](https://console.cloud.google.com/home/dashboard)
+
+![](/images/other/docker-multi-docker/ConfigureGoogleCloudCLI.png)
+
+- Click on `Activate Cloud Shell`
+
+![](/images/other/docker-multi-docker/ConfigureGoogleCloudCLI2.png)
+
+- Click on `START CLOUD SHELL`
+
+![](/images/other/docker-multi-docker/ConfigureGoogleCloudCLI3.png)
+
+- The following commands must be executed the first time with each project.
+```sh
+Welcome to Cloud Shell! Type "help" to get started.
+Your Cloud Platform project in this session is set to multi-k8s-224518.
+Use “gcloud config set project [PROJECT_ID]” to change to a different project.
+peelmicro@cloudshell:~ (multi-k8s-224518)$ gcloud config set project multi-k8s-224518
+Updated property [core/project].
+```
+```sh
+peelmicro@cloudshell:~ (multi-k8s-224518)$ gcloud config set compute/zone us-central1-a
+Updated property [compute/zone].
+```
+```sh
+peelmicro@cloudshell:~ (multi-k8s-224518)$ gcloud container clusters get-credentials multi-cluster
+Fetching cluster endpoint and auth data.
+kubeconfig entry generated for multi-cluster.
+```
+```sh
+peelmicro@cloudshell:~ (multi-k8s-224518)$ kubectl get pods
+No resources found.
+```
+```sh
+peelmicro@cloudshell:~ (multi-k8s-224518)$ kubectl create secret generic pgpassword --from-literal PGPASSWORD=postgres_password
+secret "pgpassword" created
+```
+```sh
+peelmicro@cloudshell:~ (multi-k8s-224518)$ kubectl get secrets
+NAME                  TYPE                                  DATA      AGE
+default-token-vrc79   kubernetes.io/service-account-token   3         1d
+pgpassword            Opaque                                1         34s
+```
+
+![](/images/other/docker-multi-docker/ConfigureGoogleCloudCLI4.png)
+
+![](/images/other/docker-multi-docker/ConfigureGoogleCloudCLI5.png)
+
+10. Using Helm
+
+- If we go to [NGINX Ingress Controller Deployment](https://kubernetes.github.io/ingress-nginx/deploy/) there is a way to deploy called `Helm`
+
+![](/images/other/docker-multi-docker/ConfigureGoogleCloudCLI6.png)
+
+- Click on `Using Helm`
+
+![](/images/other/docker-multi-docker/ConfigureGoogleCloudCLI7.png)
+
+Using Helm¶
+NGINX Ingress controller can be installed via Helm using the chart stable/nginx-ingress from the official charts repository. To install the chart with the release name my-nginx:
+```sh
+helm install stable/nginx-ingress --name my-nginx
+```
+If the kubernetes cluster has RBAC enabled, then run:
+```sh
+helm install stable/nginx-ingress --name my-nginx --set rbac.create=true
+```
+Detect installed version:
+```sh
+POD_NAME=$(kubectl get pods -l app.kubernetes.io/name=ingress-nginx -o jsonpath='{.items[0].metadata.name}')
+kubectl exec -it $POD_NAME -- /nginx-ingress-controller --version
+```
+
+![](/images/other/docker-multi-docker/ConfigureGoogleCloudCLI8.png)
+
+- Browse to [Helm - The package manager for Kubernetes](https://helm.sh/)
+
+![](/images/other/docker-multi-docker/ConfigureGoogleCloudCLI9.png)
+
+- Browse to [Helm - Quickstart Guide](https://docs.helm.sh/using_helm/#quickstart-guide)
+
+![](/images/other/docker-multi-docker/ConfigureGoogleCloudCLI10.png)
+
+- Install `FROM SCRIPT`
+FROM SCRIPT
+Helm now has an installer script that will automatically grab the latest version of the Helm client and install it locally.
+
+You can fetch that script, and then execute it locally. It’s well documented so that you can read through it and understand what it is doing before you run it.
+```sh
+$ curl https://raw.githubusercontent.com/helm/helm/master/scripts/get > get_helm.sh
+$ chmod 700 get_helm.sh
+$ ./get_helm.sh
+```
+Yes, you can curl https://raw.githubusercontent.com/helm/helm/master/scripts/get | bash that if you want to live on the edge.
+
+- Execute these 3 lines on `Google Cloud Terminal`
+```sh
+peelmicro@cloudshell:~ (multi-k8s-224518)$ curl https://raw.githubusercontent.com/helm/helm/master/scripts/get > get_helm.sh
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  7236  100  7236    0     0  38970      0 --:--:-- --:--:-- --:--:-- 39113
+```
+```sh
+peelmicro@cloudshell:~ (multi-k8s-224518)$ chmod 700 get_helm.sh
+```
+```sh
+peelmicro@cloudshell:~ (multi-k8s-224518)$ ./get_helm.sh
+Downloading https://kubernetes-helm.storage.googleapis.com/helm-v2.11.0-linux-amd64.tar.gz
+Preparing to install helm and tiller into /usr/local/bin
+helm installed into /usr/local/bin/helm
+tiller installed into /usr/local/bin/tiller
+Run 'helm init' to configure helm.
+```
+- We don't have to run `heml init` yet because `Tiller` must be configured first.
+`GKE`
+Google’s GKE hosted Kubernetes platform enables RBAC by default. You will need to create a service account for tiller, and use the –service-account flag when initializing the helm server.
+
+See Tiller and role-based access control for more information.
+
+![](/images/other/docker-multi-docker/ConfigureGoogleCloudCLI11.png)
+
+- There are different kind of roles.
+
+![](/images/other/docker-multi-docker/ConfigureGoogleCloudCLI12.png)
+
+- Create a `Service account` on `Google Cloud Terminal` for Tiller and a `Cluster Role Binding` for the same purpose.
+
+![](/images/other/docker-multi-docker/ConfigureGoogleCloudCLI13.png)
+```sh
+peelmicro@cloudshell:~ (multi-k8s-224518)$ kubectl create serviceaccount --namespace kube-system tiller
+serviceaccount "tiller" created
+```
+```sh
+peelmicro@cloudshell:~ (multi-k8s-224518)$ kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
+clusterrolebinding.rbac.authorization.k8s.io "tiller-cluster-rule" created
+```
+- Initialize `Helm`
+```sh
+peelmicro@cloudshell:~ (multi-k8s-224518)$ helm init --service-account tiller --upgrade
+Creating /home/peelmicro/.helm
+Creating /home/peelmicro/.helm/repository
+Creating /home/peelmicro/.helm/repository/cache
+Creating /home/peelmicro/.helm/repository/local
+Creating /home/peelmicro/.helm/plugins
+Creating /home/peelmicro/.helm/starters
+Creating /home/peelmicro/.helm/cache/archive
+Creating /home/peelmicro/.helm/repository/repositories.yaml
+Adding stable repo with URL: https://kubernetes-charts.storage.googleapis.com
+Adding local repo with URL: http://127.0.0.1:8879/charts
+$HELM_HOME has been configured at /home/peelmicro/.helm.
+Tiller (the Helm server-side component) has been installed into your Kubernetes Cluster.
+Please note: by default, Tiller is deployed with an insecure 'allow unauthenticated users' policy.
+To prevent this, run `helm init` with the --tiller-tls-verify flag.
+For more information on securing your installation see: https://docs.helm.sh/using_helm/#securing-your-helm-installation
+Happy Helming!
+```
+- Install NGINX Ingress using the command suggested on the `Instalation Guide`
+```sh
+peelmicro@cloudshell:~ (multi-k8s-224518)$ helm install stable/nginx-ingress --name my-nginx --set rbac.create=true
+NAME:   my-nginx
+LAST DEPLOYED: Thu Dec  6 17:48:51 2018
+NAMESPACE: default
+STATUS: DEPLOYED
+
+RESOURCES:
+==> v1/Service
+NAME                                    AGE
+my-nginx-nginx-ingress-controller       0s
+my-nginx-nginx-ingress-default-backend  0s
+==> v1beta1/Deployment
+my-nginx-nginx-ingress-controller       0s
+my-nginx-nginx-ingress-default-backend  0s
+==> v1/Pod(related)
+NAME                                                     READY  STATUS             RESTARTS  AGE
+my-nginx-nginx-ingress-controller-68579497d-vhtkw        0/1    ContainerCreating  0         0s
+my-nginx-nginx-ingress-default-backend-7799dcdf8f-xvvwc  0/1    ContainerCreating  0         0s
+==> v1/ConfigMap
+NAME                               AGE
+my-nginx-nginx-ingress-controller  1s
+==> v1/ServiceAccount
+my-nginx-nginx-ingress  1s
+==> v1beta1/ClusterRole
+my-nginx-nginx-ingress  1s
+==> v1beta1/ClusterRoleBinding
+my-nginx-nginx-ingress  1s
+==> v1beta1/Role
+my-nginx-nginx-ingress  1s
+==> v1beta1/RoleBinding
+my-nginx-nginx-ingress  1s
+NOTES:
+The nginx-ingress controller has been installed.
+It may take a few minutes for the LoadBalancer IP to be available.
+You can watch the status by running 'kubectl --namespace default get services -o wide -w my-nginx-nginx-ingress-controller'
+An example Ingress that makes use of the controller:
+  apiVersion: extensions/v1beta1
+  kind: Ingress
+  metadata:
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    name: example
+    namespace: foo
+  spec:
+    rules:
+      - host: www.example.com
+        http:
+          paths:
+            - backend:
+                serviceName: exampleService
+                servicePort: 80
+              path: /
+    # This section is only required if TLS is to be enabled for the Ingress
+    tls:
+        - hosts:
+            - www.example.com
+          secretName: example-tls
+
+If TLS is enabled for the Ingress, a Secret containing the certificate and key must also be provided:
+
+  apiVersion: v1
+  kind: Secret
+  metadata:
+    name: example-tls
+    namespace: foo
+  data:
+    tls.crt: <base64 encoded cert>
+    tls.key: <base64 encoded key>
+  type: kubernetes.io/tls
+```
+![](/images/other/docker-multi-docker/ConfigureGoogleCloudCLI14.png)
+
+- Click on `Workloads`
+
+![](/images/other/docker-multi-docker/ConfigureGoogleCloudCLI15.png)
+
+-Click on `Services`
+
+![](/images/other/docker-multi-docker/ConfigureGoogleCloudCLI16.png)
+
+- Click on the `Load Balancer IP`
+
+![](/images/other/docker-multi-docker/ConfigureGoogleCloudCLI17.png)
+
+![](/images/other/docker-multi-docker/ConfigureGoogleCloudCLI18.png)
+
+![](/images/other/docker-multi-docker/ConfigureGoogleCloudCLI19.png)
+
+- Click on `Network Services -> Load Balancing`
+
+![](/images/other/docker-multi-docker/ConfigureGoogleCloudCLI20.png)
+
+- We can see the `3 virtual machines` from the `Frontend`
+
+![](/images/other/docker-multi-docker/ConfigureGoogleCloudCLI21.png)
+
+11. Deploy the `Kubernetes` application
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   .gitignore
+        modified:   elastic-beanstalk/.travis.yml
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        .travis.yml
+        deploy.sh
+        service-account.json.enc
+
+no changes added to commit (use "git add" and/or "git commit -a")
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ git add .
+warning: LF will be replaced by CRLF in .gitignore.
+The file will have its original line endings in your working directory.
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        modified:   .gitignore
+        new file:   .travis.yml
+        new file:   deploy.sh
+        modified:   elastic-beanstalk/.travis.yml
+        new file:   service-account.json.enc
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ git commit -m "added Kubernetes deployment scripts"
+[master 95dade6] added Kubernetes deployment scripts
+ 5 files changed, 74 insertions(+), 13 deletions(-)
+ create mode 100644 .travis.yml
+ create mode 100644 deploy.sh
+ create mode 100644 service-account.json.enc
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ git push origin HEAD
+Counting objects: 8, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (8/8), done.
+Writing objects: 100% (8/8), 4.30 KiB | 488.00 KiB/s, done.
+Total 8 (delta 2), reused 0 (delta 0)
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+To https://github.com/peelmicro/multi-docker.git
+   2124cea..95dade6  HEAD -> master
+```
+- Browse to https://www.travis-ci.com/peelmicro/multi-docker/requests
+
+![](/images/other/docker-multi-docker/DeployKubernetesApplication.png)
+
+- The `.travis.yml` is fixed.
+`View Config`
+```yml
+sudo: required
+language: node_js
+node_js: 
+  - "8"
+services:
+  - docker
+env: 
+  global:
+    # Get an unique value of the latest commit to be used to identify the images
+    - SHA=$(git rev-parse HEAD)
+    # Tell Google Cloud CLI not to display any prompts
+    - CLOUDSDK_CORE_DISABLE_PROMPTS=1
+before_install:
+  # Decrypt the encrypted Google Cloud Keys and copy locally
+  - openssl aes-256-cbc -K $encrypted_0c35eebf403c_key -iv $encrypted_0c35eebf403c_iv -in service-account.json.enc -out service-account.json -d
+  # Install the Google Cloud SDK CLI
+  - curl https://sdk.cloud.google.com | bash > /dev/null;
+  # Apply additional configuration inside Travis CI instance
+  - source $HOME/google-cloud-sdk/path.bash.inc
+  # Install kubectl
+  - gcloud components update kubectl
+  # Authentication with Google Cloud using the decrypted json key file
+  - gcloud auth activate-service-account --key-file service-account.json
+  # Select the Google Cloud project that we're going to use
+  - gcloud config set project multi-k8s-224518
+  # Select the zone where the Kubernetes Cluster is installed
+  - gcloud config set compute/zone us-central1-a
+  # Select the Google Kubernetes Cluster
+  - gcloud container clusters get-credentials multi-cluster
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Build the 'test' version of multi-client
+  - docker build -t peelmicro/test-client -f ./client/Dockerfile.dev ./client
+script:
+  # Run the current test
+  - docker run peelmicro/test-client npm run test -- --coverage
+# Exceute an external script to do the deployment to Google Cloud
+deploy:
+  provider: script
+  script: bash ./deploy.sh
+  on:
+    branch: master
+```
+
+![](/images/other/docker-multi-docker/DeployKubernetesApplication2.png)
+
+- The keys are not created on `www.travis-ci.com`, we need to use `www.travis-ci.org` instead
+
+![](/images/other/docker-multi-docker/DeployKubernetesApplication3.png)
+
+![](/images/other/docker-multi-docker/DeployKubernetesApplication4.png)
+
+```sh
+docker build" requires exactly 1 argument.
+See 'docker build --help'.
+Usage:  docker build [OPTIONS] PATH | URL | -
+Build an image from a Dockerfile
+"docker build" requires exactly 1 argument.
+See 'docker build --help'.
+Usage:  docker build [OPTIONS] PATH | URL | -
+Build an image from a Dockerfile
+"docker build" requires exactly 1 argument.
+See 'docker build --help'.
+Usage:  docker build [OPTIONS] PATH | URL | -
+Build an image from a Dockerfile
+The push refers to a repository [docker.io/[secure]/multi-client]
+An image does not exist locally with the tag: [secure]/multi-client
+The push refers to a repository [docker.io/[secure]/multi-client]
+An image does not exist locally with the tag: [secure]/multi-client
+The push refers to a repository [docker.io/[secure]/multi-server]
+An image does not exist locally with the tag: [secure]/multi-server
+The push refers to a repository [docker.io/[secure]/multi-server]
+An image does not exist locally with the tag: [secure]/multi-server
+The push refers to a repository [docker.io/[secure]/multi-worker]
+An image does not exist locally with the tag: [secure]/multi-worker
+The push refers to a repository [docker.io/[secure]/multi-worker]
+An image does not exist locally with the tag: [secure]/multi-worker
+service "client-cluster-ip-service" created
+deployment.apps "client-deployment" created
+persistentvolumeclaim "database-persistent-volume-claim" created
+ingress.extensions "ingress-service" created
+service "postgres-cluster-ip-service" created
+deployment.apps "postgres-deployment" created
+service "redis-cluster-ip-service" created
+deployment.apps "redis-deployment" created
+service "server-cluster-ip-service" created
+deployment.apps "server-deployment" created
+deployment.apps "worker-deployment" created
+deployment.apps "client-deployment" image updated
+deployment.apps "server-deployment" image updated
+deployment.apps "worker-deployment" image updated
+```
+- `deploy.sh` must be changed
+
+- Latest versions
+> `.travis.yml`
+```yml
+sudo: required
+language: node_js
+node_js: 
+  - "8"
+services:
+  - docker
+env: 
+  global:
+    # Get an unique value of the latest commit to be used to identify the images
+    - SHA=$(git rev-parse HEAD)
+    # Tell Google Cloud CLI not to display any prompts
+    - CLOUDSDK_CORE_DISABLE_PROMPTS=1
+before_install:
+  # Decrypt the encrypted Google Cloud Keys and copy locally
+  - openssl aes-256-cbc -K $encrypted_0c35eebf403c_key -iv $encrypted_0c35eebf403c_iv -in service-account.json.enc -out service-account.json -d
+  - openssl aes-256-cbc -K $encrypted_0c35eebf403c_key -iv $encrypted_0c35eebf403c_iv -in service-account.json.enc -out service-account.json -d
+  # Install the Google Cloud SDK CLI
+  - curl https://sdk.cloud.google.com | bash > /dev/null;
+  # Apply additional configuration inside Travis CI instance
+  - source $HOME/google-cloud-sdk/path.bash.inc
+  # Install kubectl
+  - gcloud components update kubectl
+  # Authentication with Google Cloud using the decrypted json key file
+  - gcloud auth activate-service-account --key-file service-account.json
+  # Select the Google Cloud project that we're going to use
+  - gcloud config set project multi-k8s-224518
+  # Select the zone where the Kubernetes Cluster is installed
+  - gcloud config set compute/zone us-central1-a
+  # Select the Google Kubernetes Cluster
+  - gcloud container clusters get-credentials multi-cluster
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin 
+  # Build the 'test' version of multi-client
+  - docker build -t peelmicro/test-client -f ./client/Dockerfile.dev ./client
+script:
+  # Run the current test
+  - docker run peelmicro/test-client npm run test -- --coverage
+# Exceute an external script to do the deployment to Google Cloud
+deploy:
+  provider: script
+  script: bash ./deploy.sh
+  on:
+    branch: master
+```
+> `deploy.sh`
+```sh
+# Create the Docker Images
+docker build -t peelmicro/multi-client:latest -t peelmicro/multi-client:$SHA -f ./client/Dockerfile ./client
+docker build -t peelmicro/multi-server:latest -t peelmicro/multi-server:$SHA -f ./server/Dockerfile ./server
+docker build -t peelmicro/multi-worker:latest -t peelmicro/multi-worker:$SHA -f ./worker/Dockerfile ./worker
+
+# Take those images and push them to docker hub
+docker push peelmicro/multi-client:latest
+docker push peelmicro/multi-client:$SHA
+docker push peelmicro/multi-server:latest
+docker push peelmicro/multi-server:$SHA
+docker push peelmicro/multi-worker:latest
+docker push peelmicro/multi-worker:$SHA
+# Apply all configs in the 'k8s' folder
+kubectl apply -f k8s
+# Imperatively set lastest images on each deployment
+kubectl set image deployments/client-deployment client=peelmicro/multi-client:$SHA
+kubectl set image deployments/server-deployment server=peelmicro/multi-server:$SHA
+kubectl set image deployments/worker-deployment worker=peelmicro/multi-worker:$SHA
+```
+
+![](/images/other/docker-multi-docker/DeployKubernetesApplication5.png)
+
+![](/images/other/docker-multi-docker/DeployKubernetesApplication6.png)
+
+![](/images/other/docker-multi-docker/DeployKubernetesApplication7.png)
+
+- Go to `Kubernetes Engine - Workloads`
+
+![](/images/other/docker-multi-docker/DeployKubernetesApplication8.png)
+
+![](/images/other/docker-multi-docker/DeployKubernetesApplication9.png)
+
+![](/images/other/docker-multi-docker/DeployKubernetesApplication10.png)
+
+![](/images/other/docker-multi-docker/DeployKubernetesApplication11.png)
+
+![](/images/other/docker-multi-docker/DeployKubernetesApplication12.png)
+
+![](/images/other/docker-multi-docker/DeployKubernetesApplication13.png)
+
+![](/images/other/docker-multi-docker/DeployKubernetesApplication14.png)
+
+12. Workflow for changing in Production
+
+![](/images/other/docker-multi-docker/WorkflowForChanging.png)
+
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ git add .
+warning: LF will be replaced by CRLF in client/src/App.js.
+The file will have its original line endings in your working directory.
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        modified:   client/src/App.js
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ git commit -m "Updated Header with new Kubernetes title!"
+[master b7736d9] Updated Header with new Kubernetes title!
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+ ```
+ ```sh
+ Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ git push origin HEAD
+Counting objects: 5, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (5/5), done.
+Writing objects: 100% (5/5), 466 bytes | 155.00 KiB/s, done.
+Total 5 (delta 4), reused 0 (delta 0)
+remote: Resolving deltas: 100% (4/4), completed with 4 local objects.
+To https://github.com/peelmicro/multi-docker.git
+   c184ec2..b7736d9  HEAD -> master
+ ```
+
+![](/images/other/docker-multi-docker/WorkflowForChanging2.png)
+
+13. HTTPS Setup
+
+![](/images/other/docker-multi-docker/HttpsSetup.png)
+
+- Browse to [Google Domains](https://domains.google) to purchase a domain
+
+![](/images/other/docker-multi-docker/HttpsSetup2.png)
+
+![](/images/other/docker-multi-docker/HttpsSetup3.png)
+
+![](/images/other/docker-multi-docker/HttpsSetup4.png)
+
+![](/images/other/docker-multi-docker/HttpsSetup5.png)
+
+![](/images/other/docker-multi-docker/HttpsSetup6.png)
+
+- Click on `CHECKOUT`
+
+![](/images/other/docker-multi-docker/HttpsSetup7.png)
+
+- Click on `SAVE & CONTINUE`
+
+![](/images/other/docker-multi-docker/HttpsSetup8.png)
+
+![](/images/other/docker-multi-docker/HttpsSetup9.png)
+
+![](/images/other/docker-multi-docker/HttpsSetup10.png)
+
+![](/images/other/docker-multi-docker/HttpsSetup11.png)
+
+![](/images/other/docker-multi-docker/HttpsSetup12.png)
+
+![](/images/other/docker-multi-docker/HttpsSetup13.png)
+
+- Configure the new domain
+- Browse to [Google Domains](https://domains.google.com)
+
+![](/images/other/docker-multi-docker/HttpsSetup14.png)
+
+- Click on `Configure DNS`
+- Scroll down to `Custom resource records`
+- Add two entries:
+
+I) 
+
+**NAME**: k8s-multi  
+**TYPE**: A  
+**TTL**: 1h  
+**DATA**: 35.193.127.86  
+II) 
+
+**NAME**: www.k8s-multi  
+**TYPE**: CNAME  
+**TTL**: 1h  
+**DATA**: k8s-multi.peelmicro.info.  
+
+![](/images/other/docker-multi-docker/HttpsSetup15.png)
+
+- Browse to https://k8s-multi.peelmicro.info/
+
+![](/images/other/docker-multi-docker/HttpsSetup16.png)
+
+- We are going to use [cert-manager](https://github.com/jetstack/cert-manager) to manage the certificate.
+
+![](/images/other/docker-multi-docker/HttpsSetup17.png)
+
+- Browse to [cert-manager’s documentation!](https://cert-manager.readthedocs.io/en/latest/)
+
+![](/images/other/docker-multi-docker/HttpsSetup18.png)
+
+- Go to `Installing cert-manager`
+
+![](/images/other/docker-multi-docker/HttpsSetup19.png)
+
+```sh
+$ helm install \
+    --name cert-manager \
+    --namespace kube-system \
+    stable/cert-manager
+```
+- Browse to [Goole Cloud Platform - Kubernetes](https://console.cloud.google.com/kubernetes)
+
+![](/images/other/docker-multi-docker/HttpsSetup20.png)
+
+- Go to `Activate Cloud Shell`
+
+![](/images/other/docker-multi-docker/HttpsSetup21.png)
+
+- Run the script.
+```sh
+peelmicro@cloudshell:~ (multi-k8s-224518)$ helm install \
+>     --name cert-manager \
+>     --namespace kube-system \
+>     stable/cert-manager
+-bash: helm: command not found
+```
+```sh
+peelmicro@cloudshell:~ (multi-k8s-224518)$ helm
+-bash: helm: command not found
+```
+```sh
+peelmicro@cloudshell:~ (multi-k8s-224518)$ ls
+get_helm.sh  README-cloudshell.txt
+```
+```sh
+peelmicro@cloudshell:~ (multi-k8s-224518)$ ./get_helm.sh
+Downloading https://kubernetes-helm.storage.googleapis.com/helm-v2.11.0-linux-amd64.tar.gz
+Preparing to install helm and tiller into /usr/local/bin
+helm installed into /usr/local/bin/helm
+tiller installed into /usr/local/bin/tiller
+```
+```sh
+peelmicro@cloudshell:~ (multi-k8s-224518)$ helm init --service-account tiller --upgrade
+$HELM_HOME has been configured at /home/peelmicro/.helm.
+Tiller (the Helm server-side component) has been upgraded to the current version.
+Happy Helming!
+```
+```sh
+peelmicro@cloudshell:~ (multi-k8s-224518)$ helm install \
+>     --name cert-manager \
+>     --namespace kube-system \
+>     stable/cert-manager
+NAME:   cert-manager
+LAST DEPLOYED: Fri Dec  7 07:37:44 2018
+NAMESPACE: kube-system
+STATUS: DEPLOYED
+RESOURCES:
+==> v1beta1/ClusterRoleBinding
+NAME          AGE
+cert-manager  0s
+==> v1beta1/Deployment
+cert-manager  0s
+==> v1/Pod(related)
+NAME                           READY  STATUS             RESTARTS  AGE
+cert-manager-6cf4699b56-vjrxc  0/1    ContainerCreating  0         0s
+==> v1/ServiceAccount
+NAME          AGE
+cert-manager  0s
+==> v1beta1/ClusterRole
+cert-manager  0s
+NOTES:
+cert-manager has been deployed successfully!
+In order to begin issuing certificates, you will need to set up a ClusterIssuer
+or Issuer resource (for example, by creating a 'letsencrypt-staging' issuer).
+More information on the different types of issuers and how to configure them
+can be found in our documentation:
+https://cert-manager.readthedocs.io/en/latest/reference/issuers.html
+For information on how to configure cert-manager to automatically provision
+Certificates for Ingress resources, take a look at the `ingress-shim`
+documentation:
+https://cert-manager.readthedocs.io/en/latest/reference/ingress-shim.html
+```
+- Wire Up the `Cert Manager`
+
+![](/images/other/docker-multi-docker/HttpsSetup22.png)
+
+![](/images/other/docker-multi-docker/HttpsSetup23.png)
+
+- Create the new `issuer.yaml` on the `k8s` folder.
+```yml
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-prod
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: 'juanp_perez@peelmicro.info'
+    privateKeySecretRef:
+      name: letsencrypt-prod
+    http01: {}
+```
+- Create the new `certificate.yaml` on the `k8s` folder.
+```yml
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata: 
+  name: k8s-multi-com-tls
+spec:
+  secretName: k8s-multi-com
+  issuerRef: 
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  commonName: peelmicro.info
+  dnsNames:
+    - k8s-multi.peelmicro.info
+    - www.k8s-multi.peelmicro.info
+  acme:
+    config:
+      - http01:
+        ingressClass: nginx
+        domains:
+          - k8s-multi.peelmicro.info
+          - www.k8s-multi.peelmicro.info
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        k8s/certificate.yaml
+        k8s/issuer.yaml
+
+nothing added to commit but untracked files present (use "git add" to track)
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ git add .
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        new file:   k8s/certificate.yaml
+        new file:   k8s/issuer.yaml
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ git commit -m "Added certificate and issuer"
+[master 69526bd] Added certificate and issuer
+ 2 files changed, 32 insertions(+)
+ create mode 100644 k8s/certificate.yaml
+ create mode 100644 k8s/issuer.yaml
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ git push origin HEAD
+Counting objects: 5, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (5/5), done.
+Writing objects: 100% (5/5), 822 bytes | 91.00 KiB/s, done.
+Total 5 (delta 2), reused 0 (delta 0)
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+To https://github.com/peelmicro/multi-docker.git
+   b7736d9..69526bd  HEAD -> master
+```
+![](/images/other/docker-multi-docker/HttpsSetup24.png)
+- Browse to `Google Could Terminal` and check if the new certificate and issuer have been created
+```sh
+peelmicro@cloudshell:~ (multi-k8s-224518)$ kubectl get certificates
+NAME                AGE
+k8s-multi-com-tls   3m
+```
+```sh
+peelmicro@cloudshell:~ (multi-k8s-224518)$ kubectl describe certificates
+Name:         k8s-multi-com-tls
+Namespace:    default
+Labels:       <none>
+Annotations:  kubectl.kubernetes.io/last-applied-configuration={"apiVersion":"certmanager.k8s.io/v1alpha1","kind":"Certificate","metadata":{"annotations":{},"name":"k8s-multi-com-tls","namespace":"default"},"spec":...
+API Version:  certmanager.k8s.io/v1alpha1
+Kind:         Certificate
+Metadata:
+  Cluster Name:
+  Creation Timestamp:  2018-12-07T08:14:02Z
+  Generation:          0
+  Resource Version:    308105
+  Self Link:           /apis/certmanager.k8s.io/v1alpha1/namespaces/default/certificates/k8s-multi-com-tls
+  UID:                 0e6e432c-f9f8-11e8-9f4c-42010a8000c9
+Spec:
+  Acme:
+    Config:
+      Domains:
+        k8s-multi.peelmicro.info
+        www.k8s-multi.peelmicro.info
+  Common Name:  peelmicro.info
+  Dns Names:
+    k8s-multi.peelmicro.info
+    www.k8s-multi.peelmicro.info
+  Issuer Ref:
+    Kind:       ClusterIssuer
+    Name:       letsencrypt-prod
+  Secret Name:  k8s-multi-com
+Status:
+  Conditions:
+    Last Transition Time:  2018-12-07T08:14:04Z
+    Message:               Resource validation failed: [spec.acme.config: Required value: no ACME solver configuration specified for domain "peelmicro.info", spec.acme.config[0]: Required value: at least one solver must be configured]
+    Reason:                ConfigError
+    Status:                False
+    Type:                  Ready
+```
+- Assing temporaly the IP to the `peelmicro.info` domain
+
+![](/images/other/docker-multi-docker/HttpsSetup25.png)
+
+- Modify the `certificate.yaml` file
+```yml
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: k8s-multi-com-tls
+spec:
+  secretName: k8s-multi-com
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  commonName: peelmicro.info
+  dnsNames:
+    - peelmicro.info
+    - www.peelmicro.info
+  acme:
+    config:
+      - http01:
+          ingressClass: nginx
+        domains:
+          - peelmicro.info
+          - www.peelmicro.info
+```
+- Modiy the `issuer.yaml` file
+```yml
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-prod
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: 'juanp_perez@peelmicro.info'
+    privateKeySecretRef:
+      name: letsencrypt-prod
+    http01: {}    
+```
+- Browse to `Google Could Terminal` and check if the new certificate has been created
+```sh
+Labels:       <none>
+Annotations:  kubectl.kubernetes.io/last-applied-configuration={"apiVersion":"certmanager.k8s.io/v1alpha1","kind":"Certificate","metadata":{"annotations":{},"name":"k8s-multi-com-tls","namespace":"default"},"spec":...
+API Version:  certmanager.k8s.io/v1alpha1
+Kind:         Certificate
+Metadata:
+  Cluster Name:
+  Creation Timestamp:  2018-12-07T08:14:02Z
+  Generation:          0
+  Resource Version:    314535
+  Self Link:           /apis/certmanager.k8s.io/v1alpha1/namespaces/default/certificates/k8s-multi-com-tls
+  UID:                 0e6e432c-f9f8-11e8-9f4c-42010a8000c9
+Spec:
+  Acme:
+    Config:
+      Domains:
+        peelmicro.info
+        www.peelmicro.info
+      Http 01:
+        Ingress:
+        Ingress Class:  nginx
+  Common Name:          peelmicro.info
+  Dns Names:
+    peelmicro.info
+    www.peelmicro.info
+  Issuer Ref:
+    Kind:       ClusterIssuer
+    Name:       letsencrypt-prod
+  Secret Name:  k8s-multi-com
+Status:
+  Acme:
+    Order:
+      URL:  https://acme-v02.api.letsencrypt.org/acme/order/47225945/209726867
+  Conditions:
+    Last Transition Time:  2018-12-07T09:11:08Z
+    Message:               Certificate issued successfully
+    Reason:                CertIssued
+    Status:                True
+    Type:                  Ready
+    Last Transition Time:  <nil>
+    Message:               Order validated
+    Reason:                OrderValidated
+    Status:                False
+    Type:                  ValidateFailed
+Events:
+  Type    Reason          Age   From          Message
+  ----    ------          ----  ----          -------
+  Normal  CreateOrder     3m    cert-manager  Created new ACME order, attempting validation...
+  Normal  DomainVerified  2m    cert-manager  Domain "www.peelmicro.info" verified with "http-01" validation
+  Normal  DomainVerified  2m    cert-manager  Domain "peelmicro.info" verified with "http-01" validation
+  Normal  IssueCert       2m    cert-manager  Issuing certificate...
+  Normal  CertObtained    2m    cert-manager  Obtained certificate from ACME server
+  Normal  CertIssued      2m    cert-manager  Certificate issued successfully
+```
+- Check if the `k8s-multi-com` secret has been created
+```sh
+peelmicro@cloudshell:~ (multi-k8s-224518)$ kubectl get secrets
+NAME                                 TYPE                                  DATA      AGE
+default-token-vrc79                  kubernetes.io/service-account-token   3         2d
+k8s-multi-com                        kubernetes.io/tls                     2         5m
+my-nginx-nginx-ingress-token-mrc7x   kubernetes.io/service-account-token   3         15h
+pgpassword                           Opaque                                1         16h
+```
+- Check if the `letsencrypt-prod` Cluster Issuer has been created
+```sh
+peelmicro@cloudshell:~ (multi-k8s-224518)$ kubectl get clusterissuers
+NAME               AGE
+letsencrypt-prod   1h
+```
+```sh
+peelmicro@cloudshell:~ (multi-k8s-224518)$ kubectl describe clusterissuers
+Name:         letsencrypt-prod
+Namespace:
+Labels:       <none>
+Annotations:  kubectl.kubernetes.io/last-applied-configuration={"apiVersion":"certmanager.k8s.io/v1alpha1","kind":"ClusterIssuer","metadata":{"annotations":{},"name":"letsencrypt-prod","namespace":""},"spec":{"acme...
+API Version:  certmanager.k8s.io/v1alpha1
+Kind:         ClusterIssuer
+Metadata:
+  Cluster Name:
+  Creation Timestamp:  2018-12-07T08:14:04Z
+  Generation:          0
+  Resource Version:    308216
+  Self Link:           /apis/certmanager.k8s.io/v1alpha1/letsencrypt-prod
+  UID:                 0fcae057-f9f8-11e8-9f4c-42010a8000c9
+Spec:
+  Acme:
+    Email:  juanp_perez@peelmicro.info
+    Http 01:
+    Private Key Secret Ref:
+      Key:
+      Name:  letsencrypt-prod
+    Server:  https://acme-v02.api.letsencrypt.org/directory
+Status:
+  Acme:
+    Uri:  https://acme-v02.api.letsencrypt.org/acme/acct/47225945
+  Conditions:
+    Last Transition Time:  2018-12-07T08:14:10Z
+    Message:               The ACME account was registered with the ACME server
+    Reason:                ACMEAccountRegistered
+    Status:                True
+    Type:                  Ready
+Events:                    <none>
+```
+- Modify the `ingress-service.yaml` file
+```yml
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-service
+  annotations: 
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    certmanager.k8s.io/cluster-issuer: 'letsencrypt-prod'
+    nginx.ingress.kubernetes.io/ssl-redirect: 'true'
+spec: 
+  tls:
+    - hosts: 
+        - peelmicro.info
+        - www.peelmicro.info
+      secretName: k8s-multi-com
+  rules:
+    - host: peelmicro.info
+      http:
+        paths:
+          - path: /
+            backend: 
+              serviceName: client-cluster-ip-service
+              servicePort: 3000
+          - path: /api/
+            backend: 
+              serviceName: server-cluster-ip-service
+              servicePort: 5000
+    - host: www.peelmicro.info
+      http:
+        paths:
+          - path: /
+            backend: 
+              serviceName: client-cluster-ip-service
+              servicePort: 3000
+          - path: /api/
+            backend: 
+              serviceName: server-cluster-ip-service
+              servicePort: 5000
+```
+- Commit the new changes
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ git add .
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        modified:   k8s/ingress-service.yaml
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ git commit -m "Added ingress to force using TLS"
+[master b5b9873] Added ingress to force using TLS
+ 1 file changed, 21 insertions(+), 1 deletion(-)
+```
+```sh
+Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
+$ git push origin HEAD
+Counting objects: 4, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (4/4), done.
+Writing objects: 100% (4/4), 669 bytes | 133.00 KiB/s, done.
+Total 4 (delta 2), reused 0 (delta 0)
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+To https://github.com/peelmicro/multi-docker.git
+   4211526..b5b9873  HEAD -> master
+```
+
+![](/images/other/docker-multi-docker/HttpsSetup26.png)
+
+![](/images/other/docker-multi-docker/HttpsSetup27.png)
+
+![](/images/other/docker-multi-docker/HttpsSetup28.png)
+
+14. Google Cloud Cleanup
+- Browse to [Google Cloud Platform](https://console.cloud.google.com/home/dashboard)
+
+![](/images/other/docker-multi-docker/GoogleCloudCleanup.png)
+
+![](/images/other/docker-multi-docker/GoogleCloudCleanup2.png)
+
+- Click the `gear` icon on the top right 
+
+![](/images/other/docker-multi-docker/GoogleCloudCleanup3.png)
+
+- Select the `multi-k8s` project and then click on `DELETE`
+
+![](/images/other/docker-multi-docker/GoogleCloudCleanup4.png)
+
+- Enter the `project ID` and then click on `SHUT-DOWN'
+
+![](/images/other/docker-multi-docker/GoogleCloudCleanup5.png)
+
+![](/images/other/docker-multi-docker/GoogleCloudCleanup6.png)
+
+![](/images/other/docker-multi-docker/GoogleCloudCleanup7.png)
