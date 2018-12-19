@@ -1,6 +1,7 @@
 # ASP.NET Core 2 Identity Management and Security
 
-The code is stored in [This GitHub Repository](https://github.com/peelmicro/net-core-2-authentication).
+> Github Repositories
+- [net-core-2-authentication](https://github.com/peelmicro/net-core-2-authentication).
 
 The [ASP.NET Core 2 Identity Management and Security](https://www.udemy.com/aspnet-core-2-security-and-identity-management-with-c/) Udemy course explains how to Master Claim-Based Authentication, Authorization and Security in ASP.NET Core.
 

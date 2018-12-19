@@ -1,6 +1,7 @@
 # Python version of the "Docker and Kubernetes: The Complete Guide" Udemy course
 
-The code is stored in [This GitHub Repository](https://github.com/peelmicro/python-multi-docker).
+> Github Repositories
+- [python-multi-docker](https://github.com/peelmicro/python-multi-docker).
 
 Source code for the `Python` version of the [Docker and Kubernetes: The Complete Guide](https://www.udemy.com/docker-and-kubernetes-the-complete-guide) Udemy course
 

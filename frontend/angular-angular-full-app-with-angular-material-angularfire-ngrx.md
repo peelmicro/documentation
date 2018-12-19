@@ -1,6 +1,7 @@
 # Angular (Full App) with Angular Material, Angularfire & NgRx
 
-The code is stored in [This GitHub Repository](https://github.com/peelmicro/angular-fitness-tracker).
+> Github Repositories
+- [angular-fitness-tracker](https://github.com/peelmicro/angular-fitness-tracker).
 
 The [Angular (Full App) with Angular Material, Angularfire & NgRx](https://www.udemy.com/angular-full-app-with-angular-material-angularfire-ngrx/) Udemy course explains how to use Angular, Angular Material, Angularfire (+ Firebase with Firestore) and NgRx to build a real Angular App.
 

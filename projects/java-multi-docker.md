@@ -1,6 +1,7 @@
 # Java version of the "Docker and Kubernetes: The Complete Guide" Udemy course 
 
-The code is stored in [This GitHub Repository](https://github.com/peelmicro/java-multi-docker).
+> Github Repositories
+- [java-multi-docker](https://github.com/peelmicro/java-multi-docker).
 
 Source code for the `Java` version of the [Docker and Kubernetes: The Complete Guide](https://www.udemy.com/docker-and-kubernetes-the-complete-guide) Udemy course
 

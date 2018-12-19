@@ -1,6 +1,7 @@
 # Build an app with ASPNET Core and Angular from scratch
 
-The code is stored in [This GitHub Repository](https://github.com/peelmicro/asp-net-core-angular-from-scratch).
+> Github Repositories
+- [asp-net-core-angular-from-scratch](https://github.com/peelmicro/asp-net-core-angular-from-scratch).
 
 The [Build an app with ASPNET Core and Angular from scratch](https://www.udemy.com/build-an-app-with-aspnet-core-and-angular-from-scratch/) Udemy course is a practical example of how to build an application with ASP.NET Core WebAPI (v2.1) and Angular (v6) from start to finish.
 

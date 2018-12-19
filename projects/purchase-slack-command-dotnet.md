@@ -1,6 +1,7 @@
 # .Net Core version of the "How to create a Slack bot to automate tasks for you" Udemy Course
 
-The code is stored in [This GitHub Repository](https://github.com/peelmicro/purchase-slack-command-dotnet).
+> Github Repositories
+- [purchase-slack-command-dotnet](https://github.com/peelmicro/purchase-slack-command-dotnet).
 
 Source code for the `.Net Core` version of the [How to create a Slack bot to automate tasks for you](https://www.udemy.com/how-to-create-a-slack-bot-to-automate-tasks-for-you) Udemy course
 

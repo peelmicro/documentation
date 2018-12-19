@@ -1,6 +1,7 @@
 # Ethereum KickStart website created with Vue (instead of React) From 'Ethereum and Solidity: The Complete Developer's Guide' Udemy course
 
-The code is stored in [This GitHub Repository](https://github.com/peelmicro/ethereum-kickstart-vue).
+> Github Repositories
+- [ethereum-kickstart-vue](https://github.com/peelmicro/ethereum-kickstart-vue).
 
 Source code for the `Vue.js-Nuxt` version of the [Ethereum and Solidity: The Complete Developer's Guide](https://www.udemy.com/ethereum-and-solidity-the-complete-developers-guide/) Udemy course
 

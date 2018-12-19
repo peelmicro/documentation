@@ -1,6 +1,7 @@
 # Angular 7 (formerly Angular 2) - The Complete Guide
 
-The code is stored in [This GitHub Repository](https://github.com/peelmicro/angular-the-complete-guide).
+> Github Repositories
+- [angular-the-complete-guide](https://github.com/peelmicro/angular-the-complete-guide).
 
 The [Angular 7 (formerly Angular 2) - The Complete Guide](https://www.udemy.com/the-complete-guide-to-angular-2/) Udemy course explains how to Master Angular (Angular 2+, incl. Angular 7) and build awesome, reactive web apps with the successor of Angular.js
 

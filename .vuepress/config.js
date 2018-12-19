@@ -46,14 +46,20 @@ module.exports = ctx => ({
           title: 'Vue.js',
           collapsable: false,
           children: [
-            'vuejs'
+            'vuejs',
+            '/projects/node-with-vuejs-fullstack-web-development.md',
+            '/projects/ethereum-kickstart-vue.md'
           ]
         },
         {
           title: 'React',
           collapsable: false,
           children: [
-            'react'
+            'react',
+            '/other/docker-multi-docker.md',
+            '/backend/nodejs-advanced-node-for-developers.md',
+            '/backend/nodejs-node-with-react-fullstack-web-development.md',
+            '/other/blockchain-ethereum-kickstart.md'
           ]
         },
         {
@@ -96,7 +102,11 @@ module.exports = ctx => ({
             'nodejs',
             '/other/docker-multi-docker',
             'nodejs-advanced-node-for-developers',
-            '/other/bot-how-to-create-a-slack-bot-to-automate-tasks-for-you'
+            '/other/bot-how-to-create-a-slack-bot-to-automate-tasks-for-you',
+            'nodejs-node-with-react-fullstack-web-development.md',
+            '/projects/node-with-vuejs-fullstack-web-development.md',
+            '/other/blockchain-ethereum-kickstart.md',
+            '/projects/ethereum-kickstart-vue.md'
           ]
         },
         {
@@ -174,14 +184,19 @@ module.exports = ctx => ({
           collapsable: false,
           children: [
             'docker',
-            'docker-multi-docker'
+            'docker-multi-docker',
+            '/projects/dotnet-core-multi-docker.md',
+            '/projects/java-multi-docker.md',
+            '/projects/python-multi-docker.md'
           ]
         },
         {
           title: 'Blockchain',
           collapsable: false,
           children: [
-            'blockchain'
+            'blockchain',
+            'blockchain-ethereum-kickstart',
+            '/projects/ethereum-kickstart-vue'            
           ]
         },
         {

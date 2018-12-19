@@ -1,6 +1,7 @@
 # Node JS: Advanced Concepts
 
-The code is stored in [This GitHub Repository](https://github.com/peelmicro/node-advanced-concepts).
+> Github Repositories
+- [node-advanced-concepts](https://github.com/peelmicro/node-advanced-concepts).
 
 The [Node JS: Advanced Concepts](https://www.udemy.com/advanced-node-for-developers/) Udemy course helps to get advanced with Node.Js! Learn caching with Redis, speed up through clustering, and add image upload with S3 and Node!.
 

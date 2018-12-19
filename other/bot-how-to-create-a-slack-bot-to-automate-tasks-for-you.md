@@ -1,6 +1,7 @@
 # How to create a Slack bot to automate tasks for you
 
-The code is stored in [This GitHub Repository](https://github.com/peelmicro/purchase-slack-command).
+> Github Repositories
+- [purchase-slack-command](https://github.com/peelmicro/purchase-slack-command).
 
 The [How to create a Slack bot to automate tasks for you](https://www.udemy.com/how-to-create-a-slack-bot-to-automate-tasks-for-you/) Udemy course explains how to Code up your own virtual personal assistant
 

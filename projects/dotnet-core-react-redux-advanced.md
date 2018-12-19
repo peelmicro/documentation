@@ -1,6 +1,7 @@
 # .Net Core version of the "Node JS: Advanced Concepts" Udemy course
 
-The code is stored in [This GitHub Repository](https://github.com/peelmicro/dot-net-core-react-redux-advanced).
+> Github Repositories
+- [dot-net-core-react-redux-advanced](https://github.com/peelmicro/dot-net-core-react-redux-advanced).
 
 Source code for the `.Net Core` version of the [Node JS: Advanced Concepts](https://www.udemy.com/advanced-node-for-developers) Udemy course
 

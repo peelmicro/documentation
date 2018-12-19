@@ -1,6 +1,7 @@
 # CSS - The Complete Guide (incl. Flexbox, Grid & Sass)
 
-The code is stored in [This GitHub Repository](https://github.com/peelmicro/css-the-complete-guide).
+> Github Repositories
+- [css-the-complete-guide](https://github.com/peelmicro/css-the-complete-guide).
 
 The [CSS - The Complete Guide (incl. Flexbox, Grid & Sass)](https://www.udemy.com/css-the-complete-guide-incl-flexbox-grid-sass/) Udemy course explains how to Learn CSS for the first time or brush up your CSS skills and dive in even deeper. EVERY web developer has to know CSS.
 

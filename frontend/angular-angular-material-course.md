@@ -1,6 +1,7 @@
 # Angular Material Masterclass
 
-The code is stored in [This GitHub Repository](https://github.com/peelmicro/angular-material-course).
+> Github Repositories
+- [angular-material-course](https://github.com/peelmicro/angular-material-course).
 
 The [Angular Material Masterclass](https://www.udemy.com/angular-material-course/) Udemy course is a Practical Guide for Building Angular 7 Applications with `Angular Material`.
 

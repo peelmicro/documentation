@@ -1,6 +1,8 @@
 # Angular Progressive Web Apps (PWA) MasterClass
 
-The code is stored in [This GitHub Repository](https://github.com/peelmicro/angular-pwa-course-service-worker) and [Another GitHub Repository](https://github.com/peelmicro/angular.pwa.course).
+> Github Repositories
+- [angular-pwa-course-service-worker](https://github.com/peelmicro/angular-pwa-course-service-worker).
+- [angular.pwa.course](https://github.com/peelmicro/angular.pwa.course).
 
 The [Angular Progressive Web Apps (PWA) MasterClass](https://www.udemy.com/progressive-web-app-pwa-the-complete-guide/) Udemy course is a Practical Guide to Angular 7 `Progressive Web Applications` (PWA).
 

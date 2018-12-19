@@ -1,6 +1,7 @@
 # .NET Core version of the "Docker and Kubernetes: The Complete Guide" Udemy Course 
 
-The code is stored in [This GitHub Repository](https://github.com/peelmicro/dotnet-core-multi-docker).
+> Github Repositories
+- [dotnet-core-multi-docker](https://github.com/peelmicro/dotnet-core-multi-docker).
 
 Source code for the `.Net Core` version of the [Docker and Kubernetes: The Complete Guide](https://www.udemy.com/docker-and-kubernetes-the-complete-guide) Udemy course
 

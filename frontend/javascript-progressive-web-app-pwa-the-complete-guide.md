@@ -1,6 +1,8 @@
 # Progressive Web Apps (PWA) - The Complete Guide
 
-The code is stored in [This GitHub Repository](https://github.com/peelmicro/progressive-web-apps) and [Another GitHub Repository](https://github.com/peelmicro/progressive-web-apps-spas).
+> Github Repositories
+- [progressive-web-apps](https://github.com/peelmicro/progressive-web-apps).
+- [progressive-web-apps-spas](https://github.com/peelmicro/progressive-web-apps-spas).
 
 The [Progressive Web Apps (PWA) - The Complete Guide](https://www.udemy.com/progressive-web-app-pwa-the-complete-guide/) Udemy course teaches to build a `Progressive Web App` (PWA) that feels like an iOS & Android App, using Device Camera, Push Notifications and more.
 

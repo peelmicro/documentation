@@ -1,6 +1,8 @@
 # Docker and Kubernetes: The Complete Guide
 
-The code is stored in [This GitHub Repository](https://github.com/peelmicro/docker-react) and [Another GitHub Repository](https://github.com/peelmicro/multi-docker).
+> Github Repositories
+- [docker-react](https://github.com/peelmicro/docker-react).
+- [multi-docker](https://github.com/peelmicro/multi-docker).
 
 The [Docker and Kubernetes: The Complete Guide](https://www.udemy.com/docker-and-kubernetes-the-complete-guide/) Udemy course explains how to build, test, and deploy Docker applications with Kubernetes while learning production-style development workflows.
 
