@@ -31,41 +31,48 @@ module.exports = ctx => ({
     sidebar: {
       '/projects/': [
         '',
-        'documentation.md',
-        'dotnet-core-multi-docker.md',
-        'java-multi-docker.md',
-        'python-multi-docker.md',
-        'dotnet-core-react-redux-advanced.md',
-        'purchase-slack-command-dotnet.md',
-        'node-with-vuejs-fullstack-web-development.md',
-        'ethereum-kickstart-vue.md',
-        'devmeetup-vuetify-nuxt.md'
+        'documentation',
+        'dotnet-core-multi-docker',
+        'java-multi-docker',
+        'python-multi-docker',
+        'dotnet-core-react-redux-advanced',
+        'purchase-slack-command-dotnet',
+        'node-with-vuejs-fullstack-web-development',
+        'ethereum-kickstart-vue',
+        'devmeetup-vuetify-nuxt'
       ],
       '/frontend/': [
         '',
         {
           title: 'Vue.js',
-          collapsable: false,
+          collapsable: true,
           children: [
             'vuejs',
-            '/projects/node-with-vuejs-fullstack-web-development.md',
-            '/projects/ethereum-kickstart-vue.md'
+            '/projects/node-with-vuejs-fullstack-web-development',
+            '/projects/ethereum-kickstart-vue',
+            '/frontend/vuejs-a-comprehensive-project-with-vuetify-and-firebase',
+            '/projects/devmeetup-vuetify-nuxt',
+            '/frontend/vuejs-nuxtjs-vuejs-on-steroids',
+            '/frontend/vuejs-vuejs-2-essentials',
+            '/frontend/vuejs-vuejs-build-a-full-stack-app-with-firebase-vuex-router',
+            '/frontend/vuejs-vuejs-2-and-bootstrap-4-web-development'
           ]
         },
         {
           title: 'React',
-          collapsable: false,
+          collapsable: true,
           children: [
             'react',
-            '/other/docker-multi-docker.md',
-            '/backend/nodejs-advanced-node-for-developers.md',
-            '/backend/nodejs-node-with-react-fullstack-web-development.md',
-            '/other/blockchain-ethereum-kickstart.md'
+            '/other/docker-multi-docker',
+            '/backend/nodejs-advanced-node-for-developers',
+            '/backend/nodejs-node-with-react-fullstack-web-development',
+            '/other/blockchain-ethereum-kickstart',
+            '/frontend/react-react-redux'
           ]
         },
         {
           title: 'Angular',
-          collapsable: false,
+          collapsable: true,
           children: [
             'angular',
             'angular-angular-pwa-course',
@@ -78,7 +85,7 @@ module.exports = ctx => ({
         },
         {
           title: 'JavaScript',
-          collapsable: false,
+          collapsable: true,
           children: [
             'javascript',
             'javascript-javascript-es6-tutorial',
@@ -87,10 +94,11 @@ module.exports = ctx => ({
         },
         {
           title: 'CSS',
-          collapsable: false,
+          collapsable: true,
           children: [
             'css',
-            'css-css-the-complete-guide-incl-flexbox-grid-sass'
+            'css-css-the-complete-guide-incl-flexbox-grid-sass',
+            'css-travel-site'
           ]
         }
       ],
@@ -98,21 +106,21 @@ module.exports = ctx => ({
         '',
         {
           title: 'Node.js',
-          collapsable: false,
+          collapsable: true,
           children: [
             'nodejs',
             '/other/docker-multi-docker',
             'nodejs-advanced-node-for-developers',
             '/other/bot-how-to-create-a-slack-bot-to-automate-tasks-for-you',
-            'nodejs-node-with-react-fullstack-web-development.md',
-            '/projects/node-with-vuejs-fullstack-web-development.md',
-            '/other/blockchain-ethereum-kickstart.md',
-            '/projects/ethereum-kickstart-vue.md'
+            'nodejs-node-with-react-fullstack-web-development',
+            '/projects/node-with-vuejs-fullstack-web-development',
+            '/other/blockchain-ethereum-kickstart',
+            '/projects/ethereum-kickstart-vue'
           ]
         },
         {
           title: 'Java',
-          collapsable: false,
+          collapsable: true,
           children: [
             'java',
             '/projects/java-multi-docker',            
@@ -124,7 +132,7 @@ module.exports = ctx => ({
         },
         {
           title: 'Python',
-          collapsable: false,
+          collapsable: true,
           children: [
             'python',
             '/projects/python-multi-docker',
@@ -133,18 +141,18 @@ module.exports = ctx => ({
         },
         {
           title: '.Net Core',
-          collapsable: false,
+          collapsable: true,
           children: [
             'dotnetcore',
             'dotnetcore-aplicaciones-web-en-tiempo-real-con-signalr-core',
             'dotnetcore-asp-net-core-angular-from-scratch',
             'dotnetcore-aspnet-core-2-security-and-identity-management-with-c',
-            '/projects/purchase-slack-command-dotnet.md'
+            '/projects/purchase-slack-command-dotnet'
           ]
         },
         {
           title: '.Net',
-          collapsable: false,
+          collapsable: true,
           children: [
             'dotnet',
             'dotnet-the-ultimate-linq-with-csharp-masterclass-basics-to-advanced'
@@ -155,42 +163,58 @@ module.exports = ctx => ({
         '',
         {
           title: 'Firebase',
-          collapsable: false,
+          collapsable: true,
           children: [
-            'firebase'
+            'firebase',
+            '/databases/firebase-firebase-firestore-getting-started',
+            '/other/bot-how-to-create-a-slack-bot-to-automate-tasks-for-you',
+            '/projects/purchase-slack-command-dotnet',
+            '/frontend/vuejs-a-comprehensive-project-with-vuetify-and-firebase',
+            '/projects/devmeetup-vuetify-nuxt',
+            '/frontend/vuejs-vuejs-build-a-full-stack-app-with-firebase-vuex-router',
+            '/frontend/vuejs-vuejs-2-and-bootstrap-4-web-development',
+            '/databases/firebase-firebase-cookbook'
           ]
         },
         {
           title: 'MongoDB',
-          collapsable: false,
+          collapsable: true,
           children: [
-            'mongodb'
+            'mongodb',
+            '/backend/nodejs-advanced-node-for-developers',
+            '/projects/dotnet-core-react-redux-advanced',
+            '/backend/nodejs-node-with-react-fullstack-web-development',
+            '/projects/node-with-vuejs-fullstack-web-development'            
           ]
         },
         {
           title: 'SQL Server',
-          collapsable: false,
+          collapsable: true,
           children: [
             'sqlserver'
           ]
         },        
         {
           title: 'PostgreSQL',
-          collapsable: false,
+          collapsable: true,
           children: [
-            'postgresql'
+            'postgresql',
+            '/other/docker-multi-docker',
+            '/projects/dotnet-core-multi-docker',
+            '/projects/java-multi-docker',
+            '/projects/python-multi-docker'            
           ]
         },
         {
           title: 'MySQL',
-          collapsable: false,
+          collapsable: true,
           children: [
             'mysql'
           ]
         },                
         {
           title: 'SQLite',
-          collapsable: false,
+          collapsable: true,
           children: [
             'sqlite'
           ]
@@ -200,7 +224,7 @@ module.exports = ctx => ({
         '',
         {
           title: 'Markdown',
-          collapsable: false,
+          collapsable: true,
           children: [
             'markdown',
             'markdown-easy-markdown-with-vs-code',
@@ -208,7 +232,7 @@ module.exports = ctx => ({
         },
         {
           title: 'VuePress',
-          collapsable: false,
+          collapsable: true,
           children: [
             'vuepress',
             'vuepress-how-to-use-vuepress-for-a-documentation-site',
@@ -216,7 +240,7 @@ module.exports = ctx => ({
         },
         {
           title: 'Confluence',
-          collapsable: false,
+          collapsable: true,
           children: [
             'confluence',
             'confluence-understanding-confluence-for-users-managers-and-admins'
@@ -227,36 +251,38 @@ module.exports = ctx => ({
         '',
         {
           title: 'Docker',
-          collapsable: false,
+          collapsable: true,
           children: [
             'docker',
             'docker-multi-docker',
-            '/projects/dotnet-core-multi-docker.md',
-            '/projects/java-multi-docker.md',
-            '/projects/python-multi-docker.md'
+            '/projects/dotnet-core-multi-docker',
+            '/projects/java-multi-docker',
+            '/projects/python-multi-docker'
           ]
         },
         {
           title: 'Blockchain',
-          collapsable: false,
+          collapsable: true,
           children: [
             'blockchain',
             'blockchain-ethereum-kickstart',
-            '/projects/ethereum-kickstart-vue'            
+            '/projects/ethereum-kickstart-vue',
+            'blockchain-surveying-blockchain-technologies-enterprise'           
           ]
         },
         {
           title: 'Visual Studio',
-          collapsable: false,
+          collapsable: true,
           children: [
             'visualstudio',
             '/staticwebs/markdown-easy-markdown-with-vs-code',
-            'visualstudio-vs-resharper'  
+            'visualstudio-vs-resharper',
+            'visualstudio-exploring-visual-studio-2017-video'
           ]
         },
         {
           title: 'Regular Expressions',
-          collapsable: false,
+          collapsable: true,
           children: [
             'regex',
             'regex-regex-academy-an-introduction-to-text-parsing-sorcery'
@@ -264,12 +290,34 @@ module.exports = ctx => ({
         },
         {
           title: 'Internet bot',
-          collapsable: false,
+          collapsable: true,
           children: [
             'bot',
             'bot-how-to-create-a-slack-bot-to-automate-tasks-for-you'
           ]
-        }        
+        },
+        {
+          title: 'Microservices',
+          collapsable: true,
+          children: [
+            'microservices',
+            'microservices-modern-software-architecture-domain-models-cqrs-event-sourcing'
+          ]
+        },
+        {
+          title: 'Git',
+          collapsable: true,
+          children: [
+            'git'
+          ]
+        },
+        {
+          title: 'PCI',
+          collapsable: true,
+          children: [
+            'pci'
+          ]
+        }
       ]
     }
   } 

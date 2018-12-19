@@ -1,0 +1,6 @@
+# Firebase Firestore: Getting Started
+
+The [Firebase Firestore: Getting Started](https://www.pluralsight.com/courses/firebase-firestore-getting-started) Pluralsight course teaches the basics of Cloud Firestore, including basic syntax, adding, managing, querying, and securing data.
+
+## Description
+Firebase Firestore is a flexible, scalable database for mobile, web, and server development from Firebase and the Google Cloud Platform that every developer should utilize. In this course, Firebase Firestore: Getting Started, you’ll gain the skills needed to build a complete working application. First, you’ll learn the basics of Cloud Firestore. Next, you’ll explore the Firebase console as a tool used to manage data from an interface. Finally, you'll discover how to add, manage, and query data from a Cloud Firestore and how to deploy security rules so the data is safe from external risks. When you’re finished with this course, you’ll have a foundational knowledge of Firebase Firestore that will help you as you move forward to create your own personal or commercial apps.

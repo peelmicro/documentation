@@ -8,5 +8,5 @@ Python interpreters are available for many operating systems. CPython, the refer
 ## Courses
 | Course                                                                                                                                         | Date               | Source Code                                                                                         |
 | ----------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- | --------------------------------------------------------------------------------------------------- |
-| [Docker and Kubernetes: The Complete Guide (Python version)](/projects/python-multi-docker.md)                                                                                                               | 07/12/2018 | [python-multi-docker](https://github.com/peelmicro/python-multi-docker)                                         |
-| [Introduction To Python Programming](/backend/python-pythonforbeginnersintro.md)                                                                                                               | 21/11/2018 |                                          |
+| [Docker and Kubernetes: The Complete Guide (Python version)](/projects/python-multi-docker.md)| 07/12/2018 | [python-multi-docker](https://github.com/peelmicro/python-multi-docker)|
+| [Introduction To Python Programming](/backend/python-pythonforbeginnersintro.md)| 21/11/2018 ||

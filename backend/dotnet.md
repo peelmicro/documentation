@@ -5,5 +5,4 @@
 | Course                                                                                                                                         | Date               | Source Code                                                                                         |
 | ----------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- | --------------------------------------------------------------------------------------------------- |
 | [The Ultimate LINQ with C# Masterclass - Basics to Advanced](dotnet-the-ultimate-linq-with-csharp-masterclass-basics-to-advanced.md)                                                                                                               | 06/09/2018 | [linq.csharp.masterclass]|
-| [Angular Material Masterclass](dotnet-the-ultimate-linq-with-csharp-masterclass-basics-to-advanced.md)                                                                                                               | 06/09/2018 | [linq.csharp.masterclass]|
-(https://github.com/peelmicro/linq.csharp.masterclass)                                         |
+

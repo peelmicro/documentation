@@ -1,8 +1,15 @@
 # Introduction
-[Firebase](https://en.wikipedia.org/wiki/Firebase) is a mobile and web application development platform developed by Firebase, Inc. in 2011, then acquired by Google in 2014. As of October 2018, the Firebase platform has 18 products which are used by 1.5 million apps.
 
 [Firebase Realtime Database](https://en.wikipedia.org/wiki/Firebase#Realtime_Database) Firebase provides a realtime database and backend as a service. The service provides application developers an API that allows application data to be synchronized across clients and stored on Firebase's cloud. The company provides client libraries that enable integration with Android, iOS, JavaScript, Java, Objective-C, Swift and Node.js applications. The database is also accessible through a REST API and bindings for several JavaScript frameworks such as AngularJS, React, Ember.js and Backbone.js. The REST API uses the Server-Sent Events protocol, which is an API for creating HTTP connections for receiving push notifications from a server. Developers using the realtime database can secure their data by using the company's server-side-enforced security rules. Cloud Firestore which is Firebase's next generation of the Realtime Database was released for beta use.
 
 ## Courses
 | Course                                                                                                                                         | Date               | Source Code                                                                                         |
 | ----------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- | --------------------------------------------------------------------------------------------------- |
+| [Firebase Firestore: Getting Started](/databases/firebase-firebase-firestore-getting-started.md)| 11/04/2018 ||
+| [How to create a Slack bot to automate tasks for you](/other/bot-how-to-create-a-slack-bot-to-automate-tasks-for-you.md)| 22/05/2018 | [purchase-slack-command](https://github.com/peelmicro/purchase-slack-command)|
+| [.Net Core version of the "How to create a Slack bot to automate tasks for you" Udemy Course](/projects/purchase-slack-command-dotnet.md)| 22/05/2018 | [purchase-slack-command-dotnet](https://github.com/peelmicro/purchase-slack-command-dotnet)         |
+| [Build an App with Vue, Vuetify & Firebase](/frontend/vuejs-a-comprehensive-project-with-vuetify-and-firebase.md)| 30/3/2018 | [devmeetup-vuetify](https://github.com/peelmicro/devmeetup-vuetify)|
+| [Nuxt version of the dev meeting application built with Vue + Vuetify + Firebase based on "Build an App with Vue, Vuetify & Firebase" Academind course](/projects/devmeetup-vuetify-nuxt.md)| 30/3/2018 | [devmeetup-vuetify-nuxt](https://github.com/peelmicro/devmeetup-vuetify-nuxt) |
+| [Vue.js: Build a Full Stack App With Firebase, Vuex & Router](/frontend/vuejs-vuejs-build-a-full-stack-app-with-firebase-vuex-router.md)| 25/12/2017 |  |
+| [Vue.js 2 and Bootstrap 4 Web Development](/frontend/vuejs-vuejs-2-and-bootstrap-4-web-development.md)| 12/12/2018 | [Profitoro](https://github.com/peelmicro/Profitoro) |
+| [Firebase Cookbook](/databases/firebase-firebase-cookbook.md)| 05/12/2017 |  |

@@ -8,3 +8,7 @@ PostgreSQL is developed by the PostgreSQL Global Development Group, a diverse gr
 ## Courses
 | Course                                                                                                                                         | Date               | Source Code                                                                                         |
 | ----------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- | --------------------------------------------------------------------------------------------------- |
+| [Docker and Kubernetes: The Complete Guide](/other/docker-multi-docker.md)| 07/12/2018 | [multi-docker](https://github.com/peelmicro/multi-docker) <br> [docker-react](https://github.com/peelmicro/docker-react)|
+| [Docker and Kubernetes: The Complete Guide (.Net Core version)](/projects/dotnet-core-multi-docker.md)| 07/12/2018 | [dotnet-core-multi-docker](https://github.com/peelmicro/dotnet-core-multi-docker)|
+| [Docker and Kubernetes: The Complete Guide (Java version)](/projects/java-multi-docker.md)| 07/12/2018 | [java-multi-docker](https://github.com/peelmicro/java-multi-docker)|
+| [Docker and Kubernetes: The Complete Guide (Python version)](/projects/python-multi-docker.md)| 07/12/2018 | [python-multi-docker](https://github.com/peelmicro/python-multi-docker)|
