@@ -22,6 +22,7 @@ module.exports = ctx => ({
       { text: 'Projects', link: '/projects/'},
       { text: 'Front End', link: '/frontend/'},
       { text: 'Back End', link: '/backend/'},
+      { text: 'Databases', link: '/databases/'},
       { text: 'Static Webs', link: '/staticwebs/'},
       { text: 'Other', link: '/other/'},
       { text: 'About me', link: 'https://github.com/peelmicro'},
@@ -149,6 +150,51 @@ module.exports = ctx => ({
             'dotnet-the-ultimate-linq-with-csharp-masterclass-basics-to-advanced'
           ]
         }
+      ],
+      '/databases/': [
+        '',
+        {
+          title: 'Firebase',
+          collapsable: false,
+          children: [
+            'firebase'
+          ]
+        },
+        {
+          title: 'MongoDB',
+          collapsable: false,
+          children: [
+            'mongodb'
+          ]
+        },
+        {
+          title: 'SQL Server',
+          collapsable: false,
+          children: [
+            'sqlserver'
+          ]
+        },        
+        {
+          title: 'PostgreSQL',
+          collapsable: false,
+          children: [
+            'postgresql'
+          ]
+        },
+        {
+          title: 'MySQL',
+          collapsable: false,
+          children: [
+            'mysql'
+          ]
+        },                
+        {
+          title: 'SQLite',
+          collapsable: false,
+          children: [
+            'sqlite'
+          ]
+        }             
       ],
       '/staticwebs/': [
         '',
