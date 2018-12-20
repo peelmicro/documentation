@@ -4,4 +4,4 @@
 ## Courses
 | Course                                                                                                                                         | Date               | Source Code                                                                                         |
 | ----------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- | --------------------------------------------------------------------------------------------------- |
-| [Understanding Confluence for users, managers and admins](confluence-understanding-confluence-for-users-managers-and-admins.md)                                                                                                               | 01/06/2018 |                                          |
+| [Understanding Confluence for users, managers and admins](/staticwebs/confluence-understanding-confluence-for-users-managers-and-admins.md)| 01/06/2018 ||

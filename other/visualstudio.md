@@ -12,6 +12,6 @@ In the Stack Overflow 2018 Developer Survey, Visual Studio Code was ranked the m
 ## Courses
 | Course                                                                                                                                         | Date               | Source Code                                                                                         |
 | ----------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- | --------------------------------------------------------------------------------------------------- |
-| [Easy Markdown with VS Code](/staticwebs/markdown-easy-markdown-with-vs-code.md)                                                                                                               | 8/12/2018 |                                          |
-| [Double Your Coding Speed with Visual Studio and ReSharper](visualstudio-vs-resharper.md)                                                                                                               | 1/10/2018 |                                          |
-| [Exploring Visual Studio 2017 ](visualstudio-exploring-visual-studio-2017-video.md)| 29/12/2017 ||
+| [Easy Markdown with VS Code](/staticwebs/markdown-easy-markdown-with-vs-code.md)| 16/11/2018 ||
+| [Double Your Coding Speed with Visual Studio and ReSharper](/other/visualstudio-vs-resharper.md)| 1/10/2018 ||
+| [Exploring Visual Studio 2017 ](/other/visualstudio-exploring-visual-studio-2017-video.md)| 29/12/2017 ||

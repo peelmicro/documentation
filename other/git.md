@@ -8,3 +8,5 @@ As with most other distributed version-control systems, and unlike most clientâ€
 ## Courses
 | Course                                                                                                                                         | Date               | Source Code                                                                                         |
 | ----------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- | --------------------------------------------------------------------------------------------------- |
+| [Mastering Git](/other/git-mastering-git.md)| 18/11/2017 | |
+| [How Git Works](/other/git-how-git-works.md)| 14/11/2017 | |

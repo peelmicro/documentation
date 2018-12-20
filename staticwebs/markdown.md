@@ -7,5 +7,5 @@ Nowadays is highly used as a base tool to generate Static Webs.
 
 | Course                                                                                                                                         | Date               | Source Code                                                                                         |
 | ----------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- | --------------------------------------------------------------------------------------------------- |
-| [Easy Markdown with VS Code](markdown-easy-markdown-with-vs-code.md)                                                                                                               | 16/11/2018 |                                          |
+| [Easy Markdown with VS Code](/staticwebs/markdown-easy-markdown-with-vs-code.md)| 16/11/2018 ||
 

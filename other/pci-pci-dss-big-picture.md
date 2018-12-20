@@ -1,0 +1,6 @@
+# PCI DSS: The Big Picture
+
+The [PCI DSS: The Big Picture](https://app.pluralsight.com/library/courses/pci-dss-big-picture) Pluralsight course explains how The Payment Card Industry (PCI) Data Security Standard (DSS) affects every organization that stores, processes, or transmits credit or debit cards. In this course, you'll learn about the standard and how it is used in card scheme compliance programs.
+
+## Description
+TIn an organization that touches payment cards, the information security agenda includes compliance with the Payment Card Industry (PCI) Data Security Standard (DSS). In this course, PCI DSS - The Big Picture, you'll learn the basic requirements of PCI DSS, the language it uses, and how the standard is structured. More importantly, you'll learn how the standard is used in compliance programs and how you'll be expected to validate your compliance. You'll also learn what to do when you can't comply with the standard and discover ten of the most common PCI DSS myths that can lead to expensive mistakes. When you've finished this course, you'll know enough PCI DSS to work in environments where PCI DSS compliance is a requirement.

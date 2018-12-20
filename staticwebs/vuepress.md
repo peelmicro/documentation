@@ -4,4 +4,4 @@
 ## Courses
 | Course                                                                                                                                         | Date               | Source Code                                                                                         |
 | ----------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- | --------------------------------------------------------------------------------------------------- |
-| [Learn how to use VuePress for a Documentation Site](vuepress-how-to-use-vuepress-for-a-documentation-site.md)                                                                                                               | 8/12/2018 |                                          |
+| [Learn how to use VuePress for a Documentation Site](/staticwebs/vuepress-how-to-use-vuepress-for-a-documentation-site.md)| 8/12/2018 ||

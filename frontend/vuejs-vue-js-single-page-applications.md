@@ -1,0 +1,6 @@
+# Single Page Applications with Vue.js
+
+The [Single Page Applications with Vue.js](https://www.pluralsight.com/courses/vue-js-single-page-applications) Pluralsight course covers how Vue.js became quickly one of the most popular JavaScript frameworks and teaches how to create a Single Page Application from start to finish using this flexible, yet powerful framework.
+
+## Description
+How can you create a full-blown application with one of the most popular JavaScript frameworks, Vue.js? In this course, Single Page Applications with Vue.js, you'll learn how to setup the environment and build processes necessary for your application. First, you'll discover how to include single file components, routing, and API communication functionalities with plugins and modules. Next, you’ll explore state management and server-side rendering for faster and more manageable apps. Lastly, you’ll cover how to create tests and deploy your application on the cloud. When you’re finished with this course, you’ll have the necessary knowledge to efficiently create an application from start to finish using the Vue.js framework.

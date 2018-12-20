@@ -1,6 +1,6 @@
 # Projects
 
-This documentation section is about the public projects developed by me.
+This documentation section is about the Open Source projects developed by me.
 
 | Project                                                                                                                                         | Dates               | Source Code                                                                                         |
 | ----------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- | --------------------------------------------------------------------------------------------------- |

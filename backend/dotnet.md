@@ -4,5 +4,6 @@
 ## Courses
 | Course                                                                                                                                         | Date               | Source Code                                                                                         |
 | ----------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- | --------------------------------------------------------------------------------------------------- |
-| [The Ultimate LINQ with C# Masterclass - Basics to Advanced](dotnet-the-ultimate-linq-with-csharp-masterclass-basics-to-advanced.md)                                                                                                               | 06/09/2018 | [linq.csharp.masterclass]|
+| [The Ultimate LINQ with C# Masterclass - Basics to Advanced](dotnet-the-ultimate-linq-with-csharp-masterclass-basics-to-advanced.md)| 06/09/2018 | [linq.csharp.masterclass](https://github.com/peelmicro/linq.csharp.masterclass)|
+| [The .NET Ecosystem: The Big Picture](dotnet-dotnet-ecosystem-big-picture.md)| 14/09/2017 | |
 

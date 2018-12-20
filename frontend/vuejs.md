@@ -13,4 +13,6 @@ Vue.js features an incrementally adoptable architecture that focuses on declarat
 | [Nuxt.js - Vue.js on Steroids](/frontend/vuejs-nuxtjs-vuejs-on-steroids.md)| 04/3/2018 | [NuxtBlog](https://github.com/peelmicro/NuxtBlog) |
 | [The Ultimate Vue JS 2 Developers Course](/frontend/vuejs-vuejs-2-essentials.md)| 11/2/2018 | [vue-poster-shop](https://github.com/peelmicro/vue-poster-shop)<br> [vuejs-calendar](https://github.com/peelmicro/vuejs-calendar)<br> [vuejs-cinema](https://github.com/peelmicro/vuejs-cinema) |
 | [Vue.js: Build a Full Stack App With Firebase, Vuex & Router](/frontend/vuejs-vuejs-build-a-full-stack-app-with-firebase-vuex-router.md)| 25/12/2017 |  |
-| [Vue.js 2 and Bootstrap 4 Web Development](/frontend/vuejs-vuejs-2-and-bootstrap-4-web-development.md)| 12/12/2018 | [Profitoro](https://github.com/peelmicro/Profitoro) |
+| [Vue.js 2 and Bootstrap 4 Web Development](/frontend/vuejs-vuejs-2-and-bootstrap-4-web-development.md)| 12/12/2017 | [Profitoro](https://github.com/peelmicro/Profitoro) |
+| [Single Page Applications with Vue.js](/frontend/vuejs-vue-js-single-page-applications.md)| 21/11/2017 |  |
+| [Vue.js: Getting Started](/frontend/vuejs-vuejs-getting-started.md)| 30/10/2017 |  |

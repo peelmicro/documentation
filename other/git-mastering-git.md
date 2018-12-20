@@ -1,0 +1,6 @@
+# Mastering Git
+
+The [Mastering Git](https://www.pluralsight.com/courses/mastering-git) Pluralsight course teaches From a deep look at the fundamental commands, to the design of a distributed workflow, this training gives you a full overview of the Git toolset.
+
+## Description
+You can use Git for quite some time, and still get that nagging feeling that you're missing something. This ideal follow-up to "How Git Works" gives you the information you need to deeply understand Git's most useful features. In this course, Mastering Git, you'll tackle the more advanced Git topics, focus on how to actually get stuff done with Git, and will also learn the Git way of thinking so that you can work comfortably with Git day in and day out. First, you'll discover how to use Git fluently in your daily job. Next, you'll be taught how to move information around in Git and how to investigate and change your history in Git. Then, you'll move on to fixing any mistakes that you make while working with Git. Finally, you'll explore how to organize a shared Git workflow for your team. By the end of this course, you'll be able to up your game and become a power user in Git.

@@ -1,0 +1,6 @@
+# Firebase on Android: User Email Authentication and Verification
+
+The [Firebase on Android: User Email Authentication and Verification](https://www.pluralsight.com/courses/android-firebase-email-authentication-verification) Pluralsight course features the Firebase Authentication tool where you'll learn to integrate the cloud-based user management system.
+
+## Description
+The Firebase Authentication tool is arguably the most useful of the Firebase tools because you find a use for it in almost every application you build. In this course, Firebase on Android: User Email Authentication and Verification, you'll learn foundational knowledge that will give you the ability to seamlessly integrate a cloud-based user management system into your Android applications. First, you will learn how to register new users, send verification emails and sign-in existing users. Next, you'll learn how to restrict app-access to only users who have been authenticated. Finally, you'll learn how to manage user account properties like display name, profile image, and email address. When you're finished this course, you will have the skills and knowledge of Firebase Authentication needed to build a user management system for your Android applications.

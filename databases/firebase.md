@@ -5,11 +5,12 @@
 ## Courses
 | Course                                                                                                                                         | Date               | Source Code                                                                                         |
 | ----------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- | --------------------------------------------------------------------------------------------------- |
-| [Firebase Firestore: Getting Started](/databases/firebase-firebase-firestore-getting-started.md)| 11/04/2018 ||
 | [How to create a Slack bot to automate tasks for you](/other/bot-how-to-create-a-slack-bot-to-automate-tasks-for-you.md)| 22/05/2018 | [purchase-slack-command](https://github.com/peelmicro/purchase-slack-command)|
 | [.Net Core version of the "How to create a Slack bot to automate tasks for you" Udemy Course](/projects/purchase-slack-command-dotnet.md)| 22/05/2018 | [purchase-slack-command-dotnet](https://github.com/peelmicro/purchase-slack-command-dotnet)         |
+| [Firebase Firestore: Getting Started](/databases/firebase-firebase-firestore-getting-started.md)| 11/04/2018 ||
 | [Build an App with Vue, Vuetify & Firebase](/frontend/vuejs-a-comprehensive-project-with-vuetify-and-firebase.md)| 30/3/2018 | [devmeetup-vuetify](https://github.com/peelmicro/devmeetup-vuetify)|
 | [Nuxt version of the dev meeting application built with Vue + Vuetify + Firebase based on "Build an App with Vue, Vuetify & Firebase" Academind course](/projects/devmeetup-vuetify-nuxt.md)| 30/3/2018 | [devmeetup-vuetify-nuxt](https://github.com/peelmicro/devmeetup-vuetify-nuxt) |
 | [Vue.js: Build a Full Stack App With Firebase, Vuex & Router](/frontend/vuejs-vuejs-build-a-full-stack-app-with-firebase-vuex-router.md)| 25/12/2017 |  |
-| [Vue.js 2 and Bootstrap 4 Web Development](/frontend/vuejs-vuejs-2-and-bootstrap-4-web-development.md)| 12/12/2018 | [Profitoro](https://github.com/peelmicro/Profitoro) |
+| [Vue.js 2 and Bootstrap 4 Web Development](/frontend/vuejs-vuejs-2-and-bootstrap-4-web-development.md)| 12/12/2017 | [Profitoro](https://github.com/peelmicro/Profitoro) |
 | [Firebase Cookbook](/databases/firebase-firebase-cookbook.md)| 05/12/2017 |  |
+| [Firebase on Android: User Email Authentication and Verification](/databases/firebase-android-firebase-email-authentication-verification.md)| 24/10/2017 |  |

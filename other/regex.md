@@ -8,4 +8,4 @@ Regular expressions are used in search engines, search and replace dialogs of wo
 ## Courses
 | Course                                                                                                                                         | Date               | Source Code                                                                                         |
 | ----------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- | --------------------------------------------------------------------------------------------------- |
-| [Regex Academy: An Introduction To Text Parsing Sorcery](regex-regex-academy-an-introduction-to-text-parsing-sorcery.md)                                                                                                               | 26/09/2018 |        |
+| [Regex Academy: An Introduction To Text Parsing Sorcery](regex-regex-academy-an-introduction-to-text-parsing-sorcery.md)| 26/09/2018 ||

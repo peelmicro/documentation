@@ -9,4 +9,4 @@ Separation of formatting and content also makes it feasible to present the same 
 | Course                                                                                                                                         | Date               | Source Code                                                                                         |
 | ----------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- | --------------------------------------------------------------------------------------------------- |
 | [CSS - The Complete Guide (incl. Flexbox, Grid & Sass)](css-css-the-complete-guide-incl-flexbox-grid-sass.md)| 27/05/2018 |[css-the-complete-guide](https://github.com/peelmicro/css-the-complete-guide)|
-| [Web Design for Beginners: Real World Coding in HTML & CSS](css-travel-site.md)| 01/02/2018 |[travel-site](https://github.com/peelmicro/travel-site)|
+| [Git a Web Developer Job: Mastering the Modern Workflow](css-travel-site.md)| 01/02/2018 |[travel-site](https://github.com/peelmicro/travel-site)|

@@ -1,0 +1,6 @@
+# Getting Started with ASP.NET Core and OAuth
+
+The [Getting Started with ASP.NET Core and OAuth](https://www.pluralsight.com/courses/asp-dot-net-core-oauth) Pluralsight course teaches how to get started with ASP.NET Core and OAuth together to build a world-class, secure, and high-quality API. You'll learn how to introduce OAuth and OpenId Connect into your ASP.NET Core application.
+
+## Description
+How do you build a powerful and secure API using ASP.NET Core? In this course, Getting Started with ASP.NET Core and OAuth, you'll look at getting started with ASP.NET Core and OAuth together to build a world-class, both secure, and high quality API. First, you'll start off by looking at an insecure and badly designed ASP.NET Core API, talking about how to approach this API from third party applications, and also how to consume this API internally. Next, you'll discover the benefits of choosing different OAuth flows for different scenarios and you'll see how you can use IdentityServer to protect your API. Then, you'll learn how you can leverage hosted providers, such as Auth0 to secure your APIs as well as your websites. Finally, you' look into how you can introduce third party services for authentication, such as logging in using your Google account. By the end of this course, you'll have a better understanding on how to make this API a lot more secure.

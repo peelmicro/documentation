@@ -4,5 +4,6 @@
 Microsoft markets at least a dozen different editions of Microsoft SQL Server, aimed at different audiences and for workloads ranging from small single-machine applications to large Internet-facing applications with many concurrent users.
 
 ## Courses
-| Course                                                                                                                                         | Date               | Source Code                                                                                         |
+| Course| Date | Source Code |
 | ----------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- | --------------------------------------------------------------------------------------------------- |
+| [ASP.NET Core 2 Identity Management and Security](/backend/dotnetcore-aspnet-core-2-security-and-identity-management-with-c.md)| 04/06/2018 |[net-core-2-authentication](https://github.com/peelmicro/net-core-2-authentication)|

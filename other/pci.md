@@ -8,3 +8,5 @@ As of 2014, the United States uses a magnetic stripe on a card to process transa
 ## Courses
 | Course | Date| Source Code|
 | ----------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- | --------------------------------------------------------------------------------------------------- |
+| [PCI DSS: The Big Picture](/other/pci-pci-dss-big-picture.md)| 22/05/2017 | |
+| [Payment Card Security, Processing, and the PCI Standards](/other/pci-payment-card-security-processing-pci-standards.md)| 02/04/2017 | |

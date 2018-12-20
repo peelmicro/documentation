@@ -1,0 +1,6 @@
+# The .NET Ecosystem: The Big Picture
+
+The [Getting Started with ASP.NET Core and OAuth](https://app.pluralsight.com/library/courses/dotnet-ecosystem-big-picture) Pluralsight course teaches he ins and outs of the .NET ecosystem and the difference between the .NET framework, .NET core, and Xamarin.
+
+## The .NET Ecosystem: The Big Picture
+When building and designing applications with the .NET ecosystem, you need to know which frameworks and application types to use in your situation. In this course, The .NET Ecosystem: The Big Picture, you'll learn how the .NET ecosystem is organized, and which runtimes and application types are available. First, you'll explore what the .NET framework, .NET core, and Xamarin are and how they are different. Next, you'll discover how to share code with the .Net standard. Finally, you'll learn what exactly to use in practice and when you should use it. By the end of this course, you'll have a foundational knowledge of the runtimes, languages, and application types in the .NET ecosystem.

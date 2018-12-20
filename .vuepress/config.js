@@ -55,7 +55,9 @@ module.exports = ctx => ({
             '/frontend/vuejs-nuxtjs-vuejs-on-steroids',
             '/frontend/vuejs-vuejs-2-essentials',
             '/frontend/vuejs-vuejs-build-a-full-stack-app-with-firebase-vuex-router',
-            '/frontend/vuejs-vuejs-2-and-bootstrap-4-web-development'
+            '/frontend/vuejs-vuejs-2-and-bootstrap-4-web-development',
+            '/frontend/vuejs-vue-js-single-page-applications',
+            '/frontend/vuejs-vuejs-getting-started'
           ]
         },
         {
@@ -147,7 +149,8 @@ module.exports = ctx => ({
             'dotnetcore-aplicaciones-web-en-tiempo-real-con-signalr-core',
             'dotnetcore-asp-net-core-angular-from-scratch',
             'dotnetcore-aspnet-core-2-security-and-identity-management-with-c',
-            '/projects/purchase-slack-command-dotnet'
+            '/projects/purchase-slack-command-dotnet',
+            'dotnetcore-asp-dot-net-core-oauth'
           ]
         },
         {
@@ -155,7 +158,8 @@ module.exports = ctx => ({
           collapsable: true,
           children: [
             'dotnet',
-            'dotnet-the-ultimate-linq-with-csharp-masterclass-basics-to-advanced'
+            'dotnet-the-ultimate-linq-with-csharp-masterclass-basics-to-advanced',
+            'dotnet-dotnet-ecosystem-big-picture'
           ]
         }
       ],
@@ -173,7 +177,8 @@ module.exports = ctx => ({
             '/projects/devmeetup-vuetify-nuxt',
             '/frontend/vuejs-vuejs-build-a-full-stack-app-with-firebase-vuex-router',
             '/frontend/vuejs-vuejs-2-and-bootstrap-4-web-development',
-            '/databases/firebase-firebase-cookbook'
+            '/databases/firebase-firebase-cookbook',
+            '/databases/firebase-android-firebase-email-authentication-verification'
           ]
         },
         {
@@ -183,6 +188,7 @@ module.exports = ctx => ({
             'mongodb',
             '/backend/nodejs-advanced-node-for-developers',
             '/projects/dotnet-core-react-redux-advanced',
+            '/backend/java-angular-4-java-developers',
             '/backend/nodejs-node-with-react-fullstack-web-development',
             '/projects/node-with-vuejs-fullstack-web-development'            
           ]
@@ -209,14 +215,16 @@ module.exports = ctx => ({
           title: 'MySQL',
           collapsable: true,
           children: [
-            'mysql'
+            'mysql',
+            '/backend/dotnetcore-asp-net-core-angular-from-scratch'
           ]
         },                
         {
           title: 'SQLite',
           collapsable: true,
           children: [
-            'sqlite'
+            'sqlite',
+            '/backend/dotnetcore-asp-net-core-angular-from-scratch'
           ]
         }             
       ],
@@ -248,7 +256,7 @@ module.exports = ctx => ({
         }
       ],
       '/other/': [
-        '',
+        'courses',
         {
           title: 'Docker',
           collapsable: true,
@@ -293,7 +301,8 @@ module.exports = ctx => ({
           collapsable: true,
           children: [
             'bot',
-            'bot-how-to-create-a-slack-bot-to-automate-tasks-for-you'
+            'bot-how-to-create-a-slack-bot-to-automate-tasks-for-you',
+            '/projects/purchase-slack-command-dotnet'
           ]
         },
         {
@@ -308,14 +317,18 @@ module.exports = ctx => ({
           title: 'Git',
           collapsable: true,
           children: [
-            'git'
+            'git',
+            'git-mastering-git',
+            'git-how-git-works'
           ]
         },
         {
           title: 'PCI',
           collapsable: true,
           children: [
-            'pci'
+            'pci',
+            'pci-pci-dss-big-picture',
+            'pci-payment-card-security-processing-pci-standards'
           ]
         }
       ]
