@@ -10,7 +10,7 @@ module.exports = ctx => ({
     }],
     ['@vuepress/search', {
       searchMaxSuggestions: 10      
-    }]      
+    }]       
   ],        
   themeConfig: {
     algolia: ctx.isProd ? ({
