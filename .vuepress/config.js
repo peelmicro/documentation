@@ -3,20 +3,20 @@ module.exports = ctx => ({
   description: `For Training and Projects`,
   head: [
     ['link', { rel: 'icon', href: '/images/favicon.png' }]
-  ],  
+  ],
+  plugins: [
+    ['@vuepress/google-analytics', {
+      ga: 'UA-130949957-1'
+    }],
+    ['@vuepress/search', {
+      searchMaxSuggestions: 10      
+    }]      
+  ],        
   themeConfig: {
     algolia: ctx.isProd ? ({
       apiKey: '9d9b53b6e2f953299ac9ab6d8b6428d1',
       indexName: 'peelmicro'
     }) : null,
-    plugins: [
-      ['@vuepress/google-analytics', {
-        ga: 'UA-130949957-1'
-      }],
-      ['@vuepress/search', {
-        searchMaxSuggestions: 10      
-      }]      
-    ],      
     nav: [
       { text: 'Home', link: '/'},
       { text: 'Projects', link: '/projects/'},
