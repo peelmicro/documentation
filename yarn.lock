@@ -823,6 +823,11 @@
   dependencies:
     "@vuepress/shared-utils" "^1.0.0-alpha.27"
 
+"@vuepress/plugin-search@^1.0.0-alpha.0":
+  version "1.0.0-alpha.0"
+  resolved "https://registry.yarnpkg.com/@vuepress/plugin-search/-/plugin-search-1.0.0-alpha.0.tgz#9faf04047d03a16f0bb5d98bee0df3435e3c8c58"
+  integrity sha512-FELGWmLIG8GX8MlMGRDfqiQiHnq6MC122H/d033inQ5X1hhVI1lIOoHIFd8gecgx/jaCZSnKx9oKU3ZvnDd0Cw==
+
 "@vuepress/plugin-search@^1.0.0-alpha.27":
   version "1.0.0-alpha.27"
   resolved "https://registry.yarnpkg.com/@vuepress/plugin-search/-/plugin-search-1.0.0-alpha.27.tgz#e65e5cc13dc6f38eb60f58072f8f6ddfc681a489"
