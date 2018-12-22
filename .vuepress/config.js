@@ -4,7 +4,6 @@ module.exports = ctx => ({
   head: [
     ['link', { rel: 'icon', href: '/images/favicon.png' }]
   ],
-  theme: '@vuepress/vue',   
   themeConfig: {
     algolia: ctx.isProd ? ({
       apiKey: '9d9b53b6e2f953299ac9ab6d8b6428d1',
