@@ -4,15 +4,7 @@ module.exports = ctx => ({
   head: [
     ['link', { rel: 'icon', href: '/images/favicon.png' }]
   ],
-  ga: 'UA-130949957-1',
-  plugins: [
-    ['@vuepress/google-analytics', {
-      ga: 'UA-130949957-1'
-    }],
-    ['@vuepress/search', {
-      searchMaxSuggestions: 10      
-    }]       
-  ],        
+  theme: '@vuepress/vue',   
   themeConfig: {
     algolia: ctx.isProd ? ({
       apiKey: '9d9b53b6e2f953299ac9ab6d8b6428d1',
@@ -334,5 +326,13 @@ module.exports = ctx => ({
         }
       ]
     }
-  } 
+  },
+  plugins: [
+    ['@vuepress/google-analytics', {
+      ga: 'UA-130949957-1'
+    }],
+    ['@vuepress/search', {
+      searchMaxSuggestions: 10      
+    }]       
+  ]     
 })
