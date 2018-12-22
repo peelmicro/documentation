@@ -4,6 +4,7 @@ module.exports = ctx => ({
   head: [
     ['link', { rel: 'icon', href: '/images/favicon.png' }]
   ],
+  ga: 'UA-130949957-1',
   plugins: [
     ['@vuepress/google-analytics', {
       ga: 'UA-130949957-1'
