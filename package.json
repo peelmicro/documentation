@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0-alpha.30",
+  "version": "1.0.0",
   "name": "documentation",
   "description": "documentation of projects and training",  
   "author": "Juan Pablo Perez",
@@ -9,8 +9,6 @@
   },
   "dependencies": {
     "vuepress": "^1.0.0-alpha.30",
-    "@vuepress/plugin-google-analytics": "^1.0.0-alpha.30",
-    "@vuepress/plugin-search": "^1.0.0-alpha.30",
-    "@vuepress/theme-vue": "^1.0.0-alpha.30"
+    "@vuepress/plugin-google-analytics": "^1.0.0-alpha.30"
   }
 }
