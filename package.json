@@ -1,14 +1,16 @@
 {
   "version": "1.0.0",
   "name": "documentation",
-  "description": "documentation of projects and training",  
+  "description": "documentation of projects and training",
   "author": "Juan Pablo Perez",
-  "license": "MIT",  
+  "license": "MIT",
   "scripts": {
-    "docs:build": "vuepress build"
+    "docs:build": "vuepress build",
+    "dev": "vuepress dev"
   },
   "dependencies": {
-    "vuepress": "^1.0.0-alpha.30",
-    "@vuepress/plugin-google-analytics": "^1.0.0-alpha.30"
+    "@vuepress/plugin-google-analytics": "^1.0.0-alpha.32",
+    "global": "^4.3.2",
+    "vuepress": "^1.0.0-alpha.32"
   }
 }

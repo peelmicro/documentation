@@ -14,8 +14,8 @@ features:
   details: Firebase, MongoDB, SQL Server, PostgreSQL, MySQL, SQLite, ...
 - title: Static Webs
   details: Markdown, VuePress, Confluence, ...
-- title: Other
+- title: Other 
   details: Docker, Blockchain, Visual Studio, Regular Expressions, Internet Bot, Microservices, Git, PCI, ...
 
-footer: Copyright © 2018-present Juan Pablo Perez
+footer: Copyright © 2019-present Juan Pablo Perez
 ---

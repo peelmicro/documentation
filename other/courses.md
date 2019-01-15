@@ -3,6 +3,7 @@ Here can be seen all  courses done since 2017.
 
 | Course| Date | Source Code |
 | ----------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- | --------------------------------------------------------------------------------------------------- |
+| [MongoDB - The Complete Developer's Guide](/databases/mongodb-mongodb-the-complete-developers-guide.md)                                                                                                               | 12/01/2019 | [mongodb-the-complete-developers-guide](https://github.com/peelmicro/mongodb-the-complete-developers-guide) |
 | [React Hooks](/frontend/react-react-hooks.md)| 25/12/2018 | [ReactHooks](https://github.com/peelmicro/ReactHooks)|
 | [Documentation Website for Training and Projects. It is created using VuePress](/projects/documentation.md)| Dec 2018 - | [documentation](https://github.com/peelmicro/documentation)                                         |
 | [Learn how to use VuePress for a Documentation Site](/staticwebs/vuepress-how-to-use-vuepress-for-a-documentation-site.md)| 8/12/2018 ||

@@ -62,7 +62,8 @@ module.exports = ctx => ({
             '/backend/nodejs-advanced-node-for-developers',
             '/backend/nodejs-node-with-react-fullstack-web-development',
             '/other/blockchain-ethereum-kickstart',
-            '/frontend/react-react-redux'
+            '/frontend/react-react-redux',
+            '/databases/mongodb-mongodb-the-complete-developers-guide'
           ]
         },
         {
@@ -110,7 +111,8 @@ module.exports = ctx => ({
             'nodejs-node-with-react-fullstack-web-development',
             '/projects/node-with-vuejs-fullstack-web-development',
             '/other/blockchain-ethereum-kickstart',
-            '/projects/ethereum-kickstart-vue'
+            '/projects/ethereum-kickstart-vue',
+            '/databases/mongodb-mongodb-the-complete-developers-guide'
           ]
         },
         {
@@ -183,7 +185,8 @@ module.exports = ctx => ({
             '/projects/dotnet-core-react-redux-advanced',
             '/backend/java-angular-4-java-developers',
             '/backend/nodejs-node-with-react-fullstack-web-development',
-            '/projects/node-with-vuejs-fullstack-web-development'            
+            '/projects/node-with-vuejs-fullstack-web-development',
+            '/databases/mongodb-mongodb-the-complete-developers-guide'            
           ]
         },
         {
