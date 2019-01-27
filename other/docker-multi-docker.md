@@ -336,6 +336,7 @@ C:\WINDOWS\system32>docker stop 539c07bb9ba1
 ```sh
 C:\WINDOWS\system32>docker ps
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+```
 9. The `kill` command
 ::: tip Command
 docker kill **[container id]** <br>

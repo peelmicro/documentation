@@ -1,341 +1,342 @@
 module.exports = ctx => ({
   title: `Documentation`,
   description: `For Training and Projects`,
-  head: [
-    ['link', { rel: 'icon', href: '/images/favicon.png' }]
-  ],
+  head: [["link", { rel: "icon", href: "/images/favicon.png" }]],
   themeConfig: {
-    algolia: ctx.isProd ? ({
-      apiKey: '9d9b53b6e2f953299ac9ab6d8b6428d1',
-      indexName: 'peelmicro'
-    }) : null,
+    algolia: ctx.isProd
+      ? {
+          apiKey: "9d9b53b6e2f953299ac9ab6d8b6428d1",
+          indexName: "peelmicro"
+        }
+      : null,
     nav: [
-      { text: 'Home', link: '/'},
-      { text: 'Projects', link: '/projects/'},
-      { text: 'Front End', link: '/frontend/'},
-      { text: 'Back End', link: '/backend/'},
-      { text: 'Databases', link: '/databases/'},
-      { text: 'Static Webs', link: '/staticwebs/'},
-      { text: 'Other', link: '/other/'},
-      { text: 'About me', link: 'https://github.com/peelmicro'},
-      { text: 'Github', link: 'https://github.com/peelmicro/documentation'},
+      { text: "Home", link: "/" },
+      { text: "Projects", link: "/projects/" },
+      { text: "Front End", link: "/frontend/" },
+      { text: "Back End", link: "/backend/" },
+      { text: "Databases", link: "/databases/" },
+      { text: "Static Webs", link: "/staticwebs/" },
+      { text: "Other", link: "/other/" },
+      { text: "About me", link: "https://github.com/peelmicro" },
+      { text: "Github", link: "https://github.com/peelmicro/documentation" }
     ],
     sidebar: {
-      '/projects/': [
-        '',
-        'documentation',
-        'dotnet-core-multi-docker',
-        'java-multi-docker',
-        'python-multi-docker',
-        'dotnet-core-react-redux-advanced',
-        'purchase-slack-command-dotnet',
-        'node-with-vuejs-fullstack-web-development',
-        'ethereum-kickstart-vue',
-        'devmeetup-vuetify-nuxt'
+      "/projects/": [
+        "",
+        "documentation",
+        "dotnet-core-multi-docker",
+        "java-multi-docker",
+        "python-multi-docker",
+        "dotnet-core-react-redux-advanced",
+        "purchase-slack-command-dotnet",
+        "node-with-vuejs-fullstack-web-development",
+        "ethereum-kickstart-vue",
+        "devmeetup-vuetify-nuxt"
       ],
-      '/frontend/': [
-        '',
+      "/frontend/": [
+        "",
         {
-          title: 'Vue.js',
+          title: "Vue.js",
           collapsable: true,
           children: [
-            'vuejs',
-            '/projects/node-with-vuejs-fullstack-web-development',
-            '/projects/ethereum-kickstart-vue',
-            '/frontend/vuejs-a-comprehensive-project-with-vuetify-and-firebase',
-            '/projects/devmeetup-vuetify-nuxt',
-            '/frontend/vuejs-nuxtjs-vuejs-on-steroids',
-            '/frontend/vuejs-vuejs-2-essentials',
-            '/frontend/vuejs-vuejs-build-a-full-stack-app-with-firebase-vuex-router',
-            '/frontend/vuejs-vuejs-2-and-bootstrap-4-web-development',
-            '/frontend/vuejs-vue-js-single-page-applications',
-            '/frontend/vuejs-vuejs-getting-started'
+            "vuejs",
+            "/projects/node-with-vuejs-fullstack-web-development",
+            "/projects/ethereum-kickstart-vue",
+            "/frontend/vuejs-a-comprehensive-project-with-vuetify-and-firebase",
+            "/projects/devmeetup-vuetify-nuxt",
+            "/frontend/vuejs-nuxtjs-vuejs-on-steroids",
+            "/frontend/vuejs-vuejs-2-essentials",
+            "/frontend/vuejs-vuejs-build-a-full-stack-app-with-firebase-vuex-router",
+            "/frontend/vuejs-vuejs-2-and-bootstrap-4-web-development",
+            "/frontend/vuejs-vue-js-single-page-applications",
+            "/frontend/vuejs-vuejs-getting-started"
           ]
         },
         {
-          title: 'React',
+          title: "React",
           collapsable: true,
           children: [
-            'react',
-            '/frontend/react-react-hooks',
-            '/other/docker-multi-docker',
-            '/backend/nodejs-advanced-node-for-developers',
-            '/backend/nodejs-node-with-react-fullstack-web-development',
-            '/other/blockchain-ethereum-kickstart',
-            '/frontend/react-react-redux',
-            '/databases/mongodb-mongodb-the-complete-developers-guide'
+            "react",
+            "/frontend/react-react-hooks",
+            "/other/docker-multi-docker",
+            "/backend/nodejs-advanced-node-for-developers",
+            "/backend/nodejs-node-with-react-fullstack-web-development",
+            "/other/blockchain-ethereum-kickstart",
+            "/frontend/react-react-redux",
+            "/databases/mongodb-mongodb-the-complete-developers-guide"
           ]
         },
         {
-          title: 'Angular',
+          title: "Angular",
           collapsable: true,
           children: [
-            'angular',
-            'angular-angular-pwa-course',
-            'angular-angular-material-course',
-            'angular-angular-full-app-with-angular-material-angularfire-ngrx',
-            '/backend/dotnetcore-asp-net-core-angular-from-scratch',
-            '/backend/java-angular-4-java-developers',
-            'angular-the-complete-guide-to-angular-2'
+            "angular",
+            "angular-angular-pwa-course",
+            "angular-angular-material-course",
+            "angular-angular-full-app-with-angular-material-angularfire-ngrx",
+            "/backend/dotnetcore-asp-net-core-angular-from-scratch",
+            "/backend/java-angular-4-java-developers",
+            "angular-the-complete-guide-to-angular-2"
           ]
         },
         {
-          title: 'JavaScript',
+          title: "JavaScript",
           collapsable: true,
           children: [
-            'javascript',
-            'javascript-javascript-es6-tutorial',
-            'javascript-progressive-web-app-pwa-the-complete-guide'
+            "javascript",
+            "javascript-javascript-es6-tutorial",
+            "javascript-progressive-web-app-pwa-the-complete-guide"
           ]
         },
         {
-          title: 'CSS',
+          title: "CSS",
           collapsable: true,
           children: [
-            'css',
-            'css-css-the-complete-guide-incl-flexbox-grid-sass',
-            'css-travel-site'
+            "css",
+            "css-css-the-complete-guide-incl-flexbox-grid-sass",
+            "css-travel-site"
           ]
         }
       ],
-      '/backend/': [
-        '',
+      "/backend/": [
+        "",
         {
-          title: 'Node.js',
+          title: "Node.js",
           collapsable: true,
           children: [
-            'nodejs',
-            '/other/docker-multi-docker',
-            'nodejs-advanced-node-for-developers',
-            '/other/bot-how-to-create-a-slack-bot-to-automate-tasks-for-you',
-            'nodejs-node-with-react-fullstack-web-development',
-            '/projects/node-with-vuejs-fullstack-web-development',
-            '/other/blockchain-ethereum-kickstart',
-            '/projects/ethereum-kickstart-vue',
-            '/databases/mongodb-mongodb-the-complete-developers-guide'
+            "nodejs",
+            "/other/docker-multi-docker",
+            "nodejs-advanced-node-for-developers",
+            "/other/bot-how-to-create-a-slack-bot-to-automate-tasks-for-you",
+            "nodejs-node-with-react-fullstack-web-development",
+            "/projects/node-with-vuejs-fullstack-web-development",
+            "/other/blockchain-ethereum-kickstart",
+            "/projects/ethereum-kickstart-vue",
+            "/databases/mongodb-mongodb-the-complete-developers-guide"
           ]
         },
         {
-          title: 'Java',
+          title: "Java",
           collapsable: true,
           children: [
-            'java',
-            '/projects/java-multi-docker',            
-            'java-mastering-micro-services-using-java-sprint-boot',
-            'java-angular-4-java-developers',
-            'java-spring-framework-video-tutorial',
-            'java-mavencrashcourse'
+            "java",
+            "/projects/java-multi-docker",
+            "java-mastering-micro-services-using-java-sprint-boot",
+            "java-angular-4-java-developers",
+            "java-spring-framework-video-tutorial",
+            "java-mavencrashcourse"
           ]
         },
         {
-          title: 'Python',
+          title: "Python",
           collapsable: true,
           children: [
-            'python',
-            '/projects/python-multi-docker',
-            'python-pythonforbeginnersintro'
+            "python",
+            "/projects/python-multi-docker",
+            "python-pythonforbeginnersintro"
           ]
         },
         {
-          title: '.Net Core',
+          title: ".Net Core",
           collapsable: true,
           children: [
-            'dotnetcore',
-            'dotnetcore-aplicaciones-web-en-tiempo-real-con-signalr-core',
-            'dotnetcore-asp-net-core-angular-from-scratch',
-            'dotnetcore-aspnet-core-2-security-and-identity-management-with-c',
-            '/projects/purchase-slack-command-dotnet',
-            'dotnetcore-asp-dot-net-core-oauth'
+            "dotnetcore",
+            "/backend/dotnetcore-net-core-microservice",
+            "dotnetcore-aplicaciones-web-en-tiempo-real-con-signalr-core",
+            "dotnetcore-asp-net-core-angular-from-scratch",
+            "dotnetcore-aspnet-core-2-security-and-identity-management-with-c",
+            "/projects/purchase-slack-command-dotnet",
+            "dotnetcore-asp-dot-net-core-oauth"
           ]
         },
         {
-          title: '.Net',
+          title: ".Net",
           collapsable: true,
           children: [
-            'dotnet',
-            'dotnet-the-ultimate-linq-with-csharp-masterclass-basics-to-advanced',
-            'dotnet-dotnet-ecosystem-big-picture'
+            "dotnet",
+            "dotnet-the-ultimate-linq-with-csharp-masterclass-basics-to-advanced",
+            "dotnet-dotnet-ecosystem-big-picture"
           ]
         }
       ],
-      '/databases/': [
-        '',
+      "/databases/": [
+        "",
         {
-          title: 'Firebase',
+          title: "Firebase",
           collapsable: true,
           children: [
-            'firebase',
-            '/databases/firebase-firebase-firestore-getting-started',
-            '/other/bot-how-to-create-a-slack-bot-to-automate-tasks-for-you',
-            '/projects/purchase-slack-command-dotnet',
-            '/frontend/vuejs-a-comprehensive-project-with-vuetify-and-firebase',
-            '/projects/devmeetup-vuetify-nuxt',
-            '/frontend/vuejs-vuejs-build-a-full-stack-app-with-firebase-vuex-router',
-            '/frontend/vuejs-vuejs-2-and-bootstrap-4-web-development',
-            '/databases/firebase-firebase-cookbook',
-            '/databases/firebase-android-firebase-email-authentication-verification'
+            "firebase",
+            "/databases/firebase-firebase-firestore-getting-started",
+            "/other/bot-how-to-create-a-slack-bot-to-automate-tasks-for-you",
+            "/projects/purchase-slack-command-dotnet",
+            "/frontend/vuejs-a-comprehensive-project-with-vuetify-and-firebase",
+            "/projects/devmeetup-vuetify-nuxt",
+            "/frontend/vuejs-vuejs-build-a-full-stack-app-with-firebase-vuex-router",
+            "/frontend/vuejs-vuejs-2-and-bootstrap-4-web-development",
+            "/databases/firebase-firebase-cookbook",
+            "/databases/firebase-android-firebase-email-authentication-verification"
           ]
         },
         {
-          title: 'MongoDB',
+          title: "MongoDB",
           collapsable: true,
           children: [
-            'mongodb',
-            '/backend/nodejs-advanced-node-for-developers',
-            '/projects/dotnet-core-react-redux-advanced',
-            '/backend/java-angular-4-java-developers',
-            '/backend/nodejs-node-with-react-fullstack-web-development',
-            '/projects/node-with-vuejs-fullstack-web-development',
-            '/databases/mongodb-mongodb-the-complete-developers-guide'            
+            "mongodb",
+            "/backend/dotnetcore-net-core-microservice",
+            "/backend/nodejs-advanced-node-for-developers",
+            "/projects/dotnet-core-react-redux-advanced",
+            "/backend/java-angular-4-java-developers",
+            "/backend/nodejs-node-with-react-fullstack-web-development",
+            "/projects/node-with-vuejs-fullstack-web-development",
+            "/databases/mongodb-mongodb-the-complete-developers-guide"
           ]
         },
         {
-          title: 'SQL Server',
+          title: "SQL Server",
           collapsable: true,
-          children: [
-            'sqlserver'
-          ]
-        },        
+          children: ["sqlserver"]
+        },
         {
-          title: 'PostgreSQL',
+          title: "PostgreSQL",
           collapsable: true,
           children: [
-            'postgresql',
-            '/other/docker-multi-docker',
-            '/projects/dotnet-core-multi-docker',
-            '/projects/java-multi-docker',
-            '/projects/python-multi-docker'            
+            "postgresql",
+            "/other/docker-multi-docker",
+            "/projects/dotnet-core-multi-docker",
+            "/projects/java-multi-docker",
+            "/projects/python-multi-docker"
           ]
         },
         {
-          title: 'MySQL',
+          title: "MySQL",
           collapsable: true,
           children: [
-            'mysql',
-            '/backend/dotnetcore-asp-net-core-angular-from-scratch'
-          ]
-        },                
-        {
-          title: 'SQLite',
-          collapsable: true,
-          children: [
-            'sqlite',
-            '/backend/dotnetcore-asp-net-core-angular-from-scratch'
-          ]
-        }             
-      ],
-      '/staticwebs/': [
-        '',
-        {
-          title: 'Markdown',
-          collapsable: true,
-          children: [
-            'markdown',
-            'markdown-easy-markdown-with-vs-code',
+            "mysql",
+            "/backend/dotnetcore-asp-net-core-angular-from-scratch"
           ]
         },
         {
-          title: 'VuePress',
+          title: "SQLite",
           collapsable: true,
           children: [
-            'vuepress',
-            'vuepress-how-to-use-vuepress-for-a-documentation-site',
-          ]
-        },
-        {
-          title: 'Confluence',
-          collapsable: true,
-          children: [
-            'confluence',
-            'confluence-understanding-confluence-for-users-managers-and-admins'
+            "sqlite",
+            "/backend/dotnetcore-asp-net-core-angular-from-scratch"
           ]
         }
       ],
-      '/other/': [
-        'courses',
+      "/staticwebs/": [
+        "",
         {
-          title: 'Docker',
+          title: "Markdown",
+          collapsable: true,
+          children: ["markdown", "markdown-easy-markdown-with-vs-code"]
+        },
+        {
+          title: "VuePress",
           collapsable: true,
           children: [
-            'docker',
-            'docker-multi-docker',
-            '/projects/dotnet-core-multi-docker',
-            '/projects/java-multi-docker',
-            '/projects/python-multi-docker'
+            "vuepress",
+            "vuepress-how-to-use-vuepress-for-a-documentation-site"
           ]
         },
         {
-          title: 'Blockchain',
+          title: "Confluence",
           collapsable: true,
           children: [
-            'blockchain',
-            'blockchain-ethereum-kickstart',
-            '/projects/ethereum-kickstart-vue',
-            'blockchain-surveying-blockchain-technologies-enterprise'           
+            "confluence",
+            "confluence-understanding-confluence-for-users-managers-and-admins"
+          ]
+        }
+      ],
+      "/other/": [
+        "courses",
+        {
+          title: "Docker",
+          collapsable: true,
+          children: [
+            "docker",
+            "/backend/dotnetcore-net-core-microservice",
+            "docker-multi-docker",
+            "/projects/dotnet-core-multi-docker",
+            "/projects/java-multi-docker",
+            "/projects/python-multi-docker"
           ]
         },
         {
-          title: 'Visual Studio',
+          title: "Blockchain",
           collapsable: true,
           children: [
-            'visualstudio',
-            '/staticwebs/markdown-easy-markdown-with-vs-code',
-            'visualstudio-vs-resharper',
-            'visualstudio-exploring-visual-studio-2017-video'
+            "blockchain",
+            "blockchain-ethereum-kickstart",
+            "/projects/ethereum-kickstart-vue",
+            "blockchain-surveying-blockchain-technologies-enterprise"
           ]
         },
         {
-          title: 'Regular Expressions',
+          title: "Visual Studio",
           collapsable: true,
           children: [
-            'regex',
-            'regex-regex-academy-an-introduction-to-text-parsing-sorcery'
+            "visualstudio",
+            "/staticwebs/markdown-easy-markdown-with-vs-code",
+            "visualstudio-vs-resharper",
+            "visualstudio-exploring-visual-studio-2017-video"
           ]
         },
         {
-          title: 'Internet bot',
+          title: "Regular Expressions",
           collapsable: true,
           children: [
-            'bot',
-            'bot-how-to-create-a-slack-bot-to-automate-tasks-for-you',
-            '/projects/purchase-slack-command-dotnet'
+            "regex",
+            "regex-regex-academy-an-introduction-to-text-parsing-sorcery"
           ]
         },
         {
-          title: 'Microservices',
+          title: "Internet bot",
           collapsable: true,
           children: [
-            'microservices',
-            'microservices-modern-software-architecture-domain-models-cqrs-event-sourcing'
+            "bot",
+            "bot-how-to-create-a-slack-bot-to-automate-tasks-for-you",
+            "/projects/purchase-slack-command-dotnet"
           ]
         },
         {
-          title: 'Git',
+          title: "Microservices",
           collapsable: true,
           children: [
-            'git',
-            'git-mastering-git',
-            'git-how-git-works'
+            "microservices",
+            "/backend/dotnetcore-net-core-microservice",
+            "microservices-modern-software-architecture-domain-models-cqrs-event-sourcing"
           ]
         },
         {
-          title: 'PCI',
+          title: "Git",
+          collapsable: true,
+          children: ["git", "git-mastering-git", "git-how-git-works"]
+        },
+        {
+          title: "PCI",
           collapsable: true,
           children: [
-            'pci',
-            'pci-pci-dss-big-picture',
-            'pci-payment-card-security-processing-pci-standards'
+            "pci",
+            "pci-pci-dss-big-picture",
+            "pci-payment-card-security-processing-pci-standards"
           ]
         }
       ]
     }
   },
   plugins: [
-    ['@vuepress/google-analytics', {
-      ga: 'UA-130949957-1'
-    }],
-    ['@vuepress/search', {
-      searchMaxSuggestions: 10      
-    }]       
-  ]     
-})
+    [
+      "@vuepress/google-analytics",
+      {
+        ga: "UA-130949957-1"
+      }
+    ],
+    [
+      "@vuepress/search",
+      {
+        searchMaxSuggestions: 10
+      }
+    ]
+  ]
+});
