@@ -731,7 +731,7 @@ c9f09993e813        rabbitmq            "docker-entrypoint.s…"   4 minutes ago
 
 > Actio.Common -> Commands -> ICommand.cs
 
-```cs
+```csharp
 namespace Actio.Common.Commands
     // Marker interface
     public interface ICommand
@@ -743,7 +743,7 @@ namespace Actio.Common.Commands
 
 > Actio.Common -> Commands -> IAuthenticatedCommand.cs
 
-```cs
+```csharp
 using System;
 
 namespace Actio.Common.Commands
@@ -755,9 +755,9 @@ namespace Actio.Common.Commands
 }
 ```
 
-> Actio.Common -> Commands -> ICommandHamdler.cs
+> Actio.Common -> Commands -> ICommandHandler.cs
 
-```cs
+```csharp
 using System.Threading.Tasks;
 
 namespace Actio.Common.Commands
@@ -771,7 +771,7 @@ namespace Actio.Common.Commands
 
 > Actio.Common -> Commands -> AuthenticatetUser.cs
 
-```cs
+```csharp
 namespace Actio.Common.Commands
 {
     public class AuthenticateUser: ICommand
@@ -784,7 +784,7 @@ namespace Actio.Common.Commands
 
 > Actio.Common -> Commands -> CreatUser.cs
 
-```cs
+```csharp
 namespace Actio.Common.Commands
 {
   public class CreateUser : ICommand
@@ -798,7 +798,7 @@ namespace Actio.Common.Commands
 
 > Actio.Common -> Commands -> CreatActivity.cs
 
-```cs
+```csharp
 using System;
 
 namespace Actio.Common.Commands
@@ -824,7 +824,7 @@ namespace Actio.Common.Commands
 
 > Actio.Common -> Commands -> IEvent.cs
 
-```cs
+```csharp
 namespace Actio.Common.Events
 {
   // Marker interface
@@ -837,7 +837,7 @@ namespace Actio.Common.Events
 
 > Actio.Common -> Commands -> IRejectedEvent.cs
 
-```cs
+```csharp
 namespace Actio.Common.Events
 {
   public interface IRejectedEvent : IEvent
@@ -850,7 +850,7 @@ namespace Actio.Common.Events
 
 > Actio.Common -> Commands -> IEventHandler.cs
 
-```cs
+```csharp
 using System.Threading.Tasks;
 
 namespace Actio.Common.Events
@@ -864,7 +864,7 @@ namespace Actio.Common.Events
 
 > Actio.Common -> Commands -> UserCreated.cs
 
-```cs
+```csharp
 namespace Actio.Common.Events
 {
   public class UserCreated : IEvent
@@ -887,7 +887,7 @@ namespace Actio.Common.Events
 
 > Actio.Common -> Commands -> ActivityCreated.cs
 
-```cs
+```csharp
 using System;
 
 namespace Actio.Common.Events
@@ -919,7 +919,7 @@ namespace Actio.Common.Events
 
 > Actio.Common -> Commands -> CreatedUserRejected.cs
 
-```cs
+```csharp
 namespace Actio.Common.Events
 {
   public class CreatedUserRejected : IRejectedEvent
@@ -943,7 +943,7 @@ namespace Actio.Common.Events
 
 > Actio.Common -> Commands -> UserAuthenticated.cs
 
-```cs
+```csharp
 namespace Actio.Common.Events
 {
   public class EmailAuthenticated : IEvent
@@ -989,7 +989,7 @@ namespace Actio.Common.Events
 
 > Actio.Common -> RabbitMq -> Extensions.cs
 
-```cs
+```csharp
 using System.Reflection;
 using System.Threading.Tasks;
 using Actio.Common.Commands;
@@ -1022,7 +1022,7 @@ namespace Actio.Common.RabbitMq
 
 > Actio.Common -> Services -> IServiceHost.cs
 
-```cs
+```csharp
 namespace Actio.Common.Services
 {
     public interface IServiceHost
@@ -1034,7 +1034,7 @@ namespace Actio.Common.Services
 
 > Actio.Common -> Services -> ServiceHost.cs
 
-````cs
+````csharp
 using System;
 using Actio.Common.Commands;
 using Actio.Common.Events;
@@ -1143,7 +1143,7 @@ namespace Actio.Common.Services
 - On the `Actio.Api` project and `Controllers` folder remove the `ValueController.cs` document and create the following controller classes.
 
 > Actio.Api => Controllers -> HomeController.cs
-```cs
+```csharp
 using Microsoft.AspNetCore.Mvc;
 
 namespace Actio.Api.Controllers
@@ -1159,7 +1159,7 @@ namespace Actio.Api.Controllers
 
 > Actio.Api => Controllers -> ActivitiesController.cs
 
-```cs
+```csharp
 using System;
 using System.Threading.Tasks;
 using Actio.Common.Commands;
@@ -1193,7 +1193,7 @@ namespace Actio.Api.Controllers
 
 > Actio.Api => Controllers -> UserController.cs
 
-```cs
+```csharp
 using System.Threading.Tasks;
 using Actio.Common.Commands;
 using Microsoft.AspNetCore.Mvc;
@@ -1230,7 +1230,7 @@ namespace Actio.Api.Controllers
 
 > Actio.Common -> RabbitMq -> RabbitMqOptions.cs
 
-```cs
+```csharp
 using RawRabbit.Configuration;
 
 namespace Actio.Common.RabbitMq
@@ -1243,7 +1243,7 @@ namespace Actio.Common.RabbitMq
 
 > Actio.Common -> RabbitMq -> Extensions.cs
 
-```cs
+```csharp
 
 using System.Reflection;
 using System.Threading.Tasks;
@@ -1365,7 +1365,7 @@ namespace Actio.Common.RabbitMq
 
 > Actio.Api -> Handlers -> ActivityCreatedHandler.cs
 
-```cs
+```csharp
 using System;
 using System.Threading.Tasks;
 using Actio.Common.Events;
@@ -1387,7 +1387,7 @@ namespace Actio.Api.Handlers
 
 > Actio.Api -> Startup.cs
 
-```cs
+```csharp
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -1448,7 +1448,7 @@ namespace Actio.Api
 
 > Actio.Api -> Startup.cs
 
-```cs
+```csharp
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -1481,7 +1481,7 @@ namespace Actio.Api
 
 > Actio.Services.Activities -> Handlers -> CreateActivityHandler.cs
 
-```cs
+```csharp
 using System;
 using System.Threading.Tasks;
 using Actio.Common.Commands;
@@ -1514,7 +1514,7 @@ namespace Actio.Services.Activities.Handlers
 
 > Actio.Api -> Startup.cs
 
-```cs
+```csharp
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -1574,7 +1574,7 @@ On the `Actio.Services.Activities` project modify the `Program.cs` document to u
 
 > Actio.Api -> Startup.cs
 
-```cs
+```csharp
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -1640,7 +1640,7 @@ After trying to run the Api project an error is thrown. The ServiceHost class mu
 
 > Actio.Common -> Services -> ServiceHost.cs
 
-```cs
+```csharp
 using System;
 using Actio.Common.Commands;
 using Actio.Common.Events;
@@ -1958,7 +1958,7 @@ The subscription to the RabbitMQ `command` on the `Actio.Services.Activities` pr
 
 > Actio.Services.Activities -> Domain -> Models -> Category.cs
 
-```cs
+```csharp
 using System;
 
 namespace Actio.Services.Activities.Domain.Models
@@ -1983,7 +1983,7 @@ namespace Actio.Services.Activities.Domain.Models
 
 > Actio.Services.Activities -> Domain -> Models -> Activity.cs
 
-```cs
+```csharp
 using System;
 using Actio.Common.Exceptions;
 
@@ -2023,7 +2023,7 @@ namespace Actio.Services.Activities.Domain.Models
 
 > Actio.Services.Activities -> Domain -> Repositories -> ICategoryRepository.cs
 
-```cs
+```csharp
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Actio.Services.Activities.Domain.Models;
@@ -2041,7 +2041,7 @@ namespace Actio.Services.Activities.Domain.Repositories
 
 > Actio.Services.Activities -> Domain -> Repositories -> IActivityRepository.cs
 
-```cs
+```csharp
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -2151,7 +2151,7 @@ log  : Restore completed in 2.51 sec for C:\Work\Training\Pre\DotNetCore\NET-Cor
 
 > Actio.Common -> Mongo -> MongoOptions.cs
 
-```cs
+```csharp
 namespace Actio.Common.Mongo
 {
     public class MongoOptions
@@ -2165,7 +2165,7 @@ namespace Actio.Common.Mongo
 
 > Actio.Common -> Mongo -> Extensions.cs
 
-```cs
+```csharp
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -2199,7 +2199,7 @@ namespace Actio.Common.Mongo
 
 > Actio.Common -> Mongo -> IDatabaseInitializer.cs
 
-```cs
+```csharp
 using System.Threading.Tasks;
 
 namespace Actio.Common.Mongo
@@ -2213,7 +2213,7 @@ namespace Actio.Common.Mongo
 
 > Actio.Common -> Mongo -> MongoInitializer.cs
 
-```cs
+```csharp
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
@@ -2272,7 +2272,7 @@ namespace Actio.Common.Mongo
 
 > Actio.Services.Activity -> Startup.cs
 
-```cs
+```csharp
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -2382,7 +2382,7 @@ namespace Actio.Services.Activities
 
 > Actio.Services.Activity -> Repository -> CategoryRepository.cs
 
-```cs
+```csharp
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -2423,7 +2423,7 @@ namespace Actio.Services.Activities.Repositories
 
 > Actio.Services.Activity -> Repository -> ActivityRepository.cs
 
-```cs
+```csharp
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -2464,7 +2464,7 @@ namespace Actio.Services.Activities.Repositories
 
 > Actio.Common -> Mongo -> IDatabaseSeeder.cs
 
-```cs
+```csharp
 using System.Threading.Tasks;
 
 namespace Actio.Common.Mongo
@@ -2478,7 +2478,7 @@ namespace Actio.Common.Mongo
 
 > Actio.Common -> Mongo -> MongoSeeder.cs
 
-```cs
+```csharp
 using System.Linq;
 using System.Threading.Tasks;
 using MongoDB.Driver;
@@ -2515,7 +2515,7 @@ namespace Actio.Common.Mongo
 
 > Actio.Common -> Mongo -> Extensions.cs
 
-```cs
+```csharp
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -2552,7 +2552,7 @@ namespace Actio.Common.Mongo
 
 - Actio.Services.Activity -> Services -> CustomMongoSeeder.cs
 
-```cs
+```csharp
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -2593,7 +2593,7 @@ namespace Actio.Services.Activities.Services
 
 > Actio.Common -> Mongo -> MongoInitializer.cs
 
-```cs
+```csharp
 
 ```
 
@@ -2601,7 +2601,7 @@ namespace Actio.Services.Activities.Services
 
 > Actio.Services.Activity -> Startup.cs
 
-```cs
+```csharp
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -2733,7 +2733,7 @@ The previous error can be fixed changing the Actio.Common.Services.ServiceHost.H
 
 > Actio.Common -> Services -> ServiceHost.cs
 
-```cs
+```csharp
 using System;
 using Actio.Common.Commands;
 using Actio.Common.Events;
@@ -2884,7 +2884,7 @@ ImplementingRepositories3
 
 > Actio.Common -> Exceptions -> ActioException
 
-```cs
+```csharp
 using System;
 
 namespace Actio.Common.Exceptions
@@ -2928,7 +2928,7 @@ namespace Actio.Common.Exceptions
 
 > Action.Services.Activities -> Services -> IActivityService.cs
 
-```cs
+```csharp
 using System;
 using System.Threading.Tasks;
 
@@ -2944,7 +2944,7 @@ namespace Actio.Services.Activities.Services
 
 > Action.Services.Activities -> Services -> ActivityService.cs
 
-```cs
+```csharp
 using System;
 using System.Threading.Tasks;
 using Actio.Common.Exceptions;
@@ -2986,7 +2986,7 @@ namespace Actio.Services.Activities.Services
 
 > Action.Services.Activities -> Domain -> Models -> Activity.cs
 
-```cs
+```csharp
 using System;
 using Actio.Common.Exceptions;
 
@@ -3028,7 +3028,7 @@ namespace Actio.Services.Activities.Domain.Models
 
 > Action.Services.Activities -> Startup.cs
 
-```cs
+```csharp
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -3103,7 +3103,7 @@ namespace Actio.Services.Activities
 
 > Action.Services.Activities -> Handlers -> CreateActivityHandler.cs
 
-```cs
+```csharp
 using System;
 using System.Threading.Tasks;
 using Actio.Common.Commands;
@@ -3174,7 +3174,7 @@ namespace Actio.Services.Activities.Handlers
 
 > Actio.Services.Identity -> Domain -> Models -> User.cs
 
-```cs
+```csharp
 using System;
 using Actio.Common.Exceptions;
 using Actio.Services.Identity.Domain.Services;
@@ -3218,7 +3218,7 @@ namespace Actio.Services.Identity.Domain.Models
 
 > Actio.Services.Identity -> Domain -> Repositories -> IUserRepository.cs
 
-```cs
+```csharp
 using System;
 using System.Threading.Tasks;
 using Actio.Services.Identity.Domain.Models;
@@ -3242,7 +3242,7 @@ Create in the `Actio.Services.Identity` and `Domain` folder the `Services` subfo
 
 > Actio.Services.Identity -> Domain -> Services -> IEncrypter.cs
 
-```cs
+```csharp
 namespace Actio.Services.Identity.Domain.Services
 {
     public interface IEncrypter
@@ -3255,7 +3255,7 @@ namespace Actio.Services.Identity.Domain.Services
 
 > Actio.Services.Identity -> Domain -> Services -> Encrypter.cs
 
-```cs
+```csharp
 using System;
 using System.Security.Cryptography;
 using System.Text;
@@ -3299,7 +3299,7 @@ namespace Actio.Services.Identity.Domain.Services
 
 > Actio.Services.Identity -> Domain -> Models -> User.cs
 
-```cs
+```csharp
 using System;
 using Actio.Common.Exceptions;
 using Actio.Services.Identity.Domain.Services;
@@ -3358,7 +3358,7 @@ namespace Actio.Services.Identity.Domain.Models
 
 > Actio.Services.Identity -> Startup.cs
 
-```cs
+```csharp
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -3421,7 +3421,7 @@ namespace Actio.Services.Identity
 
 > Actio.Services.Identity -> Repositories -> UserRepository.cs
 
-```cs
+```csharp
 using System;
 using System.Threading.Tasks;
 using Actio.Services.Identity.Domain.Models;
@@ -3462,7 +3462,7 @@ namespace Actio.Services.Identity.Repositories
 
 > Actio.Services.Identity -> Startup.cs
 
-```cs
+```csharp
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -3581,7 +3581,7 @@ StoringUserData3
 
 > Actio.Services.Identity -> Handlers -> IUserService.cs
 
-```cs
+```csharp
 using System.Threading.Tasks;
 using Actio.Common.Auth;
 
@@ -3597,7 +3597,7 @@ namespace Actio.Services.Identity.Services
 
 > Actio.Services.Identity -> Handlers -> CreateUserHandler.cs
 
-```cs
+```csharp
 using System;
 using System.Threading.Tasks;
 using Actio.Common.Auth;
@@ -3660,7 +3660,7 @@ namespace Actio.Services.Identity.Services
 
 > Actio.Common -> Events -> CreatedUserRejected.js
 
-```cs
+```csharp
 namespace Actio.Common.Events
 {
     public class CreateUserRejected : IRejectedEvent
@@ -3688,7 +3688,7 @@ namespace Actio.Common.Events
 
 > Actio.Services.Identity -> Handlers -> CreateUserHandler.cs
 
-```cs
+```csharp
 using System;
 using System.Threading.Tasks;
 using Actio.Common.Commands;
@@ -3747,7 +3747,7 @@ namespace Actio.Services.Identity.Handlers
 
 > Actio.Services.Identity -> Startup.cs
 
-```cs
+```csharp
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -3860,7 +3860,7 @@ namespace Actio.Services.Identity
 
 > Actio.Api -> Controllers -> UsersController.cs
 
-```cs
+```csharp
 using System.Threading.Tasks;
 using Actio.Common.Commands;
 using Microsoft.AspNetCore.Mvc;
@@ -4064,7 +4064,7 @@ log  : Restore completed in 4.94 sec for C:\Work\Training\Pre\DotNetCore\NET-Cor
 
 > Actio.Common -> Auth -> IJwtHandler.cs
 
-```cs
+```csharp
 using System;
 
 namespace Actio.Common.Auth
@@ -4078,7 +4078,7 @@ namespace Actio.Common.Auth
 
 > Actio.Common -> Auth -> JsonWebToken.cs
 
-```cs
+```csharp
 namespace Actio.Common.Auth
 {
     public class JsonWebToken
@@ -4097,7 +4097,7 @@ namespace Actio.Common.Auth
 
 > Actio.Common -> Auth -> JwtOptions.cs
 
-```cs
+```csharp
 namespace Actio.Common.Auth
 {
     public class JwtOptions
@@ -4111,7 +4111,7 @@ namespace Actio.Common.Auth
 
 > Actio.Common -> Auth -> JwtHandler.cs
 
-```cs
+```csharp
 using System;
 using System.Text;
 using System.Security.Claims;
@@ -4184,7 +4184,7 @@ namespace Actio.Common.Auth
 
 > Actio.Common -> Auth -> Extensions.cs
 
-```cs
+```csharp
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -4222,7 +4222,7 @@ namespace Actio.Common.Auth
 
 > Actio.Services.Identity -> Startup.cs
 
-```cs
+```csharp
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -4299,7 +4299,7 @@ namespace Actio.Services.Identity
 - Modify the `Startup.cs` document in the `Actio.Api` project to add the `JWT`
   > Actio.Services.Identity -> Startup.cs
 
-```cs
+```csharp
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -4363,7 +4363,7 @@ namespace Actio.Api
 
 > Actio.Services.Identity -> Services -> IUserService.cs
 
-```cs
+```csharp
 using System.Threading.Tasks;
 using Actio.Common.Auth;
 
@@ -4379,7 +4379,7 @@ namespace Actio.Services.Identity.Services
 
 > Actio.Services.Identity -> Services -> IUserService.cs
 
-```cs
+```csharp
 using System;
 using System.Threading.Tasks;
 using Actio.Common.Auth;
@@ -4442,7 +4442,7 @@ namespace Actio.Services.Identity.Services
 
 > Actio.Services.Identity -> AccountController.cs
 
-```cs
+```csharp
 using System.Threading.Tasks;
 using Actio.Common.Commands;
 using Actio.Services.Identity.Services;
@@ -4566,7 +4566,7 @@ namespace Actio.Services.Identity.Controllers
 
 > Actio.Api -> Controllers -> ActivitiesController.cs
 
-```cs
+```csharp
 using System;
 using System.Threading.Tasks;
 using Actio.Common.Commands;
@@ -4640,7 +4640,7 @@ Application started. Press Ctrl+C to shut down.
 
 > Actio.Api -> Controllers -> ActivitiesController.cs
 
-```cs
+```csharp
 using System;
 using System.Net;
 using System.Threading.Tasks;
@@ -4782,7 +4782,7 @@ Secured
 - In the `Actio.Api` create the `Repositories` folder and the following documents inside:
 
 > Actio.Api -> Repositories -> IActivityRepository.cs
-```cs
+```csharp
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -4800,7 +4800,7 @@ namespace Actio.Api.Repositories
 ```
 
 > Actio.Api -> Repositories -> IActivityRepository.cs
-```cs
+```csharp
 namespace Actio.Api.Repositories
 {
     public class ActivityRepository : IActivityRepository
@@ -4812,7 +4812,7 @@ namespace Actio.Api.Repositories
 - Modify the `Actio.Api.Startup.cs` to include the new interface.
 
 > Actio.Api -> Startup.cs
-```cs
+```csharp
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -4880,7 +4880,7 @@ namespace Actio.Api
 - Modify the `ActivityCreatedHandler` handler to use properly the new repository
 
 > Actio.Api -> Handlers -> ActivityCreatedHandler.cs
-```cs
+```csharp
 using System;
 using System.Threading.Tasks;
 using Actio.Common.Events;
@@ -4956,7 +4956,7 @@ namespace Actio.Api.Handlers
 
 - In the `Actio.Api` create the `Models` folder and the following document inside:
 > Actio.Api -> Repositories -> Activity.cs
-```cs
+```csharp
 using System;
 
 namespace Actio.Api.Models
@@ -4976,7 +4976,7 @@ namespace Actio.Api.Models
 - Implement the `ActivityRepository` repository properly.
 
 > Actio.Api -> Repositories -> ActivityRepository.cs
-```cs
+```csharp
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -5018,7 +5018,7 @@ namespace Actio.Api.Repositories
 - Implement the `ActivityCreatedHandler` handler properly.
 
 > Actio.Api -> Handlers -> ActivityCreatedHandler.cs
-```cs
+```csharp
 using System;
 using System.Threading.Tasks;
 using Actio.Api.Models;
@@ -5060,7 +5060,7 @@ namespace Actio.Api.Handlers
 - Implement the `ActivitiesController` controller properly.
 
 > Actio.Api -> Controllers -> ActivitiesController.cs
-```cs
+```csharp
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -5625,7 +5625,7 @@ Reference `..\..\src\Actio.Services.Identity\Actio.Services.Identity.csproj` add
 - In the `Actio.Api.Tests` project create the new `Unit` folder and the new `Controllers` folder inside it, and the following document inside it.
 
 > Actio.Api.Tests -> Unit -> Controllers -> HomeControllerTests.cs
-```cs
+```csharp
 using Actio.Api.Controllers;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
@@ -5687,7 +5687,7 @@ The code doesn't work with .Net Core 2.2
 - Modify the `HomeControllerTests.cs` document
 
 > Actio.Api.Tests -> Unit -> Controllers -> HomeControllerTests.cs
-```cs
+```csharp
 using Actio.Api.Controllers;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
@@ -5733,7 +5733,7 @@ Test execution time: 2.7257 Seconds
 - Create another test document for tetsing the `ActivitiesController` controller.
 
 > Actio.Api.Tests -> Unit -> Controllers -> ActivitiesControllerTests.cs
-```cs
+```csharp
 using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -5829,7 +5829,7 @@ Total tests: 1. Passed: 1. Failed: 0. Skipped: 0
 - In the `Actio.Services.Activities.Tests` project create the new `Unit` folder and the new `Services` folder inside it, and the following document inside it.
 
 > Actio.Services.Activities.Tests -> Unit -> Services -> ActivityServiceTests.cs
-```cs
+```csharp
 using System;
 using System.Threading.Tasks;
 using Actio.Services.Activities.Domain.Models;
@@ -5887,7 +5887,7 @@ Test execution time: 2.5745 Seconds
 - In the `Actio.Services.Activities.Tests` project create the new `Integration` folder and the new `Controllers` folder inside it, and the following document inside it.
 
 > Actio.Services.Activities.Tests -> Integration -> Controllers -> ActivityServiceTests.cs
-```cs
+```csharp
 using System.Net.Http;
 using System.Threading.Tasks;
 using FluentAssertions;
@@ -5996,7 +5996,7 @@ Total tests: 1. Passed: 1. Failed: 0. Skipped: 0
 - In the `Actio.Services.Identity.Tests` project create the new `Unit` folder and the new `Services` folder inside it, and the following document inside it.
 
 > Actio.Services.Identity.Tests -> Unit -> Services -> UserServiceTests.cs
-```cs
+```csharp
 using System;
 using System.Threading.Tasks;
 using Actio.Common.Auth;
@@ -6070,7 +6070,7 @@ Test execution time: 2.8981 Seconds
 - In the `Actio.Services.Identity.Tests` project create the new `Integration` folder and the new `Controllers` folder inside it, and the following document inside it.
 
 > Actio.Services.Identity.Tests -> Integration -> Controllers -> AccountControllerTests.cs
-```cs
+```csharp
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -6504,7 +6504,7 @@ It's normal the previuos error because there is no access to neither RabbitMQ no
 - Modify the `Startup.cs` document to avoid using `https`
 
 > Actio.Services.Activities -> Startup.cs
-```cs
+```csharp
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6574,7 +6574,7 @@ namespace Actio.Services.Activities
 ```
 
 > Actio.Services.Identity -> Startup.cs
-```cs
+```csharp
 using System;
 using System.Collections.Generic;
 using System.Linq;
