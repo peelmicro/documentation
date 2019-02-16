@@ -7,7 +7,7 @@ On this [VuePress Tutorial - Learn how to use VuePress for a Documentation Site 
 ![](/images/vuepress/how-to-use-vuepress-for-a-documentation-site/VuePress.png)
 
 2. Install `VuePress` globally executing `yarn global add vuepress` or `npm install -g vuepress`
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Vuepress/muhvuepress$ yarn global add vuepress
 yarn global v1.9.2
 [1/4] Resolving packages...
@@ -38,11 +38,11 @@ Done in 169.81s.
 4. Compile it using `vuepress dev`
 
 ![](/images/vuepress/how-to-use-vuepress-for-a-documentation-site/VuePress3.png)
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Vuepress/muhvuepress
 $ vuepress dev
 ```
-```sh
+```bash
  DONE  [12:33:52] Build 220f0a finished in 14623 ms!
 
 > VuePress dev server listening at http://localhost:8080/
@@ -77,7 +77,7 @@ module.exports = {
 }
 ```
 8. Modify the main `README.md` to include some `yaml` code at the begining to update the layout of the main page.
-```yml
+```yaml
 ---
 home: true
 heroImage: /images/thecraftchop.png
@@ -173,7 +173,7 @@ module.exports = {
 ![](/images/vuepress/how-to-use-vuepress-for-a-documentation-site/VuePress13.png)
 
 11. If we want to change the global styles, we need to create the `override.styl` file on the `.vuepress` folder (this will be `.vuepress\styles\palette.styl` from version 1.0.0)
-```styl
+```css
 // showing default values
 $accentColor = #3eaf7c
 $textColor = blue // #2c3e50
@@ -184,7 +184,7 @@ $codeBgColor = #282c34
 ![](/images/vuepress/how-to-use-vuepress-for-a-documentation-site/VuePress14.png)
 
 12. If we want to change the style of anything inside the website, we need to create the `style.styl` file on the `.vuepress` folder (this will be `.vuepress\styles\index.styl` from version 1.0.0)
-```styl
+```css
 .content {
   font-size 30px
 }
@@ -204,7 +204,7 @@ This is more information about frontend ...
 ```
 - Modify the `override.styl` to include this new class.
 
-```styl
+```css
 // showing default values
 $accentColor = #3eaf7c
 $textColor = blue // #2c3e50

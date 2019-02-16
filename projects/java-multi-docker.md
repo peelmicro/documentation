@@ -734,7 +734,7 @@ welcomePageHandlerMapping
 The list of `Beans provided by Spring Boot` must be shown.
 
 * Check if the web service is returning the expected value executing the command `curl localhost:8080`
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex/server
 $ curl localhost:8080
 Greetings from Spring Boot!
@@ -753,7 +753,7 @@ RUN mvn package
 ENTRYPOINT ["java","-jar","target/server-0.0.1-SNAPSHOT.jar"]
 ```
 * Create the Docker image with the `docker build .` command  
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex/server
 $ docker build .
 Sending build context to Docker daemon   93.7kB
@@ -775,7 +775,7 @@ Successfully built 61b12028d995
 SECURITY WARNING: You are building a Docker image from Windows against a non-Windows Docker host. All files and directories added to build context will have '-rwxr-xr-x' permissions. It is recommended to double check and reset permissions for sensitive files and directories.
 ```
 * Ensure it is working running the `docker run -p 8080:8080 61b12028d995` command  
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex/server
 $ docker run -p 8080:8080 61b12028d995
 
@@ -932,14 +932,14 @@ websocketServletWebServerCustomizer
 welcomePageHandlerMapping
 ```
 * Ensure the container is running executing the `docker ps` command  
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex/server
 $ docker ps
 CONTAINER ID        IMAGE                       COMMAND                  CREATED             STATUS                         PORTS                    NAMES
 e16df18ad87a        61b12028d995                "java -jar target/se…"   3 minutes ago       Up 3 minutes                   0.0.0.0:8080->8080/tcp   determined_saha
 ```
 * Ensure the web is running correctly executing the `curl localhost:8080` command on another terminal  
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex/server
 $ curl localhost:8080
 Greetings from Spring Boot!
@@ -1228,7 +1228,7 @@ RUN mvn install -DskipTests
 ENTRYPOINT ["java","-jar","target/server-0.0.1-SNAPSHOT.jar"]
 ```
 11. Test if the `docker image` can be built with success
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex/serverDocker/DockerAndKubernetes.TheCompleteGuide/java-complex/server
 $ docker build .
 Sending build context to Docker daemon  109.6kB
@@ -1265,7 +1265,7 @@ Successfully built bd127e94467f
 SECURITY WARNING: You are building a Docker image from Windows against a non-Windows Docker host. All files and directories added to build context will have '-rwxr-xr-x' permissions. It is recommended to double check and reset permissions for sensitive files and directories.
 ```
 12. Execute the docker image to ensure that only errors related to the connection with Postgres are shown.
-```shell
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex/server
 $ docker run bd127e94467f
 
@@ -1410,7 +1410,7 @@ Caused by: java.lang.RuntimeException: Driver org.postgresql.Driver claims to no
 
 `mvn archetype:generate -DgroupId=com.peelmicro -DartifactId=worker -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false`
 
-```shell
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex$ mvn archetype:generate -DgroupId=com.peelmicro -Dartif
 actId=worker -DarchetypeArtifactId=maven-archetype-quick
 start -DinteractiveMode=false
@@ -1461,7 +1461,7 @@ public class App
 5. Execute the following command to generate the class:
 
 `mvn install`
-```shell
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex
 $ cd worker
 
@@ -1527,7 +1527,7 @@ Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 
 `java -cp target/worker-1.0-SNAPSHOT.jar com.peelmicro.App`
 
-```shell
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex/worker
 $ java -cp target/worker-1.0-SNAPSHOT.jar com.peelmicro.App
 Hello World!
@@ -1552,7 +1552,7 @@ ENTRYPOINT ["java","-cp","worker.jar","com.peelmicro.App"]
 
 `docker build .`
 
-```shell
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex/worker
 $ docker build .
 Sending build context to Docker daemon   38.4kB
@@ -1576,7 +1576,7 @@ SECURITY WARNING: You are building a Docker image from Windows against a non-Win
 
 `docker run 8bf625e9f2a4`
 
-```shell
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex/worker
 $ docker run 8bf625e9f2a4
 Hello World!
@@ -1770,7 +1770,7 @@ RUN mvn package
 ENTRYPOINT ["java","-cp","target/worker-1.0-SNAPSHOT-jar-with-dependencies.jar","com.peelmicro.App"]
 ```
 14. Test if the `docker image` can be built with success
-```shell
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex/worker
 $ docker build .
 Sending build context to Docker daemon  57.34kB
@@ -2677,7 +2677,7 @@ Successfully built a8b03c0ee75e
 SECURITY WARNING: You are building a Docker image from Windows against a non-Windows Docker host. All files and directories added to build context will have '-rwxr-xr-x' permissions. It is recommended to double check and reset permissions for sensitive files and directories.
 ```
 15. Execute the docker image to ensure that only errors related to the connection with Redis are shown.
-```shell
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex/worker
 $ docker run a8b03c0ee75e
 redis.clients.jedis.exceptions.JedisConnectionException: java.net.ConnectException: Connection refused (Connection refused)
@@ -2709,7 +2709,7 @@ RUN mvn install -DskipTests
 ENTRYPOINT ["java","-cp","target/worker-1.0-SNAPSHOT-jar-with-dependencies.jar","com.peelmicro.App"]
 ```
 17. Test if the `docker image` can be built with success
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ cd worker
 
@@ -2755,7 +2755,7 @@ SECURITY WARNING: You are building a Docker image from Windows against a non-Win
 ![](/images/projects/java-multi-docker/CopyClientNginx3.png)
 
 2. Ensure the Docker image for the `client` project can be created with success
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ cd client
 
@@ -2832,7 +2832,7 @@ Successfully built e24d073bd670
 SECURITY WARNING: You are building a Docker image from Windows against a non-Windows Docker host. All files and directories added to build context will have '-rwxr-xr-x' permissions. It is recommended to double check and reset permissions for sensitive files and directories.
 ```
 3. Ensure the Docker image for the `nginx` project can be created with success
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex/nginx (master)
 $ docker build .
 Sending build context to Docker daemon  4.096kB
@@ -2844,12 +2844,12 @@ Successfully built be138f1b133d
 SECURITY WARNING: You are building a Docker image from Windows against a non-Windows Docker host. All files and directories added to build context will have '-rwxr-xr-x' permissions. It is recommended to double check and reset permissions for sensitive files and directories.
 ```
 4. Initialize git repository executing the `git init` command
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex$ git init
 Initialized empty Git repository in C:/Users/juan.pablo.perez/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex/.git/
 ```
 5. Copy the 'docker-compose.yml' file from the NodeJs solution, modify it and execute it
-```yml
+```yaml
 version: '3'
 services:
   postgres:
@@ -2890,7 +2890,7 @@ services:
         - REDIS_HOST=redis
         - REDIS_PORT=6379      
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ docker-compose up
 Creating network "java-complex_default" with the default driver
@@ -2945,7 +2945,7 @@ spring.jpa.hibernate.ddl-auto = none
 # Define a different port from the standard 8080
 server.port = 5000
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ docker-compose up --build
 Building nginx
@@ -3090,7 +3090,7 @@ api_1       | 2018-11-18 16:11:36.815  INFO 1 --- [           main] com.peelmicr
 ![](/images/projects/java-multi-docker/NewGitGubRepository2.png)
 
 8. Link the project to the new repository and push the first commit.
-```sh
+```bash
 $ git status
 On branch master
 
@@ -3304,7 +3304,7 @@ To https://github.com/peelmicro/java-multi-docker.git
 ```
 9. Prepare the integration with Travis CI
 * Create the following `.travis.yml` document (where the deployment on Amazon AWS is commented out)
-```yml
+```yaml
 sudo: required
 language: node_js
 node_js: 
@@ -3349,7 +3349,7 @@ after_success:
 ![](/images/projects/java-multi-docker/TravisCI2.png)
 
 * Create and push a new commit to include the new `.travis.yml` file and force Travis to execute it.
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ git status
 On branch master
@@ -3839,7 +3839,7 @@ Ensure the new `java-multi-docker-deployer` has been created.
 17. Modify the `.travis.yml` document to include the deployment on AWS
 
 > `.travis.yml`
-```yml
+```yaml
 sudo: required
 language: node_js
 node_js: 
@@ -3926,7 +3926,7 @@ deploy:
 }
 ```
 19. Commit and push the changes
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ git status
 On branch master
@@ -4093,7 +4093,7 @@ server {
 2. Create the `simplek8s` folder and the `config` Kubernetes files
 
 >`client-node-port.yaml`
-```yml
+```yaml
 apiVersion: v1
 kind: Service
 metadata: 
@@ -4109,7 +4109,7 @@ spec:
 ```
 
 >`client-pod.yaml`
-```yml
+```yaml
 apiVersion: v1
 kind: Pod
 metadata: 
@@ -4124,7 +4124,7 @@ spec:
         - containerPort: 3000
 ```
 3. Create the `java-multi-client` Docker image
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)$ docker build -t peelmicro/java-multi-client ./client
 Sending build context to Docker daemon    341kB
 Step 1/10 : FROM node:alpine as builder
@@ -4189,7 +4189,7 @@ Successfully tagged peelmicro/java-multi-client:latest
 SECURITY WARNING: You are building a Docker image from Windows against a non-Windows Docker host. All files and directories added to build context will have '-rwxr-xr-x' permissions. It is recommended to double check and reset permissions for sensitive files and directories.
 ```
 4. Push the `java-multi-client` image to `Docker Hub`
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ docker push peelmicro/java-multi-client
 The push refers to repository [docker.io/peelmicro/java-multi-client]
@@ -4201,7 +4201,7 @@ ef68f6734aa4: Layer already exists
 latest: digest: sha256:8d802d12246b9062f0cac6d1743852a22773468973ea8184c4d39ad3bb9b6bc5 size: 1365
 ```
 5. Create the `java-client-pod` pod
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ cd simplek8s/
 
@@ -4210,13 +4210,13 @@ $ kubectl apply -f client-pod.yaml
 pod "java-client-pod" created
 ```
 6. Create the `java-client-node-port` service
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex/simplek8s (master)
 $ kubectl apply -f client-node-port.yaml
 service "java-client-node-port" created
 ```
 7. Confirm the IP where `minikube` is running
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex/simplek8s (master)
 $ minikube status
 minikube: Running
@@ -4229,13 +4229,13 @@ kubectl: Correctly Configured: pointing to minikube-vm at 192.168.0.109
 ![](/images/projects/java-multi-docker/ClientRunning.png)
 
 9. Stop the `java-client-pod` pod
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
 $ kubectl delete pod java-client-pod
 pod "java-client-pod" deleted
 ```
 10. Stop the `java-client-node-port` service
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
 $ kubectl delete service java-client-node-port
 service "java-client-node-port" deleted
@@ -4336,11 +4336,11 @@ https://www.udemy.com/docker-and-kubernetes-the-complete-guide
 
 ```
 13. Commit and push the changes to the `Github` repository
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ git add .
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ git status
 On branch master
@@ -4353,7 +4353,7 @@ Changes to be committed:
         new file:   simplek8s/client-node-port.yaml
         new file:   simplek8s/client-pod.yaml
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ git commit -m "Onwards to Kubernetes!"
 [master 433fd51] Onwards to Kubernetes!
@@ -4361,7 +4361,7 @@ $ git commit -m "Onwards to Kubernetes!"
  create mode 100644 simplek8s/client-node-port.yaml
  create mode 100644 simplek8s/client-pod.yaml
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ git push origin HEAD
 Counting objects: 10, done.
@@ -4375,7 +4375,7 @@ To https://github.com/peelmicro/java-multi-docker.git
 ```
 ## Maintaining Sets of Containers with Deployments
 1. Create the new `client-deployment.yaml` config file.
-```yml
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
@@ -4397,76 +4397,76 @@ spec:
             - containerPort: 3000
 ```
 2. Delete current `pods`, `deployments` and `services`
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ kubectl get pods
 NAME                                READY     STATUS    RESTARTS   AGE
 client-deployment-8846f9858-cvg8t   1/1       Running   0          11h
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ kubectl get deployments
 NAME                DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
 client-deployment   1         1         1            1           23h
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ kubectl delete deployment client-deployment
 deployment.extensions "client-deployment" deleted
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ kubectl get pods
 No resources found.
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ kubectl get deployments
 No resources found.
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ kubectl get services
 NAME               TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
 client-node-port   NodePort    10.96.119.223   <none>        3050:31515/TCP   22h
 kubernetes         ClusterIP   10.96.0.1       <none>        443/TCP          3d
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ kubectl delete service client-node-port
 service "client-node-port" deleted
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ kubectl get services
 NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
 kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   3d
 ```
 3. Apply the `client-deployment` config deployment
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex/simplek8s (master)
 $ kubectl apply -f client-deployment.yaml
 deployment.apps "java-client-deployment" created
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex/simplek8s (master)
 $ kubectl get deployments
 NAME                     DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
 java-client-deployment   1         1         1            1           39s
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex/simplek8s (master)
 $ kubectl get pods
 NAME                                     READY     STATUS    RESTARTS   AGE
 java-client-deployment-d84b8c989-pww6d   1/1       Running   0          1m
 ```
 4. Apply the 'client-node-port` config service
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex/simplek8s (master)
 $ kubectl apply -f client-node-port.yaml
 service "java-client-node-port" created
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex/simplek8s (master)
 $ kubectl get services
 NAME                    TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE
@@ -4475,7 +4475,7 @@ kubernetes              ClusterIP   10.96.0.1      <none>        443/TCP        
 ```
 5. Test if the `multi-client` instance is running properly
 - Find out the current IP
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex/simplek8s (master)
 $ minikube ip
 192.168.0.109
@@ -4517,7 +4517,7 @@ class App extends Component {
 export default App;
 ```
 7. Rebuild the `java-multi-client` image with a different tag
-'''sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex/simplek8s (master)
 $ docker build -t peelmicro/java-multi-client:v2 ./client
 unable to prepare context: path "./client" not found
@@ -4588,10 +4588,10 @@ Step 10/10 : COPY --from=builder /app/build /usr/share/nginx/html
 Successfully built c4c2aacf704e
 Successfully tagged peelmicro/java-multi-client:v2
 SECURITY WARNING: You are building a Docker image from Windows against a non-Windows Docker host. All files and directories added to build context will have '-rwxr-xr-x' permissions. It is recommended to double check and reset permissions for sensitive files and directories.
-'''
+```
 
 8. Push the new `java-multi-client` image to `Docker Hub`
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ docker push peelmicro/java-multi-client:v2
 The push refers to repository [docker.io/peelmicro/java-multi-client]
@@ -4603,18 +4603,18 @@ ef68f6734aa4: Layer already exists
 v2: digest: sha256:c8717622d83d61263d3f897d1dddd12979087eb609eedf74143abf4326a258ee size: 1365
 ```
 9. `Run` a specific `kubectl` command forcing the deployment to use the the `image version`
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ kubectl set image deployment/java-client-deployment client=peelmicro/java-multi-client:v2
 deployment.apps "java-client-deployment" image updated
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ kubectl get deployments
 NAME                     DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
 java-client-deployment   1         1         1            1           15m
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ kubectl get pods
 NAME                                      READY     STATUS    RESTARTS   AGE
@@ -4626,13 +4626,13 @@ java-client-deployment-7cd5869df7-xd77x   1/1       Running   0          36s
 ![](/images/projects/java-multi-docker/NewMultiClientIsRunning.png)
 
 11. `Commit` and `Push` changes to Github Repository
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ git add .
 warning: LF will be replaced by CRLF in client/src/App.js.
 The file will have its original line endings in your working directory.
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ git status
 On branch master
@@ -4642,14 +4642,14 @@ Changes to be committed:
         modified:   client/src/App.js
         new file:   simplek8s/client-deployment.yaml
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ git commit -m "Maintaining Sets of Containers with Deployments"
 [master a6b03c6] Maintaining Sets of Containers with Deployments
  2 files changed, 20 insertions(+), 1 deletion(-)
  create mode 100644 simplek8s/client-deployment.yaml
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ git push origin HEAD
 Counting objects: 7, done.
@@ -4664,7 +4664,7 @@ To https://github.com/peelmicro/java-multi-docker.git
 ## A Multi-Container App with Kubernetes
 1. Clean up the current objects running locally on `minikube`
 - Check if there are any `service` running
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)$ kubectl get services
 NAME                          TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
 client-cluster-ip-service     ClusterIP   10.96.200.46     <none>        3000/TCP   19h
@@ -4674,17 +4674,17 @@ redis-cluster-ip-service      ClusterIP   10.105.219.66    <none>        6379/TC
 server-cluster-ip-service     ClusterIP   10.97.173.225    <none>        5000/TCP   18h
 ```
 - Execute `minikube stop` (or `minikube ssh "sudo poweroff"` in Windows) to stop Minikube
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ minikube ssh "sudo poweroff"
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ kubectl get services
 Unable to connect to the server: dial tcp 192.168.0.107:8443: connectex: No connection could be made because the target machine actively refused it.
 ```
 - Start Minikube with the `minuke start` command
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ minikube start
 Starting local Kubernetes v1.10.0 cluster...
@@ -4702,7 +4702,7 @@ Kubectl is now configured to use the cluster.
 Loading cached images from config file.
 ```
 - Check if there are any `service` running
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ kubectl get services
 NAME                          TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
@@ -4764,7 +4764,7 @@ Error from server (Forbidden): namespaces "default" is forbidden: this namespace
 Error from server (Forbidden): namespaces "kube-public" is forbidden: this namespace may not be deleted
 Error from server (Forbidden): namespaces "kube-system" is forbidden: this namespace may not be deleted
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ kubectl get services
 NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
@@ -4785,7 +4785,7 @@ kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   1s
 5. Modify all the `configuration` files.
 
 > `client-cluster-ip-service.yaml`
-```yml
+```yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -4799,7 +4799,7 @@ spec:
       targetPort: 3000
 ```
 > `client-deployment.yaml`
-```yml
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
@@ -4821,7 +4821,7 @@ spec:
             - containerPort: 3000
 ```
 > `database-persistent-volume-claim.yaml`
-```yml
+```yaml
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -4834,7 +4834,7 @@ spec:
       storage: 2Gi
 ```
 > `ingress-service.yaml`
-```yml
+```yaml
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
@@ -4857,7 +4857,7 @@ spec:
             
 ```
 > `postgres-cluster-ip-service.yaml`
-```yml
+```yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -4871,7 +4871,7 @@ spec:
       targetPort: 5432
 ```
 > `postgres-deployment.yaml`
-```yml
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
@@ -4907,7 +4907,7 @@ spec:
                   key: PGPASSWORD
 ```
 > `redis-cluster-ip-service.yaml`
-```yml
+```yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -4921,7 +4921,7 @@ spec:
       targetPort: 6379
 ```
 > `redis-deployment.yaml`
-```yml
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
@@ -4943,7 +4943,7 @@ spec:
             - containerPort: 6379
 ```
 > `server-cluster-ip-service.yaml`
-```yml
+```yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -4957,7 +4957,7 @@ spec:
       targetPort: 5000
 ```
 > `server-deployment.yaml`
-```yml
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
@@ -4997,7 +4997,7 @@ spec:
                   key: PGPASSWORD
 ```
 > `worker-deployment.yaml`
-```yml
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
@@ -5022,12 +5022,12 @@ spec:
                 value: '6379'
 ```
 6. Create the `secrets` for the `postgres` password
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ kubectl create secret generic pgpassword --from-literal PGPASSWORD=postgres_password
 secret "pgpassword" created
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ kubectl get secrets
 NAME                  TYPE                                  DATA      AGE
@@ -5035,7 +5035,7 @@ default-token-w9xdh   kubernetes.io/service-account-token   3         28s
 pgpassword            Opaque                                1         6s
 ```
 7. Execute the `mandatory` `kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/mandatory.yaml` `Ingress Nginx` and `minikube addons enable ingress` `Minikube` commands.
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/mandatory.yaml
 namespace "ingress-nginx" created
@@ -5047,14 +5047,14 @@ rolebinding.rbac.authorization.k8s.io "nginx-ingress-role-nisa-binding" created
 clusterrolebinding.rbac.authorization.k8s.io "nginx-ingress-clusterrole-nisa-binding" configured
 deployment.extensions "nginx-ingress-controller" created
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ minikube addons enable ingress
 ingress was successfully enabled
 ```
 
 8. Install all the `Kubernetes objects`
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ kubectl apply -f k8s
 service "java-client-cluster-ip-service" created
@@ -5071,7 +5071,7 @@ deployment.apps "java-worker-deployment" created
 ```
 
 9. Run `minikube` locally
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ minikube ip
 192.168.0.107
@@ -5090,7 +5090,7 @@ $ minikube ip
 
 10. Have a look at the `Minikube Dashboard'
 - Execute the `minikube dashboard` command
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ minikube dashboard
 Opening http://127.0.0.1:52302/api/v1/namespaces/kube-system/services/http:kubernetes-dashboard:/proxy/ in your default browser...
@@ -5168,7 +5168,7 @@ https://www.udemy.com/docker-and-kubernetes-the-complete-guide
 
 ```
 12. `Commit` and `Push` the changes to Github Repository
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ git add .
 warning: LF will be replaced by CRLF in elastic-beanstalk/.gitignore.
@@ -5218,7 +5218,7 @@ The file will have its original line endings in your working directory.
 warning: LF will be replaced by CRLF in elastic-beanstalk/server/src/test/java/com/peelmicro/server/DemoApplicationTests.java.
 The file will have its original line endings in your working directory.
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ git status
 On branch master
@@ -5298,7 +5298,7 @@ Changes to be committed:
         new file:   k8s/server-deployment.yaml
         new file:   k8s/worker-deployment.yaml
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ git commit -m "A Multi-Container App with Kubernetes"
 [master 02e2138] A Multi-Container App with Kubernetes
@@ -5375,7 +5375,7 @@ $ git commit -m "A Multi-Container App with Kubernetes"
  create mode 100644 k8s/server-deployment.yaml
  create mode 100644 k8s/worker-deployment.yaml
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ git push origin HEAD
 Counting objects: 3, done.
@@ -5390,11 +5390,11 @@ To https://github.com/peelmicro/java-multi-docker.git
 
 ## Kubernetes Production Deployment
 1. Add a tag to the current `Github` repository
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ git tag MultiContainerAppWithKubernetes
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ git push origin --tags
 Total 0 (delta 0), reused 0 (delta 0)
@@ -5414,7 +5414,7 @@ To https://github.com/peelmicro/java-multi-docker.git
 - Copy from the `NodeJs` solution
 5. Update the following `yaml` Kubernetes config files
 > `client-deployment.yaml`
-```yml
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
@@ -5436,7 +5436,7 @@ spec:
             - containerPort: 3000
 ```
 > `server-deployment.yaml`
-```yml
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
@@ -5476,7 +5476,7 @@ spec:
                   key: PGPASSWORD
 ```
 > `worker-deployment.yaml`
-```yml
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
@@ -5501,7 +5501,7 @@ spec:
                 value: '6379'
 ```
 6. Copy the `.travis.yml` file from the `NodeJs` solution
-```yml
+```yaml
 sudo: required
 language: node_js
 node_js: 
@@ -5547,7 +5547,7 @@ deploy:
 ```
 
 7. Copy and update the `deploy.sh` file
-```sh
+```bash
 # Create the Docker Images
 docker build -t peelmicro/java-multi-client:latest -t peelmicro/java-multi-client:$SHA -f ./client/Dockerfile ./client
 docker build -t peelmicro/java-multi-server:latest -t peelmicro/java-multi-server:$SHA -f ./server/Dockerfile ./server
@@ -5583,7 +5583,7 @@ kubectl set image deployments/worker-deployment worker=peelmicro/java-multi-work
 
 9. Copy the `service-account.json` file from `NodeJs` and add it to the `.gitignore` file.
 10. Generate the `service-account.json.enc` file using `Travis CI CLI` using `PowerShell`
-```sh
+```bash
 PS C:\WINDOWS\system32> cd C:\Users\juan.pablo.perez\OneDrive\Training\Docker\DockerAndKubernetes.TheCompleteGuide\java-
 complex
 PS C:\Users\juan.pablo.perez\OneDrive\Training\Docker\DockerAndKubernetes.TheCompleteGuide\java-complex> docker run -it
@@ -5595,7 +5595,7 @@ app  bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sb
 README.md  deploy.sh          k8s                       server                temp-code
 client     elastic-beanstalk  multi-container-minikube  service-account.json  worker
 ```
-```sh
+```bash
 # gem install travis --no-rdoc --no-ri
 Fetching: multipart-post-2.0.0.gem (100%)
 Successfully installed multipart-post-2.0.0
@@ -5634,7 +5634,7 @@ Fetching: travis-1.8.9.gem (100%)
 Successfully installed travis-1.8.9
 17 gems installed
 ```
-```sh
+```bash
 # travis
 Shell completion not installed. Would you like to install it now? |y| n
 Usage: travis COMMAND ...
@@ -5680,7 +5680,7 @@ Available commands:
 
 run `/usr/local/bundle/bin/travis help COMMAND` for more infos
 ```
-```sh
+```bash
 # travis login
 We need your GitHub login to identify you.
 This information will not be sent to Travis CI, only to api.github.com.
@@ -5692,7 +5692,7 @@ Username: peelmicro
 Password for peelmicro: *********************
 Successfully logged in as peelmicro!
 ```
-```sh
+```bash
 Successfully logged in as peelmicro!
 # travis encrypt-file service-account.json -r peelmicro/java-multi-docker
 encrypting service-account.json for peelmicro/multi-docker
@@ -5788,11 +5788,11 @@ https://www.udemy.com/docker-and-kubernetes-the-complete-guide
 
 ```
 12. Commit the code
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ git add .
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ git status
 On branch master
@@ -5887,14 +5887,14 @@ Changes to be committed:
         new file:   multi-container-minikube/worker/src/test/java/com/peelmicro/AppTest.java
         new file:   service-account.json.enc
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ git commit -m "Added Google Kubernetes Engine configuration"
 [master 20c678a] Added Google Kubernetes Engine configuration
  1 file changed, 0 insertions(+), 0 deletions(-)
  rewrite service-account.json.enc (100%)
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ git push origin HEAD
 Counting objects: 3, done.

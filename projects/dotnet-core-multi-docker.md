@@ -38,16 +38,16 @@ You can find more information on [Docker and Kubernetes: The Complete Guide](/ot
 ## Multi-Docker solution
 ### Create the initial version of the `Worker` Project
 1. Create the folder for the `solution` and the `Worker` project
-```sh
+```bash
 C:\Users\juan.pablo.perez\OneDrive\Training\Docker\DockerAndKubernetes.TheCompleteGuide>mkdir dotnet-core-complex
 C:\Users\juan.pablo.perez\OneDrive\Training\Docker\DockerAndKubernetes.TheCompleteGuide>cd dotnet-core-complex
 ```
-```sh
+```bash
 C:\Users\juan.pablo.perez\OneDrive\Training\Docker\DockerAndKubernetes.TheCompleteGuide\dotnet-core-complex>mkdir Worker
 C:\Users\juan.pablo.perez\OneDrive\Training\Docker\DockerAndKubernetes.TheCompleteGuide\dotnet-core-complex>cd Worker
 ```
 2. Execute the `.Net Core CLI command` to create a new `console` application
-```sh
+```bash
 C:\Users\juan.pablo.perez\OneDrive\Training\Docker\DockerAndKubernetes.TheCompleteGuide\dotnet-core-complex\Worker>dotnet new console
 The template "Console Application" was created successfully.
 
@@ -76,13 +76,13 @@ RUN dotnet publish -c Release -o out
 ENTRYPOINT ["dotnet", "out/Worker.dll"]
 ```
 4. Create the `.dockerignore` file.
-```txt
+```
 bin\
 obj\
 ```
 
 5. Build the `Docker image`
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex/Worker
 $ docker build -t dotnet-core-worker-dev .
 Sending build context to Docker daemon  8.704kB
@@ -134,24 +134,24 @@ SECURITY WARNING: You are building a Docker image from Windows against a non-Win
 ```
 
 6. Check if there is any container running
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex/Worker
 $ docker ps
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
 ```
 
 7. Run the image
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex/Worker
 $ docker run 47b4ff18744b
 Hello World!
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex/Worker
 $ docker run dotnet-core-worker-dev
 Hello World!
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex/Worker
 $ docker run dotnet-core-worker-dev:latest
 Hello World!
@@ -159,14 +159,14 @@ Hello World!
 
 ### Create the initial version of the `Server` Project
 1. Create the folder for the `Server` project
-```sh
+```bash
 C:\Users\juan.pablo.perez\OneDrive\Training\Docker\DockerAndKubernetes.TheCompleteGuide\dotnet-core-complex>mkdir Server
 
 C:\Users\juan.pablo.perez\OneDrive\Training\Docker\DockerAndKubernetes.TheCompleteGuide\dotnet-core-complex>cd Server
 ```
 
 2. Execute the `.Net Core CLI command` to create a new `webapi` application 
-```sh
+```bash
 C:\Users\juan.pablo.perez\OneDrive\Training\Docker\DockerAndKubernetes.TheCompleteGuide\dotnet-core-complex\Server>dotnet new webapi
 The template "ASP.NET Core Web API" was created successfully.
 
@@ -202,7 +202,7 @@ pgAdmin4 Installation Directory: `C:\Program Files\PostgreSQL\10\pgAdmin`
 Stack Builder Installation Directory: `C:\Program Files\PostgreSQL\10`
 
 4. Running PostgreSQL
-```sh
+```bash
 Microsoft Windows [Version 10.0.17134.285]
 (c) 2018 Microsoft Corporation. All rights reserved.
 
@@ -222,15 +222,15 @@ pg_ctl: could not start server
 ```
 - Start service `Postgresql-x64-10` (make it manual first to avoid to be running always)
 - Check if it is running
-```sh
+```bash
 C:\Program Files\PostgreSQL\10\bin>pg_isready
 /tmp:5432 - accepting connections
 ```
-```sh
+```bash
 C:\Program Files\PostgreSQL\10\bin>(pg_isready -q -h 127.0.0.1 && echo Ok) || echo Fail
 Ok
 ```
-```sh
+```bash
 C:\Program Files\PostgreSQL\10\bin>pg_isready --help
 pg_isready issues a connection check to a PostgreSQL database.
 
@@ -270,7 +270,7 @@ ENTRYPOINT ["dotnet", "out/Server.dll"]
 ```
 
 6. Build the `docker image`
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex/Server (master)
 $ docker build .
 Sending build context to Docker daemon   21.5kB
@@ -473,7 +473,7 @@ SECURITY WARNING: You are building a Docker image from Windows against a non-Win
 ### Create the initial version of the `Client` Project
 1. Copy the folder like that from the `node.js` version.
 2. Create the `Docker image` to ensure everything is working correctly
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex/client (master)
 $ docker build -f Dockerfile.dev .
 Sending build context to Docker daemon  340.5kB
@@ -509,7 +509,7 @@ SECURITY WARNING: You are building a Docker image from Windows against a non-Win
 ### Create the initial version of the `NGINX` Project
 1. Copy the folder like that from the `node.js` version.
 2. Create the `Docker image` to ensure everything is working correctly
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex/nginx (master)
 $ docker build -f Dockerfile.dev .
 Sending build context to Docker daemon  4.096kB
@@ -523,7 +523,7 @@ SECURITY WARNING: You are building a Docker image from Windows against a non-Win
 
 ### Create the solution
 1. Init `git`
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex
 $ git init
 Initialized empty Git repository in C:/Users/juan.pablo.perez/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex/.git/
@@ -531,7 +531,7 @@ Initialized empty Git repository in C:/Users/juan.pablo.perez/OneDrive/Training/
 
 2. Create the `docker-compose.yml` document
 > `docker-compose.yml`
-```yml
+```yaml
 version: '3'
 services:
   postgres:
@@ -578,7 +578,7 @@ services:
 ```
 
 3. Execute the `docker-compose` file
-```sh
+```bash
  Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex/Server (master)
 $ cd ..
 
@@ -869,7 +869,7 @@ ERROR: for nginx  Cannot start service nginx: driver failed programming external
 ERROR: Encountered errors while bringing up the project.
 ```
 - Make the changes to make it work
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ docker-compose up --build
 Building nginx
@@ -1031,7 +1031,7 @@ WORKDIR /app
 COPY --from-build-env /app/out .
 ENTRYPOINT ["dotnet", "Worker.dll"]
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ docker-compose up --build
 Building nginx
@@ -1220,7 +1220,7 @@ ENTRYPOINT ["dotnet", "out/Worker.dll"]
 ```
 - Revert `docker-compose.yml`
 > `docker-compose.yml`
-```yml
+```yaml
 version: '3'
 services:
   postgres:
@@ -1261,7 +1261,7 @@ services:
         - REDIS_HOST-redis
         - REDIS_PORT-6379      
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ docker-compose up --build
 Building nginx
@@ -1457,7 +1457,7 @@ nginx_1     | 172.18.0.1 - - [11/Nov/2018:19:31:35 +0000] "GET /static/js/0.chun
 ```
 - Change `program.cs` in `server` project
 - Change from `.UseUrls("http://localhost:5000/")` to `.UseUrls("http://*:5000/")`
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ docker-compose up --build
 Building nginx
@@ -1605,7 +1605,7 @@ For index 21 I calculated 17711
 ```
 
 5. Commit and push the code
-```sh
+```bash
 $ git add .
 warning: LF will be replaced by CRLF in .gitignore.
 The file will have its original line endings in your working directory.
@@ -1638,7 +1638,7 @@ The file will have its original line endings in your working directory.
 warning: LF will be replaced by CRLF in client/yarn.lock.
 The file will have its original line endings in your working directory.
 ```
-```sh
+```bash
 $ git status
 On branch master
 
@@ -1687,7 +1687,7 @@ Changes to be committed:
         new file:   nginx/Dockerfile.dev
         new file:   nginx/default.conf
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ git commit -m "initial commit"
 [master (root-commit) 38d74e0] initial commit
@@ -1732,11 +1732,11 @@ $ git commit -m "initial commit"
  create mode 100644 nginx/Dockerfile.dev
  create mode 100644 nginx/default.conf
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ git remote add origin https://github.com/peelmicro/dotnet-core-multi-docker.git
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ git push origin HEAD
 Counting objects: 49, done.
@@ -1773,7 +1773,7 @@ To https://github.com/peelmicro/dotnet-core-multi-docker.git
   ]
 }
 ```
-```sh
+```bash
 Worker information
 hostname: 3411bf26-9ce0-4f19-add5-a392657f6864@1.production-2-worker-com-gce-d5v8
 version: v4.6.2 https://github.com/travis-ci/worker/tree/7004f7c9e22c7896b5b35cec84e6912047c55c3e
@@ -1819,7 +1819,7 @@ DOCKER_PASSWORD: `xxxxxxxxxxxxxxxxxx`
 
 8. Modify `.travis.yml` to include the generation of the `Docker images` and that they are pushed to `Docker Hub`
 > `.travis.yml`
-```yml
+```yaml
 sudo: required
 language: node_js
 node_js: 
@@ -1856,7 +1856,7 @@ after_success:
 #    secure: "$AWS_SECRET_KEY"
 ```
 9. Commit and push the code again
-```sh
+```bash
 $ git status
 On branch master
 Changes not staged for commit:
@@ -1867,17 +1867,17 @@ Changes not staged for commit:
 
 no changes added to commit (use "git add" and/or "git commit -a")
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ git add .
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ git commit -m "Added after_success to .travis.yml2"
 [master ac3bd8a] Added after_success to .travis.yml2
  1 file changed, 12 insertions(+), 12 deletions(-)
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ git push origin HEAD
 Counting objects: 3, done.
@@ -1891,7 +1891,7 @@ To https://github.com/peelmicro/dotnet-core-multi-docker.git
 ```
 
 10. Ensure the `Travis CI` generates the images
-```sh
+```bash
 Worker information
 hostname: 143e01e5-cff7-4d19-97e4-2a40dc55c174@1.production-2-worker-com-gce-d5v8
 version: v4.6.2 https://github.com/travis-ci/worker/tree/7004f7c9e22c7896b5b35cec84e6912047c55c3e
@@ -2052,7 +2052,7 @@ Done. Your build exited with 0.
 ### Create the sevices on `Amazon AWS`
 1. Modify `.travis.yml` to include the deployment on `Amazon AWS`
 > `.travis.yml`
-```yml
+```yaml
 sudo: required
 language: node_js
 node_js: 
@@ -2507,7 +2507,7 @@ AWS_ACCESS_KEY: `AKIAJVPFWXXXXXXXXXXX`
 AWS_SECRET_KEY: `pJauqjTXEBPYUGVfFNkTXXXXXXXXXXXXXX`
 
 10. Commit the changes 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ git status
 On branch master
@@ -2524,18 +2524,18 @@ Untracked files:
 
 no changes added to commit (use "git add" and/or "git commit -a")
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ git add .
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ git commit -m "added Dockerrun.aws.json"
 [master ca088bd] added Dockerrun.aws.json
  2 files changed, 51 insertions(+), 11 deletions(-)
  create mode 100644 Dockerrun.aws.json
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ git push origin HEAD
 Counting objects: 4, done.
@@ -2548,7 +2548,7 @@ To https://github.com/peelmicro/dotnet-core-multi-docker.git
    ac3bd8a..ca088bd  HEAD -> master
 ```
 11. Ensure the application is deployed correctly on `Travis CI`
-```sh
+```bash
 PASS src/App.test.js
   ✓ renders without crashing (1ms)
 ------------------|----------|----------|----------|----------|-------------------|
@@ -2850,7 +2850,7 @@ server {
 2. Create the `simplek8s` folder and the `config` Kubernetes files
 
 >`client-node-port.yaml`
-```yml
+```yaml
 apiVersion: v1
 kind: Service
 metadata: 
@@ -2866,7 +2866,7 @@ spec:
 ```
 
 >`client-pod.yaml`
-```yml
+```yaml
 apiVersion: v1
 kind: Pod
 metadata: 
@@ -2881,7 +2881,7 @@ spec:
         - containerPort: 3000
 ```
 3. Create the `dotnet-core-multi-client` Docker image
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ docker build -t peelmicro/dotnet-core-multi-client ./client
 Sending build context to Docker daemon  340.5kB
@@ -2946,7 +2946,7 @@ Successfully tagged peelmicro/dotnet-core-multi-client:latest
 SECURITY WARNING: You are building a Docker image from Windows against a non-Windows Docker host. All files and directories added to build context will have '-rwxr-xr-x' permissions. It is recommended to double check and reset permissions for sensitive files and directories.
 ```
 4. Push the `dotnet-core-multi-client` image to `Docker Hub`
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ docker push peelmicro/dotnet-core-multi-client
 The push refers to repository [docker.io/peelmicro/dotnet-core-multi-client]
@@ -2958,7 +2958,7 @@ ef68f6734aa4: Layer already exists
 latest: digest: sha256:030b8c60c053b98099ee08005d72f5f9b28141569a34a8aa03b01d54aa0bd2a3 size: 1365
 ```
 5. Create the `dotnet-core-client-pod` pod
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)$ cd simplek8s/
 
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex/simplek8s (master)
@@ -2966,13 +2966,13 @@ $ kubectl apply -f client-pod.yaml
 pod "dotnet-core-client-pod" created
 ```
 6. Create the `dotnet-core-client-node-port` service
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex/simplek8s (master)
 $ kubectl apply -f client-node-port.yaml
 service "dotnet-core-client-node-port" created
 ```
 7. Confirm the IP where `minikube` is running
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex/simplek8s (master)
 $ minikube status
 minikube: Running
@@ -2985,13 +2985,13 @@ kubectl: Correctly Configured: pointing to minikube-vm at 192.168.0.109
 ![](/images/projects/dotnet-core-multi-docker/ClientRunning.png)
 
 9. Stop the `dotnet-core-client-pod` pod
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex/simplek8s (master)
 $ kubectl delete pod dotnet-core-client-pod
 pod "dotnet-core-client-pod" deleted
 ```
 10. Stop the `dotnet-core-client-node-port` service
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex/simplek8s (master)
 $ kubectl delete service dotnet-core-client-node-port
 service "dotnet-core-client-node-port" deleted
@@ -3090,11 +3090,11 @@ Navigate to http://localhost:3050/
 https://www.udemy.com/docker-and-kubernetes-the-complete-guide
 ```
 13. Commit and push the changes to the `Github` repository
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex/simplek8s (master)
 $ git add .
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex/simplek8s (master)
 $ git status
 On branch master
@@ -3107,7 +3107,7 @@ Changes to be committed:
         new file:   client-node-port.yaml
         new file:   client-pod.yaml
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex/simplek8s (master)
 $ git commit -m "Onwards to Kubernetes!"
 [master e541a19] Onwards to Kubernetes!
@@ -3115,7 +3115,7 @@ $ git commit -m "Onwards to Kubernetes!"
  create mode 100644 simplek8s/client-node-port.yaml
  create mode 100644 simplek8s/client-pod.yaml
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex/simplek8s (master)
 $ git push origin HEAD
 Counting objects: 10, done.
@@ -3129,7 +3129,7 @@ To https://github.com/peelmicro/dotnet-core-multi-docker.git
 ```
 ## Maintaining Sets of Containers with Deployments
 1. Create the new `client-deployment.yaml` config file.
-```yml
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
@@ -3151,76 +3151,76 @@ spec:
             - containerPort: 3000
 ```
 2. Delete current `pods`, `deployments` and `services`
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ kubectl get pods
 NAME                                      READY     STATUS    RESTARTS   AGE
 java-client-deployment-7cd5869df7-xd77x   1/1       Running   0          25m
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ kubectl get deployments
 NAME                     DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
 java-client-deployment   1         1         1            1           41m
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ kubectl delete deployment java-client-deployment
 deployment.extensions "java-client-deployment" deleted
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ kubectl get pods
 No resources found.
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ kubectl get deployments
 No resources found.
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ kubectl get services
 NAME                    TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE
 java-client-node-port   NodePort    10.99.198.24   <none>        3050:31515/TCP   42m
 kubernetes              ClusterIP   10.96.0.1      <none>        443/TCP          3d
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ kubectl delete service java-client-node-port
 service "java-client-node-port" deleted
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ kubectl get services
 NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
 kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   3d
 ```
 3. Apply the `client-deployment` config deployment
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex/simplek8s (master)
 $ kubectl apply -f client-deployment.yaml
 deployment.apps "dotnet-core-client-deployment" created
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex/simplek8s (master)
 $ kubectl get deployments
 NAME                            DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
 dotnet-core-client-deployment   1         1         1            1           20s
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex/simplek8s (master)
 $ kubectl get pods
 NAME                                             READY     STATUS    RESTARTS   AGE
 dotnet-core-client-deployment-7b4f7756df-7jwc2   1/1       Running   0          37s
 ```
 4. Apply the 'client-node-port` config service
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex/simplek8s (master)
 $ kubectl apply -f client-node-port.yaml
 service "dotnet-core-client-node-port" created
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex/simplek8s (master)
 $ kubectl get services
 NAME                           TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
@@ -3229,7 +3229,7 @@ kubernetes                     ClusterIP   10.96.0.1       <none>        443/TCP
 ```
 5. Test if the `multi-client` instance is running properly
 - Find out the current IP
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex/simplek8s (master)
 $ minikube ip
 192.168.0.109
@@ -3271,7 +3271,7 @@ class App extends Component {
 export default App;
 ```
 7. Rebuild the `dotnet-core-multi-client` image with a different tag
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex/simplek8s (master)
 $ docker build -t peelmicro/dotnet-core-multi-client:v2 ./client
 unable to prepare context: path "./client" not found
@@ -3345,7 +3345,7 @@ SECURITY WARNING: You are building a Docker image from Windows against a non-Win
 ```
 
 8. Push the new `dotnet-core-multi-client` image to `Docker Hub`
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ docker push peelmicro/dotnet-core-multi-client:v2
 The push refers to repository [docker.io/peelmicro/dotnet-core-multi-client]
@@ -3357,18 +3357,18 @@ ef68f6734aa4: Layer already exists
 v2: digest: sha256:f587dfb422b8b59f7190c8586581121f07cb4aa5a9cdb2d631b3df5c05daf32a size: 1365
 ```
 9. `Run` a specific `kubectl` command forcing the deployment to use the `image version`
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ kubectl set image deployment/dotnet-core-client-deployment client=peelmicro/dotnet-core-multi-client:v2
 deployment.apps "dotnet-core-client-deployment" image updated
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ kubectl get deployments
 NAME                            DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
 dotnet-core-client-deployment   1         1         1            1           2h
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ kubectl get pods
 NAME                                             READY     STATUS    RESTARTS   AGE
@@ -3380,13 +3380,13 @@ dotnet-core-client-deployment-76cbb7f86f-dw2s7   1/1       Running   0          
 ![](/images/projects/dotnet-core-multi-docker/NewMultiClientIsRunning.png)
 
 11. `Commit` and `Push` changes to Github Repository
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ git add .
 warning: LF will be replaced by CRLF in client/src/App.js.
 The file will have its original line endings in your working directory.
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ git status
 On branch master
@@ -3396,14 +3396,14 @@ Changes to be committed:
         modified:   client/src/App.js
         new file:   simplek8s/client-deployment.yaml
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ git commit -m "Maintaining Sets of Containers with Deployments"
 [master a63caa1] Maintaining Sets of Containers with Deployments
  2 files changed, 20 insertions(+), 1 deletion(-)
  create mode 100644 simplek8s/client-deployment.yaml
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ git push origin HEAD
 Counting objects: 7, done.
@@ -3418,7 +3418,7 @@ To https://github.com/peelmicro/dotnet-core-multi-docker.git
 ## A Multi-Container App with Kubernetes
 1. Clean up the current objects running locally on `minikube`
 - Check if there are any `service` running
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)$ kubectl get allNAME                                            READY     STATUS    RESTARTS   AGEpod/java-client-deployment-d84b8c989-8w8df      1/1       Running   1          22h
 pod/java-client-deployment-d84b8c989-kvjjh      1/1       Running   1          22h
 pod/java-client-deployment-d84b8c989-l6vvv      1/1       Running   1          22h
@@ -3450,14 +3450,14 @@ replicaset.apps/java-redis-deployment-666bf96bdd      1         1         1     
 replicaset.apps/java-server-deployment-c45c6b558      3         3         3         22h
 replicaset.apps/java-worker-deployment-59576b545      1         1         1         22h
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ kubectl get storageclass
 NAME                 PROVISIONER                AGE
 standard (default)   k8s.io/minikube-hostpath   5d
 ```
 - Execute the `kubectl delete daemonsets,replicasets,services,deployments,pods,rc,pv,pvc,namespaces,secrets,ingresses --all` command to remove all the `Kubernetes objects`
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ kubectl delete daemonsets,replicasets,services,deployments,pods,rc,pv,pvc,namespaces,secrets,ingresses --all
 replicaset.extensions "java-client-deployment-d84b8c989" deleted
@@ -3492,7 +3492,7 @@ Error from server (Forbidden): namespaces "default" is forbidden: this namespace
 Error from server (Forbidden): namespaces "kube-public" is forbidden: this namespace may not be deleted
 Error from server (Forbidden): namespaces "kube-system" is forbidden: this namespace may not be deleted
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ kubectl get all
 NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
@@ -3513,7 +3513,7 @@ service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   2m
 5. Modify all the `configuration` files.
 
 > `client-cluster-ip-service.yaml`
-```yml
+```yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -3527,7 +3527,7 @@ spec:
       targetPort: 3000
 ```
 > `client-deployment.yaml`
-```yml
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
@@ -3549,7 +3549,7 @@ spec:
             - containerPort: 3000
 ```
 > `database-persistent-volume-claim.yaml`
-```yml
+```yaml
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -3562,7 +3562,7 @@ spec:
       storage: 2Gi
 ```
 > `ingress-service.yaml`
-```yml
+```yaml
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
@@ -3584,7 +3584,7 @@ spec:
               servicePort: 5000
 ```
 > `postgres-cluster-ip-service.yaml`
-```yml
+```yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -3598,7 +3598,7 @@ spec:
       targetPort: 5432
 ```
 > `postgres-deployment.yaml`
-```yml
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
@@ -3634,7 +3634,7 @@ spec:
                   key: PGPASSWORD
 ```
 > `redis-cluster-ip-service.yaml`
-```yml
+```yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -3648,7 +3648,7 @@ spec:
       targetPort: 6379
 ```
 > `redis-deployment.yaml`
-```yml
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
@@ -3670,7 +3670,7 @@ spec:
             - containerPort: 6379
 ```
 > `server-cluster-ip-service.yaml`
-```yml
+```yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -3684,7 +3684,7 @@ spec:
       targetPort: 5000
 ```
 > `server-deployment.yaml`
-```yml
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
@@ -3724,7 +3724,7 @@ spec:
                   key: PGPASSWORD
 ```
 > `worker-deployment.yaml`
-```yml
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
@@ -3749,12 +3749,12 @@ spec:
                 value: '6379'
 ```
 6. Create the `secrets` for the `postgres` password
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ kubectl create secret generic pgpassword --from-literal PGPASSWORD=postgres_password
 secret "pgpassword" created
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ kubectl get secrets
 NAME                  TYPE                                  DATA      AGE
@@ -3762,7 +3762,7 @@ default-token-w9xdh   kubernetes.io/service-account-token   3         28s
 pgpassword            Opaque                                1         6s
 ```
 7. Execute the `mandatory` `kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/mandatory.yaml` `Ingress Nginx` and `minikube addons enable ingress` `Minikube` commands.
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/mandatory.yaml
 namespace "ingress-nginx" created
@@ -3774,14 +3774,14 @@ rolebinding.rbac.authorization.k8s.io "nginx-ingress-role-nisa-binding" created
 clusterrolebinding.rbac.authorization.k8s.io "nginx-ingress-clusterrole-nisa-binding" configured
 deployment.extensions "nginx-ingress-controller" created
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ minikube addons enable ingress
 ingress was successfully enabled
 ```
 
 8. Install all the `Kubernetes objects`
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ kubectl apply -f k8s
 service "dotnet-core-client-cluster-ip-service" created
@@ -3797,7 +3797,7 @@ deployment.apps "dotnet-core-server-deployment" created
 deployment.apps "dotnet-core-worker-deployment" created
 ```
 - Check if the services are available
-```sh
+```bash
 $ kubectl get all
 NAME                                                   READY     STATUS              RESTARTS   AGE
 pod/dotnet-core-client-deployment-7b4f7756df-cq5rf     1/1       Running             0          32s
@@ -3831,13 +3831,13 @@ replicaset.apps/dotnet-core-redis-deployment-666bf96bdd      1         1        
 replicaset.apps/dotnet-core-server-deployment-545bb75676     3         3         0         28s
 replicaset.apps/dotnet-core-worker-deployment-7b5d67dc7f     1         1         0         27s
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ kubectl get ing
 NAME                          HOSTS     ADDRESS   PORTS     AGE
 dotnet-core-ingress-service   *                   80        1m
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ kubectl get all
 NAME                                                   READY     STATUS    RESTARTS   AGE
@@ -3873,7 +3873,7 @@ replicaset.apps/dotnet-core-server-deployment-545bb75676     3         3        
 replicaset.apps/dotnet-core-worker-deployment-7b5d67dc7f     1         1         1         9m
 ```
 9. Run `minikube` locally
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ minikube ip
 192.168.0.107
@@ -3892,7 +3892,7 @@ $ minikube ip
 
 10. Have a look at the `Minikube Dashboard'
 - Execute the `minikube dashboard` command
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ minikube dashboard
 Opening http://127.0.0.1:52302/api/v1/namespaces/kube-system/services/http:kubernetes-dashboard:/proxy/ in your default browser...
@@ -3970,7 +3970,7 @@ https://www.udemy.com/docker-and-kubernetes-the-complete-guide
 
 ```
 12. `Commit` and `Push` the changes to Github Repository
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ git add .
 warning: LF will be replaced by CRLF in elastic-beanstalk/.gitignore.
@@ -4004,7 +4004,7 @@ The file will have its original line endings in your working directory.
 warning: LF will be replaced by CRLF in elastic-beanstalk/client/yarn.lock.
 The file will have its original line endings in your working directory.
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ git status
 On branch master
@@ -4068,7 +4068,7 @@ Changes to be committed:
         new file:   k8s/server-deployment.yaml
         new file:   k8s/worker-deployment.yaml
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ git commit -m "A Multi-Container App with Kubernetes"
 [master e8a08b5] A Multi-Container App with Kubernetes
@@ -4129,7 +4129,7 @@ $ git commit -m "A Multi-Container App with Kubernetes"
  create mode 100644 k8s/server-deployment.yaml
  create mode 100644 k8s/worker-deployment.yaml
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ git push origin HEAD
 Counting objects: 3, done.
@@ -4144,10 +4144,10 @@ To https://github.com/peelmicro/dotnet-core-multi-docker.git
 
 ## Kubernetes Production Deployment
 1. Add a tag to the current `Github` repository
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)$ git tag MultiContainerAppWithKubernetes
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ git push origin --tags
 Total 0 (delta 0), reused 0 (delta 0)
@@ -4167,7 +4167,7 @@ To https://github.com/peelmicro/dotnet-core-multi-docker.git
 - Copy from the `Python` solution
 5. Update the following `yaml` Kubernetes config files
 > `client-deployment.yaml`
-```yml
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
@@ -4189,7 +4189,7 @@ spec:
             - containerPort: 3000
 ```
 > `server-deployment.yaml`
-```yml
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
@@ -4229,7 +4229,7 @@ spec:
                   key: PGPASSWORD
 ```
 > `worker-deployment.yaml`
-```yml
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
@@ -4254,7 +4254,7 @@ spec:
                 value: '6379'
 ```
 6. Copy the `.travis.yml` file from the `Python` solution
-```yml
+```yaml
 sudo: required
 language: node_js
 node_js: 
@@ -4299,7 +4299,7 @@ deploy:
     branch: master
 ```
 7. Copy and update the `deploy.sh` file
-```sh
+```bash
 # Create the Docker Images
 docker build -t peelmicro/dotnet-core-multi-client:latest -t peelmicro/dotnet-core-multi-client:$SHA -f ./client/Dockerfile ./client
 docker build -t peelmicro/dotnet-core-multi-server:latest -t peelmicro/dotnet-core-multi-server:$SHA -f ./server/Dockerfile ./server
@@ -4335,7 +4335,7 @@ kubectl set image deployments/worker-deployment worker=peelmicro/dotnet-core-mul
 
 9. Copy the `service-account.json` file from `Python` and add it to the `.gitignore` file.
 10. Generate the `service-account.json.enc` file with `Travis CI CLI` using `PowerShell`
-```sh
+```bash
 PS C:\WINDOWS\system32> cd C:\Users\juan.pablo.perez\OneDrive\Training\Docker\DockerAndKubernetes.TheCompleteGuide\dotnet-core-complex
 PS C:\Users\juan.pablo.perez\OneDrive\Training\Docker\DockerAndKubernetes.TheCompleteGuide\dotnet-core-complex> docker run -it -v ${pwd}:/app ruby:2.3 sh
 # ls
@@ -4344,7 +4344,7 @@ app  bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sb
 # ls
 README.md  Server  Worker  client  deploy.sh  elastic-beanstalk  k8s  multi-container-minikube  service-account.json
 ```
-```sh
+```bash
 # gem install travis --no-rdoc --no-ri
 Fetching: multipart-post-2.0.0.gem (100%)
 Successfully installed multipart-post-2.0.0
@@ -4383,7 +4383,7 @@ Fetching: travis-1.8.9.gem (100%)
 Successfully installed travis-1.8.9
 17 gems installed
 ```
-```sh
+```bash
 # travis
 Shell completion not installed. Would you like to install it now? |y| n
 Usage: travis COMMAND ...
@@ -4429,7 +4429,7 @@ Available commands:
 
 run `/usr/local/bundle/bin/travis help COMMAND` for more infos
 ```
-```sh
+```bash
 # travis login
 We need your GitHub login to identify you.
 This information will not be sent to Travis CI, only to api.github.com.
@@ -4441,7 +4441,7 @@ Username: peelmicro
 Password for peelmicro: *********************
 Successfully logged in as peelmicro!
 ```
-```sh
+```bash
 Successfully logged in as peelmicro!
 # travis encrypt-file service-account.json -r peelmicro/dotnet-core-multi-docker
 encrypting service-account.json for peelmicro/multi-docker
@@ -4545,11 +4545,11 @@ https://www.udemy.com/docker-and-kubernetes-the-complete-guide
 
 ```
 12. Commit the code
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ git add .
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ git status
 On branch master
@@ -4624,7 +4624,7 @@ Changes to be committed:
         renamed:    nginx/default.conf -> multi-container-minikube/nginx/default.conf
         new file:   service-account.json.enc
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ git commit -m "Added Google Kubernetes Engine configuration"
 [master 5cc159d] Added Google Kubernetes Engine configuration
@@ -4684,7 +4684,7 @@ $ git commit -m "Added Google Kubernetes Engine configuration"
  rename {nginx => multi-container-minikube/nginx}/default.conf (100%)
  create mode 100644 service-account.json.enc
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/dotnet-core-complex (master)
 $ git push origin HEAD
 Counting objects: 22, done.
@@ -4698,7 +4698,7 @@ To https://github.com/peelmicro/dotnet-core-multi-docker.git
 ```
 13. Check if it has been installed correctly
 - Ensure it has been deployed correctly with `Travis CI`
-```sh
+```bash
 The push refers to a repository [docker.io/[secure]/dotnet-core-multi-server]
 An image does not exist locally with the tag: [secure]/dotnet-core-multi-server
 The push refers to a repository [docker.io/[secure]/dotnet-core-multi-server]

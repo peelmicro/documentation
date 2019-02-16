@@ -9,3 +9,5 @@ This documentation section is about the use of `Other` technology.
 - [Microservices](microservices.md)
 - [Git](git.md)
 - [PCI](pci.md)
+- [OWASP Top 10](owasp.md)
+- [GraphQL](graphql.md)

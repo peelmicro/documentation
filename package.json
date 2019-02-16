@@ -5,12 +5,14 @@
   "author": "Juan Pablo Perez",
   "license": "MIT",
   "scripts": {
-    "docs:build": "vuepress build",
-    "dev": "vuepress dev"
+    "docs:build": "NODE_OPTIONS=--max-old-space-size=8192 vuepress build",
+    "docs:build:windows": "Set NODE_OPTIONS=--max-old-space-size=8192 && vuepress build",
+    "dev": "NODE_OPTIONS=--max-old-space-size=8192 vuepress dev",
+    "dev:windows": "Set NODE_OPTIONS=--max-old-space-size=8192 && vuepress dev"
   },
   "dependencies": {
-    "@vuepress/plugin-google-analytics": "^1.0.0-alpha.32",
+    "@vuepress/plugin-google-analytics": "^1.0.0-alpha.37",
     "global": "^4.3.2",
-    "vuepress": "^1.0.0-alpha.32"
+    "vuepress": "^1.0.0-alpha.37"
   }
 }

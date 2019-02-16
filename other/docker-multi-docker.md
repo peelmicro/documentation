@@ -26,7 +26,7 @@ The [Docker and Kubernetes: The Complete Guide](https://www.udemy.com/docker-and
 
 ## First steps with Docker
 1. Check the current version of Docker
-```sh
+```bash
 C:\WINDOWS\system32>docker version
 Client:
  Version:           18.06.1-ce
@@ -48,7 +48,7 @@ Server:
   Experimental:     false
 ```
 2. Ensure `Docker` is working running the standard `hello-world` Docker Image
-```sh
+```bash
 C:\WINDOWS\system32>docker run hello-world
 Unable to find image 'hello-world:latest' locally
 latest: Pulling from library/hello-world
@@ -83,7 +83,7 @@ The `hello-world` image is not in the Image cache
 :::
 
 3. Execute the `hello-world` Docker Image a second time
-```sh
+```bash
 C:\WINDOWS\system32>docker run hello-world
 
 Hello from Docker!
@@ -119,7 +119,7 @@ docker run `<image name>` `command!` <br>
 `<image name>` - name of the image to use for this container <br>
 `command!` - Default comand override
 :::
-```sh
+```bash
  C:\WINDOWS\system32>docker run busybox echo hi there
 Unable to find image 'busybox:latest' locally
 latest: Pulling from library/busybox
@@ -128,16 +128,16 @@ Digest: sha256:2a03a6059f21e150ae84b0973863609494aad70f0a80eaeb64bddd8d92465812
 Status: Downloaded newer image for busybox:latest
 hi there
 ```
-```sh
+```bash
 C:\WINDOWS\system32>docker run busybox echo hi there
 hi there
 ```
-```sh
+```bash
 C:\WINDOWS\system32>docker run busybox echo bye there
 bye there
 ```
 - The `busy box` image has these default folders
-```sh
+```bash
 C:\WINDOWS\system32>docker run busybox ls
 bin
 dev
@@ -161,15 +161,15 @@ your embedded systems. To create a working system, just add some device nodes in
 
 BusyBox is maintained by Denys Vlasenko, and licensed under the GNU GENERAL PUBLIC LICENSE version 2.
 ```
-```sh
+```bash
 C:\WINDOWS\system32>docker run busybox pwd
 /
 ```
-```sh
+```bash
 C:\WINDOWS\system32>docker run hello-world ls
 docker: Error response from daemon: OCI runtime create failed: container_linux.go:348: starting container process caused "exec: \"ls\": executable file not found in $PATH": unknown.
 ```
-```sh
+```bash
 C:\WINDOWS\system32>docker run hello-world echo hi there
 docker: Error response from daemon: OCI runtime create failed: container_linux.go:348: starting container process caused "exec: \"echo\": executable file not found in $PATH": unknown.
 ```
@@ -178,12 +178,12 @@ docker: Error response from daemon: OCI runtime create failed: container_linux.g
 docker `ps`
 Show all the running docker containers 
 :::
-```sh
+```bash
 C:\WINDOWS\system32>docker ps
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
 ```
 - When we executed `docker run hello-world` or `docker run busybox ls` they were just executed and the stopped
-```sh
+```bash
 C:\WINDOWS\system32>docker run busybox ping google.com
 PING google.com (216.58.214.174): 56 data bytes
 64 bytes from 216.58.214.174: seq=0 ttl=37 time=42.866 ms
@@ -192,13 +192,13 @@ PING google.com (216.58.214.174): 56 data bytes
 64 bytes from 216.58.214.174: seq=3 ttl=37 time=15.636 ms
 ```
 > Execute this in another command window
-```sh
+```bash
 C:\WINDOWS\system32>docker ps
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
 539c07bb9ba1        busybox             "ping google.com"   26 seconds ago      Up 25 seconds                           brave_montalcini
 ```
 > Show all the containers ever created
-```sh
+```bash
 C:\WINDOWS\system32>docker ps --all
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                         PORTS               NAMES
 539c07bb9ba1        busybox             "ping google.com"   3 minutes ago       Up 3 minutes                                       brave_montalcini
@@ -221,11 +221,11 @@ docker `create`:  docker create **[image name]** <br>
 docker `start`: docker start **[container id]**
 :::
 
-```sh
+```bash
 C:\WINDOWS\system32>docker create hello-world
 f4b5c1e7846623378ec54a684f26f358ee2df2ee735381cf2cf68b1e3d52b9ee
 ```
-```sh
+```bash
 C:\WINDOWS\system32>docker start -a f4b5c1e7846623378ec54a684f26f358ee2df2ee735381cf2cf68b1e3d52b9ee
 
 Hello from Docker!
@@ -249,13 +249,13 @@ Share images, automate workflows, and more with a free Docker ID:
 For more examples and ideas, visit:
  https://docs.docker.com/get-started/
 ```
-```sh
+```bash
 C:\WINDOWS\system32>docker start f4b5c1e7846623378ec54a684f26f358ee2df2ee735381cf2cf68b1e3d52b9ee
 f4b5c1e7846623378ec54a684f26f358ee2df2ee735381cf2cf68b1e3d52b9ee
 
 -a parameter is needed to attach the container and its output
 ```
-```sh
+```bash
 C:\WINDOWS\system32>docker ps --all
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                          PORTS               NAMES
 f4b5c1e78466        hello-world         "/hello"            3 minutes ago       Exited (0) About a minute ago                       distracted_keller
@@ -267,7 +267,7 @@ f4b5c1e78466        hello-world         "/hello"            3 minutes ago       
 ```
 3fabe6651653        busybox             "ls"                14 minutes ago      Exited (0) 14 minutes ago                          laughing_lamarr
 ```
-```sh
+```bash
 C:\WINDOWS\system32>docker start -a 3fabe6651653
 bin
 dev
@@ -280,7 +280,7 @@ tmp
 usr
 var
 ```
-```sh
+```bash
 C:\WINDOWS\system32>docker start -a 3fabe6651653 ls
 you cannot start and attach multiple containers at once
 ```
@@ -290,7 +290,7 @@ you cannot start and attach multiple containers at once
 docker `logs` **[container id]** <br>
 Get logs from a container 
 :::
-```sh
+```bash
 C:\WINDOWS\system32>docker logs 539c07bb9ba1
 PING google.com (216.58.214.174): 56 data bytes
 64 bytes from 216.58.214.174: seq=0 ttl=37 time=42.866 ms
@@ -302,15 +302,15 @@ PING google.com (216.58.214.174): 56 data bytes
 64 bytes from 216.58.214.174: seq=6 ttl=37 time=22.690 ms
 64 bytes from 216.58.214.174: seq=7 ttl=37 time=26.402 ms
 ```
-```sh
+```bash
 C:\WINDOWS\system32>docker create busybox echo hi there
 e22ff84a283dc9a695acdfe775904d63c44a59be8bb83ae4f5b865313e07270c
 ```
-```sh
+```bash
 C:\WINDOWS\system32>docker start e22ff84a283dc9a695acdfe775904d63c44a59be8bb83ae4f5b865313e07270c
 e22ff84a283dc9a695acdfe775904d63c44a59be8bb83ae4f5b865313e07270c
 ```
-```sh
+```bash
 C:\WINDOWS\system32>docker logs e22ff84a283dc9a695acdfe775904d63c44a59be8bb83ae4f5b865313e07270c
 hi there
 ```
@@ -323,17 +323,17 @@ docker `stop` **[container id]** <br>
 Stop a container <br>
 It can make some cleanup, so it's safer
 :::
-```sh
+```bash
 C:\WINDOWS\system32>docker ps
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
 539c07bb9ba1        busybox             "ping google.com"   34 minutes ago      Up 34 minutes                           brave_montalcini
 ```
-```sh
+```bash
 C:\WINDOWS\system32>docker stop 539c07bb9ba1
 539c07bb9ba1
 ```
 > It takes a while
-```sh
+```bash
 C:\WINDOWS\system32>docker ps
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
 ```
@@ -343,33 +343,33 @@ docker kill **[container id]** <br>
 Kills a container  <br>
 It's the same as stop but it executed inmediatelly
 :::
-```sh
+```bash
 C:\WINDOWS\system32>docker start 539c07bb9ba1
 539c07bb9ba1
 ```
-```sh
+```bash
 C:\WINDOWS\system32>docker ps
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
 539c07bb9ba1        busybox             "ping google.com"   42 minutes ago      Up 2 seconds                            brave_montalcini
 ```
-```sh
+```bash
 C:\WINDOWS\system32>docker kill 539c07bb9ba1
 539c07bb9ba1
 ```
 > It's executed inmediatelly
-```sh
+```bash
 C:\WINDOWS\system32>docker ps
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
 ```
 
 ### Working with `redis`
 1. Execute redis installed on the Operating System
-```sh
+```bash
 C:\WINDOWS\system32>redis-server
 [16152] 01 Nov 17:05:47.520 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
 [16152] 01 Nov 17:05:47.527 # Creating Server TCP listening socket *:6379: bind: No such file or directory
 ```
-```sh
+```bash
 C:\WINDOWS\system32>redis-cli
 127.0.0.1:6379> set mynumber 5
 OK
@@ -377,12 +377,12 @@ OK
 "5"
 127.0.0.1:6379>
 ```
-```sh
+```bash
 C:\WINDOWS\system32>redis-cli shutdown
 It shoutdowns Redis
 ```
 2. Execute `redis` through docker
-```sh
+```bash
 C:\WINDOWS\system32>docker run redis
 Unable to find image 'redis:latest' locally
 latest: Pulling from library/redis
@@ -403,7 +403,7 @@ Status: Downloaded newer image for redis:latest
 1:M 01 Nov 2018 17:17:58.834 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command 'echo never > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled.
 1:M 01 Nov 2018 17:17:58.834 * Ready to accept connections
 ```
-```sh
+```bash
 C:\WINDOWS\system32>docker ps
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES
 f949774360a8        redis               "docker-entrypoint.s…"   4 minutes ago       Up 4 minutes        6379/tcp            eloquent_goodall
@@ -420,7 +420,7 @@ docker `exec` -t **[container id]** **[command]** <br>
 `-i` = send to STDIN <br>
 `-t` = allows to iterate with the terminal nicely
 :::
-```sh
+```bash
 C:\WINDOWS\system32>docker exec -it f949774360a8 redis-cli
 127.0.0.1:6379> set myvalue 5
 OK
@@ -428,11 +428,11 @@ OK
 "5"
 127.0.0.1:6379> 
 ```
-```sh
+```bash
 C:\WINDOWS\system32>docker exec f949774360a8 redis-cli
 ```
 > If we just put `-i` the iteration is not that nice as with `-it`
-```sh
+```bash
 C:\WINDOWS\system32>docker exec -i f949774360a8 redis-cli
 set myvalue 5
 OK
@@ -440,7 +440,7 @@ get myvalue
 5
 ```
 > use `sh` to have full terminal access on the container
-```sh
+```bash
 C:\WINDOWS\system32>docker exec -it f949774360a8 sh
 # cd ~/
 # ls
@@ -458,7 +458,7 @@ hi there
 # CTRL-D to exit
 ```
 > some containers allows to use `bash` apart from `sh`
-```sh
+```bash
 C:\WINDOWS\system32>docker run -it busybox sh
 / # ls
 bin   dev   etc   home  proc  root  sys   tmp   usr   var
@@ -475,13 +475,13 @@ round-trip min/avg/max = 16.725/20.559/27.981 ms
 ```
 > Each container can not iterate with the other one
 - Open in two different terminal the same command
-```sh
+```bash
 C:\WINDOWS\system32>docker run -it busybox sh
 / # ls
 bin   dev   etc   home  proc  root  sys   tmp   usr   var
 / # touch hithere
 ```
-```sh
+```bash
 C:\WINDOWS\system32>docker run -it busybox sh
 / # ls
 bin   dev   etc   home  proc  root  sys   tmp   usr   var
@@ -494,7 +494,7 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 f949774360a8        redis               "docker-entrypoint.s…"   32 minutes ago      Up 32 minutes       6379/tcp            eloquent_goodall
 ```
 - Create a file in the first container
-```sh
+```bash
 / # ls
 bin   dev   etc   home  proc  root  sys   tmp   usr   var
 / # touch hithere
@@ -503,7 +503,7 @@ bin      dev      etc      hithere  home     proc     root     sys      tmp     
 / #
 ```
 - Execute `ls` in the second container and it is not there
-```sh
+```bash
 / # ls
 bin   dev   etc   home  proc  root  sys   tmp   usr   var
 / #
@@ -527,7 +527,7 @@ RUN apk add --update redis
 # Tell the image what to do when it starts as a container
 CMD ["redis-server"]
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/redis-image
 $ docker build .
 Sending build context to Docker daemon  2.048kB
@@ -555,7 +555,7 @@ Removing intermediate container 55933d5c7b05
 Successfully built 8ade2b72740d
 SECURITY WARNING: You are building a Docker image from Windows against a non-Windows Docker host. All files and directories added to build context will have '-rwxr-xr-x' permissions. It is recommended to double check and reset permissions for sensitive files and directories.
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/redis-image
 $ docker run 8ade2b72740d
 1:C 01 Nov 18:08:53.521 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
@@ -567,7 +567,7 @@ $ docker run 8ade2b72740d
 1:M 01 Nov 18:08:53.522 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command 'echo never > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled.
 1:M 01 Nov 18:08:53.523 * Ready to accept connections
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/redis-image
 $ docker ps
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES
@@ -602,7 +602,7 @@ RUN apk add --update gcc
 # Tell the image what to do when it starts as a container
 CMD ["redis-server"]
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/redis-image
 $ docker build .
 Sending build context to Docker daemon  2.048kB
@@ -640,7 +640,7 @@ SECURITY WARNING: You are building a Docker image from Windows against a non-Win
 - In this new image it uses the previous image created because there were no changes: `Using cache`
 - In this new image when the `RUN apk add --update gcc` is executed no new intermediate container is created but the `Running in 4cdfb1cbbd93` is shown
 - If we run again the command it will use everything from the cache
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/redis-image
 $ docker build .
 Sending build context to Docker daemon  2.048kB
@@ -670,7 +670,7 @@ RUN apk add --update redis
 # Tell the image what to do when it starts as a container
 CMD ["redis-server]
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/redis-image
 $ docker build .
 Sending build context to Docker daemon  2.048kB
@@ -721,7 +721,7 @@ docker build `-t` peelmicro/redis:latest . <br>
 `redis` = repo/project name<br>
 `latest` = version<br>
 :::
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/redis-image
 $ docker build -t peelmicro/redis:latest .
 Sending build context to Docker daemon  3.072kB
@@ -740,7 +740,7 @@ Successfully built 5fa87062b1fa
 Successfully tagged peelmicro/redis:latest
 SECURITY WARNING: You are building a Docker image from Windows against a non-Windows Docker host. All files and directories added to build context will have '-rwxr-xr-x' permissions. It is recommended to double check and reset permissions for sensitive files and directories.
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/redis-image
 $ docker run peelmicro/redis:latest
 1:C 01 Nov 19:07:35.509 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
@@ -752,7 +752,7 @@ $ docker run peelmicro/redis:latest
 1:M 01 Nov 19:07:35.511 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command 'echo never > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled.
 1:M 01 Nov 19:07:35.511 * Ready to accept connections
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/redis-image
 $ docker ps
 CONTAINER ID        IMAGE                    COMMAND                  CREATED             STATUS              PORTS               NAMES
@@ -762,7 +762,7 @@ CONTAINER ID        IMAGE                    COMMAND                  CREATED   
 3a4c383ab4e1        busybox                  "sh"                     About an hour ago   Up About an hour                        objective_curran
 f949774360a8        redis                    "docker-entrypoint.s…"   2 hours ago         Up 2 hours          6379/tcp            eloquent_goodall
 ```
-```sh
+```bash
 uan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/redis-image
 $ docker run redis
 1:C 01 Nov 2018 19:10:57.726 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
@@ -774,7 +774,7 @@ $ docker run redis
 1:M 01 Nov 2018 19:10:57.728 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command 'echo never > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled.
 1:M 01 Nov 2018 19:10:57.728 * Ready to accept connections
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/redis-image
 $ docker ps
 CONTAINER ID        IMAGE                    COMMAND                  CREATED             STATUS              PORTS               NAMES
@@ -785,7 +785,7 @@ CONTAINER ID        IMAGE                    COMMAND                  CREATED   
 3a4c383ab4e1        busybox                  "sh"                     About an hour ago   Up About an hour                        objective_curran
 f949774360a8        redis                    "docker-entrypoint.s…"   2 hours ago         Up 2 hours          6379/tcp            eloquent_goodall
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/redis-image
 $ docker run redis:latest
 1:C 01 Nov 2018 19:12:10.672 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
@@ -797,7 +797,7 @@ $ docker run redis:latest
 1:M 01 Nov 2018 19:12:10.674 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command 'echo never > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled.
 1:M 01 Nov 2018 19:12:10.674 * Ready to accept connections
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/redis-image
 $ docker ps
 CONTAINER ID        IMAGE                    COMMAND                  CREATED              STATUS              PORTS               NAMES
@@ -811,7 +811,7 @@ f949774360a8        redis                    "docker-entrypoint.s…"   2 hours 
 ```
 4. Create an `Image` from a `Container`
 > 1st command terminal window
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/redis-image
 $ docker run -it alpine sh
 / # apk add --update redis
@@ -825,7 +825,7 @@ OK: 6 MiB in 14 packages
 / #
 ```
 > 2nd terminal window
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/redis-image
 $ docker ps
 CONTAINER ID        IMAGE                    COMMAND                  CREATED              STATUS              PORTS               NAMES
@@ -838,12 +838,12 @@ CONTAINER ID        IMAGE                    COMMAND                  CREATED   
 3a4c383ab4e1        busybox                  "sh"                     About an hour ago    Up About an hour                        objective_curran
 f949774360a8        redis                    "docker-entrypoint.s…"   2 hours ago          Up 2 hours          6379/tcp            eloquent_goodall
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/redis-image
 $ docker commit -c 'CMD ["redis-server"]' 4f2ee675c090
 sha256:535591b32510273b59703ec5cf447c66ec9afbe0ce34d5466d6d4464d00b9d1a
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/redis-image
 $ docker run 535591b32510273
 1:C 01 Nov 19:20:47.535 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
@@ -868,7 +868,7 @@ RUN npm install
 # Default command
 CMD ["npm","run"]
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/simpleweb
 $ docker build .
 Sending build context to Docker daemon  4.096kB
@@ -895,7 +895,7 @@ RUN npm install
 # Default command
 CMD ["npm","run"]
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/simpleweb
 $ docker build .
 Sending build context to Docker daemon  4.096kB
@@ -951,7 +951,7 @@ RUN npm install
 # Default command
 CMD ["npm","run"]
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/simpleweb
 $ docker build .
 Sending build context to Docker daemon  4.096kB
@@ -979,7 +979,7 @@ Successfully built 5d9d6e469f59
 SECURITY WARNING: You are building a Docker image from Windows against a non-Windows Docker host. All files and directories added to build context will have '-rwxr-xr-x' permissions. It is recommended to double check and reset permissions for sensitive files and directories.
 ```
 > WARN messages are fine in this case
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/simpleweb
 $ docker build -t peelmicro/simpleweb .
 Sending build context to Docker daemon  4.096kB
@@ -1013,7 +1013,7 @@ RUN npm install
 # Default command
 CMD ["npm","start"]
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/simpleweb
 $ docker build -t peelmicro/simpleweb .
 Sending build context to Docker daemon  4.096kB
@@ -1042,7 +1042,7 @@ Successfully tagged peelmicro/simpleweb:latest
 SECURITY WARNING: You are building a Docker image from Windows against a non-Windows Docker host. All files and directories added to build context will have '-rwxr-xr-x' permissions. It is recommended to double check and reset permissions for sensitive files and directories.
 ```
 6. Run the `Image` 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/simpleweb
 $ docker run peelmicro/simpleweb
 
@@ -1070,7 +1070,7 @@ docker run `-p` 8080 : 8080 **[image id]** <br>
 `8080`: ... this port inside the container
 :::
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/simpleweb
 $ docker run -p 8080:8080  peelmicro/simpleweb
 C:\Program Files\Docker\Docker\Resources\bin\docker.exe: Error response from daemon: driver failed programming external connectivity on endpoint optimistic_tesla (aebdca7e7ff39ee18e16316cec31601e215b35903a5a007155422fe5e54e79c9): Error starting userland proxy: mkdir /port/tcp:0.0.0.0:8080:tcp:172.17.0.12:8080: input/output error.
@@ -1078,7 +1078,7 @@ C:\Program Files\Docker\Docker\Resources\bin\docker.exe: Error response from dae
 https://stackoverflow.com/a/49694417/1059286
 ```
 > After restarting Docker
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/simpleweb
 $ docker run -p 8080:8080  peelmicro/simpleweb
 
@@ -1097,7 +1097,7 @@ How are you doing
 docker `system prune` <br>
 remove all stopped containers
 :::
-```sh
+```bash
 C:\WINDOWS\system32>docker system prune
 WARNING! This will remove:
         - all stopped containers
@@ -1121,12 +1121,12 @@ fdc4c936f5b4de01ac70090b5dacf326fcb5b7358893cd62f20d510f0c0f78d6
 
 Total reclaimed space: 0B
 ```
-```sh
+```bash
 C:\WINDOWS\system32>docker ps --all
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
 539c07bb9ba1        busybox             "ping google.com"   24 minutes ago      Up 24 minutes                           brave_montalcini
 ```
-```sh
+```bash
 C:\WINDOWS\system32>docker start -a 3fabe6651653
 Error: No such container: 3fabe6651653
 ```
@@ -1136,7 +1136,7 @@ Command to stop all running containers<br>
 It has to be executed from `PowerShell`<br>
 docker ps -a -q | ForEach { docker stop $_ }<br>
 :::
-```sh
+```bash
 PS C:\Users\juan.pablo.perez> docker ps -a -q | ForEach { docker stop $_ }
 8d6fafb2b9f0
 de4c4b0f9d27
@@ -1157,7 +1157,7 @@ f949774360a8
 e22ff84a283d
 539c07bb9ba1
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/simpleweb
 $ docker run -p 5000:8080  peelmicro/simpleweb
 
@@ -1178,7 +1178,7 @@ WORKDIR /usr/app<br>
 `/user/app` = any following command will be executed relative to this path in the container<br>
 if the folder does not exist it is created automatically
 :::
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/simpleweb
 $ docker run -it peelmicro/simpleweb sh
 / # ls
@@ -1205,7 +1205,7 @@ RUN npm install
 # Default command
 CMD ["npm","start"]
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/simpleweb
 $ docker build -t peelmicro/simpleweb .
 Sending build context to Docker daemon  4.096kB
@@ -1237,7 +1237,7 @@ Successfully built 1a9f4a7f50b1
 Successfully tagged peelmicro/simpleweb:latest
 SECURITY WARNING: You are building a Docker image from Windows against a non-Windows Docker host. All files and directories added to build context will have '-rwxr-xr-x' permissions. It is recommended to double check and reset permissions for sensitive files and directories.
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/simpleweb
 $ docker run -it peelmicro/simpleweb sh
 /usr/app # ls
@@ -1266,7 +1266,7 @@ COPY ./ ./
 CMD ["npm","start"]
 ```
 > 1st time.
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/simpleweb
 $ docker build -t peelmicro/simpleweb .
 Sending build context to Docker daemon  4.096kB
@@ -1301,7 +1301,7 @@ SECURITY WARNING: You are building a Docker image from Windows against a non-Win
 ```
 
 > 2nd time (changed index.js)
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/simpleweb
 $ docker build -t peelmicro/simpleweb .
 Sending build context to Docker daemon  4.096kB
@@ -1358,7 +1358,7 @@ COPY . .
 # Default command
 CMD ["npm","start"]
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/visists
 $ docker build -t peelmicro/visists .
 Sending build context to Docker daemon  4.096kB
@@ -1392,7 +1392,7 @@ Successfully built ebe155eb36bf
 Successfully tagged peelmicro/visists:latest
 SECURITY WARNING: You are building a Docker image from Windows against a non-Windows Docker host. All files and directories added to build context will have '-rwxr-xr-x' permissions. It is recommended to double check and reset permissions for sensitive files and directories.
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/visists
 $ docker run peelmicro/visists
 
@@ -1424,7 +1424,7 @@ npm ERR! This is probably not a problem with npm. There is likely additional log
 npm ERR! A complete log of this run can be found in:
 npm ERR!     /root/.npm/_logs/2018-11-02T17_30_20_511Z-debug.log
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/visists
 docker run redis
 1:C 02 Nov 2018 17:31:39.373 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
@@ -1436,7 +1436,7 @@ docker run redis
 1:M 02 Nov 2018 17:31:39.376 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command 'echo never > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled.
 1:M 02 Nov 2018 17:31:39.376 * Ready to accept connections
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/visists
 $ docker run peelmicro/visists
 
@@ -1470,12 +1470,12 @@ npm ERR!     /root/.npm/_logs/2018-11-02T17_32_55_268Z-debug.log
 ```
 4. Create a `docker-compose.yml' file
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/visists
 $ dir
 Dockerfile  docker-compose.yml  index.js  package.json
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/visists
 $ docker-compose up
 Creating network "visists_default" with the default driver
@@ -1526,7 +1526,7 @@ node-app_1      | > node index.js
 node-app_1      |
 node-app_1      | Listening on port 8081
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/visits
 $ docker-compose up
 Creating network "visits_default" with the default driver
@@ -1595,7 +1595,7 @@ node-app_1      | npm ERR! A complete log of this run can be found in:
 node-app_1      | npm ERR!     /root/.npm/_logs/2018-11-02T18_21_01_950Z-debug.log
 visits_node-app_1 exited with code 1
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/visits
 $ docker-compose up --build
 Building node-app
@@ -1641,7 +1641,7 @@ Open on Goglle Chrome: http://localhost:4001/
 
 Number of visits is 6
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/visits
 $ docker ps
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                    NAMES
@@ -1653,14 +1653,14 @@ f4706298bb04        visits_node-app     "npm start"              3 minutes ago  
 docker-compose up `-d`<br>
 `d` = Launch it in background
 :::
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/visits
 $ docker-compose up -d
 Creating network "visits_default" with the default driver
 Creating visits_node-app_1     ... done
 Creating visits_redis-server_1 ... done
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/visits
 $ docker ps
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                    NAMES
@@ -1673,7 +1673,7 @@ b30f750c3cf2        redis               "docker-entrypoint.s…"   27 seconds ag
 docker-compose `down`<br>
 `down` = Stop containers
 :::
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/visits
 $ docker-compose down
 Stopping visits_node-app_1     ... done
@@ -1712,7 +1712,7 @@ app.listen(8081, () => {
   console.log('Listening on port 8081');
 });
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/visits
 $ docker-compose up --build
 Building node-app
@@ -1758,12 +1758,12 @@ node-app_1      | Listening on port 8081
 This page isn’t working localhost didn’t send any data.
 ERR_EMPTY_RESPONSE
 ```
-```sh
+```bash
 node-app_1      |
 node-app_1      | Listening on port 8081
 visits_node-app_1 exited with code 0
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/visits
 $ docker ps
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES
@@ -1779,7 +1779,7 @@ b30f750c3cf2        redis               "docker-entrypoint.s…"   7 minutes ago
 
 8. Modify the `docker-compose.yml` file
 > `docker-compose.yml`
-```yml
+```yaml
 version: '3'
 services:
   redis-server:
@@ -1790,7 +1790,7 @@ services:
     ports:
       - "4001:8081"
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/visits
 $ docker-compose up
 Recreating visits_node-app_1 ...
@@ -1801,7 +1801,7 @@ redis-server_1  | 1:C 02 Nov 2018 18:31:52.764 # Redis version=5.0.0, bits=64, c
 ```
 
 - Browse to http://localhost:4001/
-```sh
+```bash
 This page isn’t working localhost didn’t send any data.
 ERR_EMPTY_RESPONSE
 
@@ -1848,14 +1848,14 @@ node-app_1      | > node index.js
 node-app_1      |
 node-app_1      | Listening on port 8081
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/visits
 $ docker ps
 CONTAINER ID        IMAGE               COMMAND                  CREATED              STATUS              PORTS                    NAMES
 8c69374d1c39        visits_node-app     "npm start"              About a minute ago   Up 39 seconds       0.0.0.0:4001->8081/tcp   visits_node-app_1
 b30f750c3cf2        redis               "docker-entrypoint.s…"   16 minutes ago       Up 16 minutes       6379/tcp                 visits_redis-server_1
 ```
-```sh
+```bash
 redis-server_1  | 1:C 02 Nov 2018 18:31:52.764 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
 redis-server_1  | 1:M 02 Nov 2018 18:31:52.765 * Running mode=standalone, port=6379.
 redis-server_1  | 1:M 02 Nov 2018 18:31:52.765 # WARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.
@@ -1871,7 +1871,7 @@ node-app_1      | Listening on port 8081
 ```
 - modify the `docker-compose.yml` again
 > `docker-compose.yml`
-```yml
+```yaml
 version: '3'
 services:
   redis-server:
@@ -1882,7 +1882,7 @@ services:
     ports:
       - "4001:8081"
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/visits
 $ docker-compose up
 Starting visits_redis-server_1 ... done
@@ -1910,7 +1910,7 @@ docker-compose `ps` <br>
 `ps` = shows the current situation <br>
 It depends on where the `docker-compose.yml` file is located
 :::
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/visits
 $ docker-compose ps
 The system cannot find the path specified.
@@ -1919,7 +1919,7 @@ The system cannot find the path specified.
 visits_node-app_1       npm start                        Up      0.0.0.0:4001->8081/tcp
 visits_redis-server_1   docker-entrypoint.sh redis ...   Up      6379/tcp
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/visits
 $ cd ..
 
@@ -1935,14 +1935,14 @@ ERROR:
 ## Creating a Production-Grade Workflow. Continous Integration
 ### Create the client App
 1. Update `create-react-app` CLI to the latest version
-```sh
+```bash
 C:\WINDOWS\system32>npm i -g create-react-app
 C:\Users\juan.pablo.perez\AppData\Roaming\npm\create-react-app -> C:\Users\juan.pablo.perez\AppData\Roaming\npm\node_modules\create-react-app\index.js
 + create-react-app@2.1.1
 added 1 package from 1 contributor, removed 5 packages and updated 7 packages in 8.938s
 ```
 2. Use the `create-react-app` to create the `frontend` app
-```sh
+```bash
 C:\Users\juan.pablo.perez\OneDrive\Training\Docker\DockerAndKubernetes.TheCompleteGuide>create-react-app frontend
 
 Creating a new React app in C:\Users\juan.pablo.perez\OneDrive\Training\Docker\DockerAndKubernetes.TheCompleteGuide\frontend.
@@ -2006,7 +2006,7 @@ Happy hacking!
 - npm run build - Builds a pruduction version of the aplicacion
 ```
 3. Test if the new app works correctly
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (master)
 $ npm run test
 
@@ -2032,7 +2032,7 @@ Time:        9.034s
 Ran all test suites.
 ```
 4. Build the production version of the app
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (master)
 $ npm run build
 
@@ -2065,7 +2065,7 @@ Find out more about deployment here:
 
   http://bit.ly/CRA-deploy
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (master)
 $ ls
 README.md  build  node_modules  package.json  public  src  yarn.lock
@@ -2075,7 +2075,7 @@ $ ls build
 asset-manifest.json  favicon.ico  index.html  manifest.json  precache-manifest.47faa8bffed4235d63d799531863d6e6.js  service-worker.js  static
 ```
 5. Execute the local version
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (master)
 $ npm run start
 
@@ -2113,12 +2113,12 @@ COPY . .
 CMD ["npm", "run", "start"]
 ```
 7. Build the development image
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (master)
 $ docker build .
 unable to prepare context: unable to evaluate symlinks in Dockerfile path: GetFileAttributesEx C:\Users\juan.pablo.perez\OneDrive\Training\Docker\DockerAndKubernetes.TheCompleteGuide\frontend\Dockerfile: The system cannot find the file specified.
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (master)
 $ docker build -f Dockerfile.dev .
 Sending build context to Docker daemon  141.2MB
@@ -2158,7 +2158,7 @@ Sending build context to Docker daemon  141.2MB
 - This is caused because of the local node_modules folder
 - To solve it temporarily the node_modules server should be removed .
 - After removing the folder:
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (master)
 $ docker build -f Dockerfile.dev .
 Sending build context to Docker daemon  985.1kB
@@ -2183,7 +2183,7 @@ Successfully built ac3bdf759808
 SECURITY WARNING: You are building a Docker image from Windows against a non-Windows Docker host. All files and directories added to build context will have '-rwxr-xr-x' permissions. It is recommended to double check and reset permissions for sensitive files and directories.
 ```
 9. Run the created image
-```sh
+```bash
 $ docker run ac3bdf759808
 
 > frontend@0.1.0 start /app
@@ -2201,7 +2201,7 @@ You can now view frontend in the browser.
 Note that the development build is not optimized.
 To create a production build, use yarn build.
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (master)
 $ docker run -p 3000:3000 ac3bdf759808
 
@@ -2233,7 +2233,7 @@ docker run -p 3000:3000 `-v /app/node_modules` `-v $(pwd):/app` **[image id]**<b
 `-v /app/node_modules` = Put a bookmark on the node_modules folder<br>
 `-v $(pwd):/app` = Map the pwd into the /app folder
 :::
-```sh
+```bash
 juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (master)
 $ docker build -f Dockerfile.dev .
 Sending build context to Docker daemon  986.1kB
@@ -2270,7 +2270,7 @@ SECURITY WARNING: You are building a Docker image from Windows against a non-Win
 ::: warning
 The following command does not work on Windows
 :::
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (master)
 $ docker run -p 3000:3000 -v /app/node_modules -v C:\Users\juan.pablo.perez\OneDrive\Training\Docker\DockerAndKubernetes.TheCompleteGuide\frontend\:/app 67402d310ff7
 npm ERR! path /app/package.json
@@ -2286,7 +2286,7 @@ npm ERR!     /root/.npm/_logs/2018-11-03T09_58_59_240Z-debug.log
 ```
 11. Create a `Docker Compose` file
 > `docker-compose.yml`
-```yml
+```yaml
 version: '3'
 services:
   web:
@@ -2297,7 +2297,7 @@ services:
       - /app/node_modules
       - .:/app
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (master)
 $ docker-compose up
 Creating network "frontend_default" with the default driver
@@ -2306,7 +2306,7 @@ ERROR: Cannot locate specified Dockerfile: Dockerfile
 ```
 - Modify the `Docker Compose` file
 > `docker-compose.yml`
-```yml
+```yaml
 version: '3'
 services:
   web:
@@ -2319,7 +2319,7 @@ services:
       - /app/node_modules
       - .:/app
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (master)
 $ docker-compose up
 Building web
@@ -2379,7 +2379,7 @@ Hi there!
 Learn React
 ```
 12. If we change anything in App.js it is updated automatically (for instance Hi by Bye)
-```sh
+```bash
 web_1  | Compiling...
 web_1  | Compiled successfully!
 ```
@@ -2389,7 +2389,7 @@ logo
 Bye there!
 ```
 13. Run the tests
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (master)
 $ docker build -f Dockerfile.dev .
 Sending build context to Docker daemon  987.6kB
@@ -2413,7 +2413,7 @@ Removing intermediate container 720e1fadc70d
 Successfully built 33167675358a
 SECURITY WARNING: You are building a Docker image from Windows against a non-Windows Docker host. All files and directories added to build context will have '-rwxr-xr-x' permissions. It is recommended to double check and reset permissions for sensitive files and directories.
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (master)
 $ docker run 33167675358a npm run test
 
@@ -2432,7 +2432,7 @@ Ran all test suites.
 ::: warning
 The following command does not work on Windows
 :::
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (master)
 $ docker run -it 33167675358a npm run test
  PASS  src/App.test.js
@@ -2453,7 +2453,7 @@ Watch Usage
  › Press Enter to trigger a test run.
 ```
 14. Make the test solution detect the local changes
-```sh
+```bash
 $ docker-compose up
 Starting frontend_web_1 ... done
 Attaching to frontend_web_1
@@ -2474,7 +2474,7 @@ web_1  | Note that the development build is not optimized.
 web_1  | To create a production build, use yarn build.
 web_1  |
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (master)
 $ docker ps
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS                    NAMES
@@ -2483,7 +2483,7 @@ CONTAINER ID        IMAGE               COMMAND             CREATED             
 ffe059851944        33167675358a        "npm run test"      9 minutes ago       Up 9 minutes                                 nifty_babbage
 bea374cf23b9        frontend_web        "npm run start"     22 minutes ago      Up 2 minutes        0.0.0.0:3000->3000/tcp   frontend_web_1
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (master)
 $ docker exec -it 6a8d42debc1b npm run test
 
@@ -2507,7 +2507,7 @@ Watch Usage
 - Using this approach the iteration works correctly.
 - If we add or change tests when we hit Enter it's going to detect the changes.
 15. Modify the `docker-compose.yml` to add a second service
-```sh
+```bash
 $ docker-compose up --build
 Building web
 Step 1/6 : FROM node:alpine
@@ -2591,7 +2591,7 @@ The following does not work on Windows
 - If we make any change to the tests (removing one, for instance)
 - The tests should be executed again
 16. Try to access inside the container
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (master)
 $ docker ps
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS                    NAMES
@@ -2601,14 +2601,14 @@ CONTAINER ID        IMAGE               COMMAND             CREATED             
 921957b61741        33167675358a        "npm run test"      32 minutes ago      Up 32 minutes                                sharp_pasteur
 ffe059851944        33167675358a        "npm run test"      34 minutes ago      Up 34 minutes                                nifty_babbage
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (master)
 $ docker attach 9394a1ae85d6
 ```
 ::: warning
 It does nothing either 
 :::
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (master)
 $ docker exec -it 29421740f3dc sh
 /app # ps
@@ -2620,7 +2620,7 @@ PID   USER     TIME  COMMAND
    64 root      0:00 ps
 /app #
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (master)
 $ docker exec -it 9394a1ae85d6 sh
 /app # ps
@@ -2662,7 +2662,7 @@ COPY --from=builder /app/build /usr/share/nginx/html
 ::: tip info
 NGINX is going to run automatically what we've copied on /usr/share/nginx/html
 :::
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (master)
 $ Docker build .
 Sending build context to Docker daemon  989.2kB
@@ -2726,7 +2726,7 @@ Step 8/8 : COPY --from=builder /app/build /usr/share/nginx/html
 Successfully built 78c8ea0dcea5
 SECURITY WARNING: You are building a Docker image from Windows against a non-Windows Docker host. All files and directories added to build context will have '-rwxr-xr-x' permissions. It is recommended to double check and reset permissions for sensitive files and directories.
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (master)
 $ docker run -p 8080:80 78c8ea0dcea5
 ```
@@ -2748,12 +2748,12 @@ Learn React
 ```
 ### Continuous Integration and Deployment using `Travis CI` 
 1. Create a new github repository and link it to the project
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (master)
 $ git init
 Reinitialized existing Git repository in C:/Users/juan.pablo.perez/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend/.git/
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (master)
 $ git commit -m "initial commit"
 On branch master
@@ -2769,7 +2769,7 @@ Untracked files:
 
 no changes added to commit
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (master)
 $ git add .
 warning: LF will be replaced by CRLF in src/App.js.
@@ -2777,7 +2777,7 @@ The file will have its original line endings in your working directory.
 warning: LF will be replaced by CRLF in src/App.test.js.
 The file will have its original line endings in your working directory.
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (master)
 $ git commit -m "initial commit"
 [master 99c8404] initial commit
@@ -2787,14 +2787,14 @@ $ git commit -m "initial commit"
  create mode 100644 Dockerfile.dev
  create mode 100644 docker-compose.yml
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (master)
 $ git remote add origin https://github.com/peelmicro/docker-react.git
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (master)
 ```
-```sh
+```bash
 $ git push -u origin master
 Counting objects: 27, done.
 Delta compression using up to 4 threads.
@@ -2811,7 +2811,7 @@ To https://github.com/peelmicro/docker-react.git
 Branch 'master' set up to track remote branch 'master' from 'origin'.
 ```
 2. Ensure the local image runs correctly
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (master)
 $ docker build -t peelmicro/docker-react -f Dockerfile.dev .
 Sending build context to Docker daemon  1.008MB
@@ -2836,7 +2836,7 @@ Successfully built 3843b2f44242
 Successfully tagged peelmicro/docker-react:latest
 SECURITY WARNING: You are building a Docker image from Windows against a non-Windows Docker host. All files and directories added to build context will have '-rwxr-xr-x' permissions. It is recommended to double check and reset permissions for sensitive files and directories.
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (master)
 $ docker run peelmicro/docker-react npm run test -- --coverage
 
@@ -2870,7 +2870,7 @@ docker run peelmicro/docker-react npm run test `-- --coverage`<br>
 :::
 4. Create the `.travis.yml` file
 > `.travis.yml`
-```yml
+```yaml
 sudo: required
 services:
   - docker
@@ -2880,18 +2880,18 @@ script:
   - docker run peelmicro/docker-react npm run test -- --coverage
 ```
 5. Commit and push the code
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (master)
 $ git add .
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (master)
 $ git commit -m "added Travis CI file"
 [master 3a58220] added Travis CI file
  1 file changed, 7 insertions(+)
  create mode 100644 .travis.yml
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (master)
 $ git push origin master
 Counting objects: 3, done.
@@ -2922,7 +2922,7 @@ To https://github.com/peelmicro/docker-react.git
     "docker build -t peelmicro/docker-react -f Dockerfile.dev ."
   ]
 ```  
-```sh
+```bash
 Worker information
 hostname: 95e2066e-a84d-489b-b960-d1d3e9bcf669@1.production-2-worker-com-gce-mbt0
 version: v4.5.2 https://github.com/travis-ci/worker/tree/0e6ddd94961e79b28a19978d99b94505a35bb9db
@@ -3359,7 +3359,7 @@ The build has been terminated
 ```
 7. Modify the `.travis.yml` file
 > `.travis.yml`
-```yml
+```yaml
 sudo: required
 language: node_js
 services:
@@ -3388,7 +3388,7 @@ script:
   ]
 }
 ```
-```sh
+```bash
 Worker information
 hostname: fadf458d-ab3a-4482-a4f9-e18f7887a521@1.production-2-worker-com-gce-kzvj
 version: v4.5.2 https://github.com/travis-ci/worker/tree/0e6ddd94961e79b28a19978d99b94505a35bb9db
@@ -3852,7 +3852,7 @@ npm WARN engine @babel/core@7.1.0: wanted: {"node":">=6.9.0"} (current: {"node":
 ```
 8. Modify the `.travis.yml` file again
 > `.travis.yml`
-```yml
+```yaml
 udo: required
 language: node_js
 node_js: 
@@ -3884,7 +3884,7 @@ script:
   ]
 }
 ```
-```sh
+```bash
  sudo service docker start
 start: Job is already running: docker
 git.checkout
@@ -4077,7 +4077,7 @@ AWS Elastic Beanstalk overview
 AWS Elastic Beanstalk concepts
 ```
 6. Modify the `.travis.yml` adding:
-```yml
+```yaml
 deploy:
   provider: elasticbeanstalk
   region: "us-east-1" --> it can be copied from the url http://dockerreact-env.ptcpjfzxwp.us-east-1.elasticbeanstalk.com/
@@ -4135,7 +4135,7 @@ AWS_ACCESS_KEY: AKIAJKS75AVMAJ5C5ISQ
 AWS_SECRET_KEY: Dm50J3lxz*****************MxT/B3lNjfpAaxHu
 ```
 14. Commit and push the code
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (master)
 $ git status
 On branch master
@@ -4149,17 +4149,17 @@ Changes not staged for commit:
 
 no changes added to commit (use "git add" and/or "git commit -a")
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (master)
 $ git add .
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (master)
 $ git commit -m "added Travis CI deploy config"
 [master b876446] added Travis CI deploy config
  1 file changed, 12 insertions(+)
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (master)
 $ git push origin master
 Counting objects: 3, done.
@@ -4171,7 +4171,7 @@ remote: Resolving deltas: 100% (1/1), completed with 1 local object.
 To https://github.com/peelmicro/docker-react.git
    944ac95..b876446  master -> master
 ```
-```sh
+```bash
 > frontend@0.1.0 test /app
 > react-scripts test "--coverage"
 PASS src/App.test.js
@@ -4202,7 +4202,7 @@ failed to deploy
 ```
 15. Modify `.travis.yml` file
 > `.travis.yml`
-```yml
+```yaml
 sudo: required
 language: node_js
 node_js: 
@@ -4226,17 +4226,17 @@ deploy:
   secret_access_key:
     secure: "$AWS_SECRET_KEY"
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (master)
 $ git add .
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (master)
 $ git commit -m "added Travis CI deploy config removing bucket_path"
 [master 8c7ee3d] added Travis CI deploy config removing bucket_path
  1 file changed, 1 insertion(+), 1 deletion(-)
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (master)
 $ git push origin master
 Counting objects: 3, done.
@@ -4248,7 +4248,7 @@ remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
 To https://github.com/peelmicro/docker-react.git
    b876446..8c7ee3d  master -> master
 ```
-```sh   
+```bash   
 The command "docker run peelmicro/docker-react npm run test -- --coverage" exited with 0.
 dpl_0
 2.56s$ rvm $(travis_internal_ruby) --fuzzy do ruby -S gem install dpl
@@ -4302,7 +4302,7 @@ The reason of this error might probably be on the fact we didn't expose the port
 :::
 15. Modify `.travis.yml` file again
 > `.travis.yml`
-```yml
+```yaml
 FROM node:alpine as builder
 
 WORKDIR /app
@@ -4317,17 +4317,17 @@ FROM nginx
 EXPOSE 80
 COPY --from=builder /app/build /usr/share/nginx/html
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (master)
 $ git add .
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (master)
 $ git commit -m "added Expose 80 on Dokerfile"
 [master 1a8c196] added Expose 80 on Dokerfile
  1 file changed, 1 insertion(+)
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (master)
 $ git push origin master
 Counting objects: 3, done.
@@ -4339,7 +4339,7 @@ remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
 To https://github.com/peelmicro/docker-react.git
    8c7ee3d..1a8c196  master -> master
 ```
-```sh   
+```bash   
 The command "docker run peelmicro/docker-react npm run test -- --coverage" exited with 0.
 dpl_0
 2.66s$ rvm $(travis_internal_ruby) --fuzzy do ruby -S gem install dpl
@@ -4405,7 +4405,7 @@ Sometimes AWS has a tough time with the '.' folder designation and prefers the l
 ```
 15. Modify `.travis.yml` file again
 > `.travis.yml`
-```yml
+```yaml
 FROM node:alpine as builder
 
 WORKDIR /app
@@ -4420,17 +4420,17 @@ FROM nginx
 EXPOSE 80
 COPY --from=builder /app/build /usr/share/nginx/html
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (master)
 $ git add .
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (master)
 $ git commit -m "modified the way that the package.json is copied on Dokerfile"
 [master ea69b13] modified the way that the package.json is copied on Dokerfile
  1 file changed, 1 insertion(+), 1 deletion(-)
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (master)
 $ git push origin master
 Counting objects: 3, done.
@@ -4442,7 +4442,7 @@ remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
 To https://github.com/peelmicro/docker-react.git
    1a8c196..ea69b13  master -> master
 ```
-```sh   
+```bash   
 The command "docker run peelmicro/docker-react npm run test -- --coverage" exited with 0.
 dpl_0
 2.40s$ rvm $(travis_internal_ruby) --fuzzy do ruby -S gem install dpl
@@ -4572,26 +4572,26 @@ aws:autoscaling:launchconfiguration:IamInstanceProfile "null" => "aws-elasticbea
 ```
 ### 91. Workflow With Github
 1. Create the new `feature` branch
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (master)
 $ git checkout -b feature
 Switched to a new branch 'feature'
 ```
 2. Make some changes on App.js
 3. Commit and push the changes to the `feature` branch
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (feature)
 $ git add .
 warning: LF will be replaced by CRLF in src/App.js.
 The file will have its original line endings in your working directory.
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (feature)
 $ git commit -m "change app text"
 [feature da2585a] change app text
  1 file changed, 1 insertion(+), 1 deletion(-)
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/frontend (feature)
 $ git push origin feature
 Counting objects: 4, done.
@@ -4633,7 +4633,7 @@ Merging can be performed automatically.
 As it succeed we can click on [Merge pull request]
 ``` 
 - On `Travis CI`
-```sh
+```bash
 PASS src/App.test.js
   ✓ renders without crashing (23ms)
   ✓ renders without crashing 2 (2ms)
@@ -4662,7 +4662,7 @@ Pull request successfully merged and closed
 You’re all set—the feature branch can be safely deleted.
 ```
 - On `Travis CI`
-```sh
+```bash
 The command "docker run peelmicro/docker-react npm run test -- --coverage" exited with 0.
 dpl_0
 2.68s$ rvm $(travis_internal_ruby) --fuzzy do ruby -S gem install dpl
@@ -4767,7 +4767,7 @@ DockerReact-env.ptcpjfzxwp.us-east-1.elasticbeanstalk.com
 ```
 ## Building a Multi-Container Application
 1. Create the folders for the application
-```sh
+```bash
 C:\Users\juan.pablo.perez\OneDrive\Training\Docker\DockerAndKubernetes.TheCompleteGuide>mkdir complex
 
 C:\Users\juan.pablo.perez\OneDrive\Training\Docker\DockerAndKubernetes.TheCompleteGuide>cd complex
@@ -4778,7 +4778,7 @@ C:\Users\juan.pablo.perez\OneDrive\Training\Docker\DockerAndKubernetes.TheComple
 ```
 ### Create the `client` app
 1. Use `create-react-app` to create the `client` app
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex
 $ create-react-app client
 
@@ -4840,7 +4840,7 @@ Happy hacking!
 ```
 2. Create the `Dockerfile.dev` file
 > `Dockerfile.dev'
-```yml
+```yaml
 FROM node:alpine
 WORKDIR /app
 COPY package.json .
@@ -4850,7 +4850,7 @@ CMD ["npm", "run", "start"]
 ```
 
 3. Build the image
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/client (master)
 $ docker build -f Dockerfile.dev .
 Sending build context to Docker daemon  138.5MB
@@ -4885,7 +4885,7 @@ SECURITY WARNING: You are building a Docker image from Windows against a non-Win
 ```
 
 4. Run the new Image
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/client (master)
 $ docker run 3df84dd1d1a2
 
@@ -4907,7 +4907,7 @@ To create a production build, use yarn build.
 ### Create the `server` app
 1. Create the `Dockerfile.dev` file
 > `Dockerfile.dev`
-```yml
+```yaml
 FROM node:alpine
 WORKDIR /app
 COPY package.json .
@@ -4916,7 +4916,7 @@ COPY . .
 CMD ["npm", "run", "dev"]
 ```
 2. Build the image
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/server
 $ docker build -f Dockerfile.dev .
 Sending build context to Docker daemon  6.656kB
@@ -4958,7 +4958,7 @@ Successfully built 4bb93b3ce3d4
 SECURITY WARNING: You are building a Docker image from Windows against a non-Windows Docker host. All files and directories added to build context will have '-rwxr-xr-x' permissions. It is recommended to double check and reset permissions for sensitive files and directories.
 ```
 3. Run the new Image
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/server
 $ docker run 4bb93b3ce3d4
 
@@ -4982,7 +4982,7 @@ Listening
 ### Create the `worker` app
 1. Create the `Dockerfile.dev` file
 > `Dockerfile.dev`
-```yml
+```yaml
 FROM node:alpine
 WORKDIR /app
 COPY package.json .
@@ -4991,7 +4991,7 @@ COPY . .
 CMD ["npm", "run", "dev"] 
 ```
 2. Build the image
-```sh
+```bash
   Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/worker
 $ docker build -f Dockerfile.dev .
 Sending build context to Docker daemon   5.12kB
@@ -5033,7 +5033,7 @@ Successfully built 7d524be5f965
 SECURITY WARNING: You are building a Docker image from Windows against a non-Windows Docker host. All files and directories added to build context will have '-rwxr-xr-x' permissions. It is recommended to double check and reset permissions for sensitive files and directories.
 ```
 3. Run the new Image
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/worker
 $ docker run 7d524be5f965
 
@@ -5048,14 +5048,14 @@ $ docker run 7d524be5f965
 ### Create the `docker-compose`
 1. Create the `docker-compose.yml` file
 > `docker-compose.yml`
-```yml
+```yaml
 version: '3'
 services:
   postgres:
     image: 'postgres:latest'
 ```
 2. Run the `docker-compose`
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex
 $ docker-compose up
 Creating network "complex_default" with the default driver
@@ -5076,7 +5076,7 @@ Traceback (most recent call last):
 FileNotFoundError: [WinError 3] The system cannot find the path specified: 'C:\\Users\\juan.pablo.perez\\OneDrive\\Training\\Docker\\DockerAndKubernetes.TheCompleteGuide\\complex\\client\\node_modules\\babel-preset-react-app\\node_modules\\@babel\\plugin-transform-react-constant-elements\\node_modules\\@babel\\core\\lib\\config\\validation\\option-assertions.js'
 [34404] Failed to execute script docker-compose
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex
 $ docker-compose up
 Pulling postgres (postgres:latest)...
@@ -5163,7 +5163,7 @@ postgres_1  | 2018-11-05 17:39:48.170 UTC [1] LOG:  database system is ready to 
 ```
 3. Modify the `docker-compose.yml` file
 > `docker-compose.yml`
-```yml
+```yaml
 version: '3'
 services:
   postgres:
@@ -5201,7 +5201,7 @@ services:
       - ./worker:/app      
 ```
 4. Run the `docker-compose` again
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex
 $ docker-compose up
 Building server
@@ -5271,7 +5271,7 @@ server_1    | Listening
 ```
 5. Create the final version `docker-compose.yml` file
 > `docker-compose.yml`
-```yml
+```yaml
 version: '3'
 services:
   postgres:
@@ -5316,7 +5316,7 @@ services:
       - ./worker:/app      
 ```
 6.- Run the final version
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex
 $ docker-compose up --build
 Building nginx
@@ -5477,7 +5477,7 @@ Stopping complex_client_1   ... done
 Stopping complex_redis_1    ... done
 Stopping complex_postgres_1 ... done
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex
 $ docker-compose up
 Starting complex_redis_1    ... done
@@ -5545,7 +5545,7 @@ Home
 Other Page
 ```
 8. Clean up everything and build it again
-```sh
+```bash
 $ docker system prune
 WARNING! This will remove:
         - all stopped containers
@@ -5621,7 +5621,7 @@ deleted: sha256:7fe11a5c21c866b6661728593ab2d3b1df0e52c0b2bcea8267921bcdc2919f68
 
 Total reclaimed space: 404.5MB
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex
 $ docker-compose up --build
 Creating network "complex_default" with the default driver
@@ -5803,11 +5803,11 @@ client_1    | Starting the development server...
 client_1    |
 ```
 9. Set up Git
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex$ git init
 Initialized empty Git repository in C:/Users/juan.pablo.perez/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/.git/
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ git status
 On branch master
@@ -5826,7 +5826,7 @@ Untracked files:
 
 nothing added to commit but untracked files present (use "git add" to track)
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ git add .
 warning: LF will be replaced by CRLF in .gitignore.
@@ -5858,14 +5858,14 @@ The file will have its original line endings in your working directory.
 warning: LF will be replaced by CRLF in worker/package.json.
 The file will have its original line endings in your working directory.
 ```
-```sh
+```bash
 C:\WINDOWS\system32>cd C:\Users\juan.pablo.perez\OneDrive\Training\Docker\DockerAndKubernetes.TheCompleteGuide\complex\client
 ```
-```sh
+```bash
 C:\Users\juan.pablo.perez\OneDrive\Training\Docker\DockerAndKubernetes.TheCompleteGuide\complex\client>rmdir .git /s
 .git, Are you sure (Y/N)? y
 ```
-```sh
+```bash
 C:\Users\juan.pablo.perez\OneDrive\Training\Docker\DockerAndKubernetes.TheCompleteGuide\complex\client>
 $ git status
 On branch master
@@ -5912,11 +5912,11 @@ Changes to be committed:
         new file:   worker/package.json
 
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ git remote add origin https://github.com/peelmicro/multi-docker.git
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ git push -u origin master
 Counting objects: 40, done.
@@ -5936,7 +5936,7 @@ Branch 'master' set up to track remote branch 'master' from 'origin'.
 
 10. Set up Travis CI.
 > `.travis.yml`
-```yml
+```yaml
 sudo: required
 language: node_js
 node_js: 
@@ -5960,7 +5960,7 @@ after_success:
   - docker push peelmicro/multi-server
   - docker push peelmicro/multi-worker
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)$ git statusOn branch master
 Your branch is up to date with 'origin/master'.
 
@@ -5971,18 +5971,18 @@ Untracked files:
 
 nothing added to commit but untracked files present (use "git add" to track)
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ git add .
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ git commit -m "changed travis yml"
 [master 089e934] changed travis yml
  1 file changed, 34 insertions(+)
  create mode 100644 .travis.yml
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ git push origin HEAD
 Counting objects: 3, done.
@@ -5994,7 +5994,7 @@ remote: Resolving deltas: 100% (1/1), completed with 1 local object.
 To https://github.com/peelmicro/multi-docker.git
    2892ae1..089e934  HEAD -> master
 ```
-```sh
+```bash
 5.78s$ docker run [secure]/test-client npm run test -- --coverage
 > client@0.1.0 test /app
 > react-scripts test "--coverage"
@@ -6941,7 +6941,7 @@ AWS_SECRET_KEY: twBiWOirCgP*********************ugM7hsWbRxf
 ```
 9. Commit the new `.travis.yml` and the `Dockerrun.aws.json` files
 > `.travis.yml`
-```yml
+```yaml
 sudo: required
 language: node_js
 node_js: 
@@ -6977,7 +6977,7 @@ deploy:
   secret_access_key:
     secure: "$AWS_SECRET_KEY"
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ git status
 On branch master
@@ -6996,18 +6996,18 @@ Untracked files:
 
 no changes added to commit (use "git add" and/or "git commit -a")
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ git add .
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ git commit -m "added AWS Dockerrun.aws.json file"
 [master 8801512] added AWS Dockerrun.aws.json file
  2 files changed, 47 insertions(+), 11 deletions(-)
  create mode 100644 Dockerrun.aws.json
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ git status
 On branch master
@@ -7016,7 +7016,7 @@ Your branch is ahead of 'origin/master' by 1 commit.
 
 nothing to commit, working tree clean
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ git push origin master
 Counting objects: 4, done.
@@ -7028,7 +7028,7 @@ remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
 To https://github.com/peelmicro/multi-docker.git
    089e934..8801512  master -> master
 ```
-```sh
+```bash
 - On `travis-ci config` values:
 ```json
 {
@@ -7060,7 +7060,7 @@ To https://github.com/peelmicro/multi-docker.git
   ]
 }
 ```
-```sh
+```bash
 $ export PATH=./node_modules/.bin:$PATH
 Updating nvm
 nvm.install
@@ -7436,7 +7436,7 @@ Done. Your build exited with 0.
   ]
 }
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ git status
 On branch master
@@ -7450,17 +7450,17 @@ Changes not staged for commit:
 
 no changes added to commit (use "git add" and/or "git commit -a")
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ git add .
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ git commit -m "added memory to the AWS Dockerrun.aws.json file"
 [master 6a70bbd] added memory to the AWS Dockerrun.aws.json file
  1 file changed, 8 insertions(+), 4 deletions(-)
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ git push origin master
 Counting objects: 3, done.
@@ -7472,7 +7472,7 @@ remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
 To https://github.com/peelmicro/multi-docker.git
    8801512..6a70bbd  master -> master
 ```
-```sh
+```bash
 ------------------|----------|----------|----------|----------|-------------------|
 File              |  % Stmts | % Branch |  % Funcs |  % Lines | Uncovered Line #s |
 ------------------|----------|----------|----------|----------|-------------------|
@@ -7765,7 +7765,7 @@ It wasn't working becuase the ElasticBeanstalk instance was not included on the 
 ```
 11. Make a little change on the `App.js` file and deploy again 
 - Change `Welcome to React` by `Fib Calculator`
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ git status
 On branch master
@@ -7779,19 +7779,19 @@ Changes not staged for commit:
 
 no changes added to commit (use "git add" and/or "git commit -a")
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ git add .
 warning: LF will be replaced by CRLF in client/src/App.js.
 The file will have its original line endings in your working directory.
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ git commit -m "Updated App.js"
 [master cccdcca] Updated App.js
  1 file changed, 1 insertion(+), 1 deletion(-)
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ git push origin master
 Counting objects: 5, done.
@@ -7803,7 +7803,7 @@ remote: Resolving deltas: 100% (4/4), completed with 4 local objects.
 To https://github.com/peelmicro/multi-docker.git
    6a70bbd..cccdcca  master -> master
 ```
-```sh
+```bash
   ✓ renders without crashing (2ms)
 ------------------|----------|----------|----------|----------|-------------------|
 File              |  % Stmts | % Branch |  % Funcs |  % Lines | Uncovered Line #s |
@@ -8318,7 +8318,7 @@ VI) Click on `Yes`
 VII) Execute the following command:
 
 `minikube start --vm-driver=hyperv--hyperv-virtual-switch=MinikubeVirtualSwitch`
-```sh
+```bash
 PS C:\WINDOWS\system32>  minikube start --vm-driver=hyperv --hyperv-virtual-switch=MinikubeVirtualSwitch
 Starting local Kubernetes v1.10.0 cluster...
 Starting VM...
@@ -8340,7 +8340,7 @@ Loading cached images from config file.
 
 5. Check if `minikube` is running executing the `minikube status` command
 
-```sh
+```bash
 PS C:\WINDOWS\system32> minikube status
 minikube: Running
 cluster: Running
@@ -8351,7 +8351,7 @@ kubectl: Correctly Configured: pointing to minikube-vm at 192.168.0.114
 
 6. Check if `kubectl` is working correctly as well executing the `kubectl cluster-info` command
 
-```sh
+```bash
 PS C:\WINDOWS\system32> kubectl cluster-info
 Kubernetes master is running at https://192.168.0.114:8443
 CoreDNS is running at https://192.168.0.114:8443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
@@ -8392,7 +8392,7 @@ $ cd simplek8s/
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
 ```
 * Create the `client-pod.yaml` document
-```yml
+```yaml
 apiVersion: v1
 kind: Pod
 metadata: 
@@ -8408,7 +8408,7 @@ spec:
 ```
 4. Make one config file to set up networking
 * Create the `client-node-port.yaml` document
-```yml
+```yaml
 apiVersion: v1
 kind: Service
 metadata: 
@@ -8483,7 +8483,7 @@ Kube-proxy is the only one window to the external world from the VM created by M
 - `apply` - **Change the current configuration** of our cluster
 - `f` - We want to specify a file that has the config changes
 - `<filename>` - Path to the file with the config 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ cd simplek8s/
 
@@ -8491,7 +8491,7 @@ Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKuberne
 $ kubectl apply -f client-pod.yaml
 pod "client-pod" created
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
 $ kubectl apply -f client-node-port.yaml
 service "client-node-port" created
@@ -8502,13 +8502,13 @@ service "client-node-port" created
 
 - `get` - we want to retrieve information about a running object.
 - `pods` - Specifies the `object type` that we want to get information about
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
 $ kubectl get pods
 NAME         READY     STATUS    RESTARTS   AGE
 client-pod   1/1       Running   0          6m
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
 $ kubectl get services
 NAME               TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
@@ -8520,13 +8520,13 @@ kubernetes         ClusterIP   10.96.0.1       <none>        443/TCP          1d
 ![](/images/other/docker-multi-docker/KubectlUse3.png)
 
 * We need to access the `IP` where `Kubernetes` is running
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
 $ minikube ip
 E1127 05:39:09.187642   88928 ip.go:48] Error getting IP:  Host is not running
 ```
 * We need to start `minikube` first if we see the previous error
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
 $ minikube start --vm-driver=hyperv --hyperv-virtual-switch=MinikubeVirtualSwitch
 Starting local Kubernetes v1.10.0 cluster...
@@ -8559,7 +8559,7 @@ Please enter your response [Y/n]: y
 ![](/images/other/docker-multi-docker/KubectlUse8.png)
 
 * We need to start `minikube` again
-```sh
+```bash
 PS C:\WINDOWS\system32> minikube start --vm-driver=hyperv --hyperv-virtual-switch=MinikubeVirtualSwitch
 Starting local Kubernetes v1.10.0 cluster...
 Starting VM...
@@ -8578,41 +8578,41 @@ Starting cluster components...
 Kubectl is now configured to use the cluster.
 Loading cached images from config file.
 ```
-```sh
+```bash
 PS C:\WINDOWS\system32> minikube status
 minikube: Running
 cluster: Running
 kubectl: Correctly Configured: pointing to minikube-vm at 10.0.0.8
 ```
-```sh
+```bash
 PS C:\WINDOWS\system32> minikube ip
 10.0.0.8
 ```
 - If you receive an error when executing `minikube stop`
-```sh
+```bash
 PS C:\WINDOWS\system32> minikube status
 minikube: Running
 cluster: Running
 kubectl: Correctly Configured: pointing to minikube-vm at 10.0.0.8
 ```
-```sh
+```bash
 PS C:\WINDOWS\system32> minikube stop
 Stopping local Kubernetes cluster...
 Error stopping machine:  Error stopping host: minikube: exit status 1
 ```
 - Execute `minikube ssh "sudo poweroff"` instead
-```sh
+```bash
 PS C:\WINDOWS\system32> minikube ssh "sudo poweroff"
 PS C:\WINDOWS\system32>
 ```
-```sh
+```bash
 PS C:\WINDOWS\system32> minikube status
 minikube: Stopped
 cluster:
 kubectl:
 ```
 - Start it again with `minikube start`
-```sh
+```bash
 Starting local Kubernetes v1.10.0 cluster...
 Starting VM...
 Getting VM IP address...
@@ -8624,7 +8624,7 @@ Starting cluster components...
 Kubectl is now configured to use the cluster.
 Loading cached images from config file.
 ```
-```sh
+```bash
 PS C:\WINDOWS\system32> minikube status
 minikube: Running
 cluster: Running
@@ -8670,13 +8670,13 @@ The most important:
 > **Kubernetes** can use both approaches, but the **Declarative** one is the recommended one.
 
 12. Check what `pods` are running
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
 $ kubectl get pods
 Unable to connect to the server: dial tcp 10.0.0.8:8443: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because
 connected host has failed to respond.
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)$ minikube status
 minikube: Running
 cluster: Running
@@ -8687,18 +8687,18 @@ Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKuberne
 $ minikube update-context
 Reconfigured kubeconfig IP, now pointing at 192.168.0.109
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
 $ kubectl get pods
 Unable to connect to the server: dial tcp 192.168.0.109:8443: connectex: No connection could be made because the target machine actively refused it.
 ```
 * Try adding the `KUBECONFIG` environment variable as explain on [Kubernetes on Windows Error: Unable to connect to the server: dial tcp [::1]:6445: connectex: No connection could be made because the target machine actively refused it](https://www.ntweekly.com/2018/05/08/kubernetes-windows-error-unable-connect-server-dial-tcp-16445-connectex-no-connection-made-target-machine-actively-refused/)
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
 $ kubectl get pods
 Unable to connect to the server: x509: certificate is valid for 10.0.0.8, 10.96.0.1, 10.0.0.1, not 192.168.0.109
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
 $ minikube status
 minikube: Running
@@ -8706,7 +8706,7 @@ cluster: Running
 kubectl: Correctly Configured: pointing to minikube-vm at 192.168.0.109
 ```
 * change the wifi connection
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
 $ minikube status
 minikube: Running
@@ -8714,11 +8714,11 @@ cluster: Running
 kubectl: Misconfigured: pointing to stale minikube-vm.
 To fix the kubectl context, run minikube update-context
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ minikube ssh "sudo poweroff"
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ minikube status
 E1129 17:18:42.844388   23924 status.go:80] Error getting cluster bootstrapper: getting kubeadm bootstrapper: getting ssh client: Error creating new ssh host from driver: Error getting ssh host name for driver: Host is not running
@@ -8736,19 +8736,19 @@ Starting cluster components...
 Kubectl is now configured to use the cluster.
 Loading cached images from config file.
 ```
-```sh
+```bash
 $ minikube status
 minikube: Running
 cluster: Running
 kubectl: Correctly Configured: pointing to minikube-vm at 192.168.0.109
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ kubectl get pods
 NAME         READY     STATUS    RESTARTS   AGE
 client-pod   1/1       Running   2          1d
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ kubectl get services
 NAME               TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
@@ -8756,22 +8756,22 @@ client-node-port   NodePort    10.107.142.176   <none>        3050:31515/TCP   1
 kubernetes         ClusterIP   10.96.0.1        <none>        443/TCP          1d
 ```
 13. How to remove the `pods` and `services` from running
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ kubectl delete pod client-pod
 pod "client-pod" deleted
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ kubectl get pods
 No resources found.
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ kubectl delete service client-node-port
 service "client-node-port" deleted
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ kubectl get services
 NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
@@ -8822,11 +8822,11 @@ after_success:
 Follow the course on https://www.udemy.com/docker-and-kubernetes-the-complete-guide
 ```
 16. Commit and push the changes to the `Github` repository
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
 $ git add .
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
 $ git status
 On branch master
@@ -8846,7 +8846,7 @@ Changes not staged for commit:
         modified:   ../README.md
         modified:   ../client/nginx/default.conf
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
 $ git commit -m "Onwards to Kubernetes!"
 [master 7b25a4a] Onwards to Kubernetes!
@@ -8873,7 +8873,7 @@ $ git commit -m "Onwards to Kubernetes!"
 [master 9ea7131] Onwards to Kubernetes!
  3 files changed, 15 insertions(+), 15 deletions(-)
  ```
- ```sh
+ ```bash
  Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
 $ git push origin HEAD
 Counting objects: 12, done.
@@ -8900,7 +8900,7 @@ To https://github.com/peelmicro/multi-docker.git
 ![](/images/other/docker-multi-docker/UpdatingAnObject.png)
 
 > `client-pod.yaml`
-```yml
+```yaml
 apiVersion: v1
 kind: Pod
 metadata: 
@@ -8914,14 +8914,14 @@ spec:
       ports:
         - containerPort: 3000
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
 $ kubectl apply -f client-pod.yaml
 pod "client-pod" configured
 ```
 - `configured` means it has updated the configuration.
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
 $ kubectl get pods
 NAME         READY     STATUS    RESTARTS   AGE
@@ -8931,7 +8931,7 @@ client-pod   1/1       Running   1          1m
 
 ![](/images/other/docker-multi-docker/GetDetailedInfoAboutAnObject.png)
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
 $ kubectl describe pod client-pod
 Name:         client-pod
@@ -8990,7 +8990,7 @@ Events:
   ```
   2. Make another change to the `pod` config file to update the `containerPort`
   > `client-pod.yaml`
-  ```yml
+  ```yaml
   apiVersion: v1
 kind: Pod
 metadata: 
@@ -9004,7 +9004,7 @@ spec:
       ports: 
         - containerPort: 9999
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
 $ kubectl apply -f client-pod.yaml
 The Pod "client-pod" is invalid: spec: Forbidden: pod updates may not change fields other than `spec.containers[*].image`, `spec.initContainers[*].image`, `spec.activeDeadlineSeconds` or `spec.tolerations` (only additions to existing tolerations)
@@ -9033,7 +9033,7 @@ B: 3000,"Protocol":"TCP","HostIP":""}],"EnvFrom":null,"Env":null,"Resources":{"L
 
 - We can make changes just updating the `pod` template
 > `client-deployment.yaml`
-```yml
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
@@ -9065,13 +9065,13 @@ spec:
 
 ![](/images/other/docker-multi-docker/RemoveAnObject.png)
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
 $ kubectl get pods
 NAME         READY     STATUS    RESTARTS   AGE
 client-pod   1/1       Running   1          57m
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
 $ kubectl delete -f client-pod
 error: the path "client-pod" does not exist
@@ -9082,25 +9082,25 @@ Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKuberne
 $ kubectl delete -f client-pod.yaml
 pod "client-pod" deleted
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
 $ kubectl get pods
 No resources found.
 ```
 - Apply the new `deployment` object
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
 $ kubectl apply -f client-deployment.yaml
 deployment.apps "client-deployment" created
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
 $ kubectl get pods
 NAME                                 READY     STATUS    RESTARTS   AGE
 client-deployment-59b84dbbf6-4bmlq   1/1       Running   0          25s
 ```
 - We can use the `get` command to obtain information about the `deployment` object
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
 $ kubectl get deployments
 NAME                DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
@@ -9112,7 +9112,7 @@ client-deployment   1         1         1            1           1m
 - `AVAILABLE`: Number of `pods` currently up and running
 
 5. Browse the `client` container that is currently running 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
 $ minikube ip
 192.168.0.109
@@ -9122,7 +9122,7 @@ $ minikube ip
 
 ![](/images/other/docker-multi-docker/BrowseDeploymentClientContainerRunning.png)
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)$ kubectl get pods -o wide
 NAME                                 READY     STATUS    RESTARTS   AGE       IP           NODE
 client-deployment-59b84dbbf6-4bmlq   1/1       Running   0          15m       172.17.0.4   minikube
@@ -9131,7 +9131,7 @@ client-deployment-59b84dbbf6-4bmlq   1/1       Running   0          15m       17
 
 6. Update the `port` from the current `pod` and other config values
 - Change the port inside the `client-deployment.yaml` config file
-```yml
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
@@ -9153,26 +9153,26 @@ spec:
             - containerPort: 9999
 ```
 - Update the config file
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
 $ kubectl apply -f client-deployment.yaml
 deployment.apps "client-deployment" configured
 ```
 - This time it has been configured without giving any error
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
 $ kubectl get deployments
 NAME                DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
 client-deployment   1         1         1            1           24m
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
 $ kubectl get pods -o wide
 NAME                                 READY     STATUS    RESTARTS   AGE       IP           NODE
 client-deployment-6ff5c58945-d2cv5   1/1       Running   0          1m        172.17.0.6   minikube
 ```
 - Kubernates delete the pod and create a new one. Check out the `AGE` value
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
 $ kubectl describe  pods
 Name:           client-deployment-6ff5c58945-d2cv5
@@ -9226,7 +9226,7 @@ Events:
 - The port assigned is `Port: 9999/TCP`
 
 * Change the `client-deployment.yaml` again to put more `replicas`
-```yml
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
@@ -9247,18 +9247,18 @@ spec:
           ports: 
             - containerPort: 9999
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
 $ kubectl apply -f client-deployment.yaml
 deployment.apps "client-deployment" configured
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
 $ kubectl get deployments
 NAME                DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
 client-deployment   5         5         5            5           9h
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
 $ kubectl get pods
 NAME                                 READY     STATUS    RESTARTS   AGE
@@ -9269,7 +9269,7 @@ client-deployment-6ff5c58945-gmzlw   1/1       Running   0          1m
 client-deployment-6ff5c58945-j9vp7   1/1       Running   0          1m
 ```
 * Change the `client-deployment.yaml` again to use another `image`
-```yml
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
@@ -9290,18 +9290,18 @@ spec:
           ports: 
             - containerPort: 9999
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
 $ kubectl apply -f client-deployment.yaml
 deployment.apps "client-deployment" configured
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
 $ kubectl get deployments
 NAME                DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
 client-deployment   5         7         3            4           9h
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
 $ kubectl get pods
 NAME                                 READY     STATUS    RESTARTS   AGE
@@ -9311,7 +9311,7 @@ client-deployment-78cf7b9dfb-pzv2z   1/1       Running   0          1m
 client-deployment-78cf7b9dfb-rzkfs   1/1       Running   0          1m
 client-deployment-78cf7b9dfb-t4hb9   1/1       Running   0          1m
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
 $ kubectl get deployments
 NAME                DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
@@ -9322,7 +9322,7 @@ client-deployment   5         5         5            5           9h
 ![](/images/other/docker-multi-docker/ChangeImage.png)
 
 I) Modify the `client-deployment.yaml` config file to use the `multi-client` image again
-```yml
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
@@ -9343,24 +9343,24 @@ spec:
           ports: 
             - containerPort: 3000
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
 $ kubectl apply -f client-deployment.yaml
 deployment.apps "client-deployment" configured
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
 $ kubectl get deployments
 NAME                DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
 client-deployment   1         1         1            1           10h
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
 $ kubectl get pods
 NAME                                 READY     STATUS    RESTARTS   AGE
 client-deployment-59b84dbbf6-dc279   1/1       Running   0          50s
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
 $ minikube ip
 192.168.0.109
@@ -9404,7 +9404,7 @@ class App extends Component {
 export default App;
 ```
 * Rebuild the `multi-client` image
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ docker build -t peelmicro/multi-client ./client
 Sending build context to Docker daemon    341kB
@@ -9470,7 +9470,7 @@ Successfully tagged peelmicro/multi-client:latest
 SECURITY WARNING: You are building a Docker image from Windows against a non-Windows Docker host. All files and directories added to build context will have '-rwxr-xr-x' permissions. It is recommended to double check and reset permissions for sensitive files and directories.
 ```
 * Push the `multi-client` image to `Docker Hub`
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ docker push peelmicro/multi-client
 The push refers to repository [docker.io/peelmicro/multi-client]
@@ -9484,7 +9484,7 @@ latest: digest: sha256:038514b50e1b2c8511175dc516554aace22daf21f263c46231201889c
 III) Recreate our `pods` with the `lastest version` of the `multi-client` image
 * As it can be seen on [Force pods to re-pull an image without changing the image tag #33664](https://github.com/kubernetes/kubernetes/issues/33664), this is not easy to get.
 * If we try to use `kubectl apply` to get the lastest image it won't work because there have been no changes on the `client-deployment.yaml` config file.
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
 $ kubectl apply -f client-deployment.yaml
 deployment.apps "client-deployment" unchanged
@@ -9496,7 +9496,7 @@ III) **Use an imperative command to update the image version the deployment shou
 
 - The third solution seems to be `the lesser evil`. It requires 2 steps:
 I) `Tag` the image with a `version number`, push to `Docker Hub`
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ docker build -t peelmicro/multi-client:v2 ./client
 Sending build context to Docker daemon    341kB
@@ -9532,7 +9532,7 @@ Successfully built 47577da1f5ee
 Successfully tagged peelmicro/multi-client:v2
 SECURITY WARNING: You are building a Docker image from Windows against a non-Windows Docker host. All files and directories added to build context will have '-rwxr-xr-x' permissions. It is recommended to double check and reset permissions for sensitive files and directories.
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ docker push peelmicro/multi-client:v2
 The push refers to repository [docker.io/peelmicro/multi-client]
@@ -9547,12 +9547,12 @@ II) `Run` a specific `kubectl` command forcing the deployment to use the the `im
 
 ![](/images/other/docker-multi-docker/RecreatePodWithLatestImage.png)
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
 $ kubectl set image deployment/client-deployment client=peelmicro/multi-client:v2
 deployment.apps "client-deployment" image updated
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex/simplek8s (master)
 $ kubectl get pods
 NAME                                READY     STATUS    RESTARTS   AGE
@@ -9572,13 +9572,13 @@ CONTAINER ID        IMAGE               COMMAND             CREATED             
 
 ![](/images/other/docker-multi-docker/ConfigureDockerClient.png)
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ eval $(minikube docker-env)
 bash: syntax error near unexpected token `('
 ```
 - It doesn't work in Windows. We need to run the following inside `PowerShell`
-```sh
+```bash
 Windows PowerShell
 Copyright (C) Microsoft Corporation. All rights reserved.
 
@@ -9590,13 +9590,13 @@ $Env:DOCKER_API_VERSION = "1.35"
 # Run this command to configure your shell:
 # & minikube docker-env | Invoke-Expression
 ```
-```sh
+```bash
 PS C:\WINDOWS\system32> $Env:DOCKER_TLS_VERIFY = "1"
 PS C:\WINDOWS\system32> $Env:DOCKER_HOST = "tcp://192.168.0.109:2376"
 PS C:\WINDOWS\system32> $Env:DOCKER_CERT_PATH = "C:\Users\juan.pablo.perez\.minikube\certs"
 PS C:\WINDOWS\system32> $Env:DOCKER_API_VERSION = "1.35"
 ```
-```sh
+```bash
 PS C:\WINDOWS\system32> docker ps
 CONTAINER ID        IMAGE                        COMMAND                  CREATED             STATUS              PORTS               NAMES
 0a99c1cb32a3        peelmicro/multi-client       "nginx -g 'daemon of…"   26 minutes ago      Up 26 minutes                           k8s_client_client-deployment-8846f9858-cvg8t_default_4ec3b4fd-f4cc-11e8-b3dd-00155dc00118_0
@@ -9627,7 +9627,7 @@ ad9d52e5db7f        k8s.gcr.io/pause-amd64:3.1   "/pause"                 25 hou
 
 ![](/images/other/docker-multi-docker/ConfigureDockerClient2.png)
 
-```sh
+```bash
 PS C:\WINDOWS\system32> docker logs 0a99c1cb32a3
 172.17.0.1 - - [30/Nov/2018:18:19:57 +0000] "GET / HTTP/1.1" 200 2057 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36" "-"
 172.17.0.1 - - [30/Nov/2018:18:19:57 +0000] "GET /static/js/main.4bd87b42.chunk.js HTTP/1.1" 200 3852 "http://192.168.0.109:31515/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36" "-"
@@ -9637,20 +9637,20 @@ PS C:\WINDOWS\system32> docker logs 0a99c1cb32a3
 172.17.0.1 - - [30/Nov/2018:18:19:58 +0000] "GET /api/values/all HTTP/1.1" 404 555 "http://192.168.0.109:31515/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36" "-"
 172.17.0.1 - - [30/Nov/2018:18:19:58 +0000] "GET /favicon.ico HTTP/1.1" 200 3870 "http://192.168.0.109:31515/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36" "-"
 ```
-```sh
+```bash
 PS C:\WINDOWS\system32> docker exec -it 0a99c1cb32a3 sh
 # ls
 bin   dev  home  lib64  mnt  proc  run   srv  tmp  var
 boot  etc  lib   media  opt  root  sbin  sys  usr
 # exit
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ kubectl get pods
 NAME                                READY     STATUS    RESTARTS   AGE
 client-deployment-8846f9858-cvg8t   1/1       Running   0          39m
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ kubectl logs client-deployment-8846f9858-cvg8t
 172.17.0.1 - - [30/Nov/2018:18:19:57 +0000] "GET / HTTP/1.1" 200 2057 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36" "-"
@@ -9663,14 +9663,14 @@ Chrome/70.0.3538.110 Safari/537.36" "-"
 172.17.0.1 - - [30/Nov/2018:18:19:58 +0000] "GET /favicon.ico HTTP/1.1" 200 3870 "http://192.168.0.109:31515/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110
 Safari/537.36" "-"
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ kubectl exec -it  client-deployment-8846f9858-cvg8t sh
 # ls
 bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
 # exit
 ```
-```sh
+```bash
 PS C:\WINDOWS\system32> docker system prune -a
 WARNING! This will remove:
         - all stopped containers
@@ -9680,7 +9680,7 @@ WARNING! This will remove:
 Are you sure you want to continue? [y/N] N
 ```
 9. `Commit` and `Push` changes to Github Repository
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ git add .
 warning: LF will be replaced by CRLF in client/src/App.js.
@@ -9691,7 +9691,7 @@ $ git status
 On branch master
 Your branch is up to date with 'origin/master'.
 ```
-```sh
+```bash
 Changes to be committed:
   (use "git reset HEAD <file>..." to unstage)
 
@@ -9699,14 +9699,14 @@ Changes to be committed:
         modified:   client/src/App.js
         new file:   simplek8s/client-deployment.yaml
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ git commit -m "Maintaining Sets of Containers with Deployments"
 [master 6fdf00d] Maintaining Sets of Containers with Deployments
  3 files changed, 21 insertions(+), 2 deletions(-)
  create mode 100644 simplek8s/client-deployment.yaml
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $  git push origin HEAD
 Counting objects: 8, done.
@@ -9725,7 +9725,7 @@ To https://github.com/peelmicro/multi-docker.git
 ![](/images/other/docker-multi-docker/MultiContainerKubernetes2.png)
 
 1. Build the `docker-compose` images 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ docker-compose up --build
 Creating network "complex_default" with the default driver
@@ -9949,7 +9949,7 @@ Stopping complex_postgres_1 ... done
 Stopping complex_redis_1    ... done
 ```
 - If there are errors execute `docker-compose up` again and if there are still error execute `docker system prune`.
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ docker system prune
 WARNING! This will remove:
@@ -10088,7 +10088,7 @@ Total reclaimed space: 325.7MB
 
 ![](/images/other/docker-multi-docker/MultiContainerKubernetes5.png)
 
-```sh
+```bash
 Successfully tagged complex_worker:latest
 Creating complex_postgres_1 ... done
 Creating complex_redis_1    ... done
@@ -10243,7 +10243,7 @@ client_1    |
 ![](/images/other/docker-multi-docker/KubernetesNodeSchema.png)
 
 8. Create the `client-deployment.yaml` configuration file that includes 3 `multi-client` images.
-```yml
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
@@ -10269,7 +10269,7 @@ spec:
 - A `NodePort` is used to expose a `set of pods` to the `outside world`. It's only good for `dev purposes!!!`
 - An `Ingress Service` is used to allow traffic `from outside` the Node `to inside` the Node.
 > `client-cluster-ip-service.yaml`
-```yml
+```yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -10283,12 +10283,12 @@ spec:
       targetPort: 3000
 ```
 10. Delete old deployments
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ kubectl get deployments
 Unable to connect to the server: dial tcp 192.168.0.109:8443: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ minikube status
 minikube: Running
@@ -10296,24 +10296,24 @@ cluster: Running
 kubectl: Misconfigured: pointing to stale minikube-vm.
 To fix the kubectl context, run minikube update-context
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ minikube update-context
 Reconfigured kubeconfig IP, now pointing at 192.168.0.107
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ kubectl get deployments
 Unable to connect to the server: dial tcp 192.168.0.107:8443: connectex: No connection could be made because the target machine actively refused it.
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ minikube status
 minikube: Running
 cluster: Running
 kubectl: Correctly Configured: pointing to minikube-vm at 192.168.0.107
 ```
-```sh
+```bash
  Shutting Down
     0%
     [                                                                                                                                                                                                          ]
@@ -10323,11 +10323,11 @@ Stopping local Kubernetes cluster...
 Error stopping machine:  Error stopping host: minikube: exit status 1
 ```
 - Execute `minikube ssh "sudo poweroff"` instead
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ minikube ssh "sudo poweroff"
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ minikube start
 Starting local Kubernetes v1.10.0 cluster...
@@ -10341,35 +10341,35 @@ Starting cluster components...
 Kubectl is now configured to use the cluster.
 Loading cached images from config file.
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ kubectl get deployments
 NAME                       DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
 python-client-deployment   1         1         1            1           5h
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ kubectl delete deployment python-client-deployment
 deployment.extensions "python-client-deployment" deleted
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ kubectl get deployments
 No resources found.
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ kubectl get services
 NAME                      TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE
 kubernetes                ClusterIP   10.96.0.1      <none>        443/TCP          3d
 python-client-node-port   NodePort    10.99.122.33   <none>        3050:31515/TCP   5h
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ kubectl delete service python-client-node-port
 service "python-client-node-port" deleted
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ kubectl get services
 NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
@@ -10377,19 +10377,19 @@ kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   3d
 ```
 11. Apply the new `client-cluster-ip-service` ClusterIP and the new `client-deployment` deployment
 - We can apply all the `config` files from a directory
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ kubectl apply -f k8s
 service "client-cluster-ip-service" created
 deployment.apps "client-deployment" created
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ kubectl get deployments
 NAME                DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
 client-deployment   3         3         3            3           50s
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ kubectl get services
 NAME                        TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)    AGE
@@ -10401,7 +10401,7 @@ kubernetes                  ClusterIP   10.96.0.1      <none>        443/TCP    
 ![](/images/other/docker-multi-docker/CreateMultiServerDeployment.png)
 
 > `server-deployment.yaml`
-```yml
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
@@ -10423,7 +10423,7 @@ spec:
             - containerPort: 5000
 ```
 > `serve-cluster-ip-service.yaml`
-```yml
+```yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -10437,7 +10437,7 @@ spec:
       targetPort: 5000
 ```
 - It could be put the two together in a single file like `server-congif.yaml` separated by `---`
-```yml
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
@@ -10472,7 +10472,7 @@ spec:
 ```
 13. Create the 'worker-deployment` deployment file.
 > `worker-deployment.yaml`
-```yml
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
@@ -10492,7 +10492,7 @@ spec:
           image: peelmicro/multi-worker
 ```
 14. Apply the `server` and `worker` config files
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ kubectl apply -f k8s
 service "client-cluster-ip-service" unchanged
@@ -10501,7 +10501,7 @@ service "server-cluster-ip-service" created
 deployment.apps "server-deployment" created
 deployment.apps "worker-deployment" created
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ kubectl get pods
 NAME                                 READY     STATUS              RESTARTS   AGE
@@ -10513,7 +10513,7 @@ server-deployment-6d557d9f77-h8trp   1/1       Running             0          37
 server-deployment-6d557d9f77-v56hs   0/1       ContainerCreating   0          37s
 worker-deployment-7c8bc558-nnpgp     0/1       ContainerCreating   0          37s
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ kubectl get deployments
 NAME                DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
@@ -10521,7 +10521,7 @@ client-deployment   3         3         3            3           1h
 server-deployment   3         3         3            3           1m
 worker-deployment   1         1         1            1           1m
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ kubectl get services
 NAME                        TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
@@ -10529,7 +10529,7 @@ client-cluster-ip-service   ClusterIP   10.96.200.46    <none>        3000/TCP  
 kubernetes                  ClusterIP   10.96.0.1       <none>        443/TCP    3d
 server-cluster-ip-service   ClusterIP   10.97.173.225   <none>        5000/TCP   2m
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ kubectl get pods
 NAME                                 READY     STATUS    RESTARTS   AGE
@@ -10541,7 +10541,7 @@ server-deployment-6d557d9f77-h8trp   1/1       Running   0          2m
 server-deployment-6d557d9f77-v56hs   1/1       Running   0          2m
 worker-deployment-7c8bc558-nnpgp     1/1       Running   0          2m
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ kubectl logs server-deployment-6d557d9f77-7zltx
 
@@ -10558,7 +10558,7 @@ Listening
   port: 5432 }
 ```  
 - This is normal because we haven't applied the `environment variables` yet
-```sh
+```bash
   Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ kubectl logs worker-deployment-7c8bc558-nnpgp
 
@@ -10568,7 +10568,7 @@ $ kubectl logs worker-deployment-7c8bc558-nnpgp
 15. Create and apply the `redis` config files.
 > `redis-deployment.yaml`
 
-```yml
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
@@ -10590,7 +10590,7 @@ spec:
             - containerPort: 6379
 ```
 > `redis-cluster-ip-service.yaml`
-```yml
+```yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -10603,7 +10603,7 @@ spec:
     - port: 6379
       targetPort: 6379
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ kubectl apply -f k8s
 service "client-cluster-ip-service" unchanged
@@ -10614,7 +10614,7 @@ service "server-cluster-ip-service" unchanged
 deployment.apps "server-deployment" unchanged
 deployment.apps "worker-deployment" unchanged
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ kubectl get pods
 NAME                                 READY     STATUS    RESTARTS   AGE
@@ -10627,7 +10627,7 @@ server-deployment-6d557d9f77-h8trp   1/1       Running   0          22m
 server-deployment-6d557d9f77-v56hs   1/1       Running   0          22m
 worker-deployment-7c8bc558-nnpgp     1/1       Running   0          22m
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ kubectl get services
 NAME                        TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
@@ -10638,7 +10638,7 @@ server-cluster-ip-service   ClusterIP   10.97.173.225   <none>        5000/TCP  
 ```
 16. Create and apply the `postgres` config files.
 > `postgres-deployment.yaml`
-```yml
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
@@ -10660,7 +10660,7 @@ spec:
             - containerPort: 5432
 ```
 > `postgres-cluster-ip-service.yaml`
-```yml
+```yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -10673,7 +10673,7 @@ spec:
     - port: 5432
       targetPort: 5432
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ kubectl apply -f k8s
 service "client-cluster-ip-service" unchanged
@@ -10686,7 +10686,7 @@ service "server-cluster-ip-service" unchanged
 deployment.apps "server-deployment" unchanged
 deployment.apps "worker-deployment" unchanged
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ kubectl get pods
 NAME                                   READY     STATUS    RESTARTS   AGE
@@ -10700,7 +10700,7 @@ server-deployment-6d557d9f77-h8trp     1/1       Running   0          31m
 server-deployment-6d557d9f77-v56hs     1/1       Running   0          31m
 worker-deployment-7c8bc558-nnpgp       1/1       Running   0          31m
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ kubectl get services
 NAME                          TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
@@ -10761,7 +10761,7 @@ server-cluster-ip-service     ClusterIP   10.97.173.225    <none>        5000/TC
 ![](/images/other/docker-multi-docker/PostgresPVC12.png)
 
 > `database-persistent-volume-claim.yaml`
-```yml
+```yaml
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -10782,13 +10782,13 @@ spec:
 ![](/images/other/docker-multi-docker/PostgresPVC14.png)
 
 - We use `kubectl get storageclass` to get to know the different `options` on our computer that kubernetes has to create a `persintent volume`
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ kubectl get storageclass
 NAME                 PROVISIONER                AGE
 standard (default)   k8s.io/minikube-hostpath   4d
 ```
-```sh
+```bash
 $ kubectl describe storageclass
 Name:            standard
 IsDefaultClass:  Yes
@@ -10810,7 +10810,7 @@ Events:                <none>
 - Each one of them has a different `provisioner` that we can put on the `config` file. 
 - We normally are ok using the `default` options for it.
 - The `postgres-deployment.yaml` must be updated to configure the `PVC` defined.
-```yml
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
@@ -10840,7 +10840,7 @@ spec:
               subPath: postgres
 ```
 - Apply the `config` files created and changed.
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ kubectl apply -f k8s
 service "client-cluster-ip-service" unchanged
@@ -10868,7 +10868,7 @@ service "server-cluster-ip-service" unchanged
 deployment.apps "server-deployment" unchanged
 deployment.apps "worker-deployment" unchanged
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ kubectl get pods
 NAME                                  READY     STATUS    RESTARTS   AGE
@@ -10882,13 +10882,13 @@ server-deployment-6d557d9f77-h8trp    1/1       Running   2          2h
 server-deployment-6d557d9f77-v56hs    1/1       Running   2          2h
 worker-deployment-7c8bc558-nnpgp      1/1       Running   2          2h
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ kubectl get pv
 NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS    CLAIM                                      STORAGECLASS   REASON    AGE
 pvc-95d69064-f59d-11e8-aa19-00155dc00118   2Gi        RWO            Delete           Bound     default/database-persistent-volume-claim   standard                 4m
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ kubectl get pvc
 NAME                               STATUS    VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
@@ -10907,7 +10907,7 @@ database-persistent-volume-claim   Bound     pvc-95d69064-f59d-11e8-aa19-00155dc
 ![](/images/other/docker-multi-docker/EnvironmentVariables3.png)
 
 - Modify the `worker-deployment.yaml` file to include the `Environment Variables`
-```yml
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
@@ -10932,7 +10932,7 @@ spec:
               value: 6379
 ```
 - Modify the `server-deployment.yaml` file to include the `Environment Variables`
-```yml
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
@@ -10971,12 +10971,12 @@ spec:
 
 ![](/images/other/docker-multi-docker/EnvironmentVariables4.png)
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ kubectl create secret generic pgpassword --from-literal PGPASSWORD=postgres_password
 secret "pgpassword" created
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ kubectl get secrets
 NAME                  TYPE                                  DATA      AGE
@@ -10984,7 +10984,7 @@ default-token-6gfdz   kubernetes.io/service-account-token   3         4d
 pgpassword            Opaque                                1         43s
 ```
 - Modify the `server-deployment.yaml` file to include the PGPASSWORD `Environment Variable`
-```yml
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
@@ -11024,7 +11024,7 @@ spec:
                   key: PGPASSWORD
 ```
 - Modify the `postgres-deployment.yaml` config file to let `Postgres` know the password we're using that can `overwrite` the `default one`.
-```yml
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
@@ -11060,7 +11060,7 @@ spec:
                   key: PGPASSWORD 
 ```
 - Apply all the config files again.
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ kubectl apply -f k8s
 service "client-cluster-ip-service" unchanged
@@ -11080,7 +11080,7 @@ error converting YAML to JSON: yaml: line 17: did not find expected '-' indicato
 ```
 - In order to fix the previous error we need to modify the config files to manage the `Integer` values.
 > `worker-deployment.yaml`
-```yml
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
@@ -11105,7 +11105,7 @@ spec:
               value: '6379'
 ```
 > `server-deployment.yaml`
-```yml
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
@@ -11144,7 +11144,7 @@ spec:
                   name: pgpassword
                   key: PGPASSWORD
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ kubectl apply -f k8s
 service "client-cluster-ip-service" unchanged
@@ -11159,7 +11159,7 @@ deployment.apps "server-deployment" configured
 error: error converting YAML to JSON: yaml: line 17: did not find expected '-' indicator
 ```
 - The `worker-deployment.yaml` config files must be changed to put the proper `indentation`. 
-```yml
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
@@ -11183,7 +11183,7 @@ spec:
               - name: REDIS_PORT
                 value: '6379'
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ kubectl apply -f k8s
 service "client-cluster-ip-service" unchanged
@@ -11235,7 +11235,7 @@ deployment.apps "worker-deployment" configured
 * Optional Reading on `Ingress Nginx`:
 Just in case we wanted to understand ingress-nginx a bit better, we can check out this article by Hongli Lai - [Studying the Kubernetes Ingress system](https://www.joyfulbikeshedding.com/blog/2018-03-26-studying-the-kubernetes-ingress-system.html).  Hongli is an absolute genius, he co-created Phusion Passenger, an extremely popular webserver that integrates with Nginx.
 * The `kubectl apply -f  https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/mandatory.yaml` command must be executed when using `Ingress Controller`
-```yml
+```yaml
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -11475,7 +11475,7 @@ spec:
             timeoutSeconds: 1
 ---
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/mandatory.yaml
 namespace "ingress-nginx" created
@@ -11488,13 +11488,13 @@ clusterrolebinding.rbac.authorization.k8s.io "nginx-ingress-clusterrole-nisa-bin
 deployment.extensions "nginx-ingress-controller" created
 ```
 - For standard usage we need to execute `minikube addons enable ingress`
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ minikube addons enable ingress
 ingress was successfully enabled
 ```
 - For `Google Cloud` the `kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/provider/cloud-generic.yaml` command must be executed
-```yml
+```yaml
 kind: Service
 apiVersion: v1
 metadata:
@@ -11522,7 +11522,7 @@ spec:
 
 ![](/images/other/docker-multi-docker/AddingIngressService9.png)
 
-```yml
+```yaml
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
@@ -11543,7 +11543,7 @@ spec:
               serviceName: server-cluster-ip-service
               servicePort: 5000
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ kubectl apply -f k8s
 service "client-cluster-ip-service" unchanged
@@ -11559,7 +11559,7 @@ deployment.apps "server-deployment" unchanged
 deployment.apps "worker-deployment" unchanged
 ```
 20. Run `minikube` locally to see if everything is working
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ minikube ip
 192.168.0.107
@@ -11586,7 +11586,7 @@ $ minikube ip
 
 21. Have a look at the `Minikube Dashboard'
 - Execute the `minikube dashboard` command
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ minikube dashboard
 Opening http://127.0.0.1:52302/api/v1/namespaces/kube-system/services/http:kubernetes-dashboard:/proxy/ in your default browser...
@@ -11596,7 +11596,7 @@ Opening http://127.0.0.1:52302/api/v1/namespaces/kube-system/services/http:kuber
 ![](/images/other/docker-multi-docker/MinukubeDasboard.png)
 
 22. `Commit` and `Push` the changes to Github Repository
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)$ git add .warning: LF will be replaced by CRLF in elastic-beanstalk/.gitignore.The file will have its original line endings in your working directory.
 warning: LF will be replaced by CRLF in elastic-beanstalk/client/.gitignore.
 The file will have its original line endings in your working directory.
@@ -11641,7 +11641,7 @@ The file will have its original line endings in your working directory.
 warning: LF will be replaced by CRLF in elastic-beanstalk/worker/package.json.
 The file will have its original line endings in your working directory.
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ git status
 On branch master
@@ -11702,7 +11702,7 @@ Changes to be committed:
         new file:   k8s/server-deployment.yaml
         new file:   k8s/worker-deployment.yaml
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ git commit -m "A Multi-Container App with Kubernetes"
 [master 2124cea] A Multi-Container App with Kubernetes
@@ -11759,7 +11759,7 @@ $ git commit -m "A Multi-Container App with Kubernetes"
  create mode 100644 k8s/server-deployment.yaml
  create mode 100644 k8s/worker-deployment.yaml
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ git push origin HEAD
 Counting objects: 14, done.
@@ -11771,7 +11771,7 @@ remote: Resolving deltas: 100% (5/5), done.
 To https://github.com/peelmicro/multi-docker.git
    6fdf00d..2124cea  HEAD -> master
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/java-complex (master)
 $ git push origin HEAD
 Counting objects: 15, done.
@@ -11996,7 +11996,7 @@ Service account description: `Account used by Travis CI to deploy the app`
 ![](/images/other/docker-multi-docker/TravisCICli3.png)
 
 - Install Ruby on the /app folder on the application using the `docker run -it -v ${pwd}:/app ruby:2.3 sh` command
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ docker run -it -v ${pwd}:/app ruby:2.3 sh
 Unable to find image 'ruby:2.3' locally
@@ -12010,7 +12010,7 @@ a054b67f1226: Waiting
 03b77d781ee0: Waiting
 662ffcc38466: Waiting
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ docker run -it -v ${pwd}:/app ruby:2.3 sh
 Unable to find image 'ruby:2.3' locally
@@ -12027,7 +12027,7 @@ Digest: sha256:0ff11ba98f96d8f5667aa7e2de24c3877c750c6c943811c4b73c5022c2dab33d
 Status: Downloaded newer image for ruby:2.3
 #
 ```
-```sh
+```bash
 Status: Downloaded newer image for ruby:2.3
 # ls
 :  bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
@@ -12042,13 +12042,13 @@ sh: 2: cd: can't cd to app
 sh: 7: cd: can't cd to app
 #
 ```
-```sh
+```bash
 C:\Users\juan.pablo.perez\OneDrive\Training\Docker\DockerAndKubernetes.TheCompleteGuide\complex>docker run -it -v ${pwd}:/app ruby:2.3 sh
 docker: Error response from daemon: create ${pwd}: "${pwd}" includes invalid characters for a local volume name, only "[a-zA-Z0-9][a-zA-Z0-9_.-]" are allowed. If you intended to pass a host directory, use absolute path.
 See 'docker run --help'.
 ```
 - **It only works with PowerShell!!!**
-```sh
+```bash
 PS C:\Users\juan.pablo.perez\OneDrive\Training\Docker\DockerAndKubernetes.TheCompleteGuide\complex> docker run -it -v ${pwd}:/app ruby:2.3 sh
 # ls
 app  bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
@@ -12057,7 +12057,7 @@ app  bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sb
 README.md  client  elastic-beanstalk  k8s  multi-k8s-224518-4310841fc6ab.json  server  worker
 ```
 - Install `Travis CI CL` inside the container with the `gem install travis --no-rdoc --no-ri` command. `--no-rdoc --no-ri` is used to avoid installing any documentation.
-```sh
+```bash
 # gem install travis --no-rdoc --no-ri
 Fetching: multipart-post-2.0.0.gem (100%)
 Successfully installed multipart-post-2.0.0
@@ -12096,7 +12096,7 @@ Fetching: travis-1.8.9.gem (100%)
 Successfully installed travis-1.8.9
 17 gems installed
 ```
-```sh
+```bash
 # travis
 Shell completion not installed. Would you like to install it now? |y| n
 Usage: travis COMMAND ...
@@ -12142,7 +12142,7 @@ Available commands:
 
 run `/usr/local/bundle/bin/travis help COMMAND` for more infos
 ```
-```sh
+```bash
 # travis login
 We need your GitHub login to identify you.
 This information will not be sent to Travis CI, only to api.github.com.
@@ -12158,21 +12158,21 @@ Successfully logged in as peelmicro!
 ![](/images/other/docker-multi-docker/TravisCICli4.png)
 
 - Copy the `multi-k8s-224518-4310841fc6ab.json` json file generated by Google into the `complex` directory.
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ ls
 client  elastic-beanstalk  k8s  multi-k8s-224518-4310841fc6ab.json  README.md  server  worker
 ```
-```sh
+```bash
 # ls
 README.md  client  elastic-beanstalk  k8s  multi-k8s-224518-4310841fc6ab.json  server  worker
 ```
 - Rename the file to `service-account.json`
-```sh
+```bash
 # ls
 README.md  client  elastic-beanstalk  k8s  server  service-account.json  worker
 ```
-```sh
+```bash
 # travis encrypt-file service-account.json -r peelmicro/multi-docker
 encrypting service-account.json for peelmicro/multi-docker
 storing result as service-account.json.enc
@@ -12189,7 +12189,7 @@ Make sure not to add service-account.json to the git repository.
 Commit all changes to your .travis.yml.
 ```
 - Copy the line above inside the `.travis.yml` file
-```yml
+```yaml
 sudo: required
 language: node_js
 node_js: 
@@ -12204,7 +12204,7 @@ before_install:
   - gcloud auth activate-service-account --key-file service-account.json
 ```
 - Check if we have the `service-account.json.enc` file created.
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ ls
 client  elastic-beanstalk  k8s  README.md  server  service-account.json  service-account.json.enc  worker
@@ -12220,7 +12220,7 @@ client  elastic-beanstalk  k8s  README.md  server  service-account.json  service
 
 ![](/images/other/docker-multi-docker/TravisCICli5.png)
 
-```sh
+```bash
 # exit
 PS C:\Users\juan.pablo.perez\OneDrive\Training\Docker\DockerAndKubernetes.TheCompleteGuide\complex>
 ```
@@ -12254,11 +12254,11 @@ Location: `us-central1-a`
 ![](/images/other/docker-multi-docker/TravisCIDeploymentScripts6.png)
 
 - Here we're adding the `GIT_SHA` unique value to avoid having to put the version manually (the SHA value that GIT assigns to the commit).
-```sh
+```bash
 $ git rev-parse HEAD
 2124cea105a313aa938b802e657692a6c28f6db7
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ git log
 commit 2124cea105a313aa938b802e657692a6c28f6db7 (HEAD -> master, origin/master)
@@ -12326,7 +12326,7 @@ Date:   Fri Nov 9 08:30:42 2018 +0000
 
 - We need to generate the latest as well to avoid having to put the `sha` value when we download the implicit image.
 - Add a new `deploy.sh` file
-```sh
+```bash
 # Create the Docker Images
 docker build -t peelmicro/multi-client:lastest peelmicro/multi-client:$SHA ./client
 docker build -t peelmicro/multi-server:lastest peelmicro/multi-server:$SHA ./server
@@ -12346,7 +12346,7 @@ kubectl set image deployments/server-deployment server=peelmicro/multi-server:$S
 kubectl set image deployments/worker-deployment worker=peelmicro/multi-worker:$SHA
 ```
 - Add a new `.travis.yml` file
-```yml
+```yaml
 sudo: required
 language: node_js
 node_js: 
@@ -12405,31 +12405,31 @@ deploy:
 ![](/images/other/docker-multi-docker/ConfigureGoogleCloudCLI3.png)
 
 - The following commands must be executed the first time with each project.
-```sh
+```bash
 Welcome to Cloud Shell! Type "help" to get started.
 Your Cloud Platform project in this session is set to multi-k8s-224518.
 Use “gcloud config set project [PROJECT_ID]” to change to a different project.
 peelmicro@cloudshell:~ (multi-k8s-224518)$ gcloud config set project multi-k8s-224518
 Updated property [core/project].
 ```
-```sh
+```bash
 peelmicro@cloudshell:~ (multi-k8s-224518)$ gcloud config set compute/zone us-central1-a
 Updated property [compute/zone].
 ```
-```sh
+```bash
 peelmicro@cloudshell:~ (multi-k8s-224518)$ gcloud container clusters get-credentials multi-cluster
 Fetching cluster endpoint and auth data.
 kubeconfig entry generated for multi-cluster.
 ```
-```sh
+```bash
 peelmicro@cloudshell:~ (multi-k8s-224518)$ kubectl get pods
 No resources found.
 ```
-```sh
+```bash
 peelmicro@cloudshell:~ (multi-k8s-224518)$ kubectl create secret generic pgpassword --from-literal PGPASSWORD=postgres_password
 secret "pgpassword" created
 ```
-```sh
+```bash
 peelmicro@cloudshell:~ (multi-k8s-224518)$ kubectl get secrets
 NAME                  TYPE                                  DATA      AGE
 default-token-vrc79   kubernetes.io/service-account-token   3         1d
@@ -12452,15 +12452,15 @@ pgpassword            Opaque                                1         34s
 
 Using Helm¶
 NGINX Ingress controller can be installed via Helm using the chart stable/nginx-ingress from the official charts repository. To install the chart with the release name my-nginx:
-```sh
+```bash
 helm install stable/nginx-ingress --name my-nginx
 ```
 If the kubernetes cluster has RBAC enabled, then run:
-```sh
+```bash
 helm install stable/nginx-ingress --name my-nginx --set rbac.create=true
 ```
 Detect installed version:
-```sh
+```bash
 POD_NAME=$(kubectl get pods -l app.kubernetes.io/name=ingress-nginx -o jsonpath='{.items[0].metadata.name}')
 kubectl exec -it $POD_NAME -- /nginx-ingress-controller --version
 ```
@@ -12480,7 +12480,7 @@ FROM SCRIPT
 Helm now has an installer script that will automatically grab the latest version of the Helm client and install it locally.
 
 You can fetch that script, and then execute it locally. It’s well documented so that you can read through it and understand what it is doing before you run it.
-```sh
+```bash
 $ curl https://raw.githubusercontent.com/helm/helm/master/scripts/get > get_helm.sh
 $ chmod 700 get_helm.sh
 $ ./get_helm.sh
@@ -12488,16 +12488,16 @@ $ ./get_helm.sh
 Yes, you can curl https://raw.githubusercontent.com/helm/helm/master/scripts/get | bash that if you want to live on the edge.
 
 - Execute these 3 lines on `Google Cloud Terminal`
-```sh
+```bash
 peelmicro@cloudshell:~ (multi-k8s-224518)$ curl https://raw.githubusercontent.com/helm/helm/master/scripts/get > get_helm.sh
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100  7236  100  7236    0     0  38970      0 --:--:-- --:--:-- --:--:-- 39113
 ```
-```sh
+```bash
 peelmicro@cloudshell:~ (multi-k8s-224518)$ chmod 700 get_helm.sh
 ```
-```sh
+```bash
 peelmicro@cloudshell:~ (multi-k8s-224518)$ ./get_helm.sh
 Downloading https://kubernetes-helm.storage.googleapis.com/helm-v2.11.0-linux-amd64.tar.gz
 Preparing to install helm and tiller into /usr/local/bin
@@ -12520,16 +12520,16 @@ See Tiller and role-based access control for more information.
 - Create a `Service account` on `Google Cloud Terminal` for Tiller and a `Cluster Role Binding` for the same purpose.
 
 ![](/images/other/docker-multi-docker/ConfigureGoogleCloudCLI13.png)
-```sh
+```bash
 peelmicro@cloudshell:~ (multi-k8s-224518)$ kubectl create serviceaccount --namespace kube-system tiller
 serviceaccount "tiller" created
 ```
-```sh
+```bash
 peelmicro@cloudshell:~ (multi-k8s-224518)$ kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
 clusterrolebinding.rbac.authorization.k8s.io "tiller-cluster-rule" created
 ```
 - Initialize `Helm`
-```sh
+```bash
 peelmicro@cloudshell:~ (multi-k8s-224518)$ helm init --service-account tiller --upgrade
 Creating /home/peelmicro/.helm
 Creating /home/peelmicro/.helm/repository
@@ -12549,7 +12549,7 @@ For more information on securing your installation see: https://docs.helm.sh/usi
 Happy Helming!
 ```
 - Install NGINX Ingress using the command suggested on the `Instalation Guide`
-```sh
+```bash
 peelmicro@cloudshell:~ (multi-k8s-224518)$ helm install stable/nginx-ingress --name my-nginx --set rbac.create=true
 NAME:   my-nginx
 LAST DEPLOYED: Thu Dec  6 17:48:51 2018
@@ -12647,7 +12647,7 @@ If TLS is enabled for the Ingress, a Secret containing the certificate and key m
 ![](/images/other/docker-multi-docker/ConfigureGoogleCloudCLI21.png)
 
 11. Deploy the `Kubernetes` application
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ git status
 On branch master
@@ -12669,13 +12669,13 @@ Untracked files:
 
 no changes added to commit (use "git add" and/or "git commit -a")
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ git add .
 warning: LF will be replaced by CRLF in .gitignore.
 The file will have its original line endings in your working directory.
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ git status
 On branch master
@@ -12690,7 +12690,7 @@ Changes to be committed:
         modified:   elastic-beanstalk/.travis.yml
         new file:   service-account.json.enc
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ git commit -m "added Kubernetes deployment scripts"
 [master 95dade6] added Kubernetes deployment scripts
@@ -12699,7 +12699,7 @@ $ git commit -m "added Kubernetes deployment scripts"
  create mode 100644 deploy.sh
  create mode 100644 service-account.json.enc
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ git push origin HEAD
 Counting objects: 8, done.
@@ -12717,7 +12717,7 @@ To https://github.com/peelmicro/multi-docker.git
 
 - The `.travis.yml` is fixed.
 `View Config`
-```yml
+```yaml
 sudo: required
 language: node_js
 node_js: 
@@ -12770,7 +12770,7 @@ deploy:
 
 ![](/images/other/docker-multi-docker/DeployKubernetesApplication4.png)
 
-```sh
+```bash
 docker build" requires exactly 1 argument.
 See 'docker build --help'.
 Usage:  docker build [OPTIONS] PATH | URL | -
@@ -12814,7 +12814,7 @@ deployment.apps "worker-deployment" image updated
 
 - Latest versions
 > `.travis.yml`
-```yml
+```yaml
 sudo: required
 language: node_js
 node_js: 
@@ -12860,7 +12860,7 @@ deploy:
     branch: master
 ```
 > `deploy.sh`
-```sh
+```bash
 # Create the Docker Images
 docker build -t peelmicro/multi-client:latest -t peelmicro/multi-client:$SHA -f ./client/Dockerfile ./client
 docker build -t peelmicro/multi-server:latest -t peelmicro/multi-server:$SHA -f ./server/Dockerfile ./server
@@ -12907,13 +12907,13 @@ kubectl set image deployments/worker-deployment worker=peelmicro/multi-worker:$S
 
 ![](/images/other/docker-multi-docker/WorkflowForChanging.png)
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ git add .
 warning: LF will be replaced by CRLF in client/src/App.js.
 The file will have its original line endings in your working directory.
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ git status
 On branch master
@@ -12924,13 +12924,13 @@ Changes to be committed:
 
         modified:   client/src/App.js
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ git commit -m "Updated Header with new Kubernetes title!"
 [master b7736d9] Updated Header with new Kubernetes title!
  1 file changed, 1 insertion(+), 1 deletion(-)
  ```
- ```sh
+ ```bash
  Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ git push origin HEAD
 Counting objects: 5, done.
@@ -13019,7 +13019,7 @@ II)
 
 ![](/images/other/docker-multi-docker/HttpsSetup19.png)
 
-```sh
+```bash
 $ helm install \
     --name cert-manager \
     --namespace kube-system \
@@ -13034,35 +13034,35 @@ $ helm install \
 ![](/images/other/docker-multi-docker/HttpsSetup21.png)
 
 - Run the script.
-```sh
+```bash
 peelmicro@cloudshell:~ (multi-k8s-224518)$ helm install \
 >     --name cert-manager \
 >     --namespace kube-system \
 >     stable/cert-manager
 -bash: helm: command not found
 ```
-```sh
+```bash
 peelmicro@cloudshell:~ (multi-k8s-224518)$ helm
 -bash: helm: command not found
 ```
-```sh
+```bash
 peelmicro@cloudshell:~ (multi-k8s-224518)$ ls
 get_helm.sh  README-cloudshell.txt
 ```
-```sh
+```bash
 peelmicro@cloudshell:~ (multi-k8s-224518)$ ./get_helm.sh
 Downloading https://kubernetes-helm.storage.googleapis.com/helm-v2.11.0-linux-amd64.tar.gz
 Preparing to install helm and tiller into /usr/local/bin
 helm installed into /usr/local/bin/helm
 tiller installed into /usr/local/bin/tiller
 ```
-```sh
+```bash
 peelmicro@cloudshell:~ (multi-k8s-224518)$ helm init --service-account tiller --upgrade
 $HELM_HOME has been configured at /home/peelmicro/.helm.
 Tiller (the Helm server-side component) has been upgraded to the current version.
 Happy Helming!
 ```
-```sh
+```bash
 peelmicro@cloudshell:~ (multi-k8s-224518)$ helm install \
 >     --name cert-manager \
 >     --namespace kube-system \
@@ -13104,7 +13104,7 @@ https://cert-manager.readthedocs.io/en/latest/reference/ingress-shim.html
 ![](/images/other/docker-multi-docker/HttpsSetup23.png)
 
 - Create the new `issuer.yaml` on the `k8s` folder.
-```yml
+```yaml
 apiVersion: certmanager.k8s.io/v1alpha1
 kind: ClusterIssuer
 metadata:
@@ -13118,7 +13118,7 @@ spec:
     http01: {}
 ```
 - Create the new `certificate.yaml` on the `k8s` folder.
-```yml
+```yaml
 apiVersion: certmanager.k8s.io/v1alpha1
 kind: Certificate
 metadata: 
@@ -13140,7 +13140,7 @@ spec:
           - k8s-multi.peelmicro.info
           - www.k8s-multi.peelmicro.info
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ git status
 On branch master
@@ -13154,11 +13154,11 @@ Untracked files:
 
 nothing added to commit but untracked files present (use "git add" to track)
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ git add .
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ git status
 On branch master
@@ -13170,7 +13170,7 @@ Changes to be committed:
         new file:   k8s/certificate.yaml
         new file:   k8s/issuer.yaml
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ git commit -m "Added certificate and issuer"
 [master 69526bd] Added certificate and issuer
@@ -13178,7 +13178,7 @@ $ git commit -m "Added certificate and issuer"
  create mode 100644 k8s/certificate.yaml
  create mode 100644 k8s/issuer.yaml
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ git push origin HEAD
 Counting objects: 5, done.
@@ -13192,12 +13192,12 @@ To https://github.com/peelmicro/multi-docker.git
 ```
 ![](/images/other/docker-multi-docker/HttpsSetup24.png)
 - Browse to `Google Could Terminal` and check if the new certificate and issuer have been created
-```sh
+```bash
 peelmicro@cloudshell:~ (multi-k8s-224518)$ kubectl get certificates
 NAME                AGE
 k8s-multi-com-tls   3m
 ```
-```sh
+```bash
 peelmicro@cloudshell:~ (multi-k8s-224518)$ kubectl describe certificates
 Name:         k8s-multi-com-tls
 Namespace:    default
@@ -13239,7 +13239,7 @@ Status:
 ![](/images/other/docker-multi-docker/HttpsSetup25.png)
 
 - Modify the `certificate.yaml` file
-```yml
+```yaml
 apiVersion: certmanager.k8s.io/v1alpha1
 kind: Certificate
 metadata:
@@ -13262,7 +13262,7 @@ spec:
           - www.peelmicro.info
 ```
 - Modiy the `issuer.yaml` file
-```yml
+```yaml
 apiVersion: certmanager.k8s.io/v1alpha1
 kind: ClusterIssuer
 metadata:
@@ -13276,7 +13276,7 @@ spec:
     http01: {}    
 ```
 - Browse to `Google Could Terminal` and check if the new certificate has been created
-```sh
+```bash
 Labels:       <none>
 Annotations:  kubectl.kubernetes.io/last-applied-configuration={"apiVersion":"certmanager.k8s.io/v1alpha1","kind":"Certificate","metadata":{"annotations":{},"name":"k8s-multi-com-tls","namespace":"default"},"spec":...
 API Version:  certmanager.k8s.io/v1alpha1
@@ -13331,7 +13331,7 @@ Events:
   Normal  CertIssued      2m    cert-manager  Certificate issued successfully
 ```
 - Check if the `k8s-multi-com` secret has been created
-```sh
+```bash
 peelmicro@cloudshell:~ (multi-k8s-224518)$ kubectl get secrets
 NAME                                 TYPE                                  DATA      AGE
 default-token-vrc79                  kubernetes.io/service-account-token   3         2d
@@ -13340,12 +13340,12 @@ my-nginx-nginx-ingress-token-mrc7x   kubernetes.io/service-account-token   3    
 pgpassword                           Opaque                                1         16h
 ```
 - Check if the `letsencrypt-prod` Cluster Issuer has been created
-```sh
+```bash
 peelmicro@cloudshell:~ (multi-k8s-224518)$ kubectl get clusterissuers
 NAME               AGE
 letsencrypt-prod   1h
 ```
-```sh
+```bash
 peelmicro@cloudshell:~ (multi-k8s-224518)$ kubectl describe clusterissuers
 Name:         letsencrypt-prod
 Namespace:
@@ -13380,7 +13380,7 @@ Status:
 Events:                    <none>
 ```
 - Modify the `ingress-service.yaml` file
-```yml
+```yaml
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
@@ -13421,11 +13421,11 @@ spec:
               servicePort: 5000
 ```
 - Commit the new changes
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ git add .
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ git status
 On branch master
@@ -13436,13 +13436,13 @@ Changes to be committed:
 
         modified:   k8s/ingress-service.yaml
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ git commit -m "Added ingress to force using TLS"
 [master b5b9873] Added ingress to force using TLS
  1 file changed, 21 insertions(+), 1 deletion(-)
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/Docker/DockerAndKubernetes.TheCompleteGuide/complex (master)
 $ git push origin HEAD
 Counting objects: 4, done.

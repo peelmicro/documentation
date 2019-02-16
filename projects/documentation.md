@@ -15,7 +15,7 @@ Within the code you can see how to:
 
 ## Set up the project
 1. Create the `folder` where the `project` is going to be developed
-```sh
+```bash
 Microsoft Windows [Version 10.0.17134.285]
 (c) 2018 Microsoft Corporation. All rights reserved.
 
@@ -26,7 +26,7 @@ C:\Users\juan.pablo.perez\OneDrive\Projects>Mkdir Documentation
 C:\Users\juan.pablo.perez\OneDrive\Projects>cd Documentation
 ```
 2. Open `Visual Studio Code`
-```sh
+```bash
 C:\Users\juan.pablo.perez\OneDrive\Projects\Documentation>code .
 ```
 
@@ -38,7 +38,7 @@ C:\Users\juan.pablo.perez\OneDrive\Projects\Documentation>code .
 ![](/images/projects/documentation/SetUpProject2.png)
 
 - Execute the `yarn global add vuepress@next` command to install the latest version
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Projects/Documentation$ yarn global add vuepress@next
 yarn global v1.9.2
 [1/4] Resolving packages...
@@ -66,7 +66,7 @@ Done in 190.12s.
 ```
 
 5. Run the project locally using the `vuepress dev` command.
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Projects/Documentation
 $ vuepress dev
 wait Extracting site metadata...
@@ -189,25 +189,25 @@ Description: `Documentation Website for Training and Projects created using VueP
 ![](/images/projects/documentation/CreateGitHubRepository4.png)
 
 5. Init `Git` with the `git init` command
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Projects/Documentation$ git init
 Initialized empty Git repository in C:/Users/juan.pablo.perez/OneDrive/Projects/Documentation/.git/
 ```
 
 6. `Link` the current project to the new `GitHub` repository
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Projects/Documentation (master)
 $ git remote add origin https://github.com/peelmicro/documentation.git
 ```
 
 7. `Commit` and `push` the current code.
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Projects/Documentation (master)
 $ git add .
 warning: LF will be replaced by CRLF in package-lock.json.
 The file will have its original line endings in your working directory.
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Projects/Documentation (master)
 $ git status
 On branch master
@@ -225,7 +225,7 @@ Changes to be committed:
         new file:   favicon.ico
         new file:   package-lock.json
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Projects/Documentation (master)
 $ git commit -m "first commit"
 [master (root-commit) f039f7a] first commit
@@ -238,7 +238,7 @@ $ git commit -m "first commit"
  create mode 100644 favicon.ico
  create mode 100644 package-lock.json
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Projects/Documentation (master)
 $ git push origin HEAD
 Counting objects: 12, done.
@@ -321,7 +321,7 @@ Basic build settings
 
 ![](/images/projects/documentation/DeployInNetlify14.png)
 
-```sh
+```bash
 4:25:38 PM: Build ready to start
 4:25:40 PM: build-image version: 12783d4d177a66bec5a23ad1097ea7bd02931128
 4:25:40 PM: buildbot version: 5a64b5cb0ce1ed3ba485935522483a4d39e15107
@@ -380,7 +380,7 @@ Basic build settings
 ```
 
 16. The problem is that `VuePress` has been installed globally instead of locally. It has to be installed locally.
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Projects/Documentation (master)
 $ yarn add vuepress@next
 yarn add v1.12.3
@@ -409,7 +409,7 @@ Done in 425.17s.
 
 17. Modify the `package.json` created to add the `script` section:
 > `package.json`
-```sh
+```bash
 {
   "scripts": {
     "docs:build": "vuepress build"
@@ -421,7 +421,7 @@ Done in 425.17s.
 ```
 
 18. Test if the `build` command is executed correctly checking if the `dist` is created as expected
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Projects/Documentation (master)
 $ yarn docs:build
 yarn run v1.12.3
@@ -452,13 +452,13 @@ Done in 79.58s.
 ```
 
 20. `Commit` and `push` the changes
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Projects/Documentation (master)
 $ git add .
 warning: LF will be replaced by CRLF in .gitignore.
 The file will have its original line endings in your working directory.
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Projects/Documentation (master)
 $ git status
 On branch master
@@ -470,7 +470,7 @@ Changes to be committed:
         new file:   package.json
         new file:   yarn.lock
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Projects/Documentation (master)
 $ git commit -m "Installed VuePress locally"
 [master 00a61f9] Installed VuePress locally
@@ -479,7 +479,7 @@ $ git commit -m "Installed VuePress locally"
  create mode 100644 package.json
  create mode 100644 yarn.lock
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Projects/Documentation (master)
 $ git push origin HEAD
 Counting objects: 5, done.
@@ -497,7 +497,7 @@ To https://github.com/peelmicro/documentation.git
 
 ![](/images/projects/documentation/DeployInNetlify17.png)
 
-```sh
+```bash
 5:06:24 PM: Build ready to start
 5:06:26 PM: build-image version: 12783d4d177a66bec5a23ad1097ea7bd02931128
 5:06:26 PM: buildbot version: 5a64b5cb0ce1ed3ba485935522483a4d39e15107
@@ -650,7 +650,7 @@ To https://github.com/peelmicro/documentation.git
 ![](/images/projects/documentation/DeployInNetlify21.png)
 
 26. Click on `Trigger deploy -> Deploy site`
-```sh
+```bash
 5:36:04 PM: Build ready to start
 5:36:05 PM: build-image version: 12783d4d177a66bec5a23ad1097ea7bd02931128
 5:36:05 PM: buildbot version: 5a64b5cb0ce1ed3ba485935522483a4d39e15107
@@ -978,7 +978,7 @@ https://documentation.peelmicro.info/
 
 5. Modify the `config.js` to include the values sent by `Algolia`
 > `config.js`
-```json(8)
+```json
 module.exports = {
   title: `Documentation`,
   description: `For Training and Projects`,
@@ -1160,7 +1160,7 @@ In order to create one of the folders (`Static Webs` in this case) with document
 
 1. Modify the `config.js` file to include the `sidebar` for the `Static Web` folder.
 > `config.js`
-```sh
+```bash
 module.exports = {
   title: `Documentation`,
   description: `For Training and Projects`,
@@ -1259,11 +1259,11 @@ Nowadays is highly used as a base tool to generate Static Webs.
 
 6. Commit and deploy the changes
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Projects/Documentation (master)
 $ git add .
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Projects/Documentation (master)
 $ git status
 On branch master
@@ -1301,7 +1301,7 @@ Changes to be committed:
         new file:   staticwebs/vuepress-how-to-use-vuepress-for-a-documentation-site.md
         new file:   staticwebs/vuepress.md
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Projects/Documentation (master)
 $ git commit -m "Added the Static Webs Folder"
 [master 425132a] Added the Static Webs Folder
@@ -1334,7 +1334,7 @@ $ git commit -m "Added the Static Webs Folder"
  create mode 100644 staticwebs/vuepress-how-to-use-vuepress-for-a-documentation-site.md
  create mode 100644 staticwebs/vuepress.md
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Projects/Documentation (master)
 $ git push origin HEAD
 Counting objects: 40, done.
@@ -1401,7 +1401,7 @@ Tracking ID: `UA-130949957-1`
 ![](/images/projects/documentation/GoogleAnalytics5.png)
 
 4. Install the new `Google Analytics plugin`
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Projects/Documentation (master)
 $ yarn add -D @vuepress/plugin-google-analytics
 yarn add v1.12.3
@@ -1635,7 +1635,7 @@ module.exports = ctx => ({
 
 6. Commit and push changes and ensure there are no errors on the production website.
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Projects/Documentation (master)
 $ git commit -m "Added Google Analytics"
 [master 29ac136] Added Google Analytics
@@ -1703,7 +1703,7 @@ $ git commit -m "Added Google Analytics"
  create mode 100644 .vuepress/public/images/projects/documentation/SetupACustomDomain8.png
  create mode 100644 .vuepress/public/images/projects/documentation/SetupACustomDomain9.png
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Projects/Documentation (master)
 $ git push origin HEAD
 Counting objects: 77, done.

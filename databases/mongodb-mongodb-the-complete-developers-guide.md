@@ -97,7 +97,7 @@ The [MongoDB - The Complete Developer's Guide](https://www.udemy.com/mongodb-the
 
 ![](/images/databases/mongodb-mongodb-the-complete-developers-guide/Introduction18d.png)
 - Check if it works by typing `mongo` at the `command propmt`
-```sh
+```bash
 Microsoft Windows [Version 10.0.17134.285]
 (c) 2018 Microsoft Corporation. All rights reserved.
 
@@ -127,14 +127,14 @@ To permanently disable this reminder, run the following command: db.disableFreeM
 ```
 
 - In order to stop `MongoDB` we can run `net stop MongoDB` because it is running as a service
-```sh
+```bash
 C:\WINDOWS\system32>net stop MongoDB
 The MongoDB Server service is stopping.
 The MongoDB Server service was stopped successfully.
 ```
 
 - In order to start `MongoDB`we can run `mongod`
-```sh
+```bash
 C:\WINDOWS\system32>mongod
 2018-12-21T10:59:52.717-0800 I CONTROL  [main] Automatically disabling TLS 1.0, to force-enable TLS 1.0 specify --sslDisabledProtocols 'none'
 2018-12-21T10:59:52.722-0800 I CONTROL  [initandlisten] MongoDB starting : pid=19744 port=27017 dbpath=C:\data\db\ 64-bit host=RIMDUB-0232
@@ -172,7 +172,7 @@ C:\WINDOWS\system32>mongod
 ```
 
 - To start MongoDB in the default server we have to add the `--dbpath "C:\Program Files\MongoDB\Server\4.0\data"` parameter
-```sh
+```bash
 C:\WINDOWS\system32>mongod --dbpath "C:\Program Files\MongoDB\Server\4.0\data"
 2018-12-21T11:03:44.233-0800 I CONTROL  [main] Automatically disabling TLS 1.0, to force-enable TLS 1.0 specify --sslDisabledProtocols 'none'
 2018-12-21T11:03:44.240-0800 I CONTROL  [initandlisten] MongoDB starting : pid=18604 port=27017 dbpath=C:\Program Files\MongoDB\Server\4.0\data 64-bit host=RIMDUB-0232
@@ -210,7 +210,7 @@ C:\WINDOWS\system32>mongod --dbpath "C:\Program Files\MongoDB\Server\4.0\data"
 ```
 4. Query MongoDB
 - Check the current databases
-```sh
+```bash
 > show dbs
 TasksAppMongo  0.000GB
 admin          0.000GB
@@ -220,13 +220,13 @@ local          0.000GB
 ```
 
 - We can use a `database` even if it doesn't exist yet
-```sh
+```bash
 > use shop
 switched to db shop
 ```
 
 - We can create a new `collection`
-```sh
+```bash
 > db.products.insertOne({name: "Book", price: 12.99})
 {
         "acknowledged" : true,
@@ -235,11 +235,11 @@ switched to db shop
 ```
 
 - We can query the data just created
-```sh
+```bash
 > db.products.find()
 { "_id" : ObjectId("5c1d3b5499e4cbc46ce07f10"), "name" : "Book", "price" : 12.99 }
 ```
-```sh
+```bash
 > db.products.find().pretty()
 {
         "_id" : ObjectId("5c1d3b5499e4cbc46ce07f10"),
@@ -247,7 +247,7 @@ switched to db shop
         "price" : 12.99
 }
 ```
-```sh
+```bash
 > db.products.insertOne({name: "Notebook", price: 17.99, description: "Large Notebook with 500 pages"})
 {
         "acknowledged" : true,
@@ -266,14 +266,14 @@ switched to db shop
         "description" : "Large Notebook with 500 pages"
 }
 ```
-```sh
+```bash
 > db.products.insertOne({name: "Another Computer", price: 1299.49, description: "A high quality computer", details: {cpu: "Intel i7 8770", memory: 32}})
 {
         "acknowledged" : true,
         "insertedId" : ObjectId("5c1d3dcd99e4cbc46ce07f13")
 }
 ```
-```sh
+```bash
 > db.products.find().pretty()
 {
         "_id" : ObjectId("5c1d3b5499e4cbc46ce07f10"),
@@ -316,7 +316,7 @@ switched to db shop
 ![](/images/databases/mongodb-mongodb-the-complete-developers-guide/Database.png)
 
 1. `show dbs` shows all the available databases
-```sh
+```bash
 > show dbs
 TasksAppMongo  0.000GB
 admin          0.000GB
@@ -327,7 +327,7 @@ shop           0.000GB
 ```
 2. Switch to a database using the `use` comand.
 - if the database doesn't exist it is created `on the fly` the first time we add any data on it
-```sh
+```bash
 > use flights
 switched to db flights
 > show dbs
@@ -339,7 +339,7 @@ local          0.000GB
 shop           0.000GB
 ```
 3. Insert a new `document` with the `db.collectionName.insertOne({json data})` function
-```sh
+```bash
 > db.flightData.insertOne({
 ...     "departureAirport": "MUC",
 ...     "arrivalAirport": "SFO",
@@ -364,7 +364,7 @@ Tag | Description | Example
 
 4. Get the documents in a collection using `find` and with `pretty` if we want it in a `pretty way`
 
-```sh
+```bash
 > db.flightData.find()
 { "_id" : ObjectId("5c1ddb9799e4cbc46ce07f14"), "departureAirport" : "MUC", "arrivalAirport" : "SFO", "aircraft" : "Airbus A380", "distance" : 12000, "intercontinental" : true }
 > db.flightData.find().pretty()
@@ -384,7 +384,7 @@ Tag | Description | Example
 
 6. Schemaless. Each document can have a `different` schema.
 
-```sh
+```bash
 > db.flightData.insertOne({departureAirport: "TXL",arrivalAirport: "LHR"})
 {
         "acknowledged" : true,
@@ -407,7 +407,7 @@ Tag | Description | Example
 ```
 
 - The id can be assigned when creating the document adding it with the `_id` key.
-```sh
+```bash
 > db.flightData.insertOne({departureAirport: "TXL",arrivalAirport: "LHR", _id: "txl_lhr-1"})
 { "acknowledged" : true, "insertedId" : "txl_lhr-1" }
 > db.flightData.find().pretty()
@@ -431,7 +431,7 @@ Tag | Description | Example
 }
 ```
 - We cannot insert the same `id` again
-```sh
+```bash
 > db.flightData.insertOne({departureAirport: "TXL",arrivalAirport: "LHR", _id: "txl_lhr-1"})
 2018-12-22T10:06:51.925+0000 E QUERY    [js] WriteError: E11000 duplicate key error collection: flights.flightData index: _id_ dup key: { : "txl_lhr-1" } :
 WriteError({
@@ -459,7 +459,7 @@ DBCollection.prototype.insertOne@src/mongo/shell/crud_api.js:252:9
 ![](/images/databases/mongodb-mongodb-the-complete-developers-guide/Database4.png)
 
 - Clear one document using `deleteOne`
-```sh
+```bash
 > db.flightData.find().pretty()
 {
         "_id" : ObjectId("5c1ddb9799e4cbc46ce07f14"),
@@ -496,7 +496,7 @@ DBCollection.prototype.insertOne@src/mongo/shell/crud_api.js:252:9
         "arrivalAirport" : "LHR"
 }
 ```
-```sh
+```bash
 > db.flightData.deleteOne({_id: "txl_lhr-1"})
 { "acknowledged" : true, "deletedCount" : 1 }
 > db.flightData.find().pretty()
@@ -510,7 +510,7 @@ DBCollection.prototype.insertOne@src/mongo/shell/crud_api.js:252:9
 }
 ```
 - Update one document using `updateOne`
-```sh
+```bash
 > db.flightData.insertOne({departureAirport: "TXL",arrivalAirport: "LHR", _id: "txl_lhr-1"})
 { "acknowledged" : true, "insertedId" : "txl_lhr-1" }
 > db.flightData.find().pretty()
@@ -537,7 +537,7 @@ WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
         "arrivalAirport" : "LHR"
 }
 ```
-```sh
+```bash
 > db.flightData.updateOne({"marker": "delete"},  {$set: {"departureAirport": "MUC","arrivalAirport": "SFO", "aircraft": "Airbus A380", distance: 12000, "intercontinental": true  }})
 { "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
 > db.flightData.find().pretty()
@@ -556,14 +556,14 @@ WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
         "arrivalAirport" : "LHR"
 }
 ```
-```sh
+```bash
 > db.flightData.updateOne({distance: 12000}, {marketing: 'direct'})
 2018-12-22T11:07:02.332+0000 E QUERY    [js] Error: the update operation document must contain atomic operators :
 DBCollection.prototype.updateOne@src/mongo/shell/crud_api.js:542:1
 @(shell):1:1
 ```
 - Use `updateMany` to update the same data to all the documents
-```sh
+```bash
 > db.flightData.updateMany({},{$set: {marker: "toDelete"}})
 { "acknowledged" : true, "matchedCount" : 2, "modifiedCount" : 2 }
 > db.flightData.find().pretty()
@@ -585,7 +585,7 @@ DBCollection.prototype.updateOne@src/mongo/shell/crud_api.js:542:1
 ```
 
 - Delete many documents using `deleteMany`. We need to pass a `criteria`.
-```sh
+```bash
 > db.flightData.deleteMany()
 2018-12-22T10:45:38.561+0000 E QUERY    [js] Error: find() requires query criteria :
 Bulk/this.find@src/mongo/shell/bulk_api.js:781:1
@@ -594,14 +594,14 @@ DBCollection.prototype.deleteMany@src/mongo/shell/crud_api.js:408:20
 ```
 - We can use `{}` (all) as the criteria to delete all.
 - We can use another criteria to delete all the ones that match the criteria.
-```sh
+```bash
 > db.flightData.deleteMany( {marker: "toDelete"})
 { "acknowledged" : true, "deletedCount" : 2 }
 > db.flightData.find().pretty()
 >
 ```
 - Use `insertMany` to insert many documents in one go.
-```sh
+```bash
 > db.flightData.insertMany([
 ...   {
 ...     "departureAirport": "MUC",
@@ -645,7 +645,7 @@ DBCollection.prototype.deleteMany@src/mongo/shell/crud_api.js:408:20
 }
 ```
 - Search for specific documents using `find` and `findOne` with search criteria
-```sh
+```bash
 > db.flightData.find({"intercontinental" : true}).pretty()
 {
         "_id" : ObjectId("5c1e1cf599e4cbc46ce07f16"),
@@ -656,7 +656,7 @@ DBCollection.prototype.deleteMany@src/mongo/shell/crud_api.js:408:20
         "intercontinental" : true
 }
 ```
-```sh
+```bash
 > db.flightData.find({distance : 12000}).pretty()
 {
         "_id" : ObjectId("5c1e1cf599e4cbc46ce07f16"),
@@ -667,7 +667,7 @@ DBCollection.prototype.deleteMany@src/mongo/shell/crud_api.js:408:20
         "intercontinental" : true
 }
 ```
-```sh
+```bash
 > db.flightData.find({distance : {$gt:1000}}).pretty()
 {
         "_id" : ObjectId("5c1e1cf599e4cbc46ce07f16"),
@@ -681,12 +681,12 @@ DBCollection.prototype.deleteMany@src/mongo/shell/crud_api.js:408:20
 ::: warning
 `pretty` is not supported with `findOne`
 :::
-```sh
+```bash
 > db.flightData.findOne({distance : {$gt:900}}).pretty()
 2018-12-23T06:13:01.752+0000 E QUERY    [js] TypeError: db.flightData.findOne(...).pretty is not a function :
 @(shell):1:1
 ```
-```sh
+```bash
 > db.flightData.findOne({distance : {$gt:900}})
 {
         "_id" : ObjectId("5c1e1cf599e4cbc46ce07f16"),
@@ -698,7 +698,7 @@ DBCollection.prototype.deleteMany@src/mongo/shell/crud_api.js:408:20
 }
 ```
 - Use `update`, `updatemany` and `updateOne` to update documents.
-```sh
+```bash
 > db.flightData.updateOne({"_id" : ObjectId("5c1e1cf599e4cbc46ce07f16")}, {$set: {delayed: true}})
 { "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
 > db.flightData.find({distance : 12000}).pretty()
@@ -712,11 +712,11 @@ DBCollection.prototype.deleteMany@src/mongo/shell/crud_api.js:408:20
         "delayed" : true
 }
 ```
-```sh
+```bash
 > db.flightData.updateMany({"_id" : ObjectId("5c1e1cf599e4cbc46ce07f16")}, {$set: {delayed: true}})
 WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 0 })
 ```
-```sh
+```bash
 > db.flightData.updateMany({"_id" : ObjectId("5c1e1cf599e4cbc46ce07f16")}, {$set: {delayed: false}})
 WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
 > db.flightData.find({distance : 12000}).pretty()
@@ -731,13 +731,13 @@ WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
 }
 ```
 - `Update` does not need `$set` but it `replaces` the content if we use it.
-```sh
+```bash
 > db.flightData.update({"_id" : ObjectId("5c1e1cf599e4cbc46ce07f16")}, {delayed: true})
 WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
 > db.flightData.find({distance : 12000}).pretty()
 ```
 - It is better to use `replace` and `replaceOne` if we want to replace the whole document.
-```sh
+```bash
 > db.flightData.replaceOne({"_id" : ObjectId("5c1e1cf599e4cbc46ce07f16")}, {
 ...     "departureAirport": "MUC",
 ...     "arrivalAirport": "SFO",
@@ -757,7 +757,7 @@ WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
 }
 ```
 8. `find` and the `cursor` object.
-```sh
+```bash
 > db.passengers.insertMany([
 ...   {
 ...     "name": "Max Schwarzmueller",
@@ -975,7 +975,7 @@ WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
 Type "it" for more
 ```
 - We have to put `it` to see the rest
-```sh
+```bash
 > it
 {
         "_id" : ObjectId("5c1f2bcb99e4cbc46ce07f2c"),
@@ -988,7 +988,7 @@ Type "it" for more
 ![](/images/databases/mongodb-mongodb-the-complete-developers-guide/Database5.png)
 
 - We can add `toArray` to get all the data.
-```sh
+```bash
 > db.passengers.find().toArray()
 [
         {
@@ -1099,7 +1099,7 @@ Type "it" for more
 ]
 ```
 - We can use `forEach` to do something for each document `found`. The code that we have to put is `Java` because is the language used to create the `MongoDB Console`
-```sh
+```bash
 > db.passengers.find().forEach((passenger) => {printjson(passenger)})
 {
         "_id" : ObjectId("5c1f2bcb99e4cbc46ce07f18"),
@@ -1212,7 +1212,7 @@ Type "it" for more
 ![](/images/databases/mongodb-mongodb-the-complete-developers-guide/Database6.png)
 
 - `Projection` is the snapshot where we put the data that we need.
-```sh
+```bash
 > db.passengers.find({}, {name: 1})
 { "_id" : ObjectId("5c1f2bcb99e4cbc46ce07f18"), "name" : "Max Schwarzmueller" }
 { "_id" : ObjectId("5c1f2bcb99e4cbc46ce07f19"), "name" : "Manu Lorenz" }
@@ -1239,7 +1239,7 @@ Type "it" for more
 { "_id" : ObjectId("5c1f2bcb99e4cbc46ce07f2c"), "name" : "Gordon Black" }
 ```
 - `_id` is always included. We need to explicity unselect it.
-```sh
+```bash
 { "_id" : ObjectId("5c1f2bcb99e4cbc46ce07f2c"), "name" : "Gordon Black" }
 > db.passengers.find({}, {_id: 0, name: 1})
 { "name" : "Max Schwarzmueller" }
@@ -1272,7 +1272,7 @@ Type "it" for more
 
 ![](/images/databases/mongodb-mongodb-the-complete-developers-guide/Database7.png)
 
-```sh
+```bash
 > db.flightData.updateMany({}, {$set: {status: {description: "on-time", updated: "1 hour ago"}}})
 { "acknowledged" : true, "matchedCount" : 2, "modifiedCount" : 2 }
 > db.flightData.find().pretty()
@@ -1301,7 +1301,7 @@ Type "it" for more
         }
 }
 ```
-```sh
+```bash
 > db.flightData.updateMany({}, {$set: {status: {description: "on-time", updated: "1 hour ago", details: {responsible:"Juan Pablo Perez"}}}})
 { "acknowledged" : true, "matchedCount" : 2, "modifiedCount" : 2 }
 > db.flightData.find().pretty()
@@ -1340,7 +1340,7 @@ Type "it" for more
 
 ![](/images/databases/mongodb-mongodb-the-complete-developers-guide/Database8.png)
 
-```sh
+```bash
 > db.passengers.updateOne({name: "Albert Twostone"}, {$set: {hobbies: ["sports", "cooking"]}})
 { "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
 > db.passengers.find({name: "Albert Twostone"}).pretty()
@@ -1355,11 +1355,11 @@ Type "it" for more
 }
 ```
 11. Querying embedded documents
-```sh
+```bash
 > db.passengers.findOne({name: "Albert Twostone"}).hobbies
 [ "sports", "cooking" ]
 ```
-```sh
+```bash
 > db.passengers.find({hobbies: "sports"}).pretty()
 {
         "_id" : ObjectId("5c1f2bcb99e4cbc46ce07f2b"),
@@ -1371,7 +1371,7 @@ Type "it" for more
         ]
 }
 ```
-```sh
+```bash
 > db.flightData.find({"status.description": "on-time" }).pretty()
 {
         "_id" : ObjectId("5c1e1cf599e4cbc46ce07f16"),
@@ -1404,7 +1404,7 @@ Type "it" for more
         }
 }
 ```
-```sh
+```bash
 > db.flightData.find({"status.details.responsible": "Juan Pablo Perez" }).pretty()
 {
         "_id" : ObjectId("5c1e1cf599e4cbc46ce07f16"),
@@ -1440,12 +1440,12 @@ Type "it" for more
 12. Assignment
 
 - New database
-```sh
+```bash
 > use hospital
 switched to db hospital
 ```
 - Insert documents
-```sh
+```bash
 > db.patient.insertMany([
 ... {
 ... "firstName":  "Mickey",
@@ -1519,7 +1519,7 @@ switched to db hospital
 }
 ```
 - Update one document
-```sh
+```bash
 > db.patient.updateOne({"firstName" : "Minnie"}, {$set: {"age": 29, "history": [{"disease":  "bronchitis",  "treatment": "antibiotic 3 times a day for 9 days"}, {"filmography": ["Plane Crazy","Steamboat Willie","Mickey's Good","..."]}]}})
 { "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
 > db.patient.find({"firstName" : "Minnie"}).pretty()
@@ -1545,7 +1545,7 @@ switched to db hospital
 }
 ```
 - Find documents where Age greater than 34
-```sh
+```bash
 > db.patient.find({ age: {$gt: 34}}).pretty()
 {
         "_id" : ObjectId("5c1f6bc899e4cbc46ce07f2d"),
@@ -1573,7 +1573,7 @@ switched to db hospital
 }
 ```
 - Delete one patient
-```sh
+```bash
 { "acknowledged" : true, "deletedCount" : 1 }
 > db.patient.find().pretty()
 {
@@ -1616,7 +1616,7 @@ switched to db hospital
 ## Schemas & Relations: How to Structure Documents
 1. Resetting your database. 
 - We can can simply load the database we want to get rid of (`use databaseName`) and then execute `db.dropDatabase()`.
-```sh
+```bash
 > show dbs
 TasksAppMongo  0.000GB
 admin          0.000GB
@@ -1635,7 +1635,7 @@ switched to db shop
 { "dropped" : "shop", "ok" : 1 }
 ```
 - We could get rid of a single collection in a database via `db.myCollection.drop()`.
-```sh
+```bash
 > use hospital
 switched to db hospital
 > db.getCollectionNames()
@@ -1649,7 +1649,7 @@ true
 2. Why Do We Use Schemas?
 ![](/images/databases/mongodb-mongodb-the-complete-developers-guide/SchemasRelations.png)
 - we can insert some documnents without schema
-```sh
+```bash
 > db.products.insertOne({name: "Book", price: 12.99})
 {
         "acknowledged" : true,
@@ -1678,7 +1678,7 @@ true
 
 ![](/images/databases/mongodb-mongodb-the-complete-developers-guide/SchemasRelations2.png)
 
-```sh
+```bash
 > db.products.insertOne({name: "Book", price: 12.99, details: null})
 {
         "acknowledged" : true,
@@ -1723,7 +1723,7 @@ true
 
 - Insert a document with different `Data Types`.
 
-```sh
+```bash
 > use companyData
 switched to db companyData
 > db.companies.insertOne({name: "Fresh Apples Inc", isStartup: true, employees: 33, funding: 12345678901234567890, details: {ceo: "Mark Super"}, tags: ["super","perfect"], foundingDate: new Date(), insertedAt: new Timestamp()})
@@ -1751,7 +1751,7 @@ switched to db companyData
 ```
 - The `12345678901234567890` long number inserted in the `funding` value is truncated to `12345678901234567000`.
 
-```sh
+```bash
 > db.numbers.insertOne({a: 1})
 {
         "acknowledged" : true,
@@ -1775,7 +1775,7 @@ switched to db companyData
 }
 ```
 - With `drop` the colection is `completely removed`.
-```sh
+```bash
 > db.companies.drop()
 true
 > db.stats()
@@ -1796,7 +1796,7 @@ true
 }
 ```
 - With `deleteMany` it is still there.
-```sh
+```bash
 > db.numbers.deleteMany({})
 { "acknowledged" : true, "deletedCount" : 1 }
 > db.stats()
@@ -1819,7 +1819,7 @@ true
 [ "numbers" ]
 ```
 - Internally the numbers are stored depending on their type.
-```sh
+```bash
 > db.numbers.insertOne({a: NumberInt(1)})
 {
         "acknowledged" : true,
@@ -1843,7 +1843,7 @@ true
 }
 ```
 - We can know the type of the value using `typeof`
-```sh
+```bash
 > typeof db.numbers.findOne().a
 number
 ```
@@ -1867,7 +1867,7 @@ number
 ![](/images/databases/mongodb-mongodb-the-complete-developers-guide/SchemasRelations6.png)
 
 - Querying using variables
-```sh
+```bash
 > db.patients.insertOne({ name: "Max", age: 29, diseaseSummary: "summary-max-1"})
 {
         "acknowledged" : true,
@@ -1903,7 +1903,7 @@ summary-max-1
 ```
 - It will be easier if we add the information `embedded`
 
-```sh
+```bash
 > db.patients.deleteMany({})
 { "acknowledged" : true, "deletedCount" : 1 }
 > db.patients.insertOne({ name: "Max", age: 29, diseases: ["cold","broken leg"]})
@@ -1926,7 +1926,7 @@ summary-max-1
 
 ![](/images/databases/mongodb-mongodb-the-complete-developers-guide/SchemasRelations7.png)
 
-```sh
+```bash
 > use carData
 switched to db carData
 > db.persons.insertOne({name: "Max", car: {model: "BMW", price: 40000}})
@@ -1961,7 +1961,7 @@ switched to db carData
 
 ![](/images/databases/mongodb-mongodb-the-complete-developers-guide/SchemasRelations8.png)
 
-```sh
+```bash
 > use support
 switched to db support
 > db.questionThreads.insertOne({creator: "Max", question: "How does that all work?", answers: ["q1a1","q1a2"]})
@@ -2013,7 +2013,7 @@ switched to db support
 
 ![](/images/databases/mongodb-mongodb-the-complete-developers-guide/SchemasRelations9.png)
 
-```sh
+```bash
 > db.cities.insertOne({name: "New York City", coordinates: {lat: 21, lng: 55}})
 {
         "acknowledged" : true,
@@ -2053,7 +2053,7 @@ switched to db support
 
 ![](/images/databases/mongodb-mongodb-the-complete-developers-guide/SchemasRelations10.png)
 
-```sh
+```bash
 > use shop
 switched to db shop
 > db.products.insertOne({title: "Book", price: 12.99})
@@ -2113,7 +2113,7 @@ true
 
 ![](/images/databases/mongodb-mongodb-the-complete-developers-guide/SchemasRelations11.png)
 
-```sh
+```bash
 > use bookRegistry
 switched to db bookRegistry
 > db.books.insertOne({name: "My favorite Book", authors: [{name: "Max", age: 29}, {name: "Manuel", age: 30}]})
@@ -2180,7 +2180,7 @@ switched to db bookRegistry
 
 ![](/images/databases/mongodb-mongodb-the-complete-developers-guide/SchemasRelations13.png)
 
-```sh
+```bash
 > db.books.aggregate([{$lookup: {from: "authors", localField: "authors", foreignField: "_id", as: "creators"}}]).pretty()
 {
         "_id" : ObjectId("5c29d629ba280a45572d8ba5"),
@@ -2215,7 +2215,7 @@ switched to db bookRegistry
 
 ![](/images/databases/mongodb-mongodb-the-complete-developers-guide/SchemasRelations15.png)
 
-```sh
+```bash
 > db.users.insertMany([{name: "Max", age: 29, email: "max@test.com"},{name: "Manuel", age: 30, email: "manuel@test.com"}])
 {
         "acknowledged" : true,
@@ -2267,7 +2267,7 @@ switched to db bookRegistry
 
 ![](/images/databases/mongodb-mongodb-the-complete-developers-guide/SchemasRelations17.png)
 
-```sh
+```bash
 > db.posts.drop()
 true
 > db.posts.findOne()
@@ -2367,7 +2367,7 @@ DBCollection.prototype.insertOne@src/mongo/shell/crud_api.js:252:9
 ```
 
 - We use `db.runCommand` and `collMod` to update the validation.
-```sh
+```bash
 > db.runCommand({
 ...   collMod: 'posts',
 ...   validator: {
@@ -2427,7 +2427,7 @@ DBCollection.prototype.insertOne@src/mongo/shell/crud_api.js:252:9
 
 2. Execute the `mondod --help` to see all the `command line options`
 
-```sh
+```bash
 C:\WINDOWS\system32>mongod --help
 Options:
 
@@ -2613,7 +2613,7 @@ WiredTiger options:
 
 - Current content of the `mongod.cfg` file
 > `mongod.cfg`
-```yml
+```yaml
 # mongod.conf
 
 # for documentation of all options, see:
@@ -2660,7 +2660,7 @@ net:
 
 - We can execute `mongo` to open the shell
 
-```sh
+```bash
 C:\WINDOWS\system32>mongo
 MongoDB shell version v4.0.5
 connecting to: mongodb://127.0.0.1:27017/?gssapiServiceName=mongodb
@@ -2685,7 +2685,7 @@ To permanently disable this reminder, run the following command: db.disableFreeM
 
 - We can execute `help` to see some insteresting commands from the `shell`
 
-```sh
+```bash
 > help
         db.help()                    help on db methods
         db.mycoll.help()             help on collection methods
@@ -2711,7 +2711,7 @@ To permanently disable this reminder, run the following command: db.disableFreeM
         exit                         quit the mongo shell
 ```
 
-```sh
+```bash
 > db.help()
 DB methods:
         db.adminCommand(nameOrDocument) - switches to 'admin' db, and runs command [just calls db.runCommand(...)]
@@ -2768,7 +2768,7 @@ DB methods:
         db.version() current version of the server
 ```
 
-```sh
+```bash
 > db.mycoll.help()
 DBCollection help
         db.mycoll.find().help() - show DBCursor help
@@ -2899,7 +2899,7 @@ DBCollection help
 
 1. Overview
 
-```sh
+```bash
 > use contactData
 switched to db contactData
 > db.persons.insertOne({name: "Max", age: 30, hobbies: ["sports","cooking"]})
@@ -2987,7 +2987,7 @@ BulkWriteResult({
 
 2. Using with own Ids
 
-```sh
+```bash
 >  db.hobbies.insertMany([{_id: "sports", name: "sports"}, {_id: "cooking", name: "cooking"}, {_id: "cars", name: "cars"}])
 {
         "acknowledged" : true,
@@ -3005,7 +3005,7 @@ BulkWriteResult({
 
 - A `duplicated` Id cannot be inserted, but everything inserted before the error is not reverted.
 
-```sh
+```bash
 > db.hobbies.insertMany([{_id: "yoga", name: "yoga"}, {_id: "cooking", name: "cooking"}, {_id: "hiking", name: "hiking"}])
 2018-12-31T14:57:54.756+0000 E QUERY    [js] BulkWriteError: write error at item 1 in bulk operation :
 BulkWriteError({
@@ -3042,7 +3042,7 @@ DBCollection.prototype.insertMany@src/mongo/shell/crud_api.js:314:5
 
 - We can change the default behaviour using the second parameter with `{ordered: false}`.
 
-```sh
+```bash
 > db.hobbies.insertMany([{_id: "yoga", name: "yoga"}, {_id: "cooking", name: "cooking"}, {_id: "hiking", name: "hiking"}], {ordered: false})
 2018-12-31T15:02:55.452+0000 E QUERY    [js] BulkWriteError: 2 write errors in bulk operation :
 BulkWriteError({
@@ -3092,7 +3092,7 @@ DBCollection.prototype.insertMany@src/mongo/shell/crud_api.js:314:5
 ![](/images/databases/mongodb-mongodb-the-complete-developers-guide/Create2.png)
 
 - It doesn't wait for any acknowledged
-```sh
+```bash
 > db.persons.insertOne({name: "Chrissi", age: 41}, {writeConcern: {w: 0}})
 { "acknowledged" : false }
 > db.persons.find().pretty()
@@ -3157,7 +3157,7 @@ DBCollection.prototype.insertMany@src/mongo/shell/crud_api.js:314:5
 
 - Default behaviour (as if we don't put anything related to `writeConcern`)
 
-```sh
+```bash
 > db.persons.insertOne({name: "Alex", age: 36}, {writeConcern: {w: 1}})
 {
         "acknowledged" : true,
@@ -3172,7 +3172,7 @@ DBCollection.prototype.insertMany@src/mongo/shell/crud_api.js:314:5
 
 - We cannot notice the difference because we are locally and there is no other command running
 
-```sh
+```bash
 > db.persons.insertOne({name: "Michaela", age: 50}, {writeConcern: {w: 1, j: true}})
 {
         "acknowledged" : true,
@@ -3221,7 +3221,7 @@ Execute the `mongoimport`  command to import:
 - `--jsonArray` - It contains multiple documents
 - `--drop` - Recreate it if it exists
 
-```sh
+```bash
 C:\WINDOWS\system32>cd C:\Users\juan.pablo.perez\Downloads
 
 C:\Users\juan.pablo.perez\Downloads>mongoimport
@@ -3255,7 +3255,7 @@ C:\Users\juan.pablo.perez\Downloads>mongoimport tv-shows.json -d movieData -c mo
 
 3. `findOne` and `find`
 
-```sh
+```bash
 > db.movies.findOne()
 {
         "_id" : ObjectId("5c2a3a2fef2171fd1a4859c9"),
@@ -3315,7 +3315,7 @@ C:\Users\juan.pablo.perez\Downloads>mongoimport tv-shows.json -d movieData -c mo
 }
 ```
 
-```sh
+```bash
 > db.movies.find({_id: ObjectId("5c2a3a2fef2171fd1a4859c9") }).pretty()
 {
         "_id" : ObjectId("5c2a3a2fef2171fd1a4859c9"),
@@ -3376,7 +3376,7 @@ C:\Users\juan.pablo.perez\Downloads>mongoimport tv-shows.json -d movieData -c mo
 ```
 
 - The criteria is `case sensitive`
-```sh
+```bash
 > db.movies.find({ name: "The last ship" }).pretty()
 > db.movies.find({ name: "The Last Ship" })
 { "_id" : ObjectId("5c2a3a2fef2171fd1a4859dc"), "id" : 21, "url" : "http://www.tvmaze.com/shows/21/the-last-ship", "name" : "The Last Ship", "type" : "Scripted", "language" : "English", "genres" : [ "Drama", "Action", "Thriller" ], "status" : "Running", "runtime" : 60, "premiered" : "2014-06-22", "officialSite" : "http://www.tntdrama.com/shows/the-last-ship", "schedule" : { "time" : "21:00", "days" : [ "Sunday" ] }, "rating" : { "average" : 7.8 }, "weight" : 100, "network" : { "id" : 14, "name" : "TNT", "country" : { "name" : "United States", "code" : "US", "timezone" : "America/New_York" } }, "webChannel" : null, "externals" : { "tvrage" : 33158, "thetvdb" : 269533, "imdb" : "tt2402207" }, "image" : { "medium" : "http://static.tvmaze.com/uploads/images/medium_portrait/164/412464.jpg", "original" : "http://static.tvmaze.com/uploads/images/original_untouched/164/412464.jpg" }, "summary" : "<p>Their mission is simple: Find a cure. Stop the virus. Save the world. When a global pandemic wipes out eighty percent of the planet's population, the crew of a lone naval destroyer must find a way to pull humanity from the brink of extinction.</p>", "updated" : 1536575637, "_links" : { "self" : { "href" : "http://api.tvmaze.com/shows/21" }, "previousepisode" : { "href" : "http://api.tvmaze.com/episodes/1499133" }, "nextepisode" : { "href" : "http://api.tvmaze.com/episodes/1499134" } } }
@@ -3387,7 +3387,7 @@ C:\Users\juan.pablo.perez\Downloads>mongoimport tv-shows.json -d movieData -c mo
 
 - We can find all the information in [Query and Projection Operators](https://docs.mongodb.com/manual/reference/operator/query/).
 
-```sh
+```bash
 > db.movies.find({ runtime: {$ne: 60 }}).pretty()
 .
 .
@@ -3451,7 +3451,7 @@ Type "it" for more
 ```
 5. Querying Embedded Fields & Arrays
 
-```sh
+```bash
 > db.movies.find({ "rating.average": {$gt: 7 }}).pretty()
 .
 .
@@ -3520,7 +3520,7 @@ Type "it" for more
 
 - Look for all the ones which one of the `genres` is `Drama`
 
-```sh
+```bash
 db.movies.find({ genres: "Drama" }).pretty()
 .
 .
@@ -3589,7 +3589,7 @@ Type "it" for more
 
 - Look for all the ones which only have the `Drama` `genres`
 
-```sh
+```bash
 > db.movies.find({ genres: ["Drama"] }).pretty()
 .
 .
@@ -3653,7 +3653,7 @@ Type "it" for more
 6. Understanding `$in` and `$nin`
 
 - `runtime` is either `30` or `32`
-```sh
+```bash
 > db.movies.find({ runtime: {$in: [30, 32]} }).pretty()
 .
 .
@@ -3715,7 +3715,7 @@ Type "it" for more
 Type "it" for more
 ```
 - `runtime` is neither `30` nor `32`
-```sh
+```bash
 > db.movies.find({ runtime: {$nin: [30, 32]} }).pretty()
 .
 .
@@ -3785,7 +3785,7 @@ Type "it" for more
 
 - All documents where `rating` is `lower than 3` or `greater then 9`
 
-```sh
+```bash
 > db.movies.find({ "rating.average": {$lt: 5} }).count()
 2
 > db.movies.find({ "rating.average": {$gt: 9.3} }).count()
@@ -3796,7 +3796,7 @@ Type "it" for more
 
 - All documents where `rating` is neither `lower than 3` nor `greater then 9`
 
-```sh
+```bash
 > db.movies.find({$nor: [{"rating.average": {$lt: 5}},{"rating.average": {$gt: 9.3}}] }).count()
 236
 > db.movies.find().count()
@@ -3807,24 +3807,24 @@ Type "it" for more
 
 - All documents where `rating` is `greater than 9` and has `Drama` as a `genres`
 
-```sh
+```bash
 > db.movies.find({$and: [{"rating.average": {$gt: 9}},{genres: "Drama"}] }).count()
 3
 ```
 
 - Another way of getting the same result
-```sh
+```bash
 > db.movies.find({"rating.average": {$gt: 9},genres: "Drama"}).count()
 3
 ```
 
 - This is not valid because the second value replaces the first one:
-```sh
+```bash
 > db.movies.find({genres: "Drama", genres: "Horror"}).count()
 23
 ```
 - So, we have to use:
-```sh
+```bash
 > db.movies.find({$and: [{genres: "Drama"}, {genres: "Horror"}]}).count()
 17
 ```
@@ -3832,7 +3832,7 @@ Type "it" for more
 9. Using `$not`
 
 - All documents where `runtime` is `equal to 60`.
-```sh
+```bash
 > db.movies.find({runtime: {$not: {$eq: 60}}}).count()
 70
 > db.movies.find({runtime: {$eq: 60}}).count()
@@ -3840,14 +3840,14 @@ Type "it" for more
 ```
 
 - It is the same as:
-```sh
+```bash
 > db.movies.find({runtime: {$ne: 60}}).count()
 70
 ```
 
 10.  Diving Into Element Operators
 
-```sh
+```bash
 > use user
 switched to db user
 > db.users.insertMany([{name: "Max", hobbies: [{title: "Sports", frequency: 3},{title: "Cooking", frequency: 6}], phone: 0131782734}, {name: "Manuel", hobbies: [{title: "Cooking", frequency: 5 },{title: "Cars", frequency: 2 }], phone: "012177972", age: 30}])
@@ -3894,7 +3894,7 @@ switched to db user
 
 - Find all persons who have an `age` field and without one.
 
-```sh
+```bash
 > db.users.find({age: {$exists: true}}).pretty()
 {
         "_id" : ObjectId("5c2b171367f51a60f5c07716"),
@@ -3948,7 +3948,7 @@ switched to db user
 }
 ```
 
-```sh
+```bash
 > db.users.insertOne({name: "Anna", hobbies: [{title: "Sports", frequency: 2},{title: "Yoga", frequency: 3}], phone: "80811987291", age: null})
 {
         "acknowledged" : true,
@@ -4010,7 +4010,7 @@ switched to db user
 
 - All users with the type of phone number is a `number`
 
-```sh
+```bash
 > db.users.find({phone: {$type: "number"}}).pretty()
 {
         "_id" : ObjectId("5c2b171367f51a60f5c07715"),
@@ -4045,7 +4045,7 @@ switched to db user
 }
 ```
 
-```sh
+```bash
 > db.users.find({phone: {$type: ["double","string"]}}).pretty()
 {
         "_id" : ObjectId("5c2b171367f51a60f5c07715"),
@@ -4095,7 +4095,7 @@ switched to db user
         "age" : null
 }
 ```
-```sh
+```bash
 > db.users.find({phone: {$not: {$type: "double"}}}).pretty()
 {
         "_id" : ObjectId("5c2b171367f51a60f5c07716"),
@@ -4133,7 +4133,7 @@ switched to db user
 
 11. Understanding the `$regex` Evaluation Operators
 
-```sh
+```bash
 > db.movies.find({summary: {$regex: /musical/}}).pretty()
 {
         "_id" : ObjectId("5c2a3a2fef2171fd1a4859d0"),
@@ -4252,7 +4252,7 @@ switched to db user
 
 12. Understanding the `$expr` Evaluation Operators
 
-```sh
+```bash
 > use finalcialData
 switched to db finalcialData
 > db.sales.insertMany([{volume: 100, target: 120},{volume: 89, target: 80},{volume: 200, target: 177}])
@@ -4283,7 +4283,7 @@ switched to db finalcialData
 ```
 - All documents with the `volume` above the `target`
 
-```sh
+```bash
 > db.sales.find({$expr: {$gt: ["$volume","$target"]}}).pretty()
 {
         "_id" : ObjectId("5c2b1d2f67f51a60f5c07719"),
@@ -4297,7 +4297,7 @@ switched to db finalcialData
 }
 ```
 
-```sh
+```bash
 > db.sales.find({$expr: {$gt: ["$volume",99]}}).pretty()
 {
         "_id" : ObjectId("5c2b1d2f67f51a60f5c07718"),
@@ -4311,7 +4311,7 @@ switched to db finalcialData
 }
 ```
 
-```sh
+```bash
 > db.sales.find({$expr: {$gt: [{$cond: {if: {$gte: ["$volume",190]}, then: {$subtract: ["$volume",10]}, else: "$volume"}}, "$target"]}}).pretty()
 {
         "_id" : ObjectId("5c2b1d2f67f51a60f5c07719"),
@@ -4334,13 +4334,13 @@ switched to db finalcialData
 13. Assigment - Read Operations
 
 - Import Data
-```sh
+```bash
 C:\Users\juan.pablo.perez\Downloads>mongoimport boxoffice.json -d boxOffice -c movieStarts --jsonArray --drop
 2019-01-01T08:44:59.495+0000    connected to: localhost
 2019-01-01T08:44:59.499+0000    dropping: boxOffice.movieStarts
 2019-01-01T08:45:00.560+0000    imported 3 documents
 ```
-```sh
+```bash
 > db.movieStarts.find().pretty()
 {
         "_id" : ObjectId("5c2b288cef2171fd1a488c4b"),
@@ -4390,7 +4390,7 @@ C:\Users\juan.pablo.perez\Downloads>mongoimport boxoffice.json -d boxOffice -c m
 }
 ```
 - Search all movies that have a rating higher then 9.2 and a runtime lower than 100 minutes
-```sh
+```bash
 > db.movieStarts.find({$and: [{"meta.rating": {$gt: 9.2}},{"meta.runtime": {$lt: 100}}] }).pretty()
 {
         "_id" : ObjectId("5c2b288cef2171fd1a488c4b"),
@@ -4409,7 +4409,7 @@ C:\Users\juan.pablo.perez\Downloads>mongoimport boxoffice.json -d boxOffice -c m
 }
 ```
 - Search all movies that have a genre of "drama" or "action"
-```sh
+```bash
 > db.movieStarts.find({$or: [{genre: "drama"}, {genre: "action"}]}).pretty()
 {
         "_id" : ObjectId("5c2b288cef2171fd1a488c4b"),
@@ -4459,7 +4459,7 @@ C:\Users\juan.pablo.perez\Downloads>mongoimport boxoffice.json -d boxOffice -c m
 }
 ```
 - Search all movies where visitors exceeded expectedVisitors
-```sh
+```bash
 > db.movieStarts.find({$expr: {$gt: ["$visitors","$expectedVisitors"]}}).pretty()
 {
         "_id" : ObjectId("5c2b288cef2171fd1a488c4c"),
@@ -4480,7 +4480,7 @@ C:\Users\juan.pablo.perez\Downloads>mongoimport boxoffice.json -d boxOffice -c m
 
 14. Diving Deeper Into Querying Arrays
 
-```sh
+```bash
 >  db.users.find({"hobbies.title": "Sports"}).pretty()
 {
         "_id" : ObjectId("5c2b171367f51a60f5c07715"),
@@ -4517,7 +4517,7 @@ C:\Users\juan.pablo.perez\Downloads>mongoimport boxoffice.json -d boxOffice -c m
 
 15. Using Array Query Selectors - `$size`
 
-```sh
+```bash
 > db.users.insertOne({name: "Chris", hobbies: ["Sports","Cooking","Hiking"] })
 {
         "acknowledged" : true,
@@ -4583,7 +4583,7 @@ C:\Users\juan.pablo.perez\Downloads>mongoimport boxoffice.json -d boxOffice -c m
 ```
 
 - All users that have 3 `hobbies`
-```sh
+```bash
 > db.users.find({hobbies: {$size: 3}}).pretty()
 {
         "_id" : ObjectId("5c2b2fee67f51a60f5c0771b"),
@@ -4649,7 +4649,7 @@ C:\Users\juan.pablo.perez\Downloads>mongoimport boxoffice.json -d boxOffice -c m
 - Search all `movies` that have `genre` of both `action` and `thriller`
 
 - This doesn't work because the order matters
-```sh
+```bash
 > use boxOffice
 switched to db boxOffice
 > show collections
@@ -4672,7 +4672,7 @@ movieStarts
 }
 ```
 - We have to use:
-```sh
+```bash
 > db.movieStarts.find({genre: {$all: ["action","thriller"]}}).pretty()
 {
         "_id" : ObjectId("5c2b288cef2171fd1a488c4b"),
@@ -4726,7 +4726,7 @@ movieStarts
 
 - users who have a hobby of `Sports` and its frequency equal or greather than `3`
 - This approach doesn't work because it does look for all the frequencies, not just for the `Sport` one,
-```sh
+```bash
 > db.users.find({$and: [{"hobbies.title": "Sports"},{"hobbies.frequency": {$gte: 3}}]}).pretty()
 {
         "_id" : ObjectId("5c2b171367f51a60f5c07715"),
@@ -4762,7 +4762,7 @@ movieStarts
 ```
 
 - We have to use:
-```sh
+```bash
 > db.users.find({hobbies: {$elemMatch: {title: "Sports",frequency: {$gte: 3}}}}).pretty()
 {
         "_id" : ObjectId("5c2b171367f51a60f5c07715"),
@@ -4784,14 +4784,14 @@ movieStarts
 18. Assignment - Array Query Selectors
 
 - Import 
-```sh
+```bash
 C:\Users\juan.pablo.perez\Downloads>mongoimport boxoffice-extended.json -d boxOffice -c exmovieStarts --jsonArray --drop
 2019-01-01T09:47:23.679+0000    connected to: localhost
 2019-01-01T09:47:23.689+0000    dropping: boxOffice.exmovieStarts
 2019-01-01T09:47:24.775+0000    imported 3 documents
 ```
 
-```sh
+```bash
 > db.exmovieStarts.find().pretty()
 {
         "_id" : ObjectId("5c2b372cef2171fd1a488f97"),
@@ -4854,7 +4854,7 @@ C:\Users\juan.pablo.perez\Downloads>mongoimport boxoffice-extended.json -d boxOf
 }
 ```
 - Find all movies with exactly two genres
-```sh
+```bash
 > db.exmovieStarts.find({genre: {$size: 2}}).pretty()
 {
         "_id" : ObjectId("5c2b372cef2171fd1a488f97"),
@@ -4897,7 +4897,7 @@ C:\Users\juan.pablo.perez\Downloads>mongoimport boxoffice-extended.json -d boxOf
 }
 ```
 - Find all movies aired in 2018
-```sh
+```bash
 > db.exmovieStarts.find({"meta.aired": 2018 }).pretty()
 {
         "_id" : ObjectId("5c2b372cef2171fd1a488f99"),
@@ -4922,7 +4922,7 @@ C:\Users\juan.pablo.perez\Downloads>mongoimport boxoffice-extended.json -d boxOf
 ```
 - Find all movies which have ratings greater than 8 but lower than 10
 
-```sh
+```bash
 > db.exmovieStarts.find({ratings: {$elemMatch: {$gt:8, $lt:10}}}).pretty()
 {
         "_id" : ObjectId("5c2b372cef2171fd1a488f98"),
@@ -4966,7 +4966,7 @@ C:\Users\juan.pablo.perez\Downloads>mongoimport boxoffice-extended.json -d boxOf
 }
 ```
 - Another solution:
-```sh
+```bash
 > db.exmovieStarts.find({$and:[{ratings: {$gt: 8}},{ratings: {$lt:10}}]}).pretty()
 {
         "_id" : ObjectId("5c2b372cef2171fd1a488f98"),
@@ -5015,7 +5015,7 @@ C:\Users\juan.pablo.perez\Downloads>mongoimport boxoffice-extended.json -d boxOf
 ![](/images/databases/mongodb-mongodb-the-complete-developers-guide/Read5.png)
 
 - `find()` or `find().pretty()` returns always 20 or less documents.
-```sh
+```bash
 > db.movies.find()
 .
 .
@@ -5026,7 +5026,7 @@ C:\Users\juan.pablo.perez\Downloads>mongoimport boxoffice-extended.json -d boxOf
 Type "it" for more
 ```
 - If we type `it` it returns the next 20 ones.
-```sh
+```bash
 > it
 .
 .
@@ -5036,7 +5036,7 @@ Type "it" for more
 Type "it" for more
 ```
 - `next` returns the next document but starting from the first one again
-```sh
+```bash
 > db.movies.find().next()
 {
         "_id" : ObjectId("5c2a3a2fef2171fd1a4859c9"),
@@ -5096,7 +5096,7 @@ Type "it" for more
 }
 ```
 - We can store the `cursor` in a variable
-```sh
+```bash
 > const dataCursor = db.movies.find()
 > dataCursor.next()
 {
@@ -5214,7 +5214,7 @@ Type "it" for more
 }
 ```
 - We can use `forEach` to iterate through a `cursor`
-```sh
+```bash
 > dataCursor.forEach(doc => {if (doc.id < 10) printjson(doc.id)})
 3
 4
@@ -5227,7 +5227,7 @@ Type "it" for more
 - It doesn't show the first 2 because the cursor was in the third element
 
 - If we are at the end and try to execute `next` again we get an error
-```sh
+```bash
 > dataCursor.next()
 2019-01-01T11:16:48.270+0000 E QUERY    [js] Error: error hasNext: false :
 DBQuery.prototype.next@src/mongo/shell/query.js:305:1
@@ -5235,13 +5235,13 @@ DBQuery.prototype.next@src/mongo/shell/query.js:305:1
 ```
 
 - We can use `hasNext()` to check if there are more documents
-```sh
+```bash
 > dataCursor.hasNext()
 false
 ``` 
 
 - We can sort the result document returned.
-```sh
+```bash
 > db.movies.find().sort({"rating.average": 1}).pretty()
 {
         "_id" : ObjectId("5c2a3a2fef2171fd1a485a25"),
@@ -5302,21 +5302,21 @@ false
 }
 ```
 - We can `order` by more than one field.
-```sh
+```bash
 > db.movies.find().sort({"rating.average": 1, runtime: -1}).pretty()
 .
 .
 .
 ```
 - We can `skip` some elements.
-```sh
+```bash
 > db.movies.find().sort({"rating.average": 1, runtime: -1}).skip(10).pretty()
 .
 .
 .
 ```
 - We can also `limit` the elements.
-```sh
+```bash
 > db.movies.find().sort({"rating.average": 1, runtime: -1}).skip(10).limit(10).pretty()
 .
 .
@@ -5324,7 +5324,7 @@ false
 ```
 20. Using Projection to Share our Results
 
-```sh
+```bash
 > db.movies.find({},{name: 1, genres: 1, runtime:1, rating: 1})
 { "_id" : ObjectId("5c2a3a2fef2171fd1a4859c9"), "name" : "Under the Dome", "genres" : [ "Drama", "Science-Fiction", "Thriller" ], "runtime" : 60, "rating" : { "average" : 6.5 } }
 { "_id" : ObjectId("5c2a3a2fef2171fd1a4859ca"), "name" : "Person of Interest", "genres" : [ "Drama", "Action", "Crime" ], "runtime" : 60, "rating" : { "average" : 9 } }
@@ -5350,7 +5350,7 @@ Type "it" for more
 ```
 
 - We can exclude the `_id` explicitely
-```sh
+```bash
 > db.movies.find({},{name: 1, genres: 1, runtime:1, rating: 1, _id: 0})
 { "name" : "Under the Dome", "genres" : [ "Drama", "Science-Fiction", "Thriller" ], "runtime" : 60, "rating" : { "average" : 6.5 } }
 { "name" : "Person of Interest", "genres" : [ "Drama", "Action", "Crime" ], "runtime" : 60, "rating" : { "average" : 9 } }
@@ -5375,7 +5375,7 @@ Type "it" for more
 Type "it" for more
 ```
 
-```sh
+```bash
 > db.movies.find({},{name: 1, genres: 1, runtime:1, rating: 1, _id: 0, "schedule.time": 1})
 { "name" : "Under the Dome", "genres" : [ "Drama", "Science-Fiction", "Thriller" ], "runtime" : 60, "schedule" : { "time" : "22:00" }, "rating" : { "average" : 6.5 } }
 { "name" : "Person of Interest", "genres" : [ "Drama", "Action", "Crime" ], "runtime" : 60, "schedule" : { "time" : "22:00" }, "rating" : { "average" : 9 } }
@@ -5401,7 +5401,7 @@ Type "it" for more
 ```
 
 - We can project in arrays
-```sh
+```bash
 > db.movies.find({genres: "Drama"},{name: 1, "genres.$": 1})
 { "_id" : ObjectId("5c2a3a2fef2171fd1a4859c9"), "name" : "Under the Dome", "genres" : [ "Drama" ] }
 { "_id" : ObjectId("5c2a3a2fef2171fd1a4859ca"), "name" : "Person of Interest", "genres" : [ "Drama" ] }
@@ -5426,7 +5426,7 @@ Type "it" for more
 Type "it" for more
 ```
 
-```sh
+```bash
 > db.movies.find({genres: {$all: ["Drama","Horror"]}},{name: 1, "genres.$": 1})
 { "_id" : ObjectId("5c2a3a2fef2171fd1a4859cb"), "name" : "Bitten", "genres" : [ "Horror" ] }
 { "_id" : ObjectId("5c2a3a2fef2171fd1a4859d4"), "name" : "Lost Girl", "genres" : [ "Horror" ] }
@@ -5447,7 +5447,7 @@ Type "it" for more
 { "_id" : ObjectId("5c2a3a2fef2171fd1a485aa5"), "name" : "The River", "genres" : [ "Horror" ] }
 ```
 
-```sh
+```bash
 > db.movies.find({genres: "Drama"},{name: 1, genres: {$elemMatch: {$eq: "Horror" }}})
 { "_id" : ObjectId("5c2a3a2fef2171fd1a4859c9"), "name" : "Under the Dome" }
 { "_id" : ObjectId("5c2a3a2fef2171fd1a4859ca"), "name" : "Person of Interest" }
@@ -5472,7 +5472,7 @@ Type "it" for more
 Type "it" for more
 ```
 
-```sh
+```bash
 > db.movies.find({"rating.average": {$gt: 9}},{name: 1, genres: {$elemMatch: {$eq: "Horror" }}})
 { "_id" : ObjectId("5c2a3a2fef2171fd1a4859e2"), "name" : "Berserk", "genres" : [ "Horror" ] }
 { "_id" : ObjectId("5c2a3a2fef2171fd1a485a18"), "name" : "Game of Thrones" }
@@ -5487,7 +5487,7 @@ Type "it" for more
 
 - Get the first two values of `genres`.
 
-```sh
+```bash
 > db.movies.find({"rating.average": {$gt: 9}},{name: 1, genres: {$slice: 2}})
 { "_id" : ObjectId("5c2a3a2fef2171fd1a4859e2"), "name" : "Berserk", "genres" : [ "Anime", "Fantasy" ] }
 { "_id" : ObjectId("5c2a3a2fef2171fd1a485a18"), "name" : "Game of Thrones", "genres" : [ "Drama", "Adventure" ] }
@@ -5498,7 +5498,7 @@ Type "it" for more
 { "_id" : ObjectId("5c2a3a2fef2171fd1a485a97"), "name" : "Rick and Morty", "genres" : [ "Comedy", "Adventure" ] }
 ```
 - Get the first two values of `genres` skiping the first one.
-```sh
+```bash
 > db.movies.find({"rating.average": {$gt: 9}},{name: 1, genres: {$slice: [1,2]}})
 { "_id" : ObjectId("5c2a3a2fef2171fd1a4859e2"), "name" : "Berserk", "genres" : [ "Fantasy", "Horror" ] }
 { "_id" : ObjectId("5c2a3a2fef2171fd1a485a18"), "name" : "Game of Thrones", "genres" : [ "Adventure", "Fantasy" ] }
@@ -5517,7 +5517,7 @@ Type "it" for more
 
 2. Updating Fields with `updateOne()`, `updateMany()` and `$set`
 
-```sh
+```bash
 > use user
 switched to db user
 > show collections
@@ -5582,7 +5582,7 @@ users
 ```
 - Update one document with `updateOne()` and `$set`
 
-```sh
+```bash
 > db.users.updateOne({_id: ObjectId("5c2b2fee67f51a60f5c0771b")}, {$set: {hobbies: [{title: "Sports", frequency: 5},{title: "Cooking", frequency: 3},{title: "Hiking", frequency: 1}]}})
 { "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
 > db.users.find({_id: ObjectId("5c2b2fee67f51a60f5c0771b")}).pretty()
@@ -5607,13 +5607,13 @@ users
 ```
 
 - If I run it again the `modifiedCount` returns `0`.
-```sh
+```bash
 > db.users.updateOne({_id: ObjectId("5c2b2fee67f51a60f5c0771b")}, {$set: {hobbies: [{title: "Sports", frequency: 5},{title: "Cooking", frequency: 3},{title: "Hiking", frequency: 1}]}})
 { "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 0 }
 ```
 
 - We can update many users with `updateMany()` and `$set`
-```sh
+```bash
 > db.users.find({"hobbies.title": "Sports"})
 { "_id" : ObjectId("5c2b171367f51a60f5c07715"), "name" : "Max", "hobbies" : [ { "title" : "Sports", "frequency" : 3 }, { "title" : "Cooking", "frequency" : 6 } ], "phone" : 131782734 }
 { "_id" : ObjectId("5c2b187367f51a60f5c07717"), "name" : "Anna", "hobbies" : [ { "title" : "Sports", "frequency" : 2 }, { "title" : "Yoga", "frequency" : 3 } ], "phone" : "80811987291", "age" : null }
@@ -5627,7 +5627,7 @@ users
 ```
 
 3. Updating Multiple Fields with `$set`
-```sh
+```bash
 > db.users.updateOne({_id: ObjectId("5c2b2fee67f51a60f5c0771b")}, {$set: {age: 40, phone: 483924792}})
 { "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
 > db.users.find({_id: ObjectId("5c2b2fee67f51a60f5c0771b")}).pretty()
@@ -5656,7 +5656,7 @@ users
 
 4. Incrementing & Decrementing Values using `$inc`
 
-```sh
+```bash
 > db.users.find({name: "Manuel"})
 { "_id" : ObjectId("5c2b171367f51a60f5c07716"), "name" : "Manuel", "hobbies" : [ { "title" : "Cooking", "frequency" : 5 }, { "title" : "Cars", "frequency" : 2 } ], "phone" : "012177972", "age" : 30 }
 > db.users.updateOne({name: "Manuel"}, {$inc: {age: 2}})
@@ -5670,7 +5670,7 @@ users
 ```
 
 - We can combine multiple operations at the same time.
-```sh
+```bash
 > db.users.updateOne({name: "Manuel"}, {$inc: {age: 1}, $set: {isSporty: false}})
 { "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
 > db.users.find({name: "Manuel"})
@@ -5678,7 +5678,7 @@ users
 ```
 
 - We cannot update the same field with different operations at the same time
-```sh
+```bash
 > db.users.updateOne({name: "Manuel"}, {$inc: {age: 1}, $set: {age: 30}})
 2019-01-02T05:39:42.488+0000 E QUERY    [js] WriteError: Updating the path 'age' would create a conflict at 'age' :
 WriteError({
@@ -5712,7 +5712,7 @@ DBCollection.prototype.updateOne@src/mongo/shell/crud_api.js:572:17
 5. Using `$min`, `$max` and `$mul`
 
 - Update a value using `$min` to update a value only if it is greater than the value we want to change.
-```sh
+```bash
 > db.users.find({name: "Chris"})
 { "_id" : ObjectId("5c2b2fee67f51a60f5c0771b"), "name" : "Chris", "hobbies" : [ { "title" : "Sports", "frequency" : 5 }, { "title" : "Cooking", "frequency" : 3 }, { "title" : "Hiking", "frequency" : 1 } ], "isSporty" : true, "age" : 40, "phone" : 483924792 }
 > db.users.updateOne({name: "Chris"},{$min: {age: 35}})
@@ -5726,7 +5726,7 @@ DBCollection.prototype.updateOne@src/mongo/shell/crud_api.js:572:17
 ```
 
 - Update a value using `$max` to update a value only if it is lower than the value we want to change.
-```sh
+```bash
 > db.users.find({name: "Chris"})
 { "_id" : ObjectId("5c2b2fee67f51a60f5c0771b"), "name" : "Chris", "hobbies" : [ { "title" : "Sports", "frequency" : 5 }, { "title" : "Cooking", "frequency" : 3 }, { "title" : "Hiking", "frequency" : 1 } ], "isSporty" : true, "age" : 35, "phone" : 483924792 }
 > db.users.updateOne({name: "Chris"},{$max: {age: 32}})
@@ -5740,7 +5740,7 @@ DBCollection.prototype.updateOne@src/mongo/shell/crud_api.js:572:17
 ```
 
  - We can multiply a value using `$mul`
-```sh
+```bash
  > db.users.find({name: "Chris"})
 { "_id" : ObjectId("5c2b2fee67f51a60f5c0771b"), "name" : "Chris", "hobbies" : [ { "title" : "Sports", "frequency" : 5 }, { "title" : "Cooking", "frequency" : 3 }, { "title" : "Hiking", "frequency" : 1 } ], "isSporty" : true, "age" : 38, "phone" : 483924792 }
 > db.users.updateOne({name: "Chris"},{$mul: {age: 1.1}})
@@ -5751,7 +5751,7 @@ DBCollection.prototype.updateOne@src/mongo/shell/crud_api.js:572:17
 6. Getting rid of fields
 
 - We can use `$set` to remove the content of a field
-```sh
+```bash
 > db.users.find()
 { "_id" : ObjectId("5c2b171367f51a60f5c07715"), "name" : "Max", "hobbies" : [ { "title" : "Sports", "frequency" : 3 }, { "title" : "Cooking", "frequency" : 6 } ], "phone" : 131782734, "isSporty" : true }
 { "_id" : ObjectId("5c2b171367f51a60f5c07716"), "name" : "Manuel", "hobbies" : [ { "title" : "Cooking", "frequency" : 5 }, { "title" : "Cars", "frequency" : 2 } ], "phone" : "012177972", "age" : 32, "isSporty" : false }
@@ -5767,7 +5767,7 @@ DBCollection.prototype.updateOne@src/mongo/shell/crud_api.js:572:17
 ```
 
 - We can use `$unset` operator to drop the field completely (the value we put for the field does not affect anything)
-```sh
+```bash
 > db.users.find()
 { "_id" : ObjectId("5c2b171367f51a60f5c07715"), "name" : "Max", "hobbies" : [ { "title" : "Sports", "frequency" : 3 }, { "title" : "Cooking", "frequency" : 6 } ], "phone" : null, "isSporty" : true }
 { "_id" : ObjectId("5c2b171367f51a60f5c07716"), "name" : "Manuel", "hobbies" : [ { "title" : "Cooking", "frequency" : 5 }, { "title" : "Cars", "frequency" : 2 } ], "phone" : "012177972", "age" : 32, "isSporty" : false }
@@ -5785,7 +5785,7 @@ DBCollection.prototype.updateOne@src/mongo/shell/crud_api.js:572:17
 7. Renaming fields
 
 - We can use the `$rename` operator to rename a field.
-```sh
+```bash
 > db.users.find()
 { "_id" : ObjectId("5c2b171367f51a60f5c07715"), "name" : "Max", "hobbies" : [ { "title" : "Sports", "frequency" : 3 }, { "title" : "Cooking", "frequency" : 6 } ], "isSporty" : true }
 { "_id" : ObjectId("5c2b171367f51a60f5c07716"), "name" : "Manuel", "hobbies" : [ { "title" : "Cooking", "frequency" : 5 }, { "title" : "Cars", "frequency" : 2 } ], "phone" : "012177972", "age" : 32, "isSporty" : false }
@@ -5803,7 +5803,7 @@ DBCollection.prototype.updateOne@src/mongo/shell/crud_api.js:572:17
 8. Undestanding `upsert()`
 
 - We can insert a new document or update it if it doesn't exist using the `upsert` operator.
-```sh
+```bash
 > db.users.updateOne({name: "Maria"},{$set: {age: 29, hobbies: [{title: "Good food", frequency: 3 }], isSporty: true}})
 { "acknowledged" : true, "matchedCount" : 0, "modifiedCount" : 0 }
 > db.users.updateOne({name: "Maria"},{$set: {age: 29, hobbies: [{title: "Good food", frequency: 3 }], isSporty: true}}, {upsert: true})
@@ -5825,7 +5825,7 @@ DBCollection.prototype.updateOne@src/mongo/shell/crud_api.js:572:17
 
 - Create a new collection ("sports") and upsert two new documents into it (with "title" and "requiresTeam")
 
-```sh
+```bash
 > db.sports.updateOne({title: "tennis"},{$set: {requiresTeam: false}},{upsert: true})
 {
         "acknowledged" : true,
@@ -5853,7 +5853,7 @@ DBCollection.prototype.updateOne@src/mongo/shell/crud_api.js:572:17
 { "_id" : ObjectId("5c2d083cef2171fd1a48994b"), "title" : "rugby", "requiresTeam" : true }
 ```
 - Update all documents which do require a team by adding a new field with minimum amount of players required
-```sh
+```bash
 > db.sports.updateMany({requiresTeam: true},{$set: {minimumPlayers: 10}})
 { "acknowledged" : true, "matchedCount" : 2, "modifiedCount" : 2 }
 > db.sports.find()
@@ -5863,7 +5863,7 @@ DBCollection.prototype.updateOne@src/mongo/shell/crud_api.js:572:17
 ```
 
 - Update all documents that require a team by increasing the number of required players by 10
-```sh
+```bash
 > db.sports.updateMany({requiresTeam: true},{$inc: {minimumPlayers: 10}})
 { "acknowledged" : true, "matchedCount" : 2, "modifiedCount" : 2 }
 > db.sports.find()
@@ -5875,7 +5875,7 @@ DBCollection.prototype.updateOne@src/mongo/shell/crud_api.js:572:17
 10. Updating Matched Array Elements
 
 - Update all documents that have a `Sports` hobby with a frequency greater or equal to `3` adding a new field to only those array elements.
-```sh
+```bash
 > db.users.find({hobbies: {$elemMatch: {title: "Sports",frequency: {$gte: 3}}}})
 { "_id" : ObjectId("5c2b171367f51a60f5c07715"), "name" : "Max", "hobbies" : [ { "title" : "Sports", "frequency" : 3 }, { "title" : "Cooking", "frequency" : 6 } ], "isSporty" : true }
 { "_id" : ObjectId("5c2b2fee67f51a60f5c0771b"), "name" : "Chris", "hobbies" : [ { "title" : "Sports", "frequency" : 5 }, { "title" : "Cooking", "frequency" : 3 }, { "title" : "Hiking", "frequency" : 1 } ], "isSporty" : true, "totalAge" : 41.800000000000004 }
@@ -5889,7 +5889,7 @@ DBCollection.prototype.updateOne@src/mongo/shell/crud_api.js:572:17
 11. Updating All Array Elements
 
 - Update all the array elements that match the criteria (but only the first element)
-```sh
+```bash
 > db.users.find({"hobbiesfrequency": {$gt: 2}})
 > db.users.find({"hobbies.frequency": {$gt: 2}})
 { "_id" : ObjectId("5c2b171367f51a60f5c07715"), "name" : "Max", "hobbies" : [ { "title" : "Sports", "frequency" : 3, "highFrequency" : true }, { "title" : "Cooking", "frequency" : 6 } ], "isSporty" : true }
@@ -5908,7 +5908,7 @@ DBCollection.prototype.updateOne@src/mongo/shell/crud_api.js:572:17
 ```
 - Update all the array elements regardless any criteria
 
-```sh
+```bash
 > db.users.find({totalAge: {$gt: 30}})
 { "_id" : ObjectId("5c2b171367f51a60f5c07716"), "name" : "Manuel", "hobbies" : [ { "title" : "Cooking", "frequency" : 5, "goodFrequency" : true }, { "title" : "Cars", "frequency" : 2 } ], "phone" : "012177972", "isSporty" : false, "totalAge" : 32 }
 { "_id" : ObjectId("5c2b2fee67f51a60f5c0771b"), "name" : "Chris", "hobbies" : [ { "title" : "Sports", "frequency" : 5, "highFrequency" : true, "goodFrequency" : true }, { "title" : "Cooking", "frequency" : 3 }, { "title" : "Hiking", "frequency" : 1 } ], "isSporty" : true, "totalAge" : 41.800000000000004 }
@@ -5949,7 +5949,7 @@ DBCollection.prototype.updateMany@src/mongo/shell/crud_api.js:655:17
 12. Finding & Updating Specific Fields
 
 - Update all array elements that match the criteria
-```sh
+```bash
 > db.users.find({"hobbies.frequency": {$gt: 2}})
 { "_id" : ObjectId("5c2b171367f51a60f5c07715"), "name" : "Max", "hobbies" : [ { "title" : "Sports", "frequency" : 3, "highFrequency" : true, "goodFrequency" : true }, { "title" : "Cooking", "frequency" : 6 } ], "isSporty" : true }
 { "_id" : ObjectId("5c2b171367f51a60f5c07716"), "name" : "Manuel", "hobbies" : [ { "title" : "Cooking", "frequency" : 4, "goodFrequency" : true }, { "title" : "Cars", "frequency" : 1 } ], "phone" : "012177972", "isSporty" : false, "totalAge" : 32 }
@@ -5969,7 +5969,7 @@ DBCollection.prototype.updateMany@src/mongo/shell/crud_api.js:655:17
 13. Adding Elements to Arrays
 
 - We can Add a new element to an array using `$push`
-```sh
+```bash
 > db.users.find({name: "Maria"})
 { "_id" : ObjectId("5c2d0552ef2171fd1a48993c"), "name" : "Maria", "age" : 29, "hobbies" : [ { "title" : "Good food", "frequency" : 3, "goodFrequency" : true } ], "isSporty" : true }
 >  db.users.updateOne({name: "Maria"}, {$push: {hobbies: {title: "Sports", frequency: 2}}})
@@ -5978,14 +5978,14 @@ DBCollection.prototype.updateMany@src/mongo/shell/crud_api.js:655:17
 { "_id" : ObjectId("5c2d0552ef2171fd1a48993c"), "name" : "Maria", "age" : 29, "hobbies" : [ { "title" : "Good food", "frequency" : 3, "goodFrequency" : true }, { "title" : "Sports", "frequency" : 2 } ], "isSporty" : true }
 ```
 - We can add more than one element using `$push` and `$each`. We can also use `$sort` to define how we want to insert them.
-```sh
+```bash
 { "_id" : ObjectId("5c2d0552ef2171fd1a48993c"), "name" : "Maria", "age" : 29, "hobbies" : [ { "title" : "Good food", "frequency" : 3, "goodFrequency" : true }, { "title" : "Sports", "frequency" : 2 } ], "isSporty" : true }
 > db.users.updateOne({name: "Maria"}, {$push: {hobbies: {$each: [{title: "Good Wine", frequency: 1},{title: "Hiking", frequency: 2}], $sort: {frequency: -1}}}})
 { "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
 > db.users.find({name: "Maria"})
 { "_id" : ObjectId("5c2d0552ef2171fd1a48993c"), "name" : "Maria", "age" : 29, "hobbies" : [ { "title" : "Good food", "frequency" : 3, "goodFrequency" : true }, { "title" : "Sports", "frequency" : 2 }, { "title" : "Hiking", "frequency" : 2 }, { "title" : "Good Wine", "frequency" : 1 } ], "isSporty" : true }
 ```
-```sh
+```bash
 > db.users.updateOne({name: "Maria"}, {$push: {hobbies: {$each: [{title: "Good Wine", frequency: 1},{title: "Hiking", frequency: 2}], $sort: {frequency: -1}}}})
 { "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
 > db.users.find({name: "Maria"})
@@ -5994,7 +5994,7 @@ DBCollection.prototype.updateMany@src/mongo/shell/crud_api.js:655:17
 14. Removing Elements from Arrays
 
 - We can remove elements from Arrays using `$pull`
-```sh
+```bash
 > db.users.find({name: "Maria"})
 { "_id" : ObjectId("5c2d0552ef2171fd1a48993c"), "name" : "Maria", "age" : 29, "hobbies" : [ { "title" : "Good food", "frequency" : 3, "goodFrequency" : true }, { "title" : "Sports", "frequency" : 2 }, { "title" : "Hiking", "frequency" : 2 }, { "title" : "Hiking", "frequency" : 2 }, { "title" : "Good Wine", "frequency" : 1 }, { "title" : "Good Wine", "frequency" : 1 } ], "isSporty" : true }
 > db.users.updateOne({name: "Maria"}, {$pull: {hobbies: {title: "Hiking"}}})
@@ -6008,7 +6008,7 @@ DBCollection.prototype.updateMany@src/mongo/shell/crud_api.js:655:17
 ```
 
 - We can remove the last element by using the `$pop` operator
-```sh
+```bash
 > db.users.find({name: "Chris"})
 { "_id" : ObjectId("5c2b2fee67f51a60f5c0771b"), "name" : "Chris", "hobbies" : [ { "title" : "Sports", "frequency" : 4, "highFrequency" : true, "goodFrequency" : true }, { "title" : "Cooking", "frequency" : 2 }, { "title" : "Hiking", "frequency" : 0 } ], "isSporty" : true, "totalAge" : 41.800000000000004 }
 > db.users.updateOne({name: "Chris"}, {$pop: {hobbies: 1}})
@@ -6017,7 +6017,7 @@ DBCollection.prototype.updateMany@src/mongo/shell/crud_api.js:655:17
 { "_id" : ObjectId("5c2b2fee67f51a60f5c0771b"), "name" : "Chris", "hobbies" : [ { "title" : "Sports", "frequency" : 4, "highFrequency" : true, "goodFrequency" : true }, { "title" : "Cooking", "frequency" : 2 } ], "isSporty" : true, "totalAge" : 41.800000000000004 }
 ```
 - We can remove the first element by using the `$pop` operator as well
-```sh
+```bash
 > db.users.find({name: "Chris"})
 { "_id" : ObjectId("5c2b2fee67f51a60f5c0771b"), "name" : "Chris", "hobbies" : [ { "title" : "Sports", "frequency" : 4, "highFrequency" : true, "goodFrequency" : true }, { "title" : "Cooking", "frequency" : 2 } ], "isSporty" : true, "totalAge" : 41.800000000000004 }
 > db.users.updateOne({name: "Chris"}, {$pop: {hobbies: -1}})
@@ -6030,7 +6030,7 @@ DBCollection.prototype.updateMany@src/mongo/shell/crud_api.js:655:17
 
 - We can use `$addToSet` to add new values that are not duplicated if they exist
 
-```sh
+```bash
 > db.users.find({name: "Maria"})
 { "_id" : ObjectId("5c2d0552ef2171fd1a48993c"), "name" : "Maria", "age" : 29, "hobbies" : [ { "title" : "Good food", "frequency" : 3, "goodFrequency" : true }, { "title" : "Sports", "frequency" : 2 } ], "isSporty" : true }
 > db.users.updateOne({name: "Maria"}, {$addToSet: {hobbies: {title: "Hiking", frequency: 2}}})
@@ -6055,7 +6055,7 @@ DBCollection.prototype.updateMany@src/mongo/shell/crud_api.js:655:17
 
 2. Understanding `deleteOne()` & `deleteMany()`
 
-```sh
+```bash
 > db.users.find()
 { "_id" : ObjectId("5c2b171367f51a60f5c07715"), "name" : "Max", "hobbies" : [ { "title" : "Sports", "frequency" : 3, "highFrequency" : true, "goodFrequency" : true }, { "title" : "Cooking", "frequency" : 6, "goodFrequency" : true } ], "isSporty" : true }
 { "_id" : ObjectId("5c2b171367f51a60f5c07716"), "name" : "Manuel", "hobbies" : [ { "title" : "Cooking", "frequency" : 4, "goodFrequency" : true }, { "title" : "Cars", "frequency" : 1 } ], "phone" : "012177972", "isSporty" : false, "totalAge" : 32 }
@@ -6071,7 +6071,7 @@ DBCollection.prototype.updateMany@src/mongo/shell/crud_api.js:655:17
 { "_id" : ObjectId("5c2d0552ef2171fd1a48993c"), "name" : "Maria", "age" : 29, "hobbies" : [ { "title" : "Good food", "frequency" : 3, "goodFrequency" : true }, { "title" : "Sports", "frequency" : 2 }, { "title" : "Hiking", "frequency" : 2 } ], "isSporty" : true }
 ```
 
-```sh
+```bash
 > db.users.find({totalAge: {$gt: 30}, isSporty: false})
 { "_id" : ObjectId("5c2b171367f51a60f5c07716"), "name" : "Manuel", "hobbies" : [ { "title" : "Cooking", "frequency" : 4, "goodFrequency" : true }, { "title" : "Cars", "frequency" : 1 } ], "phone" : "012177972", "isSporty" : false, "totalAge" : 32 }
 > db.users.deleteMany({totalAge: {$gt: 30}, isSporty: false})
@@ -6085,14 +6085,14 @@ DBCollection.prototype.updateMany@src/mongo/shell/crud_api.js:655:17
 3. Deleting All Entries in a Collection
 
 - We can delete all entries in a collection with `deleteMany` and no criteria (`db.users.deleteMany({})`)
-```sh
+```bash
 > db.users.deleteMany({})
 { "acknowledged" : true, "deletedCount" : 3 }
 > db.users.find()
 ```
 
 - We can remove the collection using `drop`
-```sh
+```bash
 > show collections
 sports
 users
@@ -6105,7 +6105,7 @@ false
 ```
 
 - We can remove the entire database with `dropDatabase`
-```sh
+```bash
 > show dbs
 CompanyData    0.000GB
 admin          0.000GB
@@ -6153,7 +6153,7 @@ movieData      0.000GB
 2. Adding a Single Filed Index
 
 - Import the `person.json` file with the documents
-```sh
+```bash
 C:\WINDOWS\system32>cd C:\Users\juan.pablo.perez\Downloads
 
 C:\Users\juan.pablo.perez\Downloads>mongoimport persons.json -d contactData -c contacts --jsonArray
@@ -6161,7 +6161,7 @@ C:\Users\juan.pablo.perez\Downloads>mongoimport persons.json -d contactData -c c
 2019-01-03T18:34:33.652+0000    imported 5000 documents
 ```
 
-```sh
+```bash
 > show dbs
 CompanyData    0.000GB
 admin          0.000GB
@@ -6181,7 +6181,7 @@ persons
 5000
 ```
 
-```sh
+```bash
 > db.contacts.findOne()
 {
         "_id" : ObjectId("5c2e55b9ef2171fd1a489ac8"),
@@ -6239,12 +6239,12 @@ persons
 ```
 
 - Count the number of documents where age is older than 60
-```sh
+```bash
 > db.contacts.find({"dob.age": {$gt: 60}}).count()
 1222
 ```
 - We can use `explain()` to get to know what `indexes` we should create.
-```sh
+```bash
 > db.contacts.explain().find({"dob.age": {$gt: 60}})
 {
         "queryPlanner" : {
@@ -6278,7 +6278,7 @@ persons
 ```
 
 - We can get more detail using the `"executionStats"` parameter
-```sh
+```bash
 > db.contacts.explain("executionStats").find({"dob.age": {$gt: 60}})
 {
         "queryPlanner" : {
@@ -6338,7 +6338,7 @@ persons
 }
 ```
 - We can add an `Index` using `createIndex` (`1` is for `Ascending`)
-```sh
+```bash
 > db.contacts.createIndex({"dob.age": 1})
 {
         "createdCollectionAutomatically" : false,
@@ -6348,7 +6348,7 @@ persons
 }
 ```
 
-```sh
+```bash
 > db.contacts.explain("executionStats").find({"dob.age": {$gt: 60}})
 {
         "queryPlanner" : {
@@ -6455,7 +6455,7 @@ persons
 ```
 
 - If we execute it again it takes less
-```sh
+```bash
 > db.contacts.explain("executionStats").find({"dob.age": {$gt: 60}})
 {
         "queryPlanner" : {
@@ -6564,7 +6564,7 @@ persons
 
 - Put a filter with a criteria that doesn't exclude any record
 
-```sh
+```bash
 > db.contacts.explain("executionStats").find({"dob.age": {$gt: 20}})
 {
         "queryPlanner" : {
@@ -6672,13 +6672,13 @@ persons
 
 - Get rid of the `Index` using `dropIndex`.
 
-```sh
+```bash
 > db.contacts.dropIndex({"dob.age": 1})
 { "nIndexesWas" : 2, "ok" : 1 }
 ```
 
 - Check the `executionStats` again and we can see it's faster because no records match the criteria.
-```sh
+```bash
 > db.contacts.explain("executionStats").find({"dob.age": {$gt: 20}})
 {
         "queryPlanner" : {
@@ -6740,7 +6740,7 @@ persons
 
 4. Creating Compound Indexes
 - We can create simple indexing by putting just one criteria
-```sh
+```bash
 > db.contacts.createIndex({gender: 1})
 {
         "createdCollectionAutomatically" : false,
@@ -6855,7 +6855,7 @@ persons
 { "nIndexesWas" : 2, "ok" : 1 }
 ```
 - We can create compound indexes by putting more than one criteria
-```sh
+```bash
 > db.contacts.createIndex({"dob.age": 1, gender: 1})
 {
         "createdCollectionAutomatically" : false,
@@ -6925,7 +6925,7 @@ persons
 > db.contacts.find({"dob.age": {$gt: 35}}).count()
 3590
 ```
-```sh
+```bash
 > db.contacts.explain().find({"dob.age": 35})
 {
         "queryPlanner" : {
@@ -6977,7 +6977,7 @@ persons
         "ok" : 1
 }
 ```
-```sh
+```bash
 > db.contacts.explain().find({gender: "male"})
 {
         "queryPlanner" : {
@@ -7011,7 +7011,7 @@ persons
 ```
 
 5. Using Indexes for Sorting
-```sh
+```bash
 > db.contacts.explain().find({"dob.age": 35}).sort({gender: 1})
 {
         "queryPlanner" : {
@@ -7070,7 +7070,7 @@ MongoDb has a threshold of 32 Mbytes to perform sort, so if we have many records
 6. Understanding the Default Index
 
 - We can see all the Indexes on a collection by using `getIndexes()`
-```sh
+```bash
 > db.contacts.getIndexes()
 [
         {
@@ -7097,7 +7097,7 @@ MongoDb has a threshold of 32 Mbytes to perform sort, so if we have many records
 7. Configuring Indexes 
 
 - We can create `Unique` Indexes using `unique: true`, but it cannot have duplicated values
-```sh
+```bash
 > db.contacts.createIndex({email: 1},{unique: true})
 {
         "ok" : 0,
@@ -7113,7 +7113,7 @@ MongoDb has a threshold of 32 Mbytes to perform sort, so if we have many records
 8. Understanding Partial Filters 
 
 - We can drop an Index by name.
-```sh
+```bash
 > db.contacts.getIndexes()
 [
         {
@@ -7150,7 +7150,7 @@ MongoDb has a threshold of 32 Mbytes to perform sort, so if we have many records
 ```
 
 - We can create a partial filter inside an index using `partialFilterExpression`
-```sh
+```bash
 > db.contacts.createIndex({"dob.age": 1}, {partialFilterExpression: {gender: "male"}})
 {
         "createdCollectionAutomatically" : false,
@@ -7161,7 +7161,7 @@ MongoDb has a threshold of 32 Mbytes to perform sort, so if we have many records
 ```
 
 - If we don't filter by that filter exporession the index is not used:
-```sh
+```bash
 > db.contacts.explain().find({"dob.age": {$gt: 60}})
 {
         "queryPlanner" : {
@@ -7194,7 +7194,7 @@ MongoDb has a threshold of 32 Mbytes to perform sort, so if we have many records
 }
 ```
 
-```sh
+```bash
 > db.contacts.explain().find({"dob.age": {$gt: 60}, gender: "male"})
 {
         "queryPlanner" : {
@@ -7256,7 +7256,7 @@ MongoDb has a threshold of 32 Mbytes to perform sort, so if we have many records
 }
 ```
 
-```sh
+```bash
 > db.contacts.explain().find({"dob.age": {$gt: 60}, gender: "female"})
 {
         "queryPlanner" : {
@@ -7309,7 +7309,7 @@ MongoDb has a threshold of 32 Mbytes to perform sort, so if we have many records
 
 9. Applying the Partial Index 
 
-```sh
+```bash
 > db.users.insertMany([{name: "Max", email: "max@test.com"}, {name: "Manu"}])
 {
         "acknowledged" : true,
@@ -7356,7 +7356,7 @@ DBCollection.prototype.insertOne@src/mongo/shell/crud_api.js:252:9
 @(shell):1:1
 ```
 
-```sh
+```bash
 > db.users.dropIndex({email: 1}, {unique: true})
 { "nIndexesWas" : 2, "ok" : 1 }
 > db.users.createIndex({email: 1}, {unique: true, partialFilterExpression: {email: {$exists: true}}})
@@ -7422,7 +7422,7 @@ DBCollection.prototype.insertOne@src/mongo/shell/crud_api.js:252:9
 
 10. Understanding the Time-To-Live (TTL) Index
 
-```sh
+```bash
 > db.sessions.insertOne({data: "hdlhadad", createdAt: new Date()})
 {
         "acknowledged" : true,
@@ -7441,7 +7441,7 @@ DBCollection.prototype.insertOne@src/mongo/shell/crud_api.js:252:9
 { "_id" : ObjectId("5c2f94d4088cb1a0560299f3"), "data" : "hdlhadad", "createdAt" : ISODate("2019-01-04T17:16:04.455Z") }
 ```
 
-```sh
+```bash
 > db.sessions.insertOne({data: "hdlhadsdsd", createdAt: new Date()})
 {
         "acknowledged" : true,
@@ -7462,7 +7462,7 @@ DBCollection.prototype.insertOne@src/mongo/shell/crud_api.js:252:9
 
 - Covered Query example
 
-```sh
+```bash
 > db.customers.insertMany([{name: "Max", age: 29, salary: 3000},{name: "Manu", age: 30, salary: 4000}])
 {
         "acknowledged" : true,
@@ -7584,7 +7584,7 @@ DBCollection.prototype.insertOne@src/mongo/shell/crud_api.js:252:9
 ```
 
 - If the information we need it is on the index it does not examine any documents (`"totalDocsExamined" : 0`)
-```sh
+```bash
 > db.customers.explain("executionStats").find({name: "Max"}, {_id: 0, name: 1})
 {
         "queryPlanner" : {
@@ -7698,7 +7698,7 @@ DBCollection.prototype.insertOne@src/mongo/shell/crud_api.js:252:9
 
 12. How MongoDB Rejects a Plan 
 
-```sh
+```bash
 > db.customers.getIndexes()
 [
         {
@@ -7727,7 +7727,7 @@ DBCollection.prototype.insertOne@src/mongo/shell/crud_api.js:252:9
 }
 ```
 - The order we filter doesn't matter to use the index. We can see it rejects to use the index with just the name and the filter.
-```sh
+```bash
 > db.customers.explain().find({name: "Max", age: 30})
 {
         "queryPlanner" : {
@@ -7825,7 +7825,7 @@ DBCollection.prototype.insertOne@src/mongo/shell/crud_api.js:252:9
 
 - We can add `allPlansExecution` to get  to get statistics of all the possible plans
 
-```sh
+```bash
 > db.customers.explain("allPlanExecution").find({name: "Max", age: 30})
 2019-01-04T19:07:45.710+0000 E QUERY    [js] Error: explain verbosity must be one of {'queryPlanner','executionStats','allPlansExecution'} :
 parseVerbosity@src/mongo/shell/explainable.js:22:1
@@ -8113,7 +8113,7 @@ DBCollection.prototype.explain@src/mongo/shell/explainable.js:245:12
 ```
 
 13. Using Multi-Key Indexes
-```sh
+```bash
 > db.contacts.insertOne({name: "Max", hobbies: ["Cooking", "Sports"], addresses: [{street: "Main Street"},{street: "Second Street"}]})
 {
         "acknowledged" : true,
@@ -8132,7 +8132,7 @@ DBCollection.prototype.explain@src/mongo/shell/explainable.js:245:12
 { "_id" : ObjectId("5c30423b088cb1a0560299f7"), "name" : "Max", "hobbies" : [ "Cooking", "Sports" ], "addresses" : [ { "street" : "Main Street" }, { "street" : "Second Street" } ] }
 ```
 - We can tell it has a `"isMultiKey" : true,` value
-```sh
+```bash
 > db.contacts.explain("executionStats").find({hobbies: "Sports"})
 {
         "queryPlanner" : {
@@ -8244,7 +8244,7 @@ DBCollection.prototype.explain@src/mongo/shell/explainable.js:245:12
 
 - If we have an index in a field that has an array of documents we cannot use the index to look part of the document.
 
-```sh
+```bash
 > db.contacts.createIndex({addresses: 1})
 {
         "createdCollectionAutomatically" : false,
@@ -8311,7 +8311,7 @@ DBCollection.prototype.explain@src/mongo/shell/explainable.js:245:12
 }
 ```
 
-```sh
+```bash
 > db.contacts.explain("executionStats").find({addresses: {street: "MainStreet"}})
 {
         "queryPlanner" : {
@@ -8423,7 +8423,7 @@ DBCollection.prototype.explain@src/mongo/shell/explainable.js:245:12
 }
 ```
 
-```sh
+```bash
 > db.contacts.createIndex({"addresses.street": 1})
 {
         "createdCollectionAutomatically" : false,
@@ -8540,7 +8540,7 @@ DBCollection.prototype.explain@src/mongo/shell/explainable.js:245:12
 }
 ```
 - We can add a compound index with a normal field and an array field
-```sh
+```bash
 > db.contacts.createIndex({name: 1, hobbies: 1})
 {
         "createdCollectionAutomatically" : false,
@@ -8550,7 +8550,7 @@ DBCollection.prototype.explain@src/mongo/shell/explainable.js:245:12
 }
 ```
 - We cannot add a compound index with two array fields
-```sh
+```bash
 > db.contacts.createIndex({addresses: 1, hobbies: 1})
 {
         "ok" : 0,
@@ -8565,7 +8565,7 @@ DBCollection.prototype.explain@src/mongo/shell/explainable.js:245:12
 ![](/images/databases/mongodb-mongodb-the-complete-developers-guide/Indexes8.png)
 
 - We can create a text index using the `"text"` parameter.
-```sh
+```bash
 > db.products.insertMany([{title: "A book", description: "This is an awesome book about a young artist"},{title: "Red T-Shirt", description: "This T-Shirt is red and it's pretty awesome!"}])
 {
         "acknowledged" : true,
@@ -8587,46 +8587,46 @@ DBCollection.prototype.explain@src/mongo/shell/explainable.js:245:12
 ```
 
 - We can have `only one` text index per collection. We can search by that text index using `$text` and `$search`.
-```sh
+```bash
 > db.products.find({$text: {$search: "awesome"}})
 { "_id" : ObjectId("5c3049ab088cb1a0560299fa"), "title" : "A book", "description" : "This is an awesome book about a young artist" }
 { "_id" : ObjectId("5c3049ab088cb1a0560299fb"), "title" : "Red T-Shirt", "description" : "This T-Shirt is red and it's pretty awesome!" }
 ```
-```sh
+```bash
 > db.products.find({$text: {$search: "book"}})
 { "_id" : ObjectId("5c3049ab088cb1a0560299fa"), "title" : "A book", "description" : "This is an awesome book about a young artist" }
 ```
-```sh
+```bash
 > db.products.find({$text: {$search: "red book"}})
 { "_id" : ObjectId("5c3049ab088cb1a0560299fa"), "title" : "A book", "description" : "This is an awesome book about a young artist" }
 { "_id" : ObjectId("5c3049ab088cb1a0560299fb"), "title" : "Red T-Shirt", "description" : "This T-Shirt is red and it's pretty awesome!" }
 >
 ```
-```sh
+```bash
 > db.products.find({$text: {$search: "\"red book\""}})
 >
 ```
-```sh
+```bash
 > db.products.find({$text: {$search: "\"awesome book\""}})
 { "_id" : ObjectId("5c3049ab088cb1a0560299fa"), "title" : "A book", "description" : "This is an awesome book about a young artist" }
 ```
 
 15. Text Indexes & Sorting
-```sh
+```bash
 > db.products.find({$text: {$search: "awesome t-shirt"}})
 { "_id" : ObjectId("5c304b79088cb1a0560299fc"), "title" : "A book", "description" : "This is an awesome book about a young artist" }
 { "_id" : ObjectId("5c304b79088cb1a0560299fd"), "title" : "Red T-Shirt", "description" : "This T-Shirt is red and it's pretty awesome!" }
 ```
 
 - We can see the value of the `score` (someling like the best value found) using ` $meta: "textScore"`
-```sh
+```bash
 > db.products.find({$text: {$search: "awesome t-shirt"}}, {score: {$meta: "textScore"}})
 { "_id" : ObjectId("5c304b79088cb1a0560299fd"), "title" : "Red T-Shirt", "description" : "This T-Shirt is red and it's pretty awesome!", "score" : 1.7999999999999998 }
 { "_id" : ObjectId("5c304b79088cb1a0560299fc"), "title" : "A book", "description" : "This is an awesome book about a young artist", "score" : 0.625 }
 ```
 
 - We can use the `score` to order
-```sh
+```bash
 > db.products.find({$text: {$search: "awesome t-shirt"}}, {score: {$meta: "textScore"}}).sort({score: {$meta: "textScore"}})
 { "_id" : ObjectId("5c304b79088cb1a0560299fd"), "title" : "Red T-Shirt", "description" : "This T-Shirt is red and it's pretty awesome!", "score" : 1.7999999999999998 }
 { "_id" : ObjectId("5c304b79088cb1a0560299fc"), "title" : "A book", "description" : "This is an awesome book about a young artist", "score" : 0.625 }
@@ -8634,7 +8634,7 @@ DBCollection.prototype.explain@src/mongo/shell/explainable.js:245:12
 16. Creating Combined Text Indexes
 
 - The default language used for text indexes is `English`
-```sh
+```bash
 > db.products.getIndexes()
 [
         {
@@ -8662,7 +8662,7 @@ DBCollection.prototype.explain@src/mongo/shell/explainable.js:245:12
         }
 ]
 ```
-```sh
+```bash
 > db.products.createIndex({title: "text"})
 {
         "ok" : 0,
@@ -8672,7 +8672,7 @@ DBCollection.prototype.explain@src/mongo/shell/explainable.js:245:12
 }
 ```
 
-```sh
+```bash
 > db.products.getIndexes()
 [
         {
@@ -8714,7 +8714,7 @@ DBCollection.prototype.explain@src/mongo/shell/explainable.js:245:12
 ]
 ```
 - We can create a text index that includes more than one field
-```sh
+```bash
 > db.products.createIndex({title: "text", description: "text"})
 {
         "createdCollectionAutomatically" : false,
@@ -8724,7 +8724,7 @@ DBCollection.prototype.explain@src/mongo/shell/explainable.js:245:12
 }
 ```
 
-```sh
+```bash
 > db.products.insertMany([{title: "A ship", description: "Floats perfectly"},{title: "Computer", description: "It is very fast!"}])
 {
         "acknowledged" : true,
@@ -8746,7 +8746,7 @@ DBCollection.prototype.explain@src/mongo/shell/explainable.js:245:12
 ```
 
 17. Using Text Indexes to Exclude Words
-```sh
+```bash
 > db.products.find({$text: {$search: "awesome"}})
 { "_id" : ObjectId("5c304b79088cb1a0560299fc"), "title" : "A book", "description" : "This is an awesome book about a young artist" }
 { "_id" : ObjectId("5c304b79088cb1a0560299fd"), "title" : "Red T-Shirt", "description" : "This T-Shirt is red and it's pretty awesome!" }
@@ -8756,7 +8756,7 @@ DBCollection.prototype.explain@src/mongo/shell/explainable.js:245:12
 
 18. Setting the Default Language & Using Weights
 
-```sh
+```bash
 > db.products.getIndexes()
 [
         {
@@ -8799,7 +8799,7 @@ DBCollection.prototype.explain@src/mongo/shell/explainable.js:245:12
 ]
 ```
 - We can assign the default language for text indexes using `default_language` and the important for the score of each field using `weights`
-```sh
+```bash
 > db.products.createIndex({title: "text", description: "text"}, {default_language: "english", weights: {title: 1, description: 10}})
 {
         "createdCollectionAutomatically" : false,
@@ -8809,7 +8809,7 @@ DBCollection.prototype.explain@src/mongo/shell/explainable.js:245:12
 }
 ```
 
-```sh
+```bash
 > db.products.find({$text: {$search: "red"}}, {score: {$meta: "textScore"}})
 { "_id" : ObjectId("5c304b79088cb1a0560299fd"), "title" : "Red T-Shirt", "description" : "This T-Shirt is red and it's pretty awesome!", "score" : 6.666666666666667 }
 > db.products.find({$text: {$search: "red ship"}}, {score: {$meta: "textScore"}})
@@ -8834,7 +8834,7 @@ for (let i = 0; i < 1000000; i++) {
 }
 ``` 
 
-```sh
+```bash
 C:\WINDOWS\system32>cd C:\Users\juan.pablo.perez\Downloads
 
 C:\Users\juan.pablo.perez\Downloads>mongo credit-rating.js
@@ -8844,7 +8844,7 @@ Implicit session: session { "id" : UUID("458f0b30-f031-45f9-b374-2ee2b922da3e") 
 MongoDB server version: 4.0.5
 ```
 
-```sh
+```bash
 > show dbs
 CompanyData    0.000GB
 admin          0.000GB
@@ -8874,7 +8874,7 @@ ratings
 }
 ```
 
-```sh
+```bash
 > db.ratings.createIndex({age: 1})
 {
         "createdCollectionAutomatically" : false,
@@ -8883,7 +8883,7 @@ ratings
         "ok" : 1
 }
 ```
-```sh
+```bash
 > db.ratings.explain("executionStats").find({age: {$gt: 80}})
 {
         "queryPlanner" : {
@@ -8988,7 +8988,7 @@ ratings
         "ok" : 1
 }
 ```
-```sh
+```bash
 > db.ratings.dropIndex({age: 1})
 { "nIndexesWas" : 2, "ok" : 1 }
 > db.ratings.explain("executionStats").find({age: {$gt: 80}})
@@ -9051,10 +9051,10 @@ ratings
 >
 ```
 - Create the index again
-```sh
+```bash
 > db.ratings.createIndex({age: 1})
 ``` 
-```sh
+```bash
 > db.ratings.createIndex({age: 1})
 {
         "createdCollectionAutomatically" : false,
@@ -9064,10 +9064,10 @@ ratings
 }
 ```
 - Open another session with `Mongo` and query one collection at the same time
-```sh
+```bash
 > db.ratings.findOne()
 ```
-```sh
+```bash
 > db.ratings.findOne()
 {
         "_id" : ObjectId("5c30543c4f531e4e4b821d2b"),
@@ -9083,7 +9083,7 @@ ratings
 ![](/images/databases/mongodb-mongodb-the-complete-developers-guide/Indexes11.png)
 
 - If we create the index with `background: true` the insertion is not locked.
-```sh
+```bash
 > db.ratings.dropIndex({age: 1})
 { "nIndexesWas" : 2, "ok" : 1 }
 > db.ratings.createIndex({age: 1}, {background: true})
@@ -9104,7 +9104,7 @@ ratings
 
 ![](/images/databases/mongodb-mongodb-the-complete-developers-guide/Geospatial2.png)
 
-```sh
+```bash
 > use awesomeplaces
 switched to db awesomeplaces
 > db.places.insertOne({name: "California Academy of Sciences", location: {type: "Point", coordinates: [-122.4724356,37.7672544]}})
@@ -9129,7 +9129,7 @@ switched to db awesomeplaces
 2. Running Geo Queries 
 
 - We can use `$near` and `$geometry` to find documents near a defined location
-```sh
+```bash
 > db.places.find({location: {$near: {$geometry: {type: "Point", coordinates: [-122.471114, 37.771104]}}}})
 Error: error: {
         "ok" : 0,
@@ -9140,7 +9140,7 @@ Error: error: {
 ```
 
 - We need to create a Geospatial Index to Track the Distance first
-```sh
+```bash
 > db.places.createIndex({location: "2dsphere"})
 {
         "createdCollectionAutomatically" : false,
@@ -9153,14 +9153,14 @@ Error: error: {
 ```
 
 - We can specify the distance using `$maxDistance` and `$minDistance` in meters
-```sh
+```bash
 > db.places.find({location: {$near: {$geometry: {type: "Point", coordinates: [-122.471114, 37.771104]},$maxDistance: 30, $minDistance: 10}}})
 > db.places.find({location: {$near: {$geometry: {type: "Point", coordinates: [-122.471114, 37.771104]},$maxDistance: 500, $minDistance: 10}}})
 { "_id" : ObjectId("5c3060c33e6bbc70b1dd0721"), "name" : "California Academy of Sciences", "location" : { "type" : "Point", "coordinates" : [ -122.4724356, 37.7672544 ] } }
 ```
 
 3. Adding Additional Locations
-```sh
+```bash
 > db.places.insertOne({name: "Conservatory of Flowers", location: {type: "Point", coordinates: [-122.4615748,37.7701756]}})
 {
         "acknowledged" : true,
@@ -9184,7 +9184,7 @@ Error: error: {
 ```
 4. Finding Places Inside a Certain Area 
 - We can use `$geoWithIn` to find places inside a certain area (constant `p%` define the area)
-```sh
+```bash
 > const p1 = [-122.4547, 37.77473]
 > const p2 = [-122.45303, 37.76641]
 > const p3 = [-122.51026, 37.76411]
@@ -9199,7 +9199,7 @@ Error: error: {
 
 5. Finding Out If a User Is Inside a Specific Area
 
-```sh
+```bash
 > db.areas.insertOne({name: "Golden Gate Park", area: {type: "Polygon", coordinates: [[p1, p2, p3, p4, p1]]}})
 {
         "acknowledged" : true,
@@ -9216,7 +9216,7 @@ Error: error: {
 }
 ```
 - We can use `$geoIntersects` to find if a point is in a polygon area.
-```sh
+```bash
 > db.areas.find({area: {$geoIntersects: {$geometry: {type: "Point", coordinates: [-122.49089, 37.76992]}}}})
 { "_id" : ObjectId("5c3069063e6bbc70b1dd0725"), "name" : "Golden Gate Park", "area" : { "type" : "Polygon", "coordinates" : [ [ [ -122.4547, 37.77473 ], [ -122.45303, 37.76641 ], [ -122.51026, 37.76411 ], [ -122.51088, 37.77131 ], [ -122.4547, 37.77473 ] ] ] } }
 > db.areas.find({area: {$geoIntersects: {$geometry: {type: "Point", coordinates: [ -122.4389058, 37.7747415 ]}}}})
@@ -9226,7 +9226,7 @@ Error: error: {
 
 - We can use `$centerSphere` to find place within a radious distance from a Point place. The second parameter must be in radians, so, each kilometer has to be divided by `6,378.1` to obtain radians.
 
-```sh
+```bash
 > db.places.find({location: {$geoWithin: {$centerSphere: [[-122.46203, 37.77286], 1 / 6378.1]}}})
 { "_id" : ObjectId("5c3064983e6bbc70b1dd0722"), "name" : "Conservatory of Flowers", "location" : { "type" : "Point", "coordinates" : [ -122.4615748, 37.7701756 ] } }
 { "_id" : ObjectId("5c3064f73e6bbc70b1dd0723"), "name" : "Golden Gate Park Tennis Court", "location" : { "type" : "Point", "coordinates" : [ -122.4593702, 37.7705046 ] } }
@@ -9237,7 +9237,7 @@ Error: error: {
 ![](/images/databases/mongodb-mongodb-the-complete-developers-guide/Geospatial4.png)
 
 - Pick 3 Points on Google Maps and store them in a collection (places)
-```sh
+```bash
 > use myPlaces
 switched to db myPlaces
 > db.places.insertOne({name: "Wanda Metropolitano", location: {type: "Point", coordinates: [-3.599426,40.436350]}})
@@ -9261,7 +9261,7 @@ switched to db myPlaces
 { "_id" : ObjectId("5c3074113e6bbc70b1dd0728"), "name" : "Aparcamiento Publico", "location" : { "type" : "Point", "coordinates" : [ -3.598986, 40.43421 ] } }
 ```
 - Pick a point and find the nearest points within a min and max distance
-```sh
+```bash
 > db.places.createIndex({location: "2dsphere"})
 {
         "createdCollectionAutomatically" : false,
@@ -9275,7 +9275,7 @@ switched to db myPlaces
 { "_id" : ObjectId("5c3073c43e6bbc70b1dd0726"), "name" : "Wanda Metropolitano", "location" : { "type" : "Point", "coordinates" : [ -3.599426, 40.43635 ] } }
 ```
 - Pick an area and see which points stored in the collection it contains
-```sh
+```bash
 > const p1 = [-3.598151, 40.438031]
 > const p2 = [-3.597312, 40.434905]
 > const p3 = [-3.601056, 40.434407]
@@ -9285,7 +9285,7 @@ switched to db myPlaces
 { "_id" : ObjectId("5c30740a3e6bbc70b1dd0727"), "name" : "Tienda Club Atletico de Madrid", "location" : { "type" : "Point", "coordinates" : [ -3.601293, 40.435656 ] } }
 ```
 - Store at least one area in a different collection
-```sh
+```bash
 > db.areas.insertOne({name: "Wanda Metropolitano area", area: {type: "Polygon", coordinates: [[p1, p2, p3, p4, p1]]}})
 {
         "acknowledged" : true,
@@ -9295,7 +9295,7 @@ switched to db myPlaces
 { "_id" : ObjectId("5c30779e88558fed5599917c"), "name" : "Wanda Metropolitano area", "area" : { "type" : "Polygon", "coordinates" : [ [ [ -3.598151, 40.438031 ], [ -3.597312, 40.434905 ], [ -3.601056, 40.434407 ], [ -3.6017, 40.437575 ], [ -3.598151, 40.438031 ] ] ] } }
 ```
 - Pick a point and find out which areas in you collection contain that point
-```sh
+```bash
 > db.areas.createIndex({area: "2dsphere"})
 {
         "createdCollectionAutomatically" : false,
@@ -9319,13 +9319,13 @@ switched to db myPlaces
 
 1. Getting Started with the Aggregation Pipeline 
 
-```sh
+```bash
 C:\Users\juan.pablo.perez\Downloads>mongoimport persons.json -d analytics -c persons --jsonArray
 2019-01-05T11:56:16.725+0000    connected to: localhost
 2019-01-05T11:56:17.443+0000    imported 5000 documents
 ```
 
-```sh
+```bash
 > show dbs
 admin      0.000GB
 analytics  0.000GB
@@ -9392,7 +9392,7 @@ switched to db analytics
 ```
 2. Using the Aggregation Framework 
 - We have to define a series of steps that are going to be executed sequencially
-```sh
+```bash
 db.persons.aggregate([ { $match: {gender: "female"} } ])
 { "_id" : ObjectId("5c309b60aeb428f985a7d6e4"), "gender" : "female", "name" : { "title" : "mrs", "first" : "پریا", "last" : "پارسا" }, "location" : { "street" : "2889 اجاره دار", "city" : "بوشهر", "state" : "خراسان جنوبی", "postcode" : 32528, "coordinates" : { "latitude" : "4.6625", "longitude" : "34.1689" }, "timezone" : { "offset" : "+3:00", "description" : "Baghdad, Riyadh, Moscow, St. Petersburg" } }, "email" : "پریا.پارسا@example.com", "login" : { "uuid" : "75c0d4dd-3a88-42dd-a7ad-5d39b0d8b4b1", "username" : "orangesnake137", "password" : "1031", "salt" : "NRy5mtiy", "md5" : "76aac038463dbbed95cb107811879981", "sha1" : "7013f5d075efcfc35b1cb18298bd7e81db566af2", "sha256" : "6a2792cf9c0386679eb2ca357bcae567907bcfad0d400a56d4c3dd55203d8c61" }, "dob" : { "date" : "1962-01-10T05:26:30Z", "age" : 56 }, "registered" : { "date" : "2015-03-20T08:41:37Z", "age" : 3 }, "phone" : "053-06884781", "cell" : "0993-557-5092", "id" : { "name" : "", "value" : null }, "picture" : { "large" : "https://randomuser.me/api/portraits/women/52.jpg", "medium" : "https://randomuser.me/api/portraits/med/women/52.jpg", "thumbnail" : "https://randomuser.me/api/portraits/thumb/women/52.jpg" }, "nat" : "IR" }
 .
@@ -9403,7 +9403,7 @@ Type "it" for more
 ```
 
 3. Understanding the Group Stage 
-```sh
+```bash
 > db.persons.aggregate([
 ...         { $match: { gender: "female" } },
 ...         { $group: { _id: { state: "$location.state"}, totalPersons: { $sum: 1} } }
@@ -9453,12 +9453,12 @@ Type "it" for more
 Type "it" for more
 ```
 
-```sh
+```bash
 > db.persons.find({gender: "female", "location.state": "south karelia"}).count()
 3
 ```
 4. Diving Deeper Into the Group Stage 
-```sh
+```bash
 > db.persons.aggregate([
 ...         { $match: { gender: "female" } },
 ...         { $group: { _id: { state: "$location.state"}, totalPersons: { $sum: 1} } },
@@ -9490,7 +9490,7 @@ Type "it" for more
 
 - Persons older than 50, group them by gender, obtain how many persons per gender and the average and sort them by the total persons per gender.
 
-```sh
+```bash
 > db.persons.aggregate([
 ... { $match: { "dob.age": {$gt: 50} } },
 ... { $group: { _id: { gender: "$gender"}, totalPersons: { $sum: 1 }, average: {$avg: "$dob.age"} } },
@@ -9503,7 +9503,7 @@ Type "it" for more
 
 6. Working with $project
 
-```sh
+```bash
 > db.persons.aggregate([
 ... { $project: { _id:0, gender: 1, fullname: { $concat: ["Hello", "World"]} } }
 ... ])
@@ -9529,7 +9529,7 @@ Type "it" for more
 { "gender" : "female", "fullname" : "HelloWorld" }
 Type "it" for more
 ```
-```sh
+```bash
 > db.persons.aggregate([
 ... { $project: { _id:0, gender: 1, fullname: { $concat: ["$name.first", " ", "$name.last"]} } }
 ... ]).pretty()
@@ -9555,7 +9555,7 @@ Type "it" for more
 { "gender" : "female", "fullname" : "andreia arnaud" }
 Type "it" for more
 ```
-```sh
+```bash
 > db.persons.aggregate([
 ... { $project: { _id:0, gender: 1, fullname: { $concat: [ {$toUpper: "$name.first"}, " ", {$toUpper: "$name.last"}]} } }
 ... ])
@@ -9581,7 +9581,7 @@ Type "it" for more
 { "gender" : "female", "fullname" : "ANDREIA ARNAUD" }
 Type "it" for more
 ```
-```sh
+```bash
 > db.persons.aggregate([
 ...     {
 ...       $project: {
@@ -9636,7 +9636,7 @@ Type "it" for more
 
 7. Turning the Location Into a geoJSON Object 
 
-```sh
+```bash
 > db.persons.aggregate([
 ...     {
 ...       $project: {
@@ -9718,7 +9718,7 @@ Type "it" for more
 Type "it" for more
 ```
 8. Transforming the Birthdate
-```sh
+```bash
 > db.persons.aggregate([
 ...     {
 ...       $project: {
@@ -9804,7 +9804,7 @@ Type "it" for more
 Type "it" for more
 ```
 9. Using Shortcuts for Transformations
-```sh
+```bash
 > db.persons.aggregate([
 ...     {
 ...       $project: {
@@ -9890,7 +9890,7 @@ Type "it" for more
 Type "it" for more
 ```
 10. Understanding the `$isoWeekYear` Operator 
-```sh
+```bash
 > db.persons.aggregate([
 ...     {
 ...       $project: {
@@ -9982,7 +9982,7 @@ Type "it" for more
 ![](/images/databases/mongodb-mongodb-the-complete-developers-guide/Aggregation2.png)
 
 12. Pushing Elements Into Newly Created Arrays
-```sh
+```bash
 > db.friends.insertMany([
 ...   {
 ...     "name": "Max",
@@ -10029,7 +10029,7 @@ Type "it" for more
 { "_id" : ObjectId("5c31a7c8062abe175faba512"), "name" : "Manu", "hobbies" : [ "Eating", "Data Analytics" ], "age" : 30, "examScores" : [ { "difficulty" : 7, "score" : 52.1 }, { "difficulty" : 2, "score" : 74.3 }, { "difficulty" : 5, "score" : 53.1 } ] }
 { "_id" : ObjectId("5c31a7c8062abe175faba513"), "name" : "Maria", "hobbies" : [ "Cooking", "Skiing" ], "age" : 29, "examScores" : [ { "difficulty" : 3, "score" : 75.1 }, { "difficulty" : 8, "score" : 44.2 }, { "difficulty" : 6, "score" : 61.5 } ] }
 ```
-```sh
+```bash
 > db.friends.aggregate([
 ...     { $group: { _id: { age: "$age" }, allHobbies: { $push: "$hobbies" } } }
 ...   ])
@@ -10037,7 +10037,7 @@ Type "it" for more
 { "_id" : { "age" : 29 }, "allHobbies" : [ [ "Sports", "Cooking" ], [ "Cooking", "Skiing" ] ] }
 ```
 13. Understanding the `$unwind` Stage 
-```sh
+```bash
 > db.friends.aggregate([
 ...     { $unwind: "$hobbies" }
 ...   ])
@@ -10048,7 +10048,7 @@ Type "it" for more
 { "_id" : ObjectId("5c31a7c8062abe175faba513"), "name" : "Maria", "hobbies" : "Cooking", "age" : 29, "examScores" : [ { "difficulty" : 3, "score" : 75.1 }, { "difficulty" : 8, "score" : 44.2 }, { "difficulty" : 6, "score" : 61.5 } ] }
 { "_id" : ObjectId("5c31a7c8062abe175faba513"), "name" : "Maria", "hobbies" : "Skiing", "age" : 29, "examScores" : [ { "difficulty" : 3, "score" : 75.1 }, { "difficulty" : 8, "score" : 44.2 }, { "difficulty" : 6, "score" : 61.5 } ] }
 ```
-```sh
+```bash
 > db.friends.aggregate([
 ...     { $unwind: "$hobbies" },
 ...     { $group: { _id: { age: "$age" }, allHobbies: { $push: "$hobbies" } } }
@@ -10057,7 +10057,7 @@ Type "it" for more
 { "_id" : { "age" : 29 }, "allHobbies" : [ "Sports", "Cooking", "Cooking", "Skiing" ] }
 ```
 14. Eliminating Duplicate Values 
-```sh
+```bash
 > db.friends.aggregate([
 ...     { $unwind: "$hobbies" },
 ...     { $group: { _id: { age: "$age" }, allHobbies: { $addToSet: "$hobbies" } } }
@@ -10066,14 +10066,14 @@ Type "it" for more
 { "_id" : { "age" : 29 }, "allHobbies" : [ "Skiing", "Cooking", "Sports" ] }
 ```
 15. Using Projection with Arrays
-```sh
+```bash
 > db.friends.find()
 { "_id" : ObjectId("5c31a7c8062abe175faba511"), "name" : "Max", "hobbies" : [ "Sports", "Cooking" ], "age" : 29, "examScores" : [ { "difficulty" : 4, "score" : 57.9 }, { "difficulty" : 6, "score" : 62.1 }, { "difficulty" : 3, "score" : 88.5 } ] }
 { "_id" : ObjectId("5c31a7c8062abe175faba512"), "name" : "Manu", "hobbies" : [ "Eating", "Data Analytics" ], "age" : 30, "examScores" : [ { "difficulty" : 7, "score" : 52.1 }, { "difficulty" : 2, "score" : 74.3 }, { "difficulty" : 5, "score" : 53.1 } ] }
 { "_id" : ObjectId("5c31a7c8062abe175faba513"), "name" : "Maria", "hobbies" : [ "Cooking", "Skiing" ], "age" : 29, "examScores" : [ { "difficulty" : 3, "score" : 75.1 }, { "difficulty" : 8, "score" : 44.2 }, { "difficulty" : 6, "score" : 61.5 } ] }
 >
 ```
-```sh
+```bash
 > db.friends.aggregate([
 ...     { $project: { _id: 0, examScore: { $slice: ["$examScores", 1] } } }
 ...   ]).pretty();
@@ -10081,7 +10081,7 @@ Type "it" for more
 { "examScore" : [ { "difficulty" : 7, "score" : 52.1 } ] }
 { "examScore" : [ { "difficulty" : 3, "score" : 75.1 } ] }
 ```
-```sh
+```bash
 > db.friends.aggregate([
 ...     { $project: { _id: 0, examScore: { $slice: ["$examScores", 2] } } }
 ...   ])
@@ -10089,7 +10089,7 @@ Type "it" for more
 { "examScore" : [ { "difficulty" : 7, "score" : 52.1 }, { "difficulty" : 2, "score" : 74.3 } ] }
 { "examScore" : [ { "difficulty" : 3, "score" : 75.1 }, { "difficulty" : 8, "score" : 44.2 } ] }
 ```
-```sh
+```bash
 > db.friends.aggregate([
 ...     { $project: { _id: 0, examScore: { $slice: ["$examScores",-2] } } }
 ...   ])
@@ -10097,7 +10097,7 @@ Type "it" for more
 { "examScore" : [ { "difficulty" : 2, "score" : 74.3 }, { "difficulty" : 5, "score" : 53.1 } ] }
 { "examScore" : [ { "difficulty" : 8, "score" : 44.2 }, { "difficulty" : 6, "score" : 61.5 } ] }
 ```
-```sh
+```bash
 > db.friends.aggregate([
 ...     { $project: { _id: 0, examScore: { $slice: ["$examScores", 2, 1] } } }
 ...   ])
@@ -10106,7 +10106,7 @@ Type "it" for more
 { "examScore" : [ { "difficulty" : 6, "score" : 61.5 } ] }
 ```
 16. Getting the Length of an Array 
-```sh
+```bash
 > db.friends.aggregate([
 ...     { $project: { _id: 0, numScores: { $size: "$examScores" } } }
 ...   ])
@@ -10115,7 +10115,7 @@ Type "it" for more
 { "numScores" : 3 }
 ```
 17. Using the `$filter` Operator 
-```sh
+```bash
 > db.friends.aggregate([
 ...     {
 ...       $project: {
@@ -10129,7 +10129,7 @@ Type "it" for more
 { "scores" : [ { "difficulty" : 3, "score" : 75.1 }, { "difficulty" : 6, "score" : 61.5 } ] }
 ```
 18. Applying Multiple Operations to our Array 
-```sh
+```bash
 >   db.friends.aggregate([
 ...     { $unwind: "$examScores" },
 ...     { $project: { _id: 1, name: 1, age: 1, score: "$examScores.score" } },
@@ -10145,7 +10145,7 @@ Type "it" for more
 { "_id" : ObjectId("5c31a7c8062abe175faba513"), "name" : "Maria", "age" : 29, "score" : 61.5 }
 >
 ```
-```sh
+```bash
 >   db.friends.aggregate([
 ...     { $unwind: "$examScores" },
 ...     { $project: { _id: 1, name: 1, age: 1, score: "$examScores.score" } },
@@ -10161,7 +10161,7 @@ Type "it" for more
 { "_id" : ObjectId("5c31a7c8062abe175faba512"), "name" : "Manu", "age" : 30, "score" : 52.1 }
 { "_id" : ObjectId("5c31a7c8062abe175faba513"), "name" : "Maria", "age" : 29, "score" : 44.2 }
 ```
-```sh
+```bash
 >   db.friends.aggregate([
 ...     { $unwind: "$examScores" },
 ...     { $project: { _id: 1, name: 1, age: 1, score: "$examScores.score" } },
@@ -10172,7 +10172,7 @@ Type "it" for more
 { "_id" : ObjectId("5c31a7c8062abe175faba512"), "name" : "Manu", "maxScore" : 74.3 }
 { "_id" : ObjectId("5c31a7c8062abe175faba511"), "name" : "Max", "maxScore" : 88.5 }
 ```
-```sh
+```bash
 > db.friends.aggregate([
 ...     { $unwind: "$examScores" },
 ...     { $project: { _id: 1, name: 1, age: 1, score: "$examScores.score" } },
@@ -10185,7 +10185,7 @@ Type "it" for more
 { "_id" : ObjectId("5c31a7c8062abe175faba512"), "name" : "Manu", "maxScore" : 74.3 }
 >
 ```
-```sh
+```bash
 >   db.friends.aggregate([
 ...     { $unwind: "$examScores" },
 ...     { $project: { _id: 1, name: 1, age: 1, score: "$examScores.score" } },
@@ -10197,7 +10197,7 @@ Type "it" for more
 { "_id" : ObjectId("5c31a7c8062abe175faba512"), "name" : "Manu", "maxScore" : 74.3 }
 ```
 19. Understanding `$bucket`
-```sh
+```bash
 > db.persons.aggregate([
 ...     {
 ...       $bucket: {
@@ -10216,7 +10216,7 @@ Type "it" for more
 { "_id" : 50, "numPersons" : 976, "averageAge" : 54.533811475409834 }
 { "_id" : 60, "numPersons" : 1328, "averageAge" : 66.55798192771084 }
 ``` 
-```sh
+```bash
 > db.persons.aggregate([
 ...     {
 ...       $bucket: {
@@ -10236,7 +10236,7 @@ Type "it" for more
 { "_id" : 50, "numPersons" : 976, "averageAge" : 54.533811475409834, "age" : [ 50, 54, 51, 53, 52, 58, 56, 55, 59, 57 ] }
 { "_id" : 60, "numPersons" : 1328, "averageAge" : 66.55798192771084, "age" : [ 74, 60, 73, 63, 68, 69, 72, 67, 65, 61, 71, 66, 62, 64, 70 ] }
 ```
-```sh
+```bash
 > db.persons.aggregate([
 ...     {
 ...       $bucketAuto: {
@@ -10256,7 +10256,7 @@ Type "it" for more
 { "_id" : { "min" : 65, "max" : 74 }, "numPersons" : 851, "averageAge" : 69.11515863689776 }
 ```
 20. Diving Into Additional Stages 
-```sh
+```bash
 > db.persons.aggregate([
 ...     { $match: { gender: "male" } },
 ...     { $project: { _id: 0, gender: 1, name: { $concat: ["$name.first", " ", "$name.last"] }, birthdate: { $toDate: "$dob.date" } } },
@@ -10275,7 +10275,7 @@ Type "it" for more
 { "gender" : "male", "name" : "كيان سلطانی نژاد", "birthdate" : ISODate("1944-12-10T14:59:13Z") }
 ```
 
-```sh
+```bash
 > db.persons.aggregate([
 ...     { $match: { gender: "male" } },
 ...     { $project: { _id: 0, gender: 1, name: { $concat: ["$name.first", " ", "$name.last"] }, birthdate: { $toDate: "$dob.date" } } },
@@ -10295,7 +10295,7 @@ Type "it" for more
 { "gender" : "male", "name" : "marcel rey", "birthdate" : ISODate("1945-02-28T02:18:01Z") }
 ```
 21. Writing Pipeline Results Into a New Collection
-```sh
+```bash
 > db.persons.aggregate([
 ...     {
 ...       $project: {
@@ -10389,7 +10389,7 @@ transformedPersons
 Type "it" for more
 ```
 22. Working with the `$geoNear` Stage 
-```sh
+```bash
 > db.transformedPersons.createIndex({location: "2dsphere"})
 {
         "createdCollectionAutomatically" : false,
@@ -10444,7 +10444,7 @@ That matters especially for the numbers. JavaScript does NOT differentiate betwe
 So 12 and 12.0 are exactly the same number in JavaScript and therefore also in the Shell.
 
 3. Working with int32
-```sh
+```bash
 > use person
 switched to db person
 > db.persons.insertOne({ name: "Max", age: 29})
@@ -10458,7 +10458,7 @@ switched to db person
 
 - The current size is `49`
 
-```sh
+```bash
 > db.persons.stats()
 {
         "ns" : "person.persons",
@@ -10649,7 +10649,7 @@ switched to db person
 ```
 
 - The size with only the age is `35`
-```sh
+```bash
 > db.persons.deleteMany({})
 { "acknowledged" : true, "deletedCount" : 1 }
 > db.persons.insertOne({ age: 29})
@@ -10846,7 +10846,7 @@ switched to db person
 }
 ```
 - If we force the age to bin Int32 the size is `31`
-```sh
+```bash
 > db.persons.deleteMany({})
 { "acknowledged" : true, "deletedCount" : 1 }
 > db.persons.insertOne({ age: NumberInt(29)})
@@ -11044,7 +11044,7 @@ switched to db person
 ```
 4. Working with int64 
 - Insert a company with a value of $ 5,000,000,000 with a Int32 type. The value inserted is not the expected one.
-```sh
+```bash
 > db.companies.insertOne({ valuation: NumberInt("5000000000")})
 {
         "acknowledged" : true,
@@ -11054,7 +11054,7 @@ switched to db person
 { "_id" : ObjectId("5c31d817062abe175faba519"), "valuation" : 705032704 }
 ```
 - We can try to insert the maximum Int32 value and increasing it by 1
-```sh
+```bash
 > db.companies.deleteMany({})
 { "acknowledged" : true, "deletedCount" : 1 }
 > db.companies.insertOne({ valuation: NumberInt("2147483647")})
@@ -11074,7 +11074,7 @@ switched to db person
 { "_id" : ObjectId("5c31d8b4062abe175faba51b"), "valuation" : -2147483648 }
 ```
 - If we insert the value without the NumberInt function it is inserted correctly (the command line for MongoDb is 64bit float  by default)
-```sh
+```bash
 > db.companies.insertOne({ valuation: 2147483648})
 {
         "acknowledged" : true,
@@ -11086,7 +11086,7 @@ switched to db person
 { "_id" : ObjectId("5c31d8f6062abe175faba51c"), "valuation" : 2147483648 }
 ```
 - We have to use `NumberLong` to ensure it is inserted as Int64.
-```sh
+```bash
 > db.companies.insertOne({ valuation: NumberLong(2147483648)})
 {
         "acknowledged" : true,
@@ -11099,13 +11099,13 @@ switched to db person
 { "_id" : ObjectId("5c31d9bf062abe175faba51d"), "valuation" : NumberLong("2147483648") }
 ```
 - We cannot insert the maximum Int64 value using NumberLong withour quotations in the shell
-```sh
+```bash
 > db.companies.insertOne({ valuation: NumberLong(9223372036854775807)})
 2019-01-06T10:36:35.963+0000 E QUERY    [js] Error: number passed to NumberLong must be representable as an int64_t :
 @(shell):1:37
 ``` 
 - We have to use quotations
-```sh
+```bash
 > db.companies.insertOne({ valuation: NumberLong("9223372036854775807")})
 {
         "acknowledged" : true,
@@ -11123,7 +11123,7 @@ switched to db person
 ```
 5. Doing Maths with Floats int32s & int64s 
 - We shouldn't store numbers as strings because any calculation will just fail
-```sh
+```bash
 > db.accounts.insert({name: "Max", amount: "12345678903456784567893456784567"})
 WriteResult({ "nInserted" : 1 })
 > db.accounts.find()
@@ -11131,7 +11131,7 @@ WriteResult({ "nInserted" : 1 })
 > db.accounts.deleteMany({})
 { "acknowledged" : true, "deletedCount" : 1 }
 ```
-```sh
+```bash
 > db.accounts.insert({name: "Max", amount: "10"})
 WriteResult({ "nInserted" : 1 })
 > db.accounts.find()
@@ -11162,7 +11162,7 @@ Bulk/this.execute@src/mongo/shell/bulk_api.js:1150:21
 DBCollection.prototype.updateOne@src/mongo/shell/crud_api.js:572:17
 @(shell):1:1
 ```
-```sh
+```bash
 { "acknowledged" : true, "deletedCount" : 1 }
 > db.accounts.insert({name: "Max", amount: NumberInt("10")})
 WriteResult({ "nInserted" : 1 })
@@ -11172,7 +11172,7 @@ WriteResult({ "nInserted" : 1 })
 { "_id" : ObjectId("5c31dca7062abe175faba521"), "name" : "Max", "amount" : 20 }
 ```
 - To ensure it is stored as Int32 we have to use NumberInt with $inc
-```sh
+```bash
 > db.accounts.deleteMany({})
 { "acknowledged" : true, "deletedCount" : 1 }
 > db.accounts.insert({name: "Max", amount: NumberInt("10")})
@@ -11183,7 +11183,7 @@ WriteResult({ "nInserted" : 1 })
 { "_id" : ObjectId("5c31dce5062abe175faba522"), "name" : "Max", "amount" : 20 }
 ```
 ![](/images/databases/mongodb-mongodb-the-complete-developers-guide/Numeric2.png)
-```sh
+```bash
 > db.companies.deleteMany({})
 { "acknowledged" : true, "deletedCount" : 5 }
 > db.companies.insertOne({valuation: NumberLong("123456789123456789")})
@@ -11195,13 +11195,13 @@ WriteResult({ "nInserted" : 1 })
 { "_id" : ObjectId("5c31de37062abe175faba523"), "valuation" : NumberLong("123456789123456789") }
 ```
 - If we don't use `NumberLong` or `NumberInt` with `$inc` it is not stored correctly
-```sh
+```bash
 > db.companies.updateOne({}, {$inc: {valuation: 1}})
 { "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
 > db.companies.find()
 { "_id" : ObjectId("5c31de37062abe175faba523"), "valuation" : 123456789123456780 }
 ```
-```sh
+```bash
 > db.companies.deleteMany({})
 { "acknowledged" : true, "deletedCount" : 1 }
 > db.companies.insertOne({valuation: NumberLong("123456789123456789")})
@@ -11220,7 +11220,7 @@ WriteResult({ "nInserted" : 1 })
 ```
 6. What's Wrong with Normal Doubles? 
 - When we work with the default 64bit float types there can be a precission issue
-```sh
+```bash
 > db.science.insertOne({a: 0.3, b: 0.1})
 {
         "acknowledged" : true,
@@ -11234,7 +11234,7 @@ WriteResult({ "nInserted" : 1 })
 { "_id" : ObjectId("5c31e015062abe175faba525"), "result" : 0.19999999999999998 }
 ```
 7. Working with Decimal 128bit 
-```sh
+```bash
 > db.science.deleteMany({})
 { "acknowledged" : true, "deletedCount" : 0 }
 > db.science.insertOne({a: NumberDecimal("0.3"), b: NumberDecimal("0.1")})
@@ -11247,18 +11247,18 @@ WriteResult({ "nInserted" : 1 })
 > db.science.aggregate([{$project: {result: {$subtract: ["$a","$b"]}}}])
 { "_id" : ObjectId("5c31e9aa062abe175faba526"), "result" : NumberDecimal("0.2") }
 ```
-```sh
+```bash
 { "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
 > db.science.find()
 { "_id" : ObjectId("5c31e9aa062abe175faba526"), "a" : NumberDecimal("0.400000000000000"), "b" : NumberDecimal("0.1") }
 ```
-```sh
+```bash
 > db.science.updateOne({}, {$inc: {a: NumberDecimal("0.1")}})
 { "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
 > db.science.find()
 { "_id" : ObjectId("5c31e9aa062abe175faba526"), "a" : NumberDecimal("0.500000000000000"), "b" : NumberDecimal("0.1") }
 ```
-```sh
+```bash
 > db.nums.insertOne({a: 0.1})
 {
         "acknowledged" : true,
@@ -11452,7 +11452,7 @@ WriteResult({ "nInserted" : 1 })
         "ok" : 1
 }
 ```
-```sh
+```bash
 > db.nums.deleteMany({})
 { "acknowledged" : true, "deletedCount" : 1 }
 > db.nums.insertOne({a: NumberLong("0.1")})
@@ -11677,7 +11677,7 @@ WriteResult({ "nInserted" : 1 })
 
 - We can start MongoDB with `--auth` to obligate users to authenticate
 
-```sh
+```bash
 C:\Work\Git\vectorpayments>mongod --auth
 2019-01-08T17:27:49.032+0000 I CONTROL  [main] Automatically disabling TLS 1.0, to force-enable TLS 1.0 specify --sslDisabledProtocols 'none'
 2019-01-08T17:27:49.061+0000 I CONTROL  [initandlisten] MongoDB starting : pid=23140 port=27017 dbpath=C:\data\db\ 64-bit host=RIMDUB-0232
@@ -11697,7 +11697,7 @@ C:\Work\Git\vectorpayments>mongod --auth
 2019-01-08T17:27:49.082+0000 I CONTROL  [initandlisten] shutting down with code:100
 ```
 
-```sh
+```bash
 C:\Work\Git\vectorpayments>mongod --auth --dbpath "C:\Program Files\MongoDB\Server\4.0\data"
 2019-01-08T17:35:54.096+0000 I CONTROL  [main] Automatically disabling TLS 1.0, to force-enable TLS 1.0 specify --sslDisabledProtocols 'none'
 2019-01-08T17:35:54.110+0000 I CONTROL  [initandlisten] MongoDB starting : pid=18152 port=27017 dbpath=C:\Program Files\MongoDB\Server\4.0\data 64-bit host=RIMDUB-0232
@@ -11734,7 +11734,7 @@ C:\Work\Git\vectorpayments>mongod --auth --dbpath "C:\Program Files\MongoDB\Serv
 
 - We can open the `mongo` command and authenticate with `db.auth('username', 'password')`
 
-```sh
+```bash
 C:\Windows\system32>mongo
 MongoDB shell version v4.0.5
 connecting to: mongodb://127.0.0.1:27017/?gssapiServiceName=mongodb
@@ -11746,14 +11746,14 @@ Warning: unable to run listCollections, attempting to approximate collection nam
 ```
 
 - We need to create an user first to be able to see any information using `db.createuser()`
-```sh
+```bash
 > use admin
 switched to db admin
 > db.createUser({user: "juan", pwd: "juan", roles: ["userAdminAnyDatabase"]})
 Successfully added user: { "user" : "juan", "roles" : [ "userAdminAnyDatabase" ] }
 ```
 - We need to authenticate to be able to see any data
-```sh
+```bash
 > show dbs
 2019-01-08T17:43:00.966+0000 E QUERY    [js] Error: listDatabases failed:{
         "ok" : 0,
@@ -11769,17 +11769,17 @@ shellHelper@src/mongo/shell/utils.js:766:15
 ```
 
 - When we authenticate
-```sh
+```bash
 > db.auth('juan','juan')
 1
 ```
 - Then we can see on the second terminal
-```sh
+```bash
 2019-01-08T17:44:13.631+0000 I ACCESS   [conn1] Successfully authenticated as principal juan on admin
 2019-01-08T17:44:13.633+0000 I ACCESS   [conn1] Unauthorized: not authorized on admin to execute command { replSetGetStatus: 1.0, forShell: 1.0, $db: "admin" }
 ```
 - We can see the databases now
-```sh
+```bash
 > show dbs
 admin   0.000GB
 config  0.000GB
@@ -11797,7 +11797,7 @@ local   0.000GB
 6. Assigning Roles to Users & Databases
 
 - We can authenticate from the command line
-```sh
+```bash
 C:\Windows\system32>mongo -u juan -p juan
 MongoDB shell version v4.0.5
 connecting to: mongodb://127.0.0.1:27017/?gssapiServiceName=mongodb
@@ -11805,7 +11805,7 @@ Implicit session: session { "id" : UUID("b6c825a8-054e-4351-b025-60669a59ed63") 
 MongoDB server version: 4.0.5
 ```
 - Or we can provide in which database we want to authenticate
-```sh
+```bash
 C:\Windows\system32>mongo -u juan -p juan --authenticationDatabase admin
 MongoDB shell version v4.0.5
 connecting to: mongodb://127.0.0.1:27017/?authSource=admin&gssapiServiceName=mongodb
@@ -11813,19 +11813,19 @@ Implicit session: session { "id" : UUID("60e80599-c6e2-45c9-be4d-8943f852451c") 
 MongoDB server version: 4.0.5
 ```
 - We can create another user with permission in just one database
-```sh
+```bash
 > use shop
 switched to db shop
 > db.createUser({user: 'appdev', pwd: 'dev', roles: ["readWrite"]})
 Successfully added user: { "user" : "appdev", "roles" : [ "readWrite" ] }
 ```
 - on the other terminal
-```sh
+```bash
 2019-01-08T18:01:44.449+0000 I ACCESS   [conn3] Successfully authenticated as principal appdev on shop
 2019-01-08T18:01:44.451+0000 I ACCESS   [conn3] Unauthorized: not authorized on admin to execute command { replSetGetStatus: 1.0, forShell: 1.0, $db: "admin" }
 ```
 - If we try to create a new document is the new database we receive an error
-```sh
+```bash
 > db.products.insertOne({name: "book"})
 2019-01-08T18:04:04.611+0000 E QUERY    [js] WriteCommandError: too many users are authenticated :
 WriteCommandError({
@@ -11841,11 +11841,11 @@ DBCollection.prototype.insertOne@src/mongo/shell/crud_api.js:252:9
 @(shell):1:1
 ```
 - We need to run `db.logout()` or exit and authenticate again from the command line
-```sh
+```bash
 > db.logout()
 { "ok" : 1 }
 ```
-```sh
+```bash
 C:\Windows\system32>mongo -u appdev -p dev --authenticationDatabase shop
 MongoDB shell version v4.0.5
 connecting to: mongodb://127.0.0.1:27017/?authSource=shop&gssapiServiceName=mongodb
@@ -11853,7 +11853,7 @@ Implicit session: session { "id" : UUID("6ca09c7b-cfaf-4e11-9058-c2183e02ecb6") 
 MongoDB server version: 4.0.5
 ```
 - If we try to create the document right away after entering on mongoDB we receive an error
-```sh
+```bash
 > db.products.insertOne({name: "A Book"})
 2019-01-08T18:08:07.188+0000 E QUERY    [js] WriteCommandError: not authorized on test to execute command { insert: "products", ordered: true, lsid: { id: UUID("6ca09c7b-cfaf-4e11-9058-c2183e02ecb6") }, $db: "test" } :
 WriteCommandError({
@@ -11869,19 +11869,19 @@ DBCollection.prototype.insertOne@src/mongo/shell/crud_api.js:252:9
 @(shell):1:1
 ```
 - The reason is because we are not in any database yet
-```sh
+```bash
 > use local
 switched to db local
 > show collections
 Warning: unable to run listCollections, attempting to approximate collection names by parsing connectionStatus
 ```
-```sh
+```bash
 > use shop
 switched to db shop
 > show collections
 >
 ```
-```sh
+```bash
 > db.products.insertOne({name: "A Book"})
 {
         "acknowledged" : true,
@@ -11893,41 +11893,41 @@ switched to db shop
 7. Updating & Extending Roles to Other Databases
 
 - We can update an user privilages using the `db.updateUser()` command
-```sh
+```bash
 > db.updateUser("appdev", {roles: ["readWrite", {role: "readWrite", db: "blog"}]})
 2019-01-08T18:16:48.490+0000 E QUERY    [js] Error: Updating user failed: not authorized on shop to execute command { updateUser: "appdev", roles: [ "readWrite", { role: "readWrite", db: "blog" } ], writeConcern: { w: "majority", wtimeout: 600000.0 }, lsid: { id: UUID("6ca09c7b-cfaf-4e11-9058-c2183e02ecb6") }, $db: "shop" } :
 _getErrorWithCode@src/mongo/shell/utils.js:25:13
 DB.prototype.updateUser@src/mongo/shell/db.js:1541:15
 @(shell):1:1
 ```
-```sh
+```bash
 > db.logout()
 { "ok" : 1 }
 ```
-```sh
+```bash
 > db.auth('juan','juan')
 Error: Authentication failed.
 0
 ```
-```sh
+```bash
 > db.auth('juan','juan')
 1
 ```
-```sh
+```bash
 >  db.updateUser("appdev", {roles: ["readWrite", {role: "readWrite", db: "blog"}]})
 2019-01-08T18:19:52.738+0000 E QUERY    [js] Error: Updating user failed: User appdev@admin not found :
 _getErrorWithCode@src/mongo/shell/utils.js:25:13
 DB.prototype.updateUser@src/mongo/shell/db.js:1541:15
 @(shell):1:1
 ```
-```sh
+```bash
 > use shop
 switched to db shop
 > db.updateUser("appdev", {roles: ["readWrite", {role: "readWrite", db: "blog"}]})
 >
 ```
 - We can use the `db.getUser("username")` to see all the information about a user
-```sh
+```bash
 > db.getUser("appdev")
 {
         "_id" : "shop.appdev",
@@ -11949,7 +11949,7 @@ switched to db shop
         ]
 }
 ```
-```sh
+```bash
 > use shop
 switched to db shop
 > db.auth('appdev', 'dev')
@@ -11970,12 +11970,12 @@ Bulk/this.execute@src/mongo/shell/bulk_api.js:1150:21
 DBCollection.prototype.insertOne@src/mongo/shell/crud_api.js:252:9
 @(shell):1:1
 ```
-```sh
+```bash
 switched to db admin
 > db.logout()
 { "ok" : 1 }
 ```
-```sh
+```bash
 > use blog
 switched to db blog
 > db.posts.insertOne({title: "This works!"})
@@ -11989,7 +11989,7 @@ switched to db blog
 
 8. Assignment - Security
 - Authenticate to the admin database
-```sh
+```bash
 C:\Windows\system32>mongo -u juan -p juan --authenticationDatabase admin
 MongoDB shell version v4.0.5
 connecting to: mongodb://127.0.0.1:27017/?authSource=admin&gssapiServiceName=mongodb
@@ -11997,19 +11997,19 @@ Implicit session: session { "id" : UUID("d2cc2b97-763d-4a59-a3c3-c587eaa96d1b") 
 MongoDB server version: 4.0.5
 ```
 - Create the Database Admin use
-```sh
+```bash
 > use admin
 switched to db admin
 > db.createUser({user: 'databaseadmin', pwd: 'dbadmin', roles: ["dbAdminAnyDatabase"]})
 Successfully added user: { "user" : "databaseadmin", "roles" : [ "dbAdminAnyDatabase" ] }
 ```
 - Create the Admin user
-```sh
+```bash
 > db.createUser({user: 'admin', pwd: 'admin', roles: ["userAdminAnyDatabase"]})
 Successfully added user: { "user" : "admin", "roles" : [ "userAdminAnyDatabase" ] }
 ```
 - Create the developer user
-```sh
+```bash
 > use customers
 switched to db customers
 > db.createUser({user: 'dev', pwd: 'dev', roles: ["readWrite"]})
@@ -12018,7 +12018,7 @@ Successfully added user: { "user" : "dev", "roles" : [ "readWrite" ] }
 ```
 
 - We can also create a user with roles in more than one database like this:
-```sh
+```bash
 > use login
 switched to db login
 > db.createUser({user: 'dev2', pwd: 'dev2', roles: [{role: "readWrite", db: "customers"},{role: "readWrite", db: "sales"}]})
@@ -12058,7 +12058,7 @@ Successfully added user: {
 
 ![](/images/databases/mongodb-mongodb-the-complete-developers-guide/Security14.png)
 
-```sh
+```bash
 C:\Windows\system32>cd "\Program Files\OpenSSL-Win64"
 
 C:\Program Files\OpenSSL-Win64>dir
@@ -12090,7 +12090,7 @@ C:\Program Files\OpenSSL-Win64>cd bin
 
 - We need to put on `Common Name` **localhost**
 
-```sh
+```bash
 C:\Program Files\OpenSSL-Win64\bin>openssl req -newkey rsa:2048 -new -x509 -days 365 -nodes -out mongodb-cert.crt -keyout mongodb-cert.key
 Generating a RSA private key
 ............+++++
@@ -12112,7 +12112,7 @@ Organizational Unit Name (eg, section) []:Dev
 Common Name (e.g. server FQDN or YOUR name) []:localhost
 Email Address []:juan@test.com
 ```
-```sh
+```bash
 C:\Program Files\OpenSSL-Win64\bin>dir mongo*
  Volume in drive C has no label.
  Volume Serial Number is 7A1F-74B3
@@ -12124,7 +12124,7 @@ C:\Program Files\OpenSSL-Win64\bin>dir mongo*
                2 File(s)          3,170 bytes
                0 Dir(s)  353,223,208,960 bytes free
 ```
-```sh
+```bash
 C:\Program Files\OpenSSL-Win64\bin>type mongodb-cert.key mongodb-cert.crt > mongodb.pem
 
 mongodb-cert.key
@@ -12133,7 +12133,7 @@ mongodb-cert.key
 
 mongodb-cert.crt
 ```
-```sh
+```bash
 C:\Program Files\OpenSSL-Win64\bin>dir mon*
  Volume in drive C has no label.
  Volume Serial Number is 7A1F-74B3
@@ -12147,7 +12147,7 @@ C:\Program Files\OpenSSL-Win64\bin>dir mon*
                0 Dir(s)  353,178,234,880 bytes free
 ```
 
-```sh
+```bash
 C:\Program Files\OpenSSL-Win64\bin>mongod --sslMode requireSSL --sslPEMKeyFile mongodb.pem --dbpath "C:\Program Files\MongoDB\Server\4.0\data"
 2019-01-08T19:15:35.096+0000 I CONTROL  [main] Automatically disabling TLS 1.0, to force-enable TLS 1.0 specify --sslDisabledProtocols 'none'
 2019-01-08T19:15:35.102+0000 I CONTROL  [initandlisten] MongoDB starting : pid=7032 port=27017 dbpath=C:\Program Files\MongoDB\Server\4.0\data 64-bit host=RIMDUB-0232
@@ -12187,7 +12187,7 @@ C:\Program Files\OpenSSL-Win64\bin>mongod --sslMode requireSSL --sslPEMKeyFile m
 2019-01-08T19:15:38.099+0000 I NETWORK  [initandlisten] waiting for connections on port 27017 ssl
 ```
 
-```sh
+```bash
 C:\Program Files\OpenSSL-Win64>mongo
 MongoDB shell version v4.0.5
 connecting to: mongodb://127.0.0.1:27017/?gssapiServiceName=mongodb
@@ -12197,18 +12197,18 @@ connect@src/mongo/shell/mongo.js:328:13
 exception: connect failed
 ```
 
-```sh
+```bash
 2019-01-08T19:17:17.734+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:51466 #1 (1 connection now open)
 2019-01-08T19:17:17.749+0000 I NETWORK  [conn1] Error receiving request from client: SSLHandshakeFailed: The server is configured to only allow SSL connections. Ending connection from 127.0.0.1:51466 (connection id: 1)
 2019-01-08T19:17:17.750+0000 I NETWORK  [conn1] end connection 127.0.0.1:51466 (0 connections now open)
 ```
 
-```sh
+```bash
 C:\Program Files\OpenSSL-Win64>mongo --ssl --sslCAFile mongodb.pem
 Failed global initialization: InvalidSSLConfiguration Failed to open PEM file: mongodb.pem
 ``` 
 
-```sh
+```bash
 C:\Program Files\OpenSSL-Win64>mongo --ssl --sslCAFile mongodb.pem --host localhost
 Failed global initialization: InvalidSSLConfiguration Failed to open PEM file: mongodb.pem
 ```
@@ -12233,13 +12233,13 @@ Failed global initialization: InvalidSSLConfiguration Failed to open PEM file: m
 
 - Cap collections are collection where you have defined a limit of data they can contain
 
-```sh
+```bash
 > use performance
 switched to db performance
 > db.createCollection("capped", {capped: true, size: 10000, max: 3})
 { "ok" : 1 }
 ```
-```sh
+```bash
 > db.capped.insertOne({name: "Max"})
 {
         "acknowledged" : true,
@@ -12264,7 +12264,7 @@ switched to db performance
 The order used to show the documents on capped collection is the order the have been inserted. We need to use sort() if we want to change it. 
 :::
 
-```sh
+```bash
 > db.capped.find().sort({$natural: -1})
 { "_id" : ObjectId("5c3588f5b3dfabf2981a37ed"), "name" : "Anna" }
 { "_id" : ObjectId("5c3588eab3dfabf2981a37ec"), "name" : "Manu" }
@@ -12273,7 +12273,7 @@ The order used to show the documents on capped collection is the order the have 
 
 - When we insert a document once we reach the max value, the document is created and the first one is removed
 
-```sh
+```bash
 > db.capped.insertOne({name: "Maria"})
 {
         "acknowledged" : true,
@@ -12350,7 +12350,7 @@ The order used to show the documents on capped collection is the order the have 
 
 ![](/images/databases/mongodb-mongodb-the-complete-developers-guide/Performance27.png)
 
-```sh
+```bash
 C:\Windows\system32>mongo "mongodb+srv://cluster0-ycwj8.mongodb.net/test" --username juan
 MongoDB shell version v4.0.5
 Enter password:
@@ -12368,13 +12368,13 @@ MongoDB server version: 4.0.5
 MongoDB Enterprise Cluster0-shard-0:PRIMARY>
 ```
 
-```sh
+```bash
 MongoDB Enterprise Cluster0-shard-0:PRIMARY> show dbs
 admin  0.000GB
 local  2.819GB
 ```
 
-```sh
+```bash
 MongoDB Enterprise Cluster0-shard-0:PRIMARY> use shop
 switched to db shop
 MongoDB Enterprise Cluster0-shard-0:PRIMARY> db.products.insertOne({title: "A book", price: 12.99})
@@ -12400,7 +12400,7 @@ MongoDB Enterprise Cluster0-shard-0:PRIMARY> db.products.find()
 
 2. A Typical Usecase
 
-```sh
+```bash
 MongoDB Enterprise Cluster0-shard-0:PRIMARY> use blogs
 switched to db blogs
 MongoDB Enterprise Cluster0-shard-0:PRIMARY> db.users.insertOne({name: "Max"})
@@ -12423,7 +12423,7 @@ MongoDB Enterprise Cluster0-shard-0:PRIMARY> db.posts.find()
 { "_id" : ObjectId("5c36d7320371b2f7ec9a2fa0"), "title" : "Second Post", "userId" : ObjectId("5c36d6c90371b2f7ec9a2f9e") }
 ```
 - Without transactions
-```sh
+```bash
 MongoDB Enterprise Cluster0-shard-0:PRIMARY> db.users.deleteOne({_id: ObjectId("5c36d6c90371b2f7ec9a2f9e")})
 { "acknowledged" : true, "deletedCount" : 1 }
 MongoDB Enterprise Cluster0-shard-0:PRIMARY> db.posts.deleteMany({userId: ObjectId("5c36d6c90371b2f7ec9a2f9e")})
@@ -12432,7 +12432,7 @@ MongoDB Enterprise Cluster0-shard-0:PRIMARY> db.posts.deleteMany({userId: Object
 
 3. How Does a Transaction Work?
 
-```sh
+```bash
 MongoDB Enterprise Cluster0-shard-0:PRIMARY> db.users.insertOne({name: "Max"})
 {
         "acknowledged" : true,
@@ -12457,7 +12457,7 @@ MongoDB Enterprise Cluster0-shard-0:PRIMARY> db.posts.find()
 
 It is not working
 
-```sh
+```bash
 MongoDB Enterprise Cluster0-shard-0:PRIMARY> const session = db.getMongo().startSession()
 MongoDB Enterprise Cluster0-shard-0:PRIMARY> session
 session { "id" : UUID("9d736983-5d23-465f-bb86-14502a7bc78c") }
@@ -12535,7 +12535,7 @@ users
 
 ![](/images/databases/mongodb-mongodb-the-complete-developers-guide/Application16.png)
 
-```sh
+```bash
 Getting latest version of the Chocolatey package for download.
 Getting Chocolatey from https://chocolatey.org/api/v2/package/chocolatey/0.10.11.
 Downloading 7-Zip commandline tool prior to extraction.
@@ -12874,7 +12874,7 @@ The recent package changes indicate a reboot is necessary.
 ```
 
 - Copy the source code and install dependencies
-```sh
+```bash
 C:\Windows\system32>npm --version
 6.5.0-next.0
 
@@ -12895,7 +12895,7 @@ found 3 vulnerabilities (2 low, 1 high)
   run `npm audit fix` to fix them, or `npm audit` for details
 ```
 
-```sh
+```bash
 C:\Work\Training\Pre\MongoDB\mongodb-the-complete-developers-guide\shell-to-driver>npm audit
 npm ERR! code ENOAUDIT
 npm ERR! audit Your configured registry (https://registry.npmjs.org/) does not support audit requests.
@@ -12905,7 +12905,7 @@ npm ERR!     C:\Users\juan.pablo.perez\AppData\Roaming\npm-cache\_logs\2019-01-1
 ```
 
 > C:\Users\juan.pablo.perez\AppData\Roaming\npm-cache\_logs\2019-01-10T19_26_15_328Z-debug.log
-```log
+```
 0 info it worked if it ends with ok
 1 verbose cli [ 'C:\\Program Files\\nodejs\\node.exe',
 1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
@@ -12938,7 +12938,7 @@ npm ERR!     C:\Users\juan.pablo.perez\AppData\Roaming\npm-cache\_logs\2019-01-1
 16 verbose exit [ 1, true ]
 ```
 
-```sh
+```bash
 C:\Work\Training\Pre\MongoDB\mongodb-the-complete-developers-guide\shell-to-driver>npm audit fix
 npm WARN ajv-keywords@3.2.0 requires a peer of ajv@^6.0.0 but none is installed. You must install peer dependencies yourself.
 npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.4 (node_modules\fsevents):
@@ -12949,7 +12949,7 @@ fixed 0 of 3 vulnerabilities in 14755 scanned packages
   1 package update for 3 vulns involved breaking changes
   (use `npm audit fix --force` to install breaking changes; or refer to `npm audit` for steps to fix these manually)
 ```
-```sh
+```bash
 C:\Work\Training\Pre\MongoDB\mongodb-the-complete-developers-guide\shell-to-driver>npm audit fix --force
 npm WARN using --force I sure hope you know what you are doing.
 npm WARN deprecated circular-json@0.3.3: CircularJSON is in maintenance only, flatted is its successor.
@@ -12966,7 +12966,7 @@ fixed 3 of 3 vulnerabilities in 14755 scanned packages
 ```
 
 - Run the app to ensure it is working.
-```sh
+```bash
 C:\Work\Training\Pre\MongoDB\mongodb-the-complete-developers-guide\shell-to-driver>npm start
 
 > mongodb-demo@0.1.0 start C:\Work\Training\Pre\MongoDB\mongodb-the-complete-developers-guide\shell-to-driver
@@ -12992,7 +12992,7 @@ To create a production build, use yarn build.
 
 - Open another terminal window and run the node.js server app
 
-```sh
+```bash
 C:\Windows\system32>cd C:\Work\Training\Pre\MongoDB\mongodb-the-complete-developers-guide\shell-to-driver
 
 C:\Work\Training\Pre\MongoDB\mongodb-the-complete-developers-guide\shell-to-driver>npm run start:server
@@ -13015,7 +13015,7 @@ C:\Work\Training\Pre\MongoDB\mongodb-the-complete-developers-guide\shell-to-driv
 
 - As it can be seen on [Node.js MongDB Driver installation](http://mongodb.github.io/node-mongodb-native/3.1/installation-guide/installation-guide/) we have to use the `npm install mongodb --save` command.
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/MongoDB/mongodb-the-complete-developers-guide/shell-to-driver
 $ npm install mongodb --save
 + mongodb@3.1.10
@@ -13090,7 +13090,7 @@ app.listen(3100);
 ```
 
 - Start the server app
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/MongoDB/mongodb-the-complete-developers-guide/shell-to-driver
 $ npm run start:server
 
@@ -13266,7 +13266,7 @@ router.delete('/:id', (req, res, next) => {
 module.exports = router;
 ```
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/MongoDB/mongodb-the-complete-developers-guide/shell-to-driver
 $ npm run start:server
 
@@ -13478,7 +13478,7 @@ CommandResult {
   insertedId: 5c384666dee44c3ef4f99ef2 }
 ```
 
-```sh
+```bash
 MongoDB Enterprise Cluster0-shard-0:PRIMARY> db.products.find()
 { "_id" : ObjectId("5c3636f60713d82fc1c27bf8"), "title" : "A book", "price" : 12.99 }
 { "_id" : ObjectId("5c384666dee44c3ef4f99ef2"), "name" : "Any product", "description" : "Does it work?", "price" : NumberDecimal("12.99"), "image" : "http://localhost:3100/product-backpack.jpg" }
@@ -14211,7 +14211,7 @@ export default ProductsPage;
 ```
 
 10. Adding an Index
-```sh
+```bash
 C:\Windows\system32>mongo "mongodb+srv://cluster0-ycwj8.mongodb.net/test" --username juan
 MongoDB shell version v4.0.5
 Enter password:
@@ -14319,7 +14319,7 @@ module.exports = router;
 ```
 
 - Backend log:
-```sh
+```bash
 CommandResult {
   result:
    { n: 1,
@@ -14525,7 +14525,7 @@ CommandResult {
 ```
 
 - Querying MongoDB
-```sh
+```bash
 MongoDB Enterprise Cluster0-shard-0:PRIMARY> show collections
 products
 users
@@ -14535,7 +14535,7 @@ MongoDB Enterprise Cluster0-shard-0:PRIMARY> db.users.find()
 
 12. Adding an Index to Make the Email Unique 
 
-```sh
+```bash
 MongoDB Enterprise Cluster0-shard-0:PRIMARY> db.users.createIndex({email: 1}, {unique: true})
 {
         "createdCollectionAutomatically" : false,
@@ -14557,7 +14557,7 @@ MongoDB Enterprise Cluster0-shard-0:PRIMARY> db.users.createIndex({email: 1}, {u
 
 ![](/images/databases/mongodb-mongodb-the-complete-developers-guide/Application26.png)
 
-```sh
+```bash
 { MongoError: E11000 duplicate key error collection: shop.users index: email_1 dup key: { : "test@test.com" }
     at Function.create (C:\Work\Training\Pre\MongoDB\mongodb-the-complete-developers-guide\shell-to-driver\node_modules\mongodb-core\lib\error.js:43:12)
     at toError (C:\Work\Training\Pre\MongoDB\mongodb-the-complete-developers-guide\shell-to-driver\node_modules\mongodb\lib\utils.js:149:22)
@@ -14688,7 +14688,7 @@ module.exports = router;
 
 ![](/images/databases/mongodb-mongodb-the-complete-developers-guide/Stitch10.png)
 
-```sh
+```bash
 C:\Windows\system32>cd C:\Work\Training\Pre\MongoDB\mongodb-the-complete-developers-guide\stitch
 
 C:\Work\Training\Pre\MongoDB\mongodb-the-complete-developers-guide\stitch>dir
@@ -14740,7 +14740,7 @@ fixed 3 of 3 vulnerabilities in 14766 scanned packages
 C:\Work\Training\Pre\MongoDB\mongodb-the-complete-developers-guide\stitch>
 ```
 
-```sh
+```bash
 C:\Work\Training\Pre\MongoDB\mongodb-the-complete-developers-guide\stitch>npm start
 
 > mongodb-demo@0.1.0 start C:\Work\Training\Pre\MongoDB\mongodb-the-complete-developers-guide\stitch
@@ -14778,7 +14778,7 @@ To ignore, add // eslint-disable-next-line to the line before.
 
 ![](/images/databases/mongodb-mongodb-the-complete-developers-guide/Stitch13.png)
 
-```sh
+```bash
 C:\Work\Training\Pre\MongoDB\mongodb-the-complete-developers-guide\stitch>npm install --save mongodb-stitch-browser-sdk@"^4.1.1"
 + mongodb-stitch-browser-sdk@4.1.2
 added 16 packages from 12 contributors and audited 36015 packages in 26.547s
@@ -15262,7 +15262,7 @@ export default ProductsPage;
 
 7. Deleting Products
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/MongoDB/mongodb-the-complete-developers-guide/stitch
 $ npm i --save bson
 + bson@4.0.1
@@ -15550,7 +15550,7 @@ export default ProductEditPage;
 
 ![](/images/databases/mongodb-mongodb-the-complete-developers-guide/Stitch32.png)
 
-```sh
+```bash
 {insertedId: ObjectId}
 insertedId: ObjectId {id: Uint8Array(12)}
 __proto__: Object
@@ -15696,7 +15696,7 @@ export default ProductEditPage;
 
 ![](/images/databases/mongodb-mongodb-the-complete-developers-guide/Stitch34.png)
 
-```sh
+```bash
 ObjectmatchedCount: 1
 modifiedCount: 1
 upsertedId: ...
@@ -16070,7 +16070,7 @@ export default App;
 
 ![](/images/databases/mongodb-mongodb-the-complete-developers-guide/Stitch43.png)
 
-```sh
+```bash
 StitchUserImpl {id: "5c3a29cf2bdb123a185a36f4", loggedInProviderType: "local-userpass", loggedInProviderName: "local-userpass", profile: ApiCoreUserProfile, auth: StitchAuthImpl}
 auth: StitchAuthImpl {requestClient: StitchAppRequestClient, authRoutes: StitchBrowserAppAuthRoutes, storage: LocalStorage, authInfo: AuthInfo, currentUser: StitchUserImpl, …}
 id: "5c3a29cf2bdb123a185a36f4"

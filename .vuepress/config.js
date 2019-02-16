@@ -63,7 +63,8 @@ module.exports = ctx => ({
             "/backend/nodejs-node-with-react-fullstack-web-development",
             "/other/blockchain-ethereum-kickstart",
             "/frontend/react-react-redux",
-            "/databases/mongodb-mongodb-the-complete-developers-guide"
+            "/databases/mongodb-mongodb-the-complete-developers-guide",
+            "/other/graphql-graphql-react-event-booking"
           ]
         },
         {
@@ -112,7 +113,8 @@ module.exports = ctx => ({
             "/projects/node-with-vuejs-fullstack-web-development",
             "/other/blockchain-ethereum-kickstart",
             "/projects/ethereum-kickstart-vue",
-            "/databases/mongodb-mongodb-the-complete-developers-guide"
+            "/databases/mongodb-mongodb-the-complete-developers-guide",
+            "/other/graphql-graphql-react-event-booking"
           ]
         },
         {
@@ -188,7 +190,8 @@ module.exports = ctx => ({
             "/backend/java-angular-4-java-developers",
             "/backend/nodejs-node-with-react-fullstack-web-development",
             "/projects/node-with-vuejs-fullstack-web-development",
-            "/databases/mongodb-mongodb-the-complete-developers-guide"
+            "/databases/mongodb-mongodb-the-complete-developers-guide",
+            "/other/graphql-graphql-react-event-booking"
           ]
         },
         {
@@ -321,6 +324,16 @@ module.exports = ctx => ({
             "pci-pci-dss-big-picture",
             "pci-payment-card-security-processing-pci-standards"
           ]
+        },
+        {
+          title: "Owasp",
+          collapsable: true,
+          children: ["owasp", "owasp-play-by-play-owasp-top-ten-2017"]
+        },
+        {
+          title: "GraphQL",
+          collapsable: true,
+          children: ["graphql", "/other/graphql-graphql-react-event-booking"]
         }
       ]
     }

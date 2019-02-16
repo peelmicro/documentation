@@ -17,13 +17,13 @@ The [Progressive Web Apps (PWA) - The Complete Guide](https://www.udemy.com/prog
 
 ## Creation of different 'Spa' projects with the 'PWA' integration
 ### React
-```sh
+```bash
 C:\Users\juan.pablo.perez\OneDrive\Training\JavaScript\progressive-web-apps-spas>npm i -g create-react-app
 C:\Users\juan.pablo.perez\AppData\Roaming\npm\create-react-app -> C:\Users\juan.pablo.perez\AppData\Roaming\npm\node_modules\create-react-app\index.js
 + create-react-app@1.5.2
 added 67 packages from 20 contributors in 4.98s
 ```
-```sh
+```bash
 C:\Users\juan.pablo.perez\OneDrive\Training\JavaScript\progressive-web-apps-spas>create-react-app pwa-react
 
 Creating a new React app in C:\Users\juan.pablo.perez\OneDrive\Training\JavaScript\progressive-web-apps-spas\pwa-react.
@@ -809,7 +809,7 @@ We suggest that you begin by typing:
 
 Happy hacking!
 ```
-```sh
+```bash
 $ npm run eject
 
 > pwa-react@0.1.0 eject C:\Users\juan.pablo.perez\OneDrive\Training\JavaScript\progressive-web-apps-spas\pwa-react
@@ -890,7 +890,7 @@ Ejected successfully!
 Please consider sharing why you ejected in this survey:
   http://goo.gl/forms/Bi6CZjk1EqsdelXk1
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/JavaScript/progressive-web-apps-spas/pwa-react
 $ npm run build
 
@@ -929,7 +929,7 @@ npm ERR! This is probably not a problem with npm. There is likely additional log
 npm ERR! A complete log of this run can be found in:
 npm ERR!     C:\Users\juan.pablo.perez\AppData\Roaming\npm-cache\_logs\2018-09-22T11_29_32_331Z-debug.log
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/JavaScript/progressive-web-apps-spas/pwa-react
 $ yarn install
 yarn install v1.9.2
@@ -945,7 +945,7 @@ info "fsevents@1.2.4" is an optional dependency and failed compatibility check. 
 success Saved lockfile.
 Done in 111.44s.
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/JavaScript/progressive-web-apps-spas/pwa-react
 $ npm run build
 
@@ -991,7 +991,7 @@ success Installed "serve@10.0.1" with binaries:
       - serve
 Done in 74.54s.
 ```
-```sh
+```bash
 $ serve -s build
 
    ┌───────────────────────────────────────────────┐
@@ -1007,7 +1007,7 @@ $ serve -s build
 ```
 
 ### Angular
-```sh
+```bash
 C:\Users\juan.pablo.perez\OneDrive\Training\JavaScript\progressive-web-apps-spas>npm i -g @angular/cli
 C:\Users\juan.pablo.perez\AppData\Roaming\npm\ng -> C:\Users\juan.pablo.perez\AppData\Roaming\npm\node_modules\@angular\cli\bin\ng
 npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.4 (node_modules\@angular\cli\node_modules\fsevents):
@@ -1016,7 +1016,7 @@ npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@
 + @angular/cli@6.2.3
 added 4 packages from 3 contributors, removed 10 packages and updated 28 packages in 20.325s
 ```
-```sh
+```bash
 C:\Users\juan.pablo.perez\OneDrive\Training\JavaScript\progressive-web-apps-spas>ng new pwa-angular
 CREATE pwa-angular/angular.json (3593 bytes)
 CREATE pwa-angular/package.json (1317 bytes)
@@ -1129,7 +1129,7 @@ warning: LF will be replaced by CRLF in tslint.json.
 The file will have its original line endings in your working directory.
     Successfully initialized git.
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/JavaScript/progressive-web-apps-spas/pwa-angular (master)
 $ ng add @angular/pwa
 Installing packages for tooling via npm.
@@ -1177,7 +1177,7 @@ Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/JavaScript/progressive-
     "start:prod": "ng build --prod && cd dist/pwa-angular && http-server -c-1"
   },
 ```  
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/JavaScript/progressive-web-apps-spas/pwa-angular (master)
 $ npm run start:prod
 
@@ -1205,7 +1205,7 @@ Hit CTRL-C to stop the server
 ```  
 
 ### Vue.js 
-```sh
+```bash
 C:\Users\juan.pablo.perez\OneDrive\Training\JavaScript\progressive-web-apps-spas>npm uninstall vue-cli -g
 up to date in 0.043s
 
@@ -1228,11 +1228,11 @@ npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@
 + @vue/cli@3.0.3
 added 639 packages from 455 contributors in 43.883s
 ```  
-```sh
+```bash
 C:\Users\juan.pablo.perez\OneDrive\Training\JavaScript\progressive-web-apps-spas>vue --version
 3.0.3
 ```  
-```sh
+```bash
 C:\Users\juan.pablo.perez\OneDrive\Training\JavaScript\progressive-web-apps-spas>vue create pwa-vuejs
 
 Vue CLI v3.0.3
@@ -1273,7 +1273,7 @@ Done in 71.11s.
  $ cd pwa-vuejs
  $ yarn serve
 ```  
-```sh
+```bash
  Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/JavaScript/progressive-web-apps-spas/pwa-vuejs (master)
 $ vue add @vue/pwa
 
@@ -1360,7 +1360,7 @@ Done in 69.36s.
    You should review these changes with git diff and commit them.
 ```  
 - New Attempt
-```sh
+```bash
 C:\Users\juan.pablo.perez\OneDrive\Training\JavaScript\progressive-web-apps-spas>vue create vuejs
 Vue CLI v3.0.3
 ? Please pick a preset:
@@ -1450,7 +1450,7 @@ Done in 80.89s.
  $ cd pwa-vuejs
  $ yarn serve
 ```  
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/JavaScript/progressive-web-apps-spas/pwa-vuejs (master)
 $ npm run build
 
@@ -1487,7 +1487,7 @@ Using 1 worker with 2048MB memory limit
   },
   
 ```  
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/JavaScript/progressive-web-apps-spas/pwa-vuejs (master)$ npm run start:prod
 
 > pwa-vuejs@0.1.0 start:prod C:\Users\juan.pablo.perez\OneDrive\Training\JavaScript\progressive-web-apps-spas\pwa-vuejs
@@ -1527,12 +1527,12 @@ Hit CTRL-C to stop the server
 ```  
 ### Angular with ngX-Rocket CLI 
 
-```sh
+```bash
 C:\Users\juan.pablo.perez\AppData\Roaming\npm\ngx -> C:\Users\juan.pablo.perez\AppData\Roaming\npm\node_modules\generator-ngx-rocket\cli\bin\ngx
 + generator-ngx-rocket@5.1.0
 added 420 packages from 284 contributors in 44.212s
 ```  
-```sh
+```bash
 C:\Users\juan.pablo.perez\OneDrive\Training\JavaScript\progressive-web-apps-spas>ngx new pwa-angular-ngx
           __   __
  _ _  __ _\ \./ / ____ ____ ____ _  _ ____ ___
@@ -1555,13 +1555,13 @@ C:\Users\juan.pablo.perez\OneDrive\Training\JavaScript\progressive-web-apps-spas
 ? Do you want lazy loading? (y/N) N
 ? Do you want analytics support (with Angulartics2)? (y/N) N
 ```  
-```sh
+```bash
 C:\Users\juan.pablo.perez\OneDrive\Training\JavaScript\progressive-web-apps-spas>mkdir pwa-angular-ngx
 ```  
-```sh
+```bash
 C:\Users\juan.pablo.perez\OneDrive\Training\JavaScript\progressive-web-apps-spas>cd pwa-angular-ngx
 ```  
-```sh
+```bash
 C:\Users\juan.pablo.perez\OneDrive\Training\JavaScript\progressive-web-apps-spas\pwa-angular-ngx>ngx new pwa-angular-ngx
           __   __
  _ _  __ _\ \./ / ____ ____ ____ _  _ ____ ___

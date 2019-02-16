@@ -126,7 +126,7 @@ API -> Infraestructure -> Core
 
 - Create the new folder for the solution and execute the `dotnet new sln` comand.
 
-```sh
+```bash
 PS C:\Work\Training\Pre\DotNetCore\NET-Core-Microservices> md dotnet-core-microservices
 
 
@@ -138,7 +138,7 @@ Mode                LastWriteTime         Length Name
 d-----       19/01/2019     11:35                dotnet-core-microservices
 ```
 
-```sh
+```bash
 PS C:\Work\Training\Pre\DotNetCore\NET-Core-Microservices> cd .\dotnet-core-microservices\
 PS C:\Work\Training\Pre\DotNetCore\NET-Core-Microservices\dotnet-core-microservices> dotnet new sln
 
@@ -162,7 +162,7 @@ Getting ready...
 The template "Solution File" was created successfully.
 ```
 
-```sh
+```bash
 PS C:\Work\Training\Pre\DotNetCore\NET-Core-Microservices\dotnet-core-microservices> dir
 
 
@@ -174,7 +174,7 @@ Mode                LastWriteTime         Length Name
 -a----       19/01/2019     11:36            540 dotnet-core-microservices.sln
 ```
 
-```sh
+```bash
 PS C:\Work\Training\Pre\DotNetCore\NET-Core-Microservices\dotnet-core-microservices> mkdir src
 
 
@@ -210,14 +210,14 @@ d-----       19/01/2019     11:38                tests
 
 - Create the main projects for the solution from the `src` folder.
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices
 $ cd src
 ```
 
 > Actio.Api
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices/src
 $ dotnet new webapi -n Actio.Api
 The template "ASP.NET Core Web API" was created successfully.
@@ -234,7 +234,7 @@ Restore succeeded.
 
 > Actio.Services.Identity
 
-```sh
+```bash
 $ dotnet new webapi -n Actio.Services.Identity
 The template "ASP.NET Core Web API" was created successfully.
 
@@ -250,7 +250,7 @@ Restore succeeded.
 
 > Actio.Services.Activities
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices/src
 $ dotnet new webapi -n Actio.Services.Activities
 The template "ASP.NET Core Web API" was created successfully.
@@ -267,7 +267,7 @@ Restore succeeded.
 
 > Actio.Common
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices/src
 $ dotnet new classlib -n Actio.Common
 The template "Class library" was created successfully.
@@ -284,19 +284,19 @@ Restore succeeded.
 
 - Add the references between our projects
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices/src
 $ dotnet add Actio.Api/Actio.Api.csproj reference Actio.Common/Actio.Common.csproj
 Reference `..\Actio.Common\Actio.Common.csproj` added to the project.
 ```
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices/src
 $ dotnet add Actio.Services.Identity/Actio.Services.Identity.csproj reference Actio.Common/Actio.Common.csproj
 Reference `..\Actio.Common\Actio.Common.csproj` added to the project.
 ```
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices/src
 $ dotnet add Actio.Services.Activities/Actio.Services.Activities.csproj reference Actio.Common/Actio.Common.csproj
 Reference `..\Actio.Common\Actio.Common.csproj` added to the project.
@@ -305,7 +305,7 @@ Reference `..\Actio.Common\Actio.Common.csproj` added to the project.
 
 - Add the projects to the solution
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices
 $ cat dotnet-core-microservices.sln
 
@@ -328,7 +328,7 @@ Global
 EndGlobal
 ```
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices
 $ dotnet sln add src/Actio.Api/Actio.Api.csproj
 Project `src\Actio.Api\Actio.Api.csproj` added to the solution.
@@ -346,7 +346,7 @@ $ dotnet sln add src/Actio.Services.Activities/Actio.Services.Activities.csproj
 Project `src\Actio.Services.Activities\Actio.Services.Activities.csproj` added to the solution.
 ```
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices
 $ cat dotnet-core-microservices.sln
 
@@ -437,7 +437,7 @@ EndGlobal
 
 - Restore the libraries (Althought it's done automatically when the projects are created)
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices
 $ dotnet restore
   Restoring packages for C:\Work\Training\Pre\DotNetCore\NET-Core-Microservices\dotnet-core-microservices\src\Actio.Api\Actio.Api.csproj...
@@ -451,7 +451,7 @@ $ dotnet restore
 
 - Build the solution to ensure that everything is working properly
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices
 $ dotnet build
 Microsoft (R) Build Engine version 15.9.20+g88f5fadfbe for .NET Core
@@ -480,7 +480,7 @@ Time Elapsed 00:00:06.82
 
 - Build again starting `Visual Code` as an administrator
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices
 $ dotnet build
 Microsoft (R) Build Engine version 15.9.20+g88f5fadfbe for .NET Core
@@ -593,7 +593,7 @@ ConfiguringRabbitMQServiceBus18
 
 ![](/images/backend/dotnetcore-net-core-microservice/ConfiguringRabbitMQServiceBus18.png)
 
-```sh
+```bash
 choco install rabbitmq
 ```
 
@@ -603,7 +603,7 @@ choco install rabbitmq
 
 - Pull the image using `docker pull rabbitmq`
 
-```sh
+```bash
 $ docker pull rabbitmq
 Using default tag: latest
 latest: Pulling from library/rabbitmq
@@ -625,7 +625,7 @@ Status: Downloaded newer image for rabbitmq:latest
 
 - Run the container using `docker run -p 5672:5672 rabbitmq`
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices
 $ docker run -p 5672:5672 rabbitmq
 C:\Program Files\Docker\Docker\Resources\bin\docker.exe: Error response from daemon: driver failed programming external connectivity on endpoint laughing_tereshkova (857174fc2dd71c187d6bf638095396b1ba89e9f64c2e4faf65484306b081b02d): Error starting userland proxy: Bind for 0.0.0.0:5672 failed: port is already allocated.
@@ -633,7 +633,7 @@ C:\Program Files\Docker\Docker\Resources\bin\docker.exe: Error response from dae
 
 - The previous error about the 5672 is opened is because RabbitMQ service is running. It order to be able to run the container the service must be stopped.
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices
 $  docker run -p 5672:5672 rabbitmq
 2019-01-20 05:56:53.245 [info] <0.33.0> Application lager started on node rabbit@c9f09993e813
@@ -716,7 +716,7 @@ $  docker run -p 5672:5672 rabbitmq
 
 - From other terminal:
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices
 $ docker ps
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                                                   NAMES
@@ -1606,7 +1606,7 @@ namespace Actio.Api
 
 - Ensure the `RabbitMQ` container is running
 
-```ps
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices
 $ docker ps
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                                                   NAMES
@@ -1615,7 +1615,7 @@ c9f09993e813        rabbitmq            "docker-entrypoint.s…"   6 hours ago  
 
 - Run the Actio.Api project
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices
 $ cd src
 
@@ -1760,7 +1760,7 @@ namespace Actio.Common.Services
 }
 ```
 
-```sh
+```bash
 $ dotnet run
 info: Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager[0]
       User profile is available. Using 'C:\Users\juan.pablo.perez\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
@@ -1773,7 +1773,7 @@ Application started. Press Ctrl+C to shut down.
 
 - Run the `Actio.Services.Activities` project in another terminal
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices/src/Actio.Services.Activities
 $ dotnet run --urls "http://*.5050"
 info: Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager[0]
@@ -1855,7 +1855,7 @@ After trying to run the Actio.Services.Activities project an error is thrown. Th
 }
 ```
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices/src/Actio.Services.Activities
 $ dotnet run
 info: Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager[0]
@@ -1894,7 +1894,7 @@ server →Kestrel
 
 - Ensure there is a `Activity created: test` message on the `Actio.Api` terminal
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices/src/Actio.Api
 $ dotnet run
 info: Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager[0]
@@ -1929,7 +1929,7 @@ Activity created: test
 
 - Ensure there is a `Creating activity: test` message on the `Actio.Services.Activities` terminal
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices/src/Actio.Services.Activities
 $ dotnet run
 info: Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager[0]
@@ -2074,7 +2074,7 @@ namespace Actio.Services.Activities.Domain.Repositories
 
 ![](/images/backend/dotnetcore-net-core-microservice/SettingUpMongoDB.png)
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices (master)$ docker run -d -p 27017:27017 mongo
 Unable to find image 'mongo:latest' locally
 latest: Pulling from library/mongo
@@ -2099,7 +2099,7 @@ C:\Program Files\Docker\Docker\Resources\bin\docker.exe: Error response from dae
 
 - After restarting Docker
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices (master)
 $ docker run -d -p 27017:27017 mongo
 6919951222bc6f2f9b57f6fa15a77427def7469ca4eb1ad43d5963d5d66a420f
@@ -2112,7 +2112,7 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 
 - Install the `Mongo` Nuget package
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices/src/Actio.Common (master)
 $ dotnet add package MongoDB.Driver
   Writing C:\Users\juan.pablo.perez\AppData\Local\Temp\tmpE59D.tmp
@@ -2669,7 +2669,7 @@ namespace Actio.Services.Activities
 
 - Run the `Actio.Services.Activity` project to see if the new database and the new collection is created.
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices/src/Actio.Services.Activities (master)
 $ dotnet run
 info: Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager[0]
@@ -2858,7 +2858,7 @@ namespace Actio.Common.Services
 }
 ```
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices/src/Actio.Services.Activities (master)
 $ dotnet run
 info: Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager[0]
@@ -3892,7 +3892,7 @@ namespace Actio.Api.Controllers
 - Try to create an user and to login an user.
   > Run the Api on one terminal
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices/src/Actio.Api (master)
 $ dotnet run
 info: Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager[0]
@@ -3906,7 +3906,7 @@ Application started. Press Ctrl+C to shut down.
 
 > Run the Services.Identitity on another terminal
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices/src/Actio.Services.Identity (master)
 $ dotnet run
 info: Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager[0]
@@ -3920,21 +3920,21 @@ Application started. Press Ctrl+C to shut down.
 
 > Execute the following curl command on another terminal
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices (master)
 $ curl localhost:5000/users -X POST -H "content-type: application/json" -d '{"email": "user2@email.com", "name": "user2", "password": "secret2"}'
 ```
 
 - From the `Aactop.Api` terminal
 
-```sh
+```bash
 info: Microsoft.AspNetCore.Server.Kestrel[32]
       Connection id "0HLK0UI1FQL6N", Request id "0HLK0UI1FQL6N:00000001": the application completed without reading the entire request body.
 ```
 
 - Using Postman
 
-```sh
+```bash
 POST /users HTTP/1.1
 Host: localhost:5001
 Content-Type: application/json
@@ -3950,7 +3950,7 @@ Postman-Token: e375a6f5-7ef9-d9a0-958f-16257aac9430
 
 - From the `Aactop.Api` terminal
 
-```sh
+```bash
 info: Microsoft.AspNetCore.Hosting.Internal.WebHost[1]
       Request starting HTTP/1.1 POST https://localhost:5001/users application/json 74
 info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
@@ -3973,7 +3973,7 @@ info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
 
 - From the `Aactop.Services.Identity` terminal
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices/src/Actio.Services.Identity (master)
 $ dotnet run
 info: Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager[0]
@@ -4015,7 +4015,7 @@ info: Actio.Common.Commands.CreateUser[0]
 
 - Add these new `Nuget` packages.
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices (master)$ cd src/Actio.Common/
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices/src/Actio.Common (master)
 $ dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer
@@ -4033,7 +4033,7 @@ info : Writing lock file to disk. Path: C:\Work\Training\Pre\DotNetCore\NET-Core
 log  : Restore completed in 3.39 sec for C:\Work\Training\Pre\DotNetCore\NET-Core-Microservices\dotnet-core-microservices\src\Actio.Common\Actio.Common.csproj.
 ```
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices/src/Actio.Common (master)
 $ dotnet add package Microsoft.IdentityModel.Tokens
   Writing C:\Users\juan.pablo.perez\AppData\Local\Temp\tmp4355.tmp
@@ -4603,7 +4603,7 @@ namespace Actio.Api.Controllers
 
 - Run the `Actio.Api` project
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices (master)
 $ cd src/Actio.Api/
 
@@ -4620,7 +4620,7 @@ Application started. Press Ctrl+C to shut down.
 
 - Run the `Actio.Services.Identity` in another terminal
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices/src/Actio.Services.Identity (master)
 $ dotnet run
 info: Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager[0]
@@ -4681,7 +4681,7 @@ namespace Actio.Api.Controllers
 
 - If we try to access the page now some errors related to the authentication are thrown.
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices/src/Actio.Api (master)
 $ dotnet run
 info: Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager[0]
@@ -5131,7 +5131,7 @@ namespace Actio.Api.Controllers
 ![](/images/backend/dotnetcore-net-core-microservice/ExecutingHTTPRequests.png)
 
 - Run the `Actio.Api` in one terminal
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices (master)
 $ cd src/Actio.Api/
 
@@ -5147,7 +5147,7 @@ Application started. Press Ctrl+C to shut down.
 ```
 
 - Run the `Actio.Services.Identity` from another terminal
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices (master)
 $ cd src/Actio.Services.Identity/
 
@@ -5163,7 +5163,7 @@ Application started. Press Ctrl+C to shut down.
 ```
 
 - Run the `Actio.Services.Activities` from another terminal
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices (master)
 $ cd src/Actio.Services.Activities/
 
@@ -5220,14 +5220,14 @@ Postman-Token: be7a09a2-716f-6eae-8753-fc325bb1276e
 
 ![](/images/backend/dotnetcore-net-core-microservice/ExecutingHTTPRequests2.png)
 
-```sh
+```bash
 info: Actio.Services.Activities.Handlers.CreateActivityHandler[0]
       Creating activity: '66f21441-454a-4137-bb84-912419b9386d' for user: 'f04a569a-7595-4cb0-9724-32af9b343e0b'.
 info: Actio.Services.Activities.Handlers.CreateActivityHandler[0]
       Activity: '66f21441-454a-4137-bb84-912419b9386d' was created for user: 'f04a569a-7595-4cb0-9724-32af9b343e0b'.
 ```
 
-```sh
+```bash
 info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
       Executed endpoint 'Actio.Api.Controllers.ActivitiesController.Post (Actio.Api)'
 info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
@@ -5294,7 +5294,7 @@ Postman-Token: 1f953c5f-5e4a-b0bc-8b62-c014cc845173
 ![](/images/backend/dotnetcore-net-core-microservice/APITesting.png)
 
 - Create the `Actio.Api.Tests` project
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices/tests (master)
 $ dotnet new xunit -n Actio.Api.Tests
 The template "xUnit Test Project" was created successfully.
@@ -5310,14 +5310,14 @@ Restore succeeded.
 ```
 
 - Add the project to the solution
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices
 $ dotnet sln add tests/src/Actio.Api.Test/Actio.Api.Tests.csproj
 Project `tests\Actio.Api.Tests\Actio.Api.Test.csproj` added to the solution.
 ```
 
 - Add the `FluentAssertions` package
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices/tests/Actio.Api.Tests (master)
 $ dotnet add package FluentAssertions
   Writing C:\Users\juan.pablo.perez\AppData\Local\Temp\tmpCEF5.tmp
@@ -5344,7 +5344,7 @@ log  : Restore completed in 7.04 sec for C:\Work\Training\Pre\DotNetCore\NET-Cor
 ```
 
 - Add the `Microsoft.AspNetCore.TestHost` package
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices/tests/Actio.Api.Tests (master)
 $ dotnet add package Microsoft.AspNetCore.TestHost
   Writing C:\Users\juan.pablo.perez\AppData\Local\Temp\tmpFED.tmp
@@ -5365,7 +5365,7 @@ log  : Restore completed in 3.83 sec for C:\Work\Training\Pre\DotNetCore\NET-Cor
 ```
 
 - Add the `Moq` package
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices/tests/Actio.Api.Tests (master)
 $ dotnet add package Moq
   Writing C:\Users\juan.pablo.perez\AppData\Local\Temp\tmp3003.tmp
@@ -5382,7 +5382,7 @@ info : Writing lock file to disk. Path: C:\Work\Training\Pre\DotNetCore\NET-Core
 log  : Restore completed in 4.58 sec for C:\Work\Training\Pre\DotNetCore\NET-Core-Microservices\dotnet-core-microservices\tests\Actio.Api.Tests\Actio.Api.Tests.csproj.
 ```
 - Add a reference to the `Action.Api` project,
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices/tests/Actio.Api.Tests (master)
 $ dotnet add Actio.Api.Tests.csproj reference ../../src/Actio.Api/Actio.Api.csproj
 Reference `..\..\src\Actio.Api\Actio.Api.csproj` added to the project
@@ -5415,7 +5415,7 @@ Reference `..\..\src\Actio.Api\Actio.Api.csproj` added to the project
 ```
 
 - Create the `Actio.Services.Activities.Tests` project
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices/tests (master)
 $ dotnet new xunit -n Actio.Services.Activities.Tests
 The template "xUnit Test Project" was created successfully.
@@ -5430,14 +5430,14 @@ Running 'dotnet restore' on Actio.Services.Activities.Tests\Actio.Services.Activ
 Restore succeeded.
 ```
 - Add the project to the solution
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices
 $ dotnet sln add tests/src/Actio.Services.Activities.Test/Actio.Services.Activities.Tests.csproj
 Project `tests\Actio.Services.Activities.Tests\Actio.Services.Activities.Test.csproj` added to the solution.
 ```
 
 - Add the `FluentAssertions` package
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices/tests/Actio.Services.Activities.Tests (master)
 $ dotnet add package FluentAssertions
   Writing C:\Users\juan.pablo.perez\AppData\Local\Temp\tmpFF0C.tmp
@@ -5453,7 +5453,7 @@ log  : Restore completed in 967.63 ms for C:\Work\Training\Pre\DotNetCore\NET-Co
 ```
 
 - Add the `Microsoft.AspNetCore.TestHost` package
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices/tests/Actio.Services.Activities.Tests (master)
 $ dotnet add package Microsoft.AspNetCore.TestHost
   Writing C:\Users\juan.pablo.perez\AppData\Local\Temp\tmp4D8A.tmp
@@ -5469,7 +5469,7 @@ log  : Restore completed in 1.29 sec for C:\Work\Training\Pre\DotNetCore\NET-Cor
 ```
 
 - Add the `moq` package
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices/tests/Actio.Services.Activities.Tests (master)
 $ dotnet add package Moq
   Writing C:\Users\juan.pablo.perez\AppData\Local\Temp\tmpD17F.tmp
@@ -5485,7 +5485,7 @@ log  : Restore completed in 2.75 sec for C:\Work\Training\Pre\DotNetCore\NET-Cor
 ```
 
 - Add a reference to the `Action.Services.Activities` project,
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices/tests/Actio.Services.Activities.Tests (master)
 $ dotnet add Actio.Services.Activities.Tests.csproj reference ../../src/Actio.Services.Activities/Actio.Services.Activities.csproj
 Reference `..\..\src\Actio.Services.Activities\Actio.Services.Activities.csproj` added to the project.
@@ -5518,7 +5518,7 @@ Reference `..\..\src\Actio.Services.Activities\Actio.Services.Activities.csproj`
 ```
 
 - Create the `Actio.Services.Identity.Tests` project
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices/tests (master)
 $ dotnet new xunit -n Actio.Services.Identity.Tests
 The template "xUnit Test Project" was created successfully.
@@ -5533,14 +5533,14 @@ Running 'dotnet restore' on Actio.Services.Identity.Tests\Actio.Services.Identit
 Restore succeeded.
 ```
 - Add the project to the solution
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices
 $ dotnet sln add tests/src/Actio.Services.Identity.Test/Actio.Services.Identity.Tests.csproj
 Project `tests\Actio.Services.Identity.Tests\Actio.Services.Identity.Test.csproj` added to the solution.
 ```
 
 - Add the `FluentAssertions` package
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices/tests/Actio.Services.Identity.Tests (master)
 $ dotnet add package FluentAssertions
   Writing C:\Users\juan.pablo.perez\AppData\Local\Temp\tmp8BDC.tmp
@@ -5556,7 +5556,7 @@ log  : Restore completed in 989.19 ms for C:\Work\Training\Pre\DotNetCore\NET-Co
 ```
 
 - Add the `Microsoft.AspNetCore.TestHost` package
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices/tests/Actio.Services.Identity.Tests (master)
 $ dotnet add package Microsoft.AspNetCore.TestHost
   Writing C:\Users\juan.pablo.perez\AppData\Local\Temp\tmpDE03.tmp
@@ -5572,7 +5572,7 @@ log  : Restore completed in 1.36 sec for C:\Work\Training\Pre\DotNetCore\NET-Cor
 ```
 
 - Add the `moq` package
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices/tests/Actio.Services.Identity.Tests (master)
 $ dotnet add package Moq
   Writing C:\Users\juan.pablo.perez\AppData\Local\Temp\tmp44CC.tmp
@@ -5587,7 +5587,7 @@ info : Writing lock file to disk. Path: C:\Work\Training\Pre\DotNetCore\NET-Core
 log  : Restore completed in 2.17 sec for C:\Work\Training\Pre\DotNetCore\NET-Core-Microservices\dotnet-core-microservices\tests\Actio.Services.Identity.Tests\Actio.Services.Identity.Tests.csproj.
 ```
 - Add a reference to the `Action.Identity.Activities` project,
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices/tests/Actio.Services.Identity.Tests (master)
 $ dotnet add Actio.Services.Identity.Tests.csproj reference ../../src/Actio.Services.Identity/Actio.Services.Identity.csproj
 Reference `..\..\src\Actio.Services.Identity\Actio.Services.Identity.csproj` added to the project.
@@ -5713,7 +5713,7 @@ namespace Actio.Api.Tests.Unit.Controllers
 ```
 
 - Run the test.
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices/tests/Actio.Api.Tests (master)
 $ dotnet test
 Build started, please wait...
@@ -5790,7 +5790,7 @@ namespace Actio.Api.Tests.Unit.Controllers
 
 ![](/images/backend/dotnetcore-net-core-microservice/APITesting2.png)
 
-```sh
+```bash
 ----- Running test method "Actio.Api.Tests.Unit.Controllers.ActivitiesControllerTests.activities_controller_post_should_return_accepted" -----
 
 Microsoft (R) Build Engine version 15.9.20+g88f5fadfbe for .NET Core
@@ -5867,7 +5867,7 @@ namespace Actio.Services.Activities.Tests.Unit.Services
 
 - Test if it works.
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices/tests/Actio.Services.Activities.Tests (master)
 $ dotnet test
 Build started, please wait...
@@ -5958,7 +5958,7 @@ namespace Actio.Services.Activities.Tests.Controllers
 ```
 
 - Run the test from Visual Studio Code
-```sh
+```bash
 ----- Running test method "Actio.Services.Activities.Tests.Controllers.HomeControllerTests.home_controller_get_should_return_string_content" -----
 
 Microsoft (R) Build Engine version 15.9.20+g88f5fadfbe for .NET Core
@@ -6049,7 +6049,7 @@ namespace Actio.Services.Identity.Tests.Unit.Services
 ```
 
 - Run the test
-```sh
+```bash
 
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices/tests/Actio.Services.Identity.Tests (master)
 $ dotnet test
@@ -6156,7 +6156,7 @@ namespace Actio.Services.Activities.Tests.Integration.Controllers
 
 ```
 - Run the test from Visual Studio.
-```sh
+```bash
 ----- Running test method "Actio.Services.Activities.Tests.Controllers.HomeControllerTests.home_controller_get_should_return_string_content" -----
 
 Microsoft (R) Build Engine version 15.9.20+g88f5fadfbe for .NET Core
@@ -6291,7 +6291,7 @@ ENTRYPOINT dotnet Actio.Api.dll
 ```
 
 - Publish the `Actio.Api` project
-```sc
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices (master)
 $ cd src/Actio.Api/
 
@@ -6310,7 +6310,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
 ```
 
 - Build the Docker Image
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices/src/Actio.Api (master)
 $ docker build -t actio.api .
 Sending build context to Docker daemon  5.091MB
@@ -6347,7 +6347,7 @@ SECURITY WARNING: You are building a Docker image from Windows against a non-Win
 ```
 
 - Run the `rabbitmq` image
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices/src/Actio.Api (master)
 $ docker run -p 5672:5672 rabbitmq
 2019-01-26 10:21:43.069 [info] <0.33.0> Application lager started on node rabbit@b39c4d524ecb
@@ -6429,13 +6429,13 @@ $ docker run -p 5672:5672 rabbitmq
 ```
 
 - Run the `mongodb` image
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices (master)
 $ docker run -d -p 27017:27017 mongo
 90cbacec482164c3fd229a6545f6ac77f75b1cbbb96feeae7229fab4d4a80683
 ```
 - Ensure both images are running
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices (master)
 $ docker ps
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                                                   NAMES
@@ -6443,7 +6443,7 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 b39c4d524ecb        rabbitmq            "docker-entrypoint.s…"   2 minutes ago       Up 2 minutes        4369/tcp, 5671/tcp, 25672/tcp, 0.0.0.0:5672->5672/tcp   musing_hopper
 ```
 - Run the new Docker Image
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices/src/Actio.Api (master)
 $ docker run -p 5000:5000 actio.api
 
@@ -6812,7 +6812,7 @@ services:
 
 - Start running the dependencies
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices/scripts (master)
 $ docker-compose run start-dependencies
 Starting scripts_rabbitmq_1 ... done
@@ -6821,7 +6821,7 @@ Creating scripts_mongo_1    ...
 
 ![](/images/backend/dotnetcore-net-core-microservice/UsingDockerCompose3.png)
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices/scripts (master)
 $ docker-compose run start-dependencies
 Starting scripts_rabbitmq_1 ... done
@@ -6834,7 +6834,7 @@ Waiting for rabbitmq to listen on 5672...
 ```
 
 - Run the `Docker Compose`
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices/scripts (master)
 $ docker-compose up
 Building identity-service
@@ -6850,14 +6850,14 @@ ERROR: Service 'identity-service' failed to build: COPY failed: stat /var/lib/do
 - Create the `dotnet-publish.sh` and run it
 
 > scripts -> dotnet-publish.sh
-```sh
+```bash
 cd src
 dotnet publish ./Actio.Api -c Release -o ./bin/Docker
 dotnet publish ./Actio.Services.Activities -c Release -o ./bin/Docker
 dotnet publish ./Actio.Services.Identity -c Release -o ./bin/Docker
 ```
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices/scripts (master)
 $ cd ..
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices (master)
@@ -6893,14 +6893,14 @@ Copyright (C) Microsoft Corporation. All rights reserved.
 - Create the `docker-build.sh` and run it
 
 > scripts -> docker-build.sh
-```sh
+```bash
 cd src
 docker build -f ./Actio.Api/Dockerfile -t actio.api ./Actio.Api
 docker build -f ./Actio.Services.Activities/Dockerfile -t actio.services.activities ./Actio.Services.Activities
 docker build -f ./Actio.Services.Identity/Dockerfile -t actio.services.identity ./Actio.Services.Identity
 ```
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices (master)
 $ bash scripts/docker-build.sh
 Sending build context to Docker daemon    8.8MB
@@ -6961,7 +6961,7 @@ SECURITY WARNING: You are building a Docker image from Windows against a non-Win
 
 - Run the docker compose again
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices/scripts (master)
 $ docker-compose build
 mongo uses an image, skipping
@@ -7187,7 +7187,7 @@ activities-service_1  | Application started. Press Ctrl+C to shut down.
 ```
 
 - Ensure all the services are running properly
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices (master)
 $ curl localhost:5050
 Hello from Actio.Services.Activites API!
@@ -7210,13 +7210,13 @@ Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Mi
 
 I) Tag the image
 
-```sh
+```bash
 $ docker tag actio.api peelmicro/actio.api
 ```
 
 II) Authenticate
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices (master)
 $ docker login
 Authenticating with existing credentials...
@@ -7224,7 +7224,7 @@ Login Succeeded
 ```
 III) Push the image
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices (master)
 $ docker push peelmicro/actio.api
 The push refers to repository [docker.io/peelmicro/actio.api]
@@ -7241,7 +7241,7 @@ latest: digest: sha256:adb362280d55b3217140c9abb312d1849cf1fe879978015f8f52cb7d8
 
 
 - We can pull the image as well
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 /c/Work/Training/Pre/DotNetCore/NET-Core-Microservices/dotnet-core-microservices (master)
 $ docker pull peelmicro/actio.api
 Using default tag: latest

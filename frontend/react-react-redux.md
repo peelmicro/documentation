@@ -32,7 +32,7 @@ The [Modern React with Redux](https://www.udemy.com/react-redux/) Udemy course t
 ![](/images/frontend/react-react-redux/Introduction2.png)
 
 2. Create a simple application
-```sh
+```bash
 C:\Users\juan.pablo.perez\OneDrive\Training\React\react-hooks>create-react-app hooks-simple
 
 Creating a new React app in C:\Users\juan.pablo.perez\OneDrive\Training\React\react-hooks\hooks-simple.
@@ -90,7 +90,7 @@ Happy hacking!
 ```
 3. Ensure we are using the latest version of `React` because the current stable version doesn't include `hooks` yet.
 
-```sh
+```bash
 C:\Users\juan.pablo.perez\OneDrive\Training\React\react-hooks>cd hooks-simple
 
 C:\Users\juan.pablo.perez\OneDrive\Training\React\react-hooks\hooks-simple>npm install --save react@next react-dom@next
@@ -119,7 +119,7 @@ found 0 vulnerabilities
 
 4. Ensure the new application is running properly
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/React/react-hooks/hooks-simple (master)
 $ npm start
 
@@ -289,7 +289,7 @@ export default App;
 ![](/images/frontend/react-react-redux/Introduction9.png)
 
 11. Install `axios`
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/React/react-hooks/hooks-simple (master)
 $ npm i --save axios
 npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.4 (node_modules\fsevents):
@@ -547,7 +547,7 @@ export default App;
 1. Copy the Seasons App from the current chapter of the course or from previous chapters
 
 - Install node modules
-```sh
+```bash
 $ npm i
 npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.4 (node_modules\fsevents):
 npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.4: wanted {"os":"darwin","arch":"any"} (current: {"os":"win32","arch":"x64"})
@@ -558,7 +558,7 @@ found 0 vulnerabilities
 
 - Ensure it is working
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/React/react-hooks/hooks-seasons
 $ npm run start
 

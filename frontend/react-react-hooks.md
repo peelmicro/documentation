@@ -14,7 +14,7 @@ The [React Hooks](https://www.udemy.com/react-hooks/) Udemy course teaches how t
 
 ## React Hooks Intro
 1. Create the `react-hooks-intro` project using the `create-react-app` client
-```sh
+```bash
 Creating a new React app in C:\Users\juan.pablo.perez\OneDrive\Training\React\ReactHooksCourse\react-hooks-intro.
 
 Installing packages. This might take a couple of minutes.
@@ -103,7 +103,7 @@ class App extends Component {
 export default App;
 ```
 4. Check if it is working
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/React/ReactHooksCourse/react-hooks-intro (master)
 $ npm run start
 
@@ -131,7 +131,7 @@ To create a production build, use yarn build.
 6. Example of `class-based` componenet.
 
 > `App.js`
-```sh
+```bash
 import React, { Component } from 'react';
 
 class App extends Component {
@@ -240,7 +240,7 @@ serviceWorker.unregister();
 
 - Update `node` libraries executing `yarn install`
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/React/ReactHooksCourse/react-hooks-intro (master)
 $ yarn install
 yarn install v1.12.3
@@ -256,7 +256,7 @@ Done in 40.25s.
 ```
 - If it still doesn't work execute:
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/React/ReactHooksCourse/react-hooks-intro (master)
 $ yarn add -D react@next react-dom@next
 yarn add v1.12.3
@@ -1150,7 +1150,7 @@ export default function Register() {
 ## Use useEffect and useRef for Data Fetching with Hooks
 1. Create the `react-hooks-news` project using the `create-react-app` client
 
-```sh
+```bash
 C:\Users\juan.pablo.perez\OneDrive\Training\React\ReactHooksCourse>create-react-app react-hooks-news
 
 Creating a new React app in C:\Users\juan.pablo.perez\OneDrive\Training\React\ReactHooksCourse\react-hooks-news.
@@ -1218,7 +1218,7 @@ Happy hacking!
 ```
 2. Ensure we're using the latest version of `React` and install `axios` as well.
 
-```sh
+```bash
 C:\Users\juan.pablo.perez\OneDrive\Training\React\ReactHooksCourse>cd react-hooks-news
 
 C:\Users\juan.pablo.perez\OneDrive\Training\React\ReactHooksCourse\react-hooks-news>npm i react@next react-dom@next axios
@@ -1282,7 +1282,7 @@ ReactDOM.render(<App />, document.getElementById('root'));
 serviceWorker.unregister();
 
 ```
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/React/ReactHooksCourse/react-hooks-news (master)
 $ npm run start
 
@@ -1857,7 +1857,7 @@ export default function App() {
 
 1. Create the `react-hooks-news` project using the `create-react-app` client
 
-```sh
+```bash
 C:\Users\juan.pablo.perez\OneDrive\Training\React\ReactHooksCourse>create-react-app react-hooks-todos
 
 Creating a new React app in C:\Users\juan.pablo.perez\OneDrive\Training\React\ReactHooksCourse\react-hooks-todos.
@@ -1926,7 +1926,7 @@ Happy hacking!
 
 2. Ensure we're using the latest version of `React` and install `axios` and `uuid` as well.
 
-```sh
+```bash
 C:\Users\juan.pablo.perez\OneDrive\Training\React\ReactHooksCourse>cd react-hooks-todos
 
 C:\Users\juan.pablo.perez\OneDrive\Training\React\ReactHooksCourse\react-hooks-todos>npm i react@next react-dom@next axios uuid
@@ -2037,7 +2037,7 @@ export default function App() {
 }
 ```
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/React/ReactHooksCourse/react-hooks-todos (master)
 $ npm start
 
@@ -2999,7 +2999,7 @@ export default function reducer(state, action) {
 
 ![](/images/frontend/react-react-hooks/hooks-todos-api5.png)
 
-```sh
+```bash
 Juan.Pablo.Perez@RIMDUB-0232 MINGW64 ~/OneDrive/Training/React/ReactHooksCourse/react-hooks-todos (master)
 $ npm install -g now
 C:\Users\juan.pablo.perez\AppData\Roaming\npm\now -> C:\Users\juan.pablo.perez\AppData\Roaming\npm\node_modules\now\download\dist\now
@@ -3019,13 +3019,13 @@ added 1 package in 14.722s
 ![](/images/frontend/react-react-hooks/hooks-todos-api6.png)
 
 - Copy the repository to a local folder and deploy the API using the `now` command.
-```sh
+```bash
 C:\Users\juan.pablo.perez\OneDrive\Training\React\ReactHooksCourse\react-hooks-api>now login
 > We sent an email to juanp_perez@loyaltycrm.com. Please follow the steps provided
   inside it and make sure the security code matches Unusual Anteater.
 \ Waiting for your confirmation
 ```
-```sh
+```bash
 From: ZEIT
 Sent: Tuesday 25 December 2018 10:11
 To: juanp_perez@loyaltycrm.com
@@ -3050,7 +3050,7 @@ If you didn't attempt to log in but received this email, or if the location does
 ```
 ![](/images/frontend/react-react-hooks/hooks-todos-api7.png)
 
-```sh
+```bash
 C:\Users\juan.pablo.perez\OneDrive\Training\React\ReactHooksCourse\react-hooks-api>now login
 > We sent an email to juanp_perez@loyaltycrm.com. Please follow the steps provided
   inside it and make sure the security code matches Unusual Anteater.
@@ -3058,7 +3058,7 @@ C:\Users\juan.pablo.perez\OneDrive\Training\React\ReactHooksCourse\react-hooks-a
 > Ready! Authentication token and personal details saved in "~\.now"
 ```
 
-```sh
+```bash
 C:\Users\juan.pablo.perez\OneDrive\Training\React\ReactHooksCourse\react-hooks-api>now
 > WARN! You are using an old version of the Now Platform. More: https://zeit.co/docs/v1-upgrade
 > Deploying ~\OneDrive\Training\React\ReactHooksCourse\react-hooks-api under peelmicro
@@ -3098,7 +3098,7 @@ C:\Users\juan.pablo.perez\OneDrive\Training\React\ReactHooksCourse\react-hooks-a
 > Success! Deployment ready
 ```
 
-```sh
+```bash
 C:\Users\juan.pablo.perez\OneDrive\Training\React\ReactHooksCourse\react-hooks-api>now
 > WARN! You are using an old version of the Now Platform. More: https://zeit.co/docs/v1-upgrade
 > Deploying ~\OneDrive\Training\React\ReactHooksCourse\react-hooks-api under peelmicro
@@ -3107,7 +3107,7 @@ C:\Users\juan.pablo.perez\OneDrive\Training\React\ReactHooksCourse\react-hooks-a
 > Success! Deployment ready
 ```
 
-```sh
+```bash
 C:\Users\juan.pablo.perez\OneDrive\Training\React\ReactHooksCourse\react-hooks-api>curl https://todos-api-juwmymcrdh.now.sh/todos
 [
   {
@@ -3340,7 +3340,7 @@ export default function TodoList() {
 
 ![](/images/frontend/react-react-hooks/hooks-todos-api13.png)
 
-```sh
+```bash
 C:\Users\juan.pablo.perez\OneDrive\Training\React\ReactHooksCourse\react-hooks-api>curl https://todos-api-juwmymcrdh.now.sh/todos
 [
   {
