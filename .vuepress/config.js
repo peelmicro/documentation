@@ -262,7 +262,8 @@ module.exports = ctx => ({
             "docker-multi-docker",
             "/projects/dotnet-core-multi-docker",
             "/projects/java-multi-docker",
-            "/projects/python-multi-docker"
+            "/projects/python-multi-docker",
+            "/other/cicd-learn-devops-ci-cd-with-jenkins-using-pipelines-and-docker"
           ]
         },
         {
@@ -334,6 +335,14 @@ module.exports = ctx => ({
           title: "GraphQL",
           collapsable: true,
           children: ["graphql", "/other/graphql-graphql-react-event-booking"]
+        },
+        {
+          title: "CI/CD",
+          collapsable: true,
+          children: [
+            "cicd",
+            "/other/cicd-learn-devops-ci-cd-with-jenkins-using-pipelines-and-docker"
+          ]
         }
       ]
     }
