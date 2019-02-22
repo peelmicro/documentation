@@ -64,7 +64,8 @@ module.exports = ctx => ({
             "/other/blockchain-ethereum-kickstart",
             "/frontend/react-react-redux",
             "/databases/mongodb-mongodb-the-complete-developers-guide",
-            "/other/graphql-graphql-react-event-booking"
+            "/other/graphql-graphql-react-event-booking",
+            "/staticwebs/gatsby-the-gatsby-masterclass"
           ]
         },
         {
@@ -249,6 +250,11 @@ module.exports = ctx => ({
             "confluence",
             "confluence-understanding-confluence-for-users-managers-and-admins"
           ]
+        },
+        {
+          title: "Gatsby",
+          collapsable: true,
+          children: ["gatsby", "/staticwebs/gatsby-the-gatsby-masterclass"]
         }
       ],
       "/other/": [
@@ -334,7 +340,11 @@ module.exports = ctx => ({
         {
           title: "GraphQL",
           collapsable: true,
-          children: ["graphql", "/other/graphql-graphql-react-event-booking"]
+          children: [
+            "graphql",
+            "/other/graphql-graphql-react-event-booking",
+            "/staticwebs/gatsby-the-gatsby-masterclass"
+          ]
         },
         {
           title: "CI/CD",
