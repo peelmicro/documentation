@@ -144,6 +144,7 @@ module.exports = ctx => ({
           collapsable: true,
           children: [
             "dotnetcore",
+            "/other/graphql-building-graphql-apis-aspdotnet-core",
             "/backend/dotnetcore-net-core-microservice",
             "dotnetcore-aplicaciones-web-en-tiempo-real-con-signalr-core",
             "dotnetcore-asp-net-core-angular-from-scratch",
@@ -343,7 +344,8 @@ module.exports = ctx => ({
           children: [
             "graphql",
             "/other/graphql-graphql-react-event-booking",
-            "/staticwebs/gatsby-the-gatsby-masterclass"
+            "/staticwebs/gatsby-the-gatsby-masterclass",
+            "/other/graphql-building-graphql-apis-aspdotnet-core"
           ]
         },
         {
