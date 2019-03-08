@@ -270,7 +270,8 @@ module.exports = ctx => ({
             "/projects/dotnet-core-multi-docker",
             "/projects/java-multi-docker",
             "/projects/python-multi-docker",
-            "/other/cicd-learn-devops-ci-cd-with-jenkins-using-pipelines-and-docker"
+            "/other/cicd-learn-devops-ci-cd-with-jenkins-using-pipelines-and-docker",
+            "/other/cicd-learn-devops-kubernetes-deployment-by-kops-and-terraform"
           ]
         },
         {
@@ -353,7 +354,8 @@ module.exports = ctx => ({
           collapsable: true,
           children: [
             "cicd",
-            "/other/cicd-learn-devops-ci-cd-with-jenkins-using-pipelines-and-docker"
+            "/other/cicd-learn-devops-ci-cd-with-jenkins-using-pipelines-and-docker",
+            "/other/cicd-learn-devops-kubernetes-deployment-by-kops-and-terraform"
           ]
         }
       ]
