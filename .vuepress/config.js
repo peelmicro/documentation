@@ -271,7 +271,8 @@ module.exports = ctx => ({
             "/projects/java-multi-docker",
             "/projects/python-multi-docker",
             "/other/cicd-learn-devops-ci-cd-with-jenkins-using-pipelines-and-docker",
-            "/other/cicd-learn-devops-kubernetes-deployment-by-kops-and-terraform"
+            "/other/cicd-learn-devops-kubernetes-deployment-by-kops-and-terraform",
+            "/other/cicd-learn-devops-helm-helmfile-kubernetes-deployment"
           ]
         },
         {
@@ -355,7 +356,8 @@ module.exports = ctx => ({
           children: [
             "cicd",
             "/other/cicd-learn-devops-ci-cd-with-jenkins-using-pipelines-and-docker",
-            "/other/cicd-learn-devops-kubernetes-deployment-by-kops-and-terraform"
+            "/other/cicd-learn-devops-kubernetes-deployment-by-kops-and-terraform",
+            "/other/cicd-learn-devops-helm-helmfile-kubernetes-deployment"
           ]
         }
       ]
