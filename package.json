@@ -11,8 +11,8 @@
     "dev:windows": "Set NODE_OPTIONS=--max-old-space-size=8192 && vuepress dev"
   },
   "dependencies": {
-    "@vuepress/plugin-google-analytics": "^1.0.0-alpha.37",
+    "@vuepress/plugin-google-analytics": "^1.0.0-alpha.47",
     "global": "^4.3.2",
-    "vuepress": "^1.0.0-alpha.37"
+    "vuepress": "^1.0.0-alpha.47"
   }
 }

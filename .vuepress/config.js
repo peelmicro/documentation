@@ -272,7 +272,11 @@ module.exports = ctx => ({
             "/projects/python-multi-docker",
             "/other/cicd-learn-devops-ci-cd-with-jenkins-using-pipelines-and-docker",
             "/other/cicd-learn-devops-kubernetes-deployment-by-kops-and-terraform",
-            "/other/cicd-learn-devops-helm-helmfile-kubernetes-deployment"
+            "/other/cicd-learn-devops-helm-helmfile-kubernetes-deployment",
+            "/other/cicd-learn-devops-the-complete-kubernetes-course",
+            "/other/cicd-learn-devops-the-complete-kubernetes-course-2",
+            "/other/cicd-learn-devops-the-complete-kubernetes-course-3",
+            "/other/cicd-learn-devops-the-complete-kubernetes-course-4"
           ]
         },
         {
@@ -357,7 +361,11 @@ module.exports = ctx => ({
             "cicd",
             "/other/cicd-learn-devops-ci-cd-with-jenkins-using-pipelines-and-docker",
             "/other/cicd-learn-devops-kubernetes-deployment-by-kops-and-terraform",
-            "/other/cicd-learn-devops-helm-helmfile-kubernetes-deployment"
+            "/other/cicd-learn-devops-helm-helmfile-kubernetes-deployment",
+            "/other/cicd-learn-devops-the-complete-kubernetes-course",
+            "/other/cicd-learn-devops-the-complete-kubernetes-course-2",
+            "/other/cicd-learn-devops-the-complete-kubernetes-course-3",
+            "/other/cicd-learn-devops-the-complete-kubernetes-course-4"
           ]
         }
       ]
