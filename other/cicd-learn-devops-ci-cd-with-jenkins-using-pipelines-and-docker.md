@@ -8224,9 +8224,10 @@ INFO: Connected
 - We are going to use the `jenkins-course/ssh-agent/Jenkinsfile` Jenkins file.
 
 > jenkins-course/ssh-agent/Jenkinsfile
+
 ```groovy
 node {
-  stage('do something with git') {  
+  stage('do something with git') {
     sshagent (credentials: ['github-key']) {
       // get the last commit id from a repository you own
       sh 'git ls-remote -h --refs git@github.com:peelmicro/jenkins-course.git master |awk "{print $1}"'
@@ -8363,6 +8364,7 @@ root@ubuntu-s-1vcpu-2gb-lon1-01:~# ssh-keyscan github.com >> /var/jenkins_home/.
 # github.com:22 SSH-2.0-babeld-426c1566
 # github.com:22 SSH-2.0-babeld-426c1566
 ```
+
 - Run the pipeline again
 
 ![](/images/other/cicd-learn-devops-ci-cd-with-jenkins-using-pipelines-and-docker/DemoSshAgent23.png)
@@ -8411,12 +8413,14 @@ echo Agent pid 15908 killed;
 [Pipeline] End of Pipeline
 Finished: SUCCESS
 ```
+
 - Modify the `jenkins-course/ssh-agent/Jenkinsfile` Jenkins file to use https.
 
 > jenkins-course/ssh-agent/Jenkinsfile
+
 ```groovy
 node {
-  stage('do something with git') {  
+  stage('do something with git') {
     sshagent (credentials: ['github-key']) {
       // get the last commit id from a repository you own
       sh 'git ls-remote -h --refs https://github.com/peelmicro/jenkins-course master |awk "{print $1}"'
@@ -8424,6 +8428,7 @@ node {
   }
 }
 ```
+
 - Execute the pipeline again.
 
 ![](/images/other/cicd-learn-devops-ci-cd-with-jenkins-using-pipelines-and-docker/DemoSshAgent24.png)
@@ -8512,12 +8517,12 @@ Finished: SUCCESS
 ![](/images/other/cicd-learn-devops-ci-cd-with-jenkins-using-pipelines-and-docker/DemoAuthorizations7.png)
 
 - We can add new users or groups clicking on [Add user or group...` button.
-]
-![](/images/other/cicd-learn-devops-ci-cd-with-jenkins-using-pipelines-and-docker/DemoAuthorizations8.png)
+  ]
+  ![](/images/other/cicd-learn-devops-ci-cd-with-jenkins-using-pipelines-and-docker/DemoAuthorizations8.png)
 
 ![](/images/other/cicd-learn-devops-ci-cd-with-jenkins-using-pipelines-and-docker/DemoAuthorizations9.png)
 
-- We normally grant the new user access to `View Credential` and `Build Jobs` 
+- We normally grant the new user access to `View Credential` and `Build Jobs`
 
 ![](/images/other/cicd-learn-devops-ci-cd-with-jenkins-using-pipelines-and-docker/DemoAuthorizations10.png)
 
@@ -8562,11 +8567,11 @@ Finished: SUCCESS
 ![](/images/other/cicd-learn-devops-ci-cd-with-jenkins-using-pipelines-and-docker/DemoOneloginIntegrationWithJenkinsUsingSaml13.png)
 
 - Put `Jenkins` in `Display Name` and click on `Save`
-![](/images/other/cicd-learn-devops-ci-cd-with-jenkins-using-pipelines-and-docker/DemoOneloginIntegrationWithJenkinsUsingSaml14.png)
+  ![](/images/other/cicd-learn-devops-ci-cd-with-jenkins-using-pipelines-and-docker/DemoOneloginIntegrationWithJenkinsUsingSaml14.png)
 
 ![](/images/other/cicd-learn-devops-ci-cd-with-jenkins-using-pipelines-and-docker/DemoOneloginIntegrationWithJenkinsUsingSaml15.png)
 
-We nee to put `http://68.183.44.204:8080/securityRealm/finishLogin` in `Audience`, `Recipient` and `ACS (Consumer) URL*` fields and `^http:\/\/68\.183\.44\.204:8080\/` in ACS (Consumer) URL Validator*, then click on `Save`.
+We nee to put `http://68.183.44.204:8080/securityRealm/finishLogin` in `Audience`, `Recipient` and `ACS (Consumer) URL*` fields and `^http:\/\/68\.183\.44\.204:8080\/` in ACS (Consumer) URL Validator\*, then click on `Save`.
 
 ![](/images/other/cicd-learn-devops-ci-cd-with-jenkins-using-pipelines-and-docker/DemoOneloginIntegrationWithJenkinsUsingSaml16.png)
 
@@ -8577,6 +8582,7 @@ We nee to put `http://68.183.44.204:8080/securityRealm/finishLogin` in `Audience
 ![](/images/other/cicd-learn-devops-ci-cd-with-jenkins-using-pipelines-and-docker/DemoOneloginIntegrationWithJenkinsUsingSaml18.png)
 
 > onelogin_metadata_894931.xml
+
 ```xml
 <?xml version="1.0"?>
 <EntityDescriptor xmlns="urn:oasis:names:tc:SAML:2.0:metadata" entityID="https://app.onelogin.com/saml/metadata/29e8db35-78e7-4899-b7d0-faddda448f59">
@@ -8609,9 +8615,9 @@ DQvJl7BKYNufP/eLtw8cc3jUUnLWLZikGRVrB0voz+xDXCXt2Ys=</ds:X509Certificate>
       </ds:KeyInfo>
     </KeyDescriptor>
     <SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://peelmicro-dev.onelogin.com/trust/saml2/http-redirect/slo/894931"/>
-    
+
       <NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</NameIDFormat>
-    
+
     <SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://peelmicro-dev.onelogin.com/trust/saml2/http-redirect/sso/894931"/>
     <SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://peelmicro-dev.onelogin.com/trust/saml2/http-post/sso/894931"/>
     <SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" Location="https://peelmicro-dev.onelogin.com/trust/saml2/soap/sso/894931"/>
@@ -8645,7 +8651,7 @@ DQvJl7BKYNufP/eLtw8cc3jUUnLWLZikGRVrB0voz+xDXCXt2Ys=</ds:X509Certificate>
 
 ![](/images/other/cicd-learn-devops-ci-cd-with-jenkins-using-pipelines-and-docker/DemoOneloginIntegrationWithJenkinsUsingSaml28.png)
 
-- We have to `log out` 
+- We have to `log out`
 
 ![](/images/other/cicd-learn-devops-ci-cd-with-jenkins-using-pipelines-and-docker/DemoOneloginIntegrationWithJenkinsUsingSaml29.png)
 
@@ -8667,7 +8673,6 @@ DQvJl7BKYNufP/eLtw8cc3jUUnLWLZikGRVrB0voz+xDXCXt2Ys=</ds:X509Certificate>
 
 - Go back to use `Jenkins Database`, otherwise we will never be able to connect once the `OneLogin` trial ends.
 
-
 ![](/images/other/cicd-learn-devops-ci-cd-with-jenkins-using-pipelines-and-docker/DemoOneloginIntegrationWithJenkinsUsingSaml36.png)
 
 ![](/images/other/cicd-learn-devops-ci-cd-with-jenkins-using-pipelines-and-docker/DemoOneloginIntegrationWithJenkinsUsingSaml37.png)
@@ -8679,5 +8684,3 @@ DQvJl7BKYNufP/eLtw8cc3jUUnLWLZikGRVrB0voz+xDXCXt2Ys=</ds:X509Certificate>
 ![](/images/other/cicd-learn-devops-ci-cd-with-jenkins-using-pipelines-and-docker/CongratulationsOnCompletingThisCourse.png)
 
 ### 52. Bonus Lecture
-
-

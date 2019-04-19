@@ -57,6 +57,9 @@ module.exports = ctx => ({
           collapsable: true,
           children: [
             "react",
+            "/other/graphql-full-stack-react-python-and-graphql",
+            "/other/graphql-full-stack-react-python-and-graphql-2",
+            "/other/graphql-full-stack-react-python-and-graphql-3",            
             "/frontend/react-react-hooks",
             "/other/docker-multi-docker",
             "/backend/nodejs-advanced-node-for-developers",
@@ -135,6 +138,9 @@ module.exports = ctx => ({
           collapsable: true,
           children: [
             "python",
+            "/other/graphql-full-stack-react-python-and-graphql",
+            "/other/graphql-full-stack-react-python-and-graphql-2",
+            "/other/graphql-full-stack-react-python-and-graphql-3",            
             "/projects/python-multi-docker",
             "python-pythonforbeginnersintro"
           ]
@@ -225,6 +231,9 @@ module.exports = ctx => ({
           collapsable: true,
           children: [
             "sqlite",
+            "/other/graphql-full-stack-react-python-and-graphql",
+            "/other/graphql-full-stack-react-python-and-graphql-2",
+            "/other/graphql-full-stack-react-python-and-graphql-3",            
             "/backend/dotnetcore-asp-net-core-angular-from-scratch"
           ]
         }
@@ -265,6 +274,10 @@ module.exports = ctx => ({
           collapsable: true,
           children: [
             "docker",
+            "/other/cicd-learn-devops-the-complete-kubernetes-course",
+            "/other/cicd-learn-devops-the-complete-kubernetes-course-2",
+            "/other/cicd-learn-devops-the-complete-kubernetes-course-3",
+            "/other/cicd-learn-devops-the-complete-kubernetes-course-4",
             "/backend/dotnetcore-net-core-microservice",
             "docker-multi-docker",
             "/projects/dotnet-core-multi-docker",
@@ -272,11 +285,8 @@ module.exports = ctx => ({
             "/projects/python-multi-docker",
             "/other/cicd-learn-devops-ci-cd-with-jenkins-using-pipelines-and-docker",
             "/other/cicd-learn-devops-kubernetes-deployment-by-kops-and-terraform",
-            "/other/cicd-learn-devops-helm-helmfile-kubernetes-deployment",
-            "/other/cicd-learn-devops-the-complete-kubernetes-course",
-            "/other/cicd-learn-devops-the-complete-kubernetes-course-2",
-            "/other/cicd-learn-devops-the-complete-kubernetes-course-3",
-            "/other/cicd-learn-devops-the-complete-kubernetes-course-4"
+            "/other/cicd-learn-devops-helm-helmfile-kubernetes-deployment"
+
           ]
         },
         {
@@ -349,6 +359,9 @@ module.exports = ctx => ({
           collapsable: true,
           children: [
             "graphql",
+            "/other/graphql-full-stack-react-python-and-graphql",
+            "/other/graphql-full-stack-react-python-and-graphql-2",
+            "/other/graphql-full-stack-react-python-and-graphql-3",
             "/other/graphql-graphql-react-event-booking",
             "/staticwebs/gatsby-the-gatsby-masterclass",
             "/other/graphql-building-graphql-apis-aspdotnet-core"
@@ -359,13 +372,13 @@ module.exports = ctx => ({
           collapsable: true,
           children: [
             "cicd",
-            "/other/cicd-learn-devops-ci-cd-with-jenkins-using-pipelines-and-docker",
-            "/other/cicd-learn-devops-kubernetes-deployment-by-kops-and-terraform",
-            "/other/cicd-learn-devops-helm-helmfile-kubernetes-deployment",
             "/other/cicd-learn-devops-the-complete-kubernetes-course",
             "/other/cicd-learn-devops-the-complete-kubernetes-course-2",
             "/other/cicd-learn-devops-the-complete-kubernetes-course-3",
-            "/other/cicd-learn-devops-the-complete-kubernetes-course-4"
+            "/other/cicd-learn-devops-the-complete-kubernetes-course-4",
+            "/other/cicd-learn-devops-ci-cd-with-jenkins-using-pipelines-and-docker",
+            "/other/cicd-learn-devops-kubernetes-deployment-by-kops-and-terraform",
+            "/other/cicd-learn-devops-helm-helmfile-kubernetes-deployment"
           ]
         }
       ]

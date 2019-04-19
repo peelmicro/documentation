@@ -824,12 +824,12 @@ app.UseGraphQLPlayground(new GraphQLPlaygroundOptions());
 
 > Request
 
-```grahql
-{ products
-  {
-  	name
-  	description
-	}
+```graphql
+{
+  products {
+    name
+    description
+  }
 }
 ```
 
@@ -874,14 +874,13 @@ app.UseGraphQLPlayground(new GraphQLPlaygroundOptions());
 
 > Request
 
-```grahql
-{ __schema
-  {
-  	types
-    {
+```graphql
+{
+  __schema {
+    types {
       name
     }
-	}
+  }
 }
 ```
 
@@ -1023,18 +1022,18 @@ namespace CarvedRock.Api.GraphQL.Types
 
 > Request
 
-```grahql
-{ products
-  {
+```graphql
+{
+  products {
     id
-  	name
-  	description
+    name
+    description
     introducedAt
     photoFileName
     price
     rating
     type
-	}
+  }
 }
 ```
 
@@ -1117,7 +1116,7 @@ namespace CarvedRock.Api.GraphQL.Types
 
 > `Data/ProductType.cs`
 
-```cs
+```csharp
 namespace CarvedRock.Api.Data
 {
     public enum ProductTypeEnum
@@ -1817,7 +1816,7 @@ info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
 
 > Startup.cs
 
-```cs
+```csharp
 using CarvedRock.Api.Data;
 using CarvedRock.Api.GraphQL;
 using CarvedRock.Api.Repositories;
@@ -2831,13 +2830,12 @@ Postman-Token: 4655e269-fe2e-8631-4e28-3ff13a4f3d42
 > Request
 
 ```graphql
-query all($showPrice: Boolean!)
-{ products 
-  {
-    id 
-  	name 
+query all($showPrice: Boolean!) {
+  products {
+    id
+    name
     price @include(if: $showPrice)
-    rating 
+    rating
     photoFileName
   }
 }
@@ -2897,7 +2895,9 @@ query all($showPrice: Boolean!)
   }
 }
 ```
+
 > variable
+
 ```json
 {
   "showPrice": true
@@ -2960,20 +2960,21 @@ query all($showPrice: Boolean!)
 > Request
 
 ```graphql
-query all($showPrice: Boolean=false)
-{ products 
-  {
-    id 
-  	name 
+query all($showPrice: Boolean = false) {
+  products {
+    id
+    name
     price @include(if: $showPrice)
-    rating 
+    rating
     photoFileName
   }
 }
 ```
 
 > variable (empty)
+
 ```json
+
 ```
 
 > response
@@ -3022,26 +3023,29 @@ query all($showPrice: Boolean=false)
   }
 }
 ```
+
 > Request
 
 ```graphql
-query all($showPrice: Boolean=false)
-{ products 
-  {
-    id 
-  	name 
+query all($showPrice: Boolean = false) {
+  products {
+    id
+    name
     price @skip(if: $showPrice)
-    rating 
+    rating
     photoFileName
   }
 }
 ```
 
 > variable (empty)
+
 ```json
+
 ```
 
 > response
+
 ```json
 {
   "data": {
@@ -3096,24 +3100,27 @@ query all($showPrice: Boolean=false)
 ### 4.7 Errors
 
 > Request (with invalid i field)
+
 ```graphql
-query all($showPrice: Boolean=false)
-{ products 
-  {
-    i 
-  	name 
+query all($showPrice: Boolean = false) {
+  products {
+    i
+    name
     price @skip(if: $showPrice)
-    rating 
+    rating
     photoFileName
   }
 }
 ```
 
 > variable (empty)
+
 ```json
+
 ```
 
 > response
+
 ```json
 {
   "errors": [
@@ -3132,6 +3139,7 @@ query all($showPrice: Boolean=false)
   ]
 }
 ```
+
 - The error message contains the `message` of the error, the `locations` where the error occurs and some metadata information as `extensions`.
 
 - There are the standard rules that the query shoul comply
@@ -3159,6 +3167,7 @@ query all($showPrice: Boolean=false)
 - The `CarvedRock.sln` must be updated to include the new `project`
 
 > CarvedRock.sln
+
 ```yaml
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
@@ -3187,9 +3196,11 @@ Global
 	EndGlobalSection
 EndGlobal
 ```
+
 - The project just have the `Home` Controller.
 
 > Controllers/HomeController.cs
+
 ```csharp
 using System.Threading.Tasks;
 using CarvedRock.Web.Clients;
@@ -3204,7 +3215,7 @@ namespace CarvedRock.Web.Controllers
         private readonly ProductHttpClient _httpClient;
         private readonly ProductGraphClient _productGraphClient;
 
-        public HomeController(ProductHttpClient httpClient, 
+        public HomeController(ProductHttpClient httpClient,
             ProductGraphClient productGraphClient)
         {
             _httpClient = httpClient;
@@ -3240,9 +3251,10 @@ namespace CarvedRock.Web.Controllers
 }
 ```
 
-- The `ProductHttpClient` class has been created to manage the client request from the `Index` action. The `GetProducts` method makes a `Get request` using HttpClient class using a `GrpahQL query` and using `JsonConvert` to deserialize the response using the `ProductContainer` model. 
+- The `ProductHttpClient` class has been created to manage the client request from the `Index` action. The `GetProducts` method makes a `Get request` using HttpClient class using a `GrpahQL query` and using `JsonConvert` to deserialize the response using the `ProductContainer` model.
 
 > Models/ProductModel.cs
+
 ```csharp
 using System;
 using System.Collections.Generic;
@@ -3266,6 +3278,7 @@ namespace CarvedRock.Web.Models
 ```
 
 > Models/ErrorModel.cs
+
 ```csharp
 namespace CarvedRock.Web.Models
 {
@@ -3276,9 +3289,11 @@ namespace CarvedRock.Web.Models
     }
 }
 ```
+
 - Apart from the `ProductsContainer` class, the `Models/Response.cs` document has a generic `Reponse` class with the `ThrowErrors` method used to manage the response errors. It is called from the `Actions` on the `Home` controllers.
 
 > Models/Response.cs
+
 ```csharp
 using System.Collections.Generic;
 using System.Linq;
@@ -3308,6 +3323,7 @@ namespace CarvedRock.Web.Models
 ```
 
 > Clients/ProductHttpClient.cs
+
 ```csharp
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -3327,9 +3343,9 @@ namespace CarvedRock.Web.HttpClients
 
         public async Task<Response<ProductsContainer>> GetProducts()
         {
-            var response = await _httpClient.GetAsync(@"?query= 
-            { products 
-                { id name price rating photoFileName } 
+            var response = await _httpClient.GetAsync(@"?query=
+            { products
+                { id name price rating photoFileName }
             }");
             var stringResult = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<Response<ProductsContainer>>(stringResult);
@@ -3342,13 +3358,15 @@ namespace CarvedRock.Web.HttpClients
 - The `HttpClient` is configured in the `Startup.cs` document setting the `url` using the `appsettings.json` document with the `Url` of the `Api GraphQL endpoint`.
 
 > appsettings.json
+
 ```json
 {
-  "CarvedRockApiUri": "https://localhost:5001/graphql" 
+  "CarvedRockApiUri": "https://localhost:5001/graphql"
 }
 ```
 
 > Startup.cs
+
 ```csharp
 using System;
 using CarvedRock.Web.Clients;
@@ -3396,6 +3414,7 @@ namespace CarvedRock.Web
 - In order to use parameters, fragments, directives, generic errors we have to use the `GraphQL.Client Nuget` package.
 
 > CarvedRock.Web.csproj
+
 ```xml
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
@@ -3416,6 +3435,7 @@ namespace CarvedRock.Web
 - We have the `ProductGraphClient` class created to manage the `queries` with all the special attributes.
 
 > Clients/ProductGraphClient.cs
+
 ```csharp
 using System.Threading.Tasks;
 using CarvedRock.Web.Models;
@@ -3438,10 +3458,10 @@ namespace CarvedRock.Web.Clients
         {
             var query = new GraphQLRequest
             {
-                Query = @" 
+                Query = @"
                 query productQuery($productId: ID!)
-                { product(id: $productId) 
-                    { id name price rating photoFileName description stock introducedAt 
+                { product(id: $productId)
+                    { id name price rating photoFileName description stock introducedAt
                       reviews { title review }
                     }
                 }",
@@ -3455,7 +3475,7 @@ namespace CarvedRock.Web.Clients
         {
             var query = new GraphQLRequest
             {
-                Query = @" 
+                Query = @"
                 mutation($review: reviewInput!)
                 {
                     createReview(review: $review)
@@ -3475,6 +3495,7 @@ namespace CarvedRock.Web.Clients
 - The `GraphQL client` amnd the class created must be also registered in the `Startup.cs` class.
 
 > Startup.cs
+
 ```csharp
 .
 .
@@ -3489,6 +3510,7 @@ services.AddSingleton<ProductGraphClient>();
 - The `Home` controller has the `ProductDetail` action that uses the `GraphQL client`.
 
 > Controllers/HomeController.cs
+
 ```csharp
 .
 .
@@ -3510,6 +3532,7 @@ public async Task<IActionResult> ProductDetail(int productId)
 - The `CarvedRock.Api/GraphQL/Types/CarvedRockQuery.cs` document will be updated to accept reviews for a product.
 
 > CarvedRock.Api/GraphQL/Types/CarvedRockQuery.cs
+
 ```csharp
 using CarvedRock.Api.GraphQL.Types;
 using CarvedRock.Api.Repositories;
@@ -3522,7 +3545,7 @@ namespace CarvedRock.Api.GraphQL
         public CarvedRockQuery(ProductRepository productRepository, ProductReviewRepository reviewRepository)
         {
             Field<ListGraphType<ProductType>>(
-                "products", 
+                "products",
                 resolve: context => productRepository.GetAll()
             );
 
@@ -3552,6 +3575,7 @@ namespace CarvedRock.Api.GraphQL
 - In the `Views/Home/ProductDetail.cshtml` will be included the `Apollo` client.
 
 > Views/Home/ProductDetail.cshtml
+
 ```aspnet
 @model CarvedRock.Web.Models.ProductModel
 <div class="row">
@@ -3605,18 +3629,20 @@ namespace CarvedRock.Api.GraphQL
     renderReviews(@Model.Id);
 </script>
 ```
-3) The `wwwroot/reviews.js` document well be created to make a call to the `reviewsForProducts query` from JavaScript.
+
+3. The `wwwroot/reviews.js` document well be created to make a call to the `reviewsForProducts query` from JavaScript.
 
 > wwwroot/reviews.js
+
 ```js
 const apolloClient = new Apollo.lib.ApolloClient({
-    networkInterface: Apollo.lib.createNetworkInterface({
-        uri: 'https://localhost:5001/graphql'
-    })
+  networkInterface: Apollo.lib.createNetworkInterface({
+    uri: "https://localhost:5001/graphql"
+  })
 });
 
 function renderReviews(productId) {
-    const query = Apollo.gql`
+  const query = Apollo.gql`
     query reviewsForProducts($productId: ID!) 
     {
 
@@ -3627,27 +3653,30 @@ function renderReviews(productId) {
     }
     `;
 
-    apolloClient
-        .query({
-            query: query,
-            variables: { productId: productId }
-        }).then(result => {
-            const div = document.getElementById("reviews");
-            result.data.reviews.forEach(review => {             
-                div.innerHTML += `            
+  apolloClient
+    .query({
+      query: query,
+      variables: { productId: productId }
+    })
+    .then(result => {
+      const div = document.getElementById("reviews");
+      result.data.reviews.forEach(review => {
+        div.innerHTML += `            
                     <div class="row">
                         <div class="col-12"><h5>${review.title}</h5></div>
                     </div>
                     <div class="row mb-2">
                         <div class="col-12">${review.review}</div>
                     </div>`;
-            });
-        });
+      });
+    });
 }
 ```
+
 - In order to be able to call it from JavaScript we will need to configure Cors in the `Api StartUp.cs` document.
 
 > StartUp.cs
+
 ```csharp
 using CarvedRock.Api.Data;
 using CarvedRock.Api.GraphQL;
@@ -3903,6 +3932,7 @@ info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
 - We need to create the `GraphQL/Types/ProductReviewInputType.cs` document where the `reviewInput` input is created. The `ProductReviewInputType` derived from `InputObjectGraphType`.
 
 > GraphQL/Types/ProductReviewInputType.cs
+
 ```csharp
 using GraphQL.Types;
 
@@ -3926,6 +3956,7 @@ namespace CarvedRock.Api.GraphQL.Types
 - We need to create `GraphQL/CarvedRockMutation.cs` document where the `CarvedRockMutation` mutation is created. It derives from the same `ObjectGraphType` as the queries do.
 
 > GraphQL/CarvedRockMutation.cs
+
 ```csharp
 using CarvedRock.Api.Data.Entities;
 using CarvedRock.Api.GraphQL.Types;
@@ -3941,7 +3972,7 @@ namespace CarvedRock.Api.GraphQL
             FieldAsync<ProductReviewType>(
                 "createReview",
                 arguments: new QueryArguments(
-                    new QueryArgument<NonNullGraphType<ProductReviewInputType>> {Name = "review"}), 
+                    new QueryArgument<NonNullGraphType<ProductReviewInputType>> {Name = "review"}),
                 resolve: async context =>
                 {
                     var review = context.GetArgument<ProductReview>("review");
@@ -3952,9 +3983,11 @@ namespace CarvedRock.Api.GraphQL
     }
 }
 ```
+
 - We need to update the `Repositories/ProductReviewRepository.cs` to include the `AddReview` method.
 
 > Repositories/ProductReviewRepository.cs
+
 ```csharp
 using System;
 using System.Collections.Generic;
@@ -4001,6 +4034,7 @@ namespace CarvedRock.Api.Repositories
 - We don't need to do any extra configuration in the `Startup.cs` document because we are already including all GraphQl types with `AddGraphTypes`.
 
 > Startup.cs
+
 ```csharp
 using CarvedRock.Api.Data;
 using CarvedRock.Api.GraphQL;
@@ -4056,6 +4090,7 @@ namespace CarvedRock.Api
 - We have to modify the `GraphQL/CarvedRockSchema.cs` document to icnlude the Mutation.
 
 > GraphQL/CarvedRockSchema.cs
+
 ```csharp
 using GraphQL;
 using GraphQL.Types;
@@ -4078,23 +4113,29 @@ namespace CarvedRock.Api.GraphQL
 ### 5.6 Writing a Query That Uses a Mutation
 
 > Request
+
 ```graphql
-mutation ($review: reviewInput!) {
-  createReview(review: $review) {id title}
+mutation($review: reviewInput!) {
+  createReview(review: $review) {
+    id
+    title
+  }
 }
 ```
 
 > Variable
+
 ```json
 {
   "review": {
-    "title":  "This is awesome!",
-  	"productId":  1
+    "title": "This is awesome!",
+    "productId": 1
   }
 }
 ```
 
 > Response
+
 ```json
 {
   "data": {
@@ -4111,15 +4152,17 @@ mutation ($review: reviewInput!) {
 - If we omit the `id` an error is thrown
 
 > Variable
+
 ```json
 {
   "review": {
-    "title":  "This is awesome!"
+    "title": "This is awesome!"
   }
 }
 ```
 
 > Response
+
 ```json
 {
   "errors": [
@@ -4138,6 +4181,7 @@ mutation ($review: reviewInput!) {
 - The `Clients/ProductGraphClient.cs` document must be modified to include the `AddReview` method used to make a call to the new `createReview` mutation. We need the `Models/ProductReviewInputModel.cs` document with the `ProductReviewInputModel` used to populated the request mutation properties. We also need the `Models/ProductReviewModel.cs` used to populated the response mutation properties.
 
 > Models/ProductReviewInputModel.cs
+
 ```csharp
 namespace CarvedRock.Web.Models
 {
@@ -4151,6 +4195,7 @@ namespace CarvedRock.Web.Models
 ```
 
 > Models/ProductReviewModel.cs
+
 ```csharp
 namespace CarvedRock.Web.Models
 {
@@ -4165,6 +4210,7 @@ namespace CarvedRock.Web.Models
 ```
 
 > Clients/ProductGraphClient.cs
+
 ```csharp
 using System.Threading.Tasks;
 using CarvedRock.Web.Models;
@@ -4187,10 +4233,10 @@ namespace CarvedRock.Web.Clients
         {
             var query = new GraphQLRequest
             {
-                Query = @" 
+                Query = @"
                 query productQuery($productId: ID!)
-                { product(id: $productId) 
-                    { id name price rating photoFileName description stock introducedAt 
+                { product(id: $productId)
+                    { id name price rating photoFileName description stock introducedAt
                       reviews { title review }
                     }
                 }",
@@ -4204,7 +4250,7 @@ namespace CarvedRock.Web.Clients
         {
             var query = new GraphQLRequest
             {
-                Query = @" 
+                Query = @"
                 mutation($review: reviewInput!)
                 {
                     createReview(review: $review)
@@ -4224,6 +4270,7 @@ namespace CarvedRock.Web.Clients
 - The `Home` controller has been updated to include the new `AddReview` action.
 
 > Controllers/HomeController.cs
+
 ```csharp
 using System.Threading.Tasks;
 using CarvedRock.Web.Clients;
@@ -4238,7 +4285,7 @@ namespace CarvedRock.Web.Controllers
         private readonly ProductHttpClient _httpClient;
         private readonly ProductGraphClient _productGraphClient;
 
-        public HomeController(ProductHttpClient httpClient, 
+        public HomeController(ProductHttpClient httpClient,
             ProductGraphClient productGraphClient)
         {
             _httpClient = httpClient;
@@ -4277,6 +4324,7 @@ namespace CarvedRock.Web.Controllers
 - The `Views/Home/ProductDetail.cshtml` document has been updated to include a link to the new `AddReview` action.
 
 > Views/Home/ProductDetail.cshtml
+
 ```aspnet
 @model CarvedRock.Web.Models.ProductModel
 <div class="row">
@@ -4324,6 +4372,7 @@ namespace CarvedRock.Web.Controllers
     </div>
 </div>
 ```
+
 - We can test now how the `Web` works.
 
 ```bash
@@ -4390,6 +4439,7 @@ Application started. Press Ctrl+C to shut down.
 - we need to add the new `GraphQL/Messaging` folder with the `ReviewAddedMessage.cs` and `ReviewMessageService.cs` documents.
 
 > GraphQL/Messaging/ReviewAddedMessage.cs
+
 ```csharp
 namespace CarvedRock.Api.GraphQL.Messaging
 {
@@ -4401,9 +4451,11 @@ namespace CarvedRock.Api.GraphQL.Messaging
 }
 
 ```
+
 - The `OnNext` method send the message to all subscribers.
 
 > GraphQL/Messaging/ReviewMessageService.cs
+
 ```csharp
 using CarvedRock.Api.Data.Entities;
 using CarvedRock.Api.GraphQL.Messaging;
@@ -4435,9 +4487,11 @@ namespace CarvedRock.Api
     }
 }
 ```
+
 - Thew new `GraphQL/CarvedRockSubscription.cs` along with the `GraphQL/Types/ReviewAddedMessageType.cs` documents have to be created.
 
 > GraphQL/Types/ReviewAddedMessageType.cs
+
 ```csharp
 using CarvedRock.Api.GraphQL.Messaging;
 using GraphQL.Types;
@@ -4456,6 +4510,7 @@ namespace CarvedRock.Api.GraphQL.Types
 ```
 
 > GraphQL/CarvedRockSubscription.cs
+
 ```csharp
 using CarvedRock.Api.GraphQL.Messaging;
 using CarvedRock.Api.GraphQL.Types;
@@ -4484,6 +4539,7 @@ namespace CarvedRock.Api.GraphQL
 - We finally need to add the subscription to the schema modifying the `GraphQL/CarvedRockSchema.cs` document.
 
 > GraphQL/CarvedRockSchema.cs
+
 ```csharp
 using GraphQL;
 using GraphQL.Types;
@@ -4507,6 +4563,7 @@ namespace CarvedRock.Api.GraphQL
 - We need to add the `GraphQL.Server.Transports.WebSockets` Nuget package.
 
 > GraphQL.Server.Transports.WebSockets
+
 ```xml
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
@@ -4533,6 +4590,7 @@ namespace CarvedRock.Api.GraphQL
 - The `ReviewMessageService` class must be registered in the `Startup.cs` document as `Singleton` becase we need it keeps alive. Also, the the use of `Web Sockets` must be added as well.
 
 > Startup.cs
+
 ```csharp
 using CarvedRock.Api.Data;
 using CarvedRock.Api.GraphQL;
@@ -4596,6 +4654,7 @@ namespace CarvedRock.Api
 - We need to modify the `GrpahQL/CarvedRockMutation.cs` document to add the call to the `AddReviewAddedMessage` method when the review is created.
 
 > GrpahQL/CarvedRockMutation.cs
+
 ```csharp
 using CarvedRock.Api.Data.Entities;
 using CarvedRock.Api.GraphQL.Types;
@@ -4611,8 +4670,8 @@ namespace CarvedRock.Api.GraphQL
             FieldAsync<ProductReviewType>(
                 "createReview",
                 arguments: new QueryArguments(
-                    new QueryArgument<NonNullGraphType<ProductReviewInputType>> {Name = "review"}), 
-               
+                    new QueryArgument<NonNullGraphType<ProductReviewInputType>> {Name = "review"}),
+
                 resolve: async context =>
                 {
                     var review = context.GetArgument<ProductReview>("review");
@@ -4652,6 +4711,7 @@ Application started. Press Ctrl+C to shut down.
 - We need first to create a subscription query
 
 > Request
+
 ```graphql
 subscription {
   reviewAdded {
@@ -4689,6 +4749,7 @@ Application started. Press Ctrl+C to shut down.
 ![](/images/other/graphql-building-graphql-apis-aspdotnet-core/SubscriptionsInClients6.png)
 
 > Response
+
 ```json
 {
   "data": {
@@ -4703,6 +4764,7 @@ Application started. Press Ctrl+C to shut down.
 - In order to use subscriptions in the client we need a `GraphQL.Client` 2.0.0 or newer version
 
 > CarvedRock.Web.csproj
+
 ```xml
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
@@ -4745,10 +4807,10 @@ namespace CarvedRock.Web.Clients
         {
             var query = new GraphQLRequest
             {
-                Query = @" 
+                Query = @"
                 query productQuery($productId: ID!)
-                { product(id: $productId) 
-                    { id name price rating photoFileName description stock introducedAt 
+                { product(id: $productId)
+                    { id name price rating photoFileName description stock introducedAt
                       reviews { title review }
                     }
                 }",
@@ -4762,7 +4824,7 @@ namespace CarvedRock.Web.Clients
         {
             var query = new GraphQLRequest
             {
-                Query = @" 
+                Query = @"
                 mutation($review: reviewInput!)
                 {
                     createReview(review: $review)
@@ -4793,7 +4855,9 @@ namespace CarvedRock.Web.Clients
 - We need to modify the `Home` controller to call the `SubscribeToUpdates` method created previously.
 
 > Controllers/HomeController.cs
+
 ```csharp
+
 ```
 
 ```bash
@@ -4808,6 +4872,7 @@ Startup.cs(23,44): warning CS0618: 'GraphQLClient' is obsolete: 'Use GraphQLHttp
 - We need to modify `CarvedRock.Web/Startup.cs` to use `GraphQLHttpClient` instead of `GraphQLClient`
 
 > CarvedRock.Web/Startup.cs
+
 ```csharp
 using System;
 using CarvedRock.Web.Clients;
@@ -4853,6 +4918,7 @@ namespace CarvedRock.Web
 - We need to modify `CarvedRock.Web/Clients/ProductGraphClient.cs` to use `GraphQLHttpClient` instead of `GraphQLClient`
 
 > CarvedRock.Web/Clients/ProductGraphClient.cs
+
 ```csharp
 using System.Threading.Tasks;
 using CarvedRock.Web.Models;
@@ -4875,10 +4941,10 @@ namespace CarvedRock.Web.Clients
         {
             var query = new GraphQLRequest
             {
-                Query = @" 
+                Query = @"
                 query productQuery($productId: ID!)
-                { product(id: $productId) 
-                    { id name price rating photoFileName description stock introducedAt 
+                { product(id: $productId)
+                    { id name price rating photoFileName description stock introducedAt
                       reviews { title review }
                     }
                 }",
@@ -4892,7 +4958,7 @@ namespace CarvedRock.Web.Clients
         {
             var query = new GraphQLRequest
             {
-                Query = @" 
+                Query = @"
                 mutation($review: reviewInput!)
                 {
                     createReview(review: $review)
@@ -4926,6 +4992,7 @@ namespace CarvedRock.Web.Clients
 - We need to modify `CarvedRock.Web/Controllers/HomeController.cs` to use `GraphQLHttpClient` instead of `GraphQLClient`
 
 > CarvedRock.Web/Controllers/HomeController.cs
+
 ```csharp
 using System.Threading.Tasks;
 using CarvedRock.Web.Clients;
@@ -4988,9 +5055,10 @@ namespace CarvedRock.Web.Controllers
 
 - In order to use Apollo we need:
 
-1) The `CarvedRock.Api/GraphQL/Types/CarvedRockQuery.cs` document must be updated to accept reviews for a product.
+1. The `CarvedRock.Api/GraphQL/Types/CarvedRockQuery.cs` document must be updated to accept reviews for a product.
 
 > CarvedRock.Api/GraphQL/Types/CarvedRockQuery.cs
+
 ```csharp
 using CarvedRock.Api.GraphQL.Types;
 using CarvedRock.Api.Repositories;
@@ -5025,15 +5093,16 @@ namespace CarvedRock.Api.GraphQL
                 {
                     var id = context.GetArgument<int>("productId");
                     return reviewRepository.GetForProduct(id);
-                });            
+                });
         }
     }
 }
 ```
 
-2) In the `Views/Home/ProductDetail.cshtml` we need to include the `Apollo` client.
+2. In the `Views/Home/ProductDetail.cshtml` we need to include the `Apollo` client.
 
 > Views/Home/ProductDetail.cshtml
+
 ```aspnet
 @model CarvedRock.Web.Models.ProductModel
 <div class="row">
@@ -5088,18 +5157,19 @@ namespace CarvedRock.Api.GraphQL
 </script>
 ```
 
-3) The `wwwroot/reviews.js` document must be created to make a call to the `reviewsForProducts query` from JavaScript.
+3. The `wwwroot/reviews.js` document must be created to make a call to the `reviewsForProducts query` from JavaScript.
 
 > wwwroot/reviews.js
+
 ```js
 const apolloClient = new Apollo.lib.ApolloClient({
-    networkInterface: Apollo.lib.createNetworkInterface({
-        uri: 'https://localhost:5001/graphql'
-    })
+  networkInterface: Apollo.lib.createNetworkInterface({
+    uri: "https://localhost:5001/graphql"
+  })
 });
 
 function renderReviews(productId) {
-    const query = Apollo.gql`
+  const query = Apollo.gql`
     query reviewsForProducts($productId: ID!) 
     {
 
@@ -5110,28 +5180,30 @@ function renderReviews(productId) {
     }
     `;
 
-    apolloClient
-        .query({
-            query: query,
-            variables: { productId: productId }
-        }).then(result => {
-            const div = document.getElementById("reviews");
-            result.data.reviews.forEach(review => {             
-                div.innerHTML += `            
+  apolloClient
+    .query({
+      query: query,
+      variables: { productId: productId }
+    })
+    .then(result => {
+      const div = document.getElementById("reviews");
+      result.data.reviews.forEach(review => {
+        div.innerHTML += `            
                     <div class="row">
                         <div class="col-12"><h5>${review.title}</h5></div>
                     </div>
                     <div class="row mb-2">
                         <div class="col-12">${review.review}</div>
                     </div>`;
-            });
-        });
+      });
+    });
 }
 ```
 
-4) In order to be able to call it from JavaScript we need to configure Cors in the `Api StartUp.cs` document.
+4. In order to be able to call it from JavaScript we need to configure Cors in the `Api StartUp.cs` document.
 
 > StartUp.cs
+
 ```csharp
 using CarvedRock.Api.Data;
 using CarvedRock.Api.GraphQL;
@@ -5192,9 +5264,10 @@ namespace CarvedRock.Api
 }
 ```
 
-5) We need to modify the `GraphQL/Types/ProductReviewInputType.cs` document to include the 'id` field.
+5. We need to modify the `GraphQL/Types/ProductReviewInputType.cs` document to include the 'id` field.
 
 > GraphQL/Types/ProductReviewInputType.cs
+
 ```csharp
 using GraphQL.Types;
 

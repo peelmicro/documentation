@@ -2447,6 +2447,7 @@ root@ubuntu-s-1vcpu-2gb-lon1-01:~/kops_cluster# ./kops_cluster.sh
 - Remove all the comments
 
 > kops_cluster.sh
+
 ```bash
 kops create cluster \
   --name=kops.peelmicro.com \
@@ -4910,6 +4911,7 @@ NAME                      DATA   AGE
 configmap/nginx-content   1      10h
 root@ubuntu-s-1vcpu-2gb-lon1-01:~/nginx#
 ```
+
 - We need to open the `30773` port to be able to access the nodes from outside to see the new deployment.
 
 ![](/images/other/cicd-learn-devops-kubernetes-deployment-by-kops-and-terraform/UpdateNginxContentInKubernetesClusterDeployment2.png)
@@ -5024,6 +5026,7 @@ kubectl delete cm nginx-content
 root@ubuntu-s-1vcpu-2gb-lon1-01:~/nginx# kubectl create configmap nginx-content --from-file=index.html
 configmap/nginx-content created
 ```
+
 ```bash
 root@ubuntu-s-1vcpu-2gb-lon1-01:~/nginx# kubectl delete deployment.extensions/nginx-deployment
 deployment.extensions "nginx-deployment" deleted
@@ -5062,6 +5065,7 @@ lrwxrwxrwx 1 root root   17 Mar  8 06:31 index.html -> ..data/index.html
 - Change the number of replicas to 10
 
 > deployment_file.yaml
+
 ```yaml
 # **********************
 # Deployment Definition
@@ -5084,16 +5088,16 @@ spec:
         app: nginx
     spec:
       containers:
-      - name: nginx
-        image: nginx:1.7.9
-        volumeMounts:
-          # What we gonna mount (SOURCE)
-          - name: nginx-content-folder
-          # Where we gonna mount it wihtin pod (container)
-          # in Kubernetes1 (DESTINATION)
-            mountPath: /usr/share/nginx/html
-        ports:
-        - containerPort: 80
+        - name: nginx
+          image: nginx:1.7.9
+          volumeMounts:
+            # What we gonna mount (SOURCE)
+            - name: nginx-content-folder
+              # Where we gonna mount it wihtin pod (container)
+              # in Kubernetes1 (DESTINATION)
+              mountPath: /usr/share/nginx/html
+          ports:
+            - containerPort: 80
       # Volumes specifications
       volumes:
         - name: nginx-content-folder
@@ -5114,15 +5118,13 @@ metadata:
   namespace: default
 spec:
   ports:
-  - nodePort: 30773
-    port: 80
-    protocol: TCP
-    targetPort: 80
+    - nodePort: 30773
+      port: 80
+      protocol: TCP
+      targetPort: 80
   selector:
     app: nginx
   type: NodePort
-
-
 ############################
 ```
 
@@ -5191,6 +5193,7 @@ nginx-deployment-9577b758f-zvk4f       1/1     Running   0          4m
 nginx-deployment-9577b758f-zzgxw       1/1     Running   0          4m
 
 ```
+
 ## Section: 4. Congratulations section
 
 ### 26. Congratulations
@@ -5433,5 +5436,5 @@ aws_iam_role.nodes-kops-peelmicro-com: Destruction complete after 0s
 
 Destroy complete! Resources: 16 destroyed.
 ```
-![](/images/other/cicd-learn-devops-kubernetes-deployment-by-kops-and-terraform/Congratulations3.png)
 
+![](/images/other/cicd-learn-devops-kubernetes-deployment-by-kops-and-terraform/Congratulations3.png)

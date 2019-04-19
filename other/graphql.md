@@ -14,6 +14,7 @@ On 9 February 2018, the GraphQL Schema Definition Language (SDL) was made part o
 
 | Course                                                                                                            | Date       | Source Code                                                                                               |
 | ----------------------------------------------------------------------------------------------------------------- | ---------- | --------------------------------------------------------------------------------------------------------- |
+| [Full-Stack React, Python, and GraphQL](/other/graphql-full-stack-react-python-and-graphql.md)                    | 19/04/2019 | [full-stack-react-python-and-graphql](https://github.com/peelmicro/full-stack-react-python-and-graphql)   |
 | [Building GraphQL APIs with ASP.NET Core](/other/graphql-building-graphql-apis-aspdotnet-core.md)                 | 24/02/2019 | [building-graphql-apis-aspdotnet-core](https://github.com/peelmicro/building-graphql-apis-aspdotnet-core) |
 | [The Gatsby Masterclass](/staticwebs/gatsby-the-gatsby-masterclass.md)                                            | 22/02/2019 | [the-gatsby-masterclass](https://github.com/peelmicro/the-gatsby-masterclass)                             |
 | [Build a Complete App with GraphQL, Node.js, MongoDB and React.js](/other/graphql-graphql-react-event-booking.md) | 14/02/2019 | [graphql-react-event-booking](https://github.com/peelmicro/graphql-react-event-booking)                   |

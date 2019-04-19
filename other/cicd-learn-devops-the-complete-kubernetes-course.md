@@ -7,7 +7,7 @@
 - [kubernetes-coursee](https://github.com/peelmicro/kubernetes-course).
 - [http-echo](https://github.com/peelmicro/http-echo).
 
-The [Learn DevOps: The Complete Kubernetes Course ](https://www.udemy.com/learn-devops-the-complete-kubernetes-course//) Udemy course help learn how Kubernetes will run and manage your containerized applications and to build, deploy, use, and maintain Kubernetes.
+The [Learn DevOps: The Complete Kubernetes Course ](https://www.udemy.com/learn-devops-the-complete-kubernetes-course//) Udemy course helps learn how Kubernetes will run and manage your containerized applications and to build, deploy, use, and maintain Kubernetes.
 
 > Other parts:
 
@@ -16,7 +16,7 @@ The [Learn DevOps: The Complete Kubernetes Course ](https://www.udemy.com/learn-
 - [Learn DevOps: The Complete Kubernetes Course (Part 4)](./cicd-learn-devops-the-complete-kubernetes-course-4.md)
 
 > Table of contents
-> [[toc]]
+[[toc]]
 
 ## What I've learned
 

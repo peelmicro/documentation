@@ -820,7 +820,6 @@ module.exports = {
     siteMetadata {
       title
       description
-
     }
   }
 }
@@ -1480,6 +1479,7 @@ export default () => (
 - We can add a second `Markdown` post document
 
 > src\pages\post-two.md
+
 ```markdown
 ---
 title: "The Second Gatsby Garb Post"
@@ -1899,11 +1899,12 @@ export default PostTemplate;
 - Modify the `blog.js` document to include the link using the `fields/slug` field.
 
 > pages\blog.js
-```js
-import React from 'react'
-import { StaticQuery, graphql, Link } from 'gatsby'
 
-import Layout from '../components/layout'
+```js
+import React from "react";
+import { StaticQuery, graphql, Link } from "gatsby";
+
+import Layout from "../components/layout";
 
 const getMarkdownPosts = graphql`
   {
@@ -1924,12 +1925,12 @@ const getMarkdownPosts = graphql`
       }
     }
   }
-`
+`;
 
 export default () => (
   <Layout>
     <div>
-      <h1 style={{ display: 'inlineBlock', borderBottom: '1px solid' }}>
+      <h1 style={{ display: "inlineBlock", borderBottom: "1px solid" }}>
         Gatsby Garb Blog
       </h1>
       <StaticQuery
@@ -1942,8 +1943,8 @@ export default () => (
                 <h3>
                   <Link to={`/post${node.fields.slug}`}>
                     {node.frontmatter.title}
-                  </Link>{' '}
-                  <span style={{ color: '#bbb' }}>
+                  </Link>{" "}
+                  <span style={{ color: "#bbb" }}>
                     - {node.frontmatter.date}
                   </span>
                 </h3>
@@ -1955,7 +1956,7 @@ export default () => (
       />
     </div>
   </Layout>
-)
+);
 ```
 
 ![](/images/staticwebs/the-gatsby-masterclass/ProgrammaticallyCreatingBlogPages.png)
@@ -1971,28 +1972,29 @@ export default () => (
 - Modify the `gatsby-node.js` document to include pagination of the Blogs.
 
 > gatsby-node.js
-```js
-const path = require('path')
-const { createFilePath } = require('gatsby-source-filesystem')
 
-const PostTemplate = path.resolve('./src/templates/post-template.js')
-const BlogTemplate = path.resolve('./src/templates/blog-template.js')
+```js
+const path = require("path");
+const { createFilePath } = require("gatsby-source-filesystem");
+
+const PostTemplate = path.resolve("./src/templates/post-template.js");
+const BlogTemplate = path.resolve("./src/templates/blog-template.js");
 
 exports.onCreateNode = ({ node, getNode, actions }) => {
-  const { createNodeField } = actions
+  const { createNodeField } = actions;
 
-  if (node.internal.type === 'MarkdownRemark') {
-    const slug = createFilePath({ node, getNode, basepath: 'posts' })
+  if (node.internal.type === "MarkdownRemark") {
+    const slug = createFilePath({ node, getNode, basepath: "posts" });
     createNodeField({
       node,
-      name: 'slug',
-      value: slug,
-    })
+      name: "slug",
+      value: slug
+    });
   }
-}
+};
 
 exports.createPages = async ({ graphql, actions }) => {
-  const { createPage } = actions
+  const { createPage } = actions;
   const result = await graphql(`
     {
       allMarkdownRemark {
@@ -2005,27 +2007,27 @@ exports.createPages = async ({ graphql, actions }) => {
         }
       }
     }
-  `)
-  const posts = result.data.allMarkdownRemark.edges
+  `);
+  const posts = result.data.allMarkdownRemark.edges;
 
   posts.forEach(({ node: post }) => {
     createPage({
       path: `posts${post.fields.slug}`,
       component: PostTemplate,
       context: {
-        slug: post.fields.slug,
-      },
-    })
-  })
+        slug: post.fields.slug
+      }
+    });
+  });
 
   posts.forEach((_, index, postArr) => {
-    const totalPages = postArr.length
-    const postsPerPage = 1
-    const currentPage = index + 1
-    const isFirstPage = index === 0
-    const isLastPage = currentPage === totalPages
+    const totalPages = postArr.length;
+    const postsPerPage = 1;
+    const currentPage = index + 1;
+    const isFirstPage = index === 0;
+    const isLastPage = currentPage === totalPages;
     createPage({
-      path: isFirstPage ? '/blog/' : `blog/${currentPage}`,
+      path: isFirstPage ? "/blog/" : `blog/${currentPage}`,
       component: BlogTemplate,
       context: {
         limit: postsPerPage,
@@ -2033,11 +2035,11 @@ exports.createPages = async ({ graphql, actions }) => {
         isFirstPage,
         isLastPage,
         currentPage,
-        totalPages,
-      },
-    })
-  })
-}
+        totalPages
+      }
+    });
+  });
+};
 ```
 
 ### 23. Adding Pagination with Prev Page / Next Page Links
@@ -2045,21 +2047,22 @@ exports.createPages = async ({ graphql, actions }) => {
 - Update the `blog_template.js` to include and use the new fields added.
 
 > `templates\blog_template.js`
-```js
-import React from 'react'
-import { graphql, Link } from 'gatsby'
 
-import Layout from '../components/layout'
+```js
+import React from "react";
+import { graphql, Link } from "gatsby";
+
+import Layout from "../components/layout";
 
 export default ({ data, pageContext }) => {
-  const { currentPage, isFirstPage, isLastPage } = pageContext
-  const nextPage = `/blog/${String(currentPage + 1)}`
+  const { currentPage, isFirstPage, isLastPage } = pageContext;
+  const nextPage = `/blog/${String(currentPage + 1)}`;
   const prevPage =
-    currentPage - 1 === 1 ? '/blog' : `/blog/${String(currentPage - 1)}`
+    currentPage - 1 === 1 ? "/blog" : `/blog/${String(currentPage - 1)}`;
   return (
     <Layout>
       <div>
-        <h1 style={{ display: 'inlineBlock', borderBottom: '1px solid' }}>
+        <h1 style={{ display: "inlineBlock", borderBottom: "1px solid" }}>
           Gatsby Garb Blog
         </h1>
         <h4>{data.allMarkdownRemark.totalCount} Posts</h4>
@@ -2068,8 +2071,8 @@ export default ({ data, pageContext }) => {
             <h3>
               <Link to={`/posts${node.fields.slug}`}>
                 {node.frontmatter.title}
-              </Link>{' '}
-              <span style={{ color: '#bbb' }}>- {node.frontmatter.date}</span>
+              </Link>{" "}
+              <span style={{ color: "#bbb" }}>- {node.frontmatter.date}</span>
             </h3>
             <p>{node.excerpt}</p>
           </div>
@@ -2089,8 +2092,8 @@ export default ({ data, pageContext }) => {
         </div>
       </div>
     </Layout>
-  )
-}
+  );
+};
 export const query = graphql`
   query($skip: Int!, $limit: Int!) {
     allMarkdownRemark(skip: $skip, limit: $limit) {
@@ -2110,7 +2113,7 @@ export const query = graphql`
       }
     }
   }
-`
+`;
 ```
 
 ![](/images/staticwebs/the-gatsby-masterclass/AddingPaginationWithPrevPageNextPageLinks.png)
@@ -2121,21 +2124,22 @@ export const query = graphql`
 
 ### 24. Adding Numbered Pagination
 
-- Move all the posts to the new `posts` folder 
+- Move all the posts to the new `posts` folder
 
 ![](/images/staticwebs/the-gatsby-masterclass/AddingNumberedPagination.png)
 
 ![](/images/staticwebs/the-gatsby-masterclass/AddingNumberedPagination2.png)
 
-- We need to modify the `gatsby-transformer-remark` plugin to point at the `posts` folder in the  `gastby-config.js` document.
-> gastby-config.js
+- We need to modify the `gatsby-transformer-remark` plugin to point at the `posts` folder in the `gastby-config.js` document.
+  > gastby-config.js
+
 ```js
 module.exports = {
   siteMetadata: {
     title: `Gatsby Garb`,
     description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
     author: `Juan Pablo Perez`,
-    createdAt: 2019,
+    createdAt: 2019
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -2143,16 +2147,16 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `images`,
-        path: `${__dirname}/src/images`,
-      },
+        path: `${__dirname}/src/images`
+      }
     },
     `gatsby-transformer-remark`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `posts`,
-        path: `${__dirname}/src/posts`,
-      },
+        path: `${__dirname}/src/posts`
+      }
     },
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
@@ -2165,35 +2169,35 @@ module.exports = {
         background_color: `#663399`,
         theme_color: `#663399`,
         display: `minimal-ui`,
-        icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
-      },
-    },
+        icon: `src/images/gatsby-icon.png` // This path is relative to the root of the site.
+      }
+    }
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.app/offline
     // 'gatsby-plugin-offline',
-  ],
-}
-
+  ]
+};
 ```
 
 - Create two new posts
 
 > post-three.md
+
 ```markdown
 ---
-title: 'Third Gatsby Garb Post'
-date: '2019-02-13'
+title: "Third Gatsby Garb Post"
+date: "2019-02-13"
 ---
 
 Hello, this is my third post so far!
 ```
 
-
 > post-four.md
+
 ```markdown
 ---
-title: 'My Fourth Markdown Post'
-date: '2019-02-14'
+title: "My Fourth Markdown Post"
+date: "2019-02-14"
 ---
 
 Hello, this is my fourth post made using Markdown and I'm getting practice!
@@ -2209,23 +2213,23 @@ Hello, this is my fourth post made using Markdown and I'm getting practice!
 
 - Modify the `blog-template.js` document to include the number of each page.
 
-
 > `templates\blog_template.js`
-```js
-import React from 'react'
-import { graphql, Link } from 'gatsby'
 
-import Layout from '../components/layout'
+```js
+import React from "react";
+import { graphql, Link } from "gatsby";
+
+import Layout from "../components/layout";
 
 export default ({ data, pageContext }) => {
-  const { currentPage, isFirstPage, isLastPage, totalPages } = pageContext
-  const nextPage = `/blog/${String(currentPage + 1)}`
+  const { currentPage, isFirstPage, isLastPage, totalPages } = pageContext;
+  const nextPage = `/blog/${String(currentPage + 1)}`;
   const prevPage =
-    currentPage - 1 === 1 ? '/blog' : `/blog/${String(currentPage - 1)}`
+    currentPage - 1 === 1 ? "/blog" : `/blog/${String(currentPage - 1)}`;
   return (
     <Layout>
       <div>
-        <h1 style={{ display: 'inlineBlock', borderBottom: '1px solid' }}>
+        <h1 style={{ display: "inlineBlock", borderBottom: "1px solid" }}>
           Gatsby Garb Blog
         </h1>
         <h4>{data.allMarkdownRemark.totalCount} Posts</h4>
@@ -2234,8 +2238,8 @@ export default ({ data, pageContext }) => {
             <h3>
               <Link to={`/posts${node.fields.slug}`}>
                 {node.frontmatter.title}
-              </Link>{' '}
-              <span style={{ color: '#bbb' }}>- {node.frontmatter.date}</span>
+              </Link>{" "}
+              <span style={{ color: "#bbb" }}>- {node.frontmatter.date}</span>
             </h3>
             <p>{node.excerpt}</p>
           </div>
@@ -2248,7 +2252,7 @@ export default ({ data, pageContext }) => {
             </Link>
           )}
           {Array.from({ length: totalPages }, (_, index) => (
-            <Link key={index} to={`/blog/${index === 0 ? '' : index + 1}`}>
+            <Link key={index} to={`/blog/${index === 0 ? "" : index + 1}`}>
               {index + 1}
             </Link>
           ))}
@@ -2260,8 +2264,8 @@ export default ({ data, pageContext }) => {
         </div>
       </div>
     </Layout>
-  )
-}
+  );
+};
 export const query = graphql`
   query($skip: Int!, $limit: Int!) {
     allMarkdownRemark(skip: $skip, limit: $limit) {
@@ -2281,7 +2285,7 @@ export const query = graphql`
       }
     }
   }
-`
+`;
 ```
 
 ![](/images/staticwebs/the-gatsby-masterclass/AddingNumberedPagination7.png)
@@ -2291,21 +2295,22 @@ export const query = graphql`
 - We are going to format the pagination
 
 > `templates\blog_template.js`
-```js
-import React from 'react'
-import { graphql, Link } from 'gatsby'
 
-import Layout from '../components/layout'
+```js
+import React from "react";
+import { graphql, Link } from "gatsby";
+
+import Layout from "../components/layout";
 
 export default ({ data, pageContext }) => {
-  const { currentPage, isFirstPage, isLastPage, totalPages } = pageContext
-  const nextPage = `/blog/${String(currentPage + 1)}`
+  const { currentPage, isFirstPage, isLastPage, totalPages } = pageContext;
+  const nextPage = `/blog/${String(currentPage + 1)}`;
   const prevPage =
-    currentPage - 1 === 1 ? '/blog' : `/blog/${String(currentPage - 1)}`
+    currentPage - 1 === 1 ? "/blog" : `/blog/${String(currentPage - 1)}`;
   return (
     <Layout>
       <div>
-        <h1 style={{ display: 'inlineBlock', borderBottom: '1px solid' }}>
+        <h1 style={{ display: "inlineBlock", borderBottom: "1px solid" }}>
           Gatsby Garb Blog
         </h1>
         <h4>{data.allMarkdownRemark.totalCount} Posts</h4>
@@ -2314,8 +2319,8 @@ export default ({ data, pageContext }) => {
             <h3>
               <Link to={`/posts${node.fields.slug}`}>
                 {node.frontmatter.title}
-              </Link>{' '}
-              <span style={{ color: '#bbb' }}>- {node.frontmatter.date}</span>
+              </Link>{" "}
+              <span style={{ color: "#bbb" }}>- {node.frontmatter.date}</span>
             </h3>
             <p>{node.excerpt}</p>
           </div>
@@ -2323,11 +2328,11 @@ export default ({ data, pageContext }) => {
         {/* Pagination Links */}
         <div
           style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-around',
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-around",
             maxWidth: 300,
-            margin: '0 auto',
+            margin: "0 auto"
           }}
         >
           {!isFirstPage && (
@@ -2336,7 +2341,7 @@ export default ({ data, pageContext }) => {
             </Link>
           )}
           {Array.from({ length: totalPages }, (_, index) => (
-            <Link key={index} to={`/blog/${index === 0 ? '' : index + 1}`}>
+            <Link key={index} to={`/blog/${index === 0 ? "" : index + 1}`}>
               {index + 1}
             </Link>
           ))}
@@ -2348,8 +2353,8 @@ export default ({ data, pageContext }) => {
         </div>
       </div>
     </Layout>
-  )
-}
+  );
+};
 export const query = graphql`
   query($skip: Int!, $limit: Int!) {
     allMarkdownRemark(skip: $skip, limit: $limit) {
@@ -2369,7 +2374,7 @@ export const query = graphql`
       }
     }
   }
-`
+`;
 ```
 
 ![](/images/staticwebs/the-gatsby-masterclass/AddingNumberedPagination9.png)
@@ -2377,28 +2382,29 @@ export const query = graphql`
 - We need to modify the `gatsby-node.js` to make the number of posts per page configurable.
 
 > gatsby-node.js
-```js
-const path = require('path')
-const { createFilePath } = require('gatsby-source-filesystem')
 
-const PostTemplate = path.resolve('./src/templates/post-template.js')
-const BlogTemplate = path.resolve('./src/templates/blog-template.js')
+```js
+const path = require("path");
+const { createFilePath } = require("gatsby-source-filesystem");
+
+const PostTemplate = path.resolve("./src/templates/post-template.js");
+const BlogTemplate = path.resolve("./src/templates/blog-template.js");
 
 exports.onCreateNode = ({ node, getNode, actions }) => {
-  const { createNodeField } = actions
+  const { createNodeField } = actions;
 
-  if (node.internal.type === 'MarkdownRemark') {
-    const slug = createFilePath({ node, getNode, basepath: 'posts' })
+  if (node.internal.type === "MarkdownRemark") {
+    const slug = createFilePath({ node, getNode, basepath: "posts" });
     createNodeField({
       node,
-      name: 'slug',
-      value: slug,
-    })
+      name: "slug",
+      value: slug
+    });
   }
-}
+};
 
 exports.createPages = async ({ graphql, actions }) => {
-  const { createPage } = actions
+  const { createPage } = actions;
   const result = await graphql(`
     {
       allMarkdownRemark {
@@ -2411,28 +2417,28 @@ exports.createPages = async ({ graphql, actions }) => {
         }
       }
     }
-  `)
-  const posts = result.data.allMarkdownRemark.edges
+  `);
+  const posts = result.data.allMarkdownRemark.edges;
 
   posts.forEach(({ node: post }) => {
     createPage({
       path: `posts${post.fields.slug}`,
       component: PostTemplate,
       context: {
-        slug: post.fields.slug,
-      },
-    })
-  })
+        slug: post.fields.slug
+      }
+    });
+  });
 
-  const postsPerPage = 2
-  const totalPages = Math.ceil(posts.length / postsPerPage)
+  const postsPerPage = 2;
+  const totalPages = Math.ceil(posts.length / postsPerPage);
 
   Array.from({ length: totalPages }).forEach((_, index) => {
-    const currentPage = index + 1
-    const isFirstPage = index === 0
-    const isLastPage = currentPage === totalPages
+    const currentPage = index + 1;
+    const isFirstPage = index === 0;
+    const isLastPage = currentPage === totalPages;
     createPage({
-      path: isFirstPage ? '/blog/' : `blog/${currentPage}`,
+      path: isFirstPage ? "/blog/" : `blog/${currentPage}`,
       component: BlogTemplate,
       context: {
         limit: postsPerPage,
@@ -2440,11 +2446,11 @@ exports.createPages = async ({ graphql, actions }) => {
         isFirstPage,
         isLastPage,
         currentPage,
-        totalPages,
-      },
-    })
-  })
-}
+        totalPages
+      }
+    });
+  });
+};
 ```
 
 ![](/images/staticwebs/the-gatsby-masterclass/AddingNumberedPagination10.png)
@@ -2456,6 +2462,7 @@ exports.createPages = async ({ graphql, actions }) => {
 ### 25. Sorting, Filtering, Limiting, Skipping w/ GraphQL Arguments / Listing Blog Posts
 
 > Query using skip and limit.
+
 ```graphql
 {
   allMarkdownRemark(limit: 2, skip: 1) {
@@ -2475,6 +2482,7 @@ exports.createPages = async ({ graphql, actions }) => {
 ```
 
 > Response
+
 ```json
 {
   "data": {
@@ -2506,14 +2514,14 @@ exports.createPages = async ({ graphql, actions }) => {
   }
 }
 ```
+
 > Query using filter.
+
 ```graphql
 {
-  allMarkdownRemark(filter: {
-	 frontmatter: {
-     title: {eq: "My Fourth Markdown Post"}
-		}
-  }) {
+  allMarkdownRemark(
+    filter: { frontmatter: { title: { eq: "My Fourth Markdown Post" } } }
+  ) {
     totalCount
     edges {
       node {
@@ -2528,7 +2536,9 @@ exports.createPages = async ({ graphql, actions }) => {
   }
 }
 ```
+
 > Response
+
 ```json
 {
   "data": {
@@ -2550,14 +2560,18 @@ exports.createPages = async ({ graphql, actions }) => {
   }
 }
 ```
+
 > Query using filter with nin.
+
 ```graphql
 {
-  allMarkdownRemark(filter: {
-	 frontmatter: {
-     title: {nin: ["My Fourth Markdown Post","Third Gatsby Garb Post"]}
-		}
-  }) {
+  allMarkdownRemark(
+    filter: {
+      frontmatter: {
+        title: { nin: ["My Fourth Markdown Post", "Third Gatsby Garb Post"] }
+      }
+    }
+  ) {
     totalCount
     edges {
       node {
@@ -2572,7 +2586,9 @@ exports.createPages = async ({ graphql, actions }) => {
   }
 }
 ```
+
 > Response
+
 ```json
 {
   "data": {
@@ -2603,15 +2619,13 @@ exports.createPages = async ({ graphql, actions }) => {
     }
   }
 }
-``` 
+```
 
 > Query using sort.
+
 ```graphql
 {
-  allMarkdownRemark(sort: {
-	 fields: [frontmatter___date]
-    order: DESC
-  }) {
+  allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
     totalCount
     edges {
       node {
@@ -2626,7 +2640,9 @@ exports.createPages = async ({ graphql, actions }) => {
   }
 }
 ```
+
 > Response
+
 ```json
 {
   "data": {
@@ -2682,28 +2698,29 @@ exports.createPages = async ({ graphql, actions }) => {
 - Modify the `gatsby-node.js` document to limit the number of documents returned to 1,000.
 
 > gatsby-node.js
-```js
-const path = require('path')
-const { createFilePath } = require('gatsby-source-filesystem')
 
-const PostTemplate = path.resolve('./src/templates/post-template.js')
-const BlogTemplate = path.resolve('./src/templates/blog-template.js')
+```js
+const path = require("path");
+const { createFilePath } = require("gatsby-source-filesystem");
+
+const PostTemplate = path.resolve("./src/templates/post-template.js");
+const BlogTemplate = path.resolve("./src/templates/blog-template.js");
 
 exports.onCreateNode = ({ node, getNode, actions }) => {
-  const { createNodeField } = actions
+  const { createNodeField } = actions;
 
-  if (node.internal.type === 'MarkdownRemark') {
-    const slug = createFilePath({ node, getNode, basepath: 'posts' })
+  if (node.internal.type === "MarkdownRemark") {
+    const slug = createFilePath({ node, getNode, basepath: "posts" });
     createNodeField({
       node,
-      name: 'slug',
-      value: slug,
-    })
+      name: "slug",
+      value: slug
+    });
   }
-}
+};
 
 exports.createPages = async ({ graphql, actions }) => {
-  const { createPage } = actions
+  const { createPage } = actions;
   const result = await graphql(`
     {
       allMarkdownRemark(limit: 1000) {
@@ -2716,28 +2733,28 @@ exports.createPages = async ({ graphql, actions }) => {
         }
       }
     }
-  `)
-  const posts = result.data.allMarkdownRemark.edges
+  `);
+  const posts = result.data.allMarkdownRemark.edges;
 
   posts.forEach(({ node: post }) => {
     createPage({
       path: `posts${post.fields.slug}`,
       component: PostTemplate,
       context: {
-        slug: post.fields.slug,
-      },
-    })
-  })
+        slug: post.fields.slug
+      }
+    });
+  });
 
-  const postsPerPage = 2
-  const totalPages = Math.ceil(posts.length / postsPerPage)
+  const postsPerPage = 2;
+  const totalPages = Math.ceil(posts.length / postsPerPage);
 
   Array.from({ length: totalPages }).forEach((_, index) => {
-    const currentPage = index + 1
-    const isFirstPage = index === 0
-    const isLastPage = currentPage === totalPages
+    const currentPage = index + 1;
+    const isFirstPage = index === 0;
+    const isLastPage = currentPage === totalPages;
     createPage({
-      path: isFirstPage ? '/blog/' : `blog/${currentPage}`,
+      path: isFirstPage ? "/blog/" : `blog/${currentPage}`,
       component: BlogTemplate,
       context: {
         limit: postsPerPage,
@@ -2745,32 +2762,32 @@ exports.createPages = async ({ graphql, actions }) => {
         isFirstPage,
         isLastPage,
         currentPage,
-        totalPages,
-      },
-    })
-  })
-}
+        totalPages
+      }
+    });
+  });
+};
 ```
-
 
 - Modify the `templates\blog-template.js` document to use the `order` clause.
 
 > templates\blog-template.js
-```js
-import React from 'react'
-import { graphql, Link } from 'gatsby'
 
-import Layout from '../components/layout'
+```js
+import React from "react";
+import { graphql, Link } from "gatsby";
+
+import Layout from "../components/layout";
 
 export default ({ data, pageContext }) => {
-  const { currentPage, isFirstPage, isLastPage, totalPages } = pageContext
-  const nextPage = `/blog/${String(currentPage + 1)}`
+  const { currentPage, isFirstPage, isLastPage, totalPages } = pageContext;
+  const nextPage = `/blog/${String(currentPage + 1)}`;
   const prevPage =
-    currentPage - 1 === 1 ? '/blog' : `/blog/${String(currentPage - 1)}`
+    currentPage - 1 === 1 ? "/blog" : `/blog/${String(currentPage - 1)}`;
   return (
     <Layout>
       <div>
-        <h1 style={{ display: 'inlineBlock', borderBottom: '1px solid' }}>
+        <h1 style={{ display: "inlineBlock", borderBottom: "1px solid" }}>
           Gatsby Garb Blog
         </h1>
         <h4>{data.allMarkdownRemark.totalCount} Posts</h4>
@@ -2779,8 +2796,8 @@ export default ({ data, pageContext }) => {
             <h3>
               <Link to={`/posts${node.fields.slug}`}>
                 {node.frontmatter.title}
-              </Link>{' '}
-              <span style={{ color: '#bbb' }}>- {node.frontmatter.date}</span>
+              </Link>{" "}
+              <span style={{ color: "#bbb" }}>- {node.frontmatter.date}</span>
             </h3>
             <p>{node.excerpt}</p>
           </div>
@@ -2788,11 +2805,11 @@ export default ({ data, pageContext }) => {
         {/* Pagination Links */}
         <div
           style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-around',
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-around",
             maxWidth: 300,
-            margin: '0 auto',
+            margin: "0 auto"
           }}
         >
           {!isFirstPage && (
@@ -2801,7 +2818,7 @@ export default ({ data, pageContext }) => {
             </Link>
           )}
           {Array.from({ length: totalPages }, (_, index) => (
-            <Link key={index} to={`/blog/${index === 0 ? '' : index + 1}`}>
+            <Link key={index} to={`/blog/${index === 0 ? "" : index + 1}`}>
               {index + 1}
             </Link>
           ))}
@@ -2813,8 +2830,8 @@ export default ({ data, pageContext }) => {
         </div>
       </div>
     </Layout>
-  )
-}
+  );
+};
 export const query = graphql`
   query($skip: Int!, $limit: Int!) {
     allMarkdownRemark(
@@ -2838,7 +2855,7 @@ export const query = graphql`
       }
     }
   }
-`
+`;
 ```
 
 ![](/images/staticwebs/the-gatsby-masterclass/SortingFilteringLimitingSkipping.png)
@@ -2853,14 +2870,14 @@ export const query = graphql`
 
 ![](/images/staticwebs/the-gatsby-masterclass/FormattingDatesInGatsby2.png)
 
-
 > Query using moment to format dates.
+
 ```graphql
 {
-  allMarkdownRemark(limit: 2, sort: {
-	 fields: [frontmatter___date]
-    order: DESC
-  }) {
+  allMarkdownRemark(
+    limit: 2
+    sort: { fields: [frontmatter___date], order: DESC }
+  ) {
     totalCount
     edges {
       node {
@@ -2875,7 +2892,9 @@ export const query = graphql`
   }
 }
 ```
+
 > Response
+
 ```json
 {
   "data": {
@@ -2909,12 +2928,13 @@ export const query = graphql`
 ```
 
 > Query using locale.
+
 ```graphql
 {
-  allMarkdownRemark(limit: 2, sort: {
-	 fields: [frontmatter___date]
-    order: DESC
-  }) {
+  allMarkdownRemark(
+    limit: 2
+    sort: { fields: [frontmatter___date], order: DESC }
+  ) {
     totalCount
     edges {
       node {
@@ -2929,7 +2949,9 @@ export const query = graphql`
   }
 }
 ```
+
 > Response
+
 ```json
 {
   "data": {
@@ -2963,12 +2985,13 @@ export const query = graphql`
 ```
 
 > Query using fromNow.
+
 ```graphql
 {
-  allMarkdownRemark(limit: 2, sort: {
-	 fields: [frontmatter___date]
-    order: DESC
-  }) {
+  allMarkdownRemark(
+    limit: 2
+    sort: { fields: [frontmatter___date], order: DESC }
+  ) {
     totalCount
     edges {
       node {
@@ -2982,9 +3005,10 @@ export const query = graphql`
     }
   }
 }
-
 ```
+
 > Response
+
 ```json
 {
   "data": {
@@ -3018,12 +3042,13 @@ export const query = graphql`
 ```
 
 > Query using difference.
+
 ```graphql
 {
-  allMarkdownRemark(limit: 2, sort: {
-	 fields: [frontmatter___date]
-    order: DESC
-  }) {
+  allMarkdownRemark(
+    limit: 2
+    sort: { fields: [frontmatter___date], order: DESC }
+  ) {
     totalCount
     edges {
       node {
@@ -3038,7 +3063,9 @@ export const query = graphql`
   }
 }
 ```
+
 > Response
+
 ```json
 {
   "data": {
@@ -3074,12 +3101,13 @@ export const query = graphql`
 ### 27. Formatting Excerpts
 
 > Query shorting the excerpts values.
+
 ```graphql
 {
-  allMarkdownRemark(limit: 2, sort: {
-	 fields: [frontmatter___date]
-    order: DESC
-  }) {
+  allMarkdownRemark(
+    limit: 2
+    sort: { fields: [frontmatter___date], order: DESC }
+  ) {
     totalCount
     edges {
       node {
@@ -3094,7 +3122,9 @@ export const query = graphql`
   }
 }
 ```
+
 > Response
+
 ```json
 {
   "data": {
@@ -3128,12 +3158,13 @@ export const query = graphql`
 ```
 
 > Query using excerpts truncate.
+
 ```graphql
 {
-  allMarkdownRemark(limit: 2, sort: {
-	 fields: [frontmatter___date]
-    order: DESC
-  }) {
+  allMarkdownRemark(
+    limit: 2
+    sort: { fields: [frontmatter___date], order: DESC }
+  ) {
     totalCount
     edges {
       node {
@@ -3148,7 +3179,9 @@ export const query = graphql`
   }
 }
 ```
+
 > Response
+
 ```json
 {
   "data": {
@@ -3182,12 +3215,13 @@ export const query = graphql`
 ```
 
 > Query using excerpts format.
+
 ```graphql
 {
-  allMarkdownRemark(limit: 2, sort: {
-	 fields: [frontmatter___date]
-    order: DESC
-  }) {
+  allMarkdownRemark(
+    limit: 2
+    sort: { fields: [frontmatter___date], order: DESC }
+  ) {
     totalCount
     edges {
       node {
@@ -3203,7 +3237,9 @@ export const query = graphql`
   }
 }
 ```
+
 > Response
+
 ```json
 {
   "data": {
@@ -3241,12 +3277,13 @@ export const query = graphql`
 ### 28. Time To Read for each Post / Formatting Dates on our Blog Pages
 
 > Query using timeToRead.
+
 ```graphql
 {
-  allMarkdownRemark(limit: 2, sort: {
-	 fields: [frontmatter___date]
-    order: DESC
-  }) {
+  allMarkdownRemark(
+    limit: 2
+    sort: { fields: [frontmatter___date], order: DESC }
+  ) {
     totalCount
     edges {
       node {
@@ -3263,7 +3300,9 @@ export const query = graphql`
   }
 }
 ```
+
 > Response
+
 ```json
 {
   "data": {
@@ -3299,24 +3338,26 @@ export const query = graphql`
   }
 }
 ```
+
 - Modify the `templates\blog-template.js` document to format the date.
 
 > templates\blog-template.js
-```js
-import React from 'react'
-import { graphql, Link } from 'gatsby'
 
-import Layout from '../components/layout'
+```js
+import React from "react";
+import { graphql, Link } from "gatsby";
+
+import Layout from "../components/layout";
 
 export default ({ data, pageContext }) => {
-  const { currentPage, isFirstPage, isLastPage, totalPages } = pageContext
-  const nextPage = `/blog/${String(currentPage + 1)}`
+  const { currentPage, isFirstPage, isLastPage, totalPages } = pageContext;
+  const nextPage = `/blog/${String(currentPage + 1)}`;
   const prevPage =
-    currentPage - 1 === 1 ? '/blog' : `/blog/${String(currentPage - 1)}`
+    currentPage - 1 === 1 ? "/blog" : `/blog/${String(currentPage - 1)}`;
   return (
     <Layout>
       <div>
-        <h1 style={{ display: 'inlineBlock', borderBottom: '1px solid' }}>
+        <h1 style={{ display: "inlineBlock", borderBottom: "1px solid" }}>
           Gatsby Garb Blog
         </h1>
         <h4>{data.allMarkdownRemark.totalCount} Posts</h4>
@@ -3325,8 +3366,8 @@ export default ({ data, pageContext }) => {
             <h3>
               <Link to={`/posts${node.fields.slug}`}>
                 {node.frontmatter.title}
-              </Link>{' '}
-              <span style={{ color: '#bbb' }}>- {node.frontmatter.date}</span>
+              </Link>{" "}
+              <span style={{ color: "#bbb" }}>- {node.frontmatter.date}</span>
             </h3>
             <p>{node.excerpt}</p>
           </div>
@@ -3334,11 +3375,11 @@ export default ({ data, pageContext }) => {
         {/* Pagination Links */}
         <div
           style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-around',
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-around",
             maxWidth: 300,
-            margin: '0 auto',
+            margin: "0 auto"
           }}
         >
           {!isFirstPage && (
@@ -3347,7 +3388,7 @@ export default ({ data, pageContext }) => {
             </Link>
           )}
           {Array.from({ length: totalPages }, (_, index) => (
-            <Link key={index} to={`/blog/${index === 0 ? '' : index + 1}`}>
+            <Link key={index} to={`/blog/${index === 0 ? "" : index + 1}`}>
               {index + 1}
             </Link>
           ))}
@@ -3359,8 +3400,8 @@ export default ({ data, pageContext }) => {
         </div>
       </div>
     </Layout>
-  )
-}
+  );
+};
 export const query = graphql`
   query($skip: Int!, $limit: Int!) {
     allMarkdownRemark(
@@ -3384,28 +3425,29 @@ export const query = graphql`
       }
     }
   }
-`
+`;
 ```
 
 - Modify the `templates\post-template.js` document to include the `time to read` (timeToRead) field.
 
 > templates\post-template.js
-```js
-import React from 'react'
-import { graphql } from 'gatsby'
 
-import Layout from '../components/layout'
+```js
+import React from "react";
+import { graphql } from "gatsby";
+
+import Layout from "../components/layout";
 
 const PostTemplate = ({ data: post }) => (
   <Layout>
     <h1>{post.markdownRemark.frontmatter.title}</h1>
     <h4>
       {post.markdownRemark.timeToRead}
-      {post.markdownRemark.timeToRead > 1 ? 'minutes' : 'minute'}
+      {post.markdownRemark.timeToRead > 1 ? "minutes" : "minute"}
     </h4>
     <div dangerouslySetInnerHTML={{ __html: post.markdownRemark.html }} />
   </Layout>
-)
+);
 
 // This will be rendered and sent to the `data` parameter
 export const query = graphql`
@@ -3418,9 +3460,9 @@ export const query = graphql`
       }
     }
   }
-`
+`;
 
-export default PostTemplate
+export default PostTemplate;
 ```
 
 ![](/images/staticwebs/the-gatsby-masterclass/TimeToReadForEachPost.png)
@@ -3434,42 +3476,43 @@ export default PostTemplate
 - Modify the `components\header.js` document to use an image for the header.
 
 > components\header.js
-```js
-import { Link } from 'gatsby'
-import PropTypes from 'prop-types'
-import React from 'react'
 
-import gatsbyLogo from '../images/gatsby-icon.png'
+```js
+import { Link } from "gatsby";
+import PropTypes from "prop-types";
+import React from "react";
+
+import gatsbyLogo from "../images/gatsby-icon.png";
 
 const Header = ({ siteTitle }) => (
   <div
     style={{
       background: `rebeccapurple`,
-      marginBottom: `1.45rem`,
+      marginBottom: `1.45rem`
     }}
   >
     <div
       style={{
         margin: `0 auto`,
         maxWidth: 960,
-        padding: `1.45rem 1.0875rem`,
+        padding: `1.45rem 1.0875rem`
       }}
     >
       {/* Title / Logo */}
       <span
         style={{
-          display: 'flex',
-          alignItems: 'center',
+          display: "flex",
+          alignItems: "center"
         }}
       >
         <img
           src={gatsbyLogo}
           alt="Gastby Garb Logo"
           style={{
-            borderRadius: '50%',
-            border: '3px solid orange',
-            margin: '0 5px',
-            width: `3rem`,
+            borderRadius: "50%",
+            border: "3px solid orange",
+            margin: "0 5px",
+            width: `3rem`
           }}
         />
         <h1 style={{ margin: 0 }}>
@@ -3477,7 +3520,7 @@ const Header = ({ siteTitle }) => (
             to="/"
             style={{
               color: `white`,
-              textDecoration: `none`,
+              textDecoration: `none`
             }}
           >
             {siteTitle}
@@ -3486,17 +3529,17 @@ const Header = ({ siteTitle }) => (
       </span>
     </div>
   </div>
-)
+);
 
 Header.propTypes = {
-  siteTitle: PropTypes.string,
-}
+  siteTitle: PropTypes.string
+};
 
 Header.defaultProps = {
-  siteTitle: ``,
-}
+  siteTitle: ``
+};
 
-export default Header
+export default Header;
 ```
 
 ![](/images/staticwebs/the-gatsby-masterclass/ImportingImagesInGatsbyAddingOurSiteLogo.png)
@@ -3512,10 +3555,11 @@ export default Header
 - It can be seen how it works having a look at the `\src\components\image.js` document.#
 
 > \src\components\image.js
+
 ```js
-import React from 'react'
-import { StaticQuery, graphql } from 'gatsby'
-import Img from 'gatsby-image'
+import React from "react";
+import { StaticQuery, graphql } from "gatsby";
+import Img from "gatsby-image";
 
 /*
  * This component is built using `gatsby-image` to automatically serve optimized
@@ -3543,8 +3587,8 @@ const Image = () => (
     `}
     render={data => <Img fluid={data.placeholderImage.childImageSharp.fluid} />}
   />
-)
-export default Image
+);
+export default Image;
 ```
 
 ![](/images/staticwebs/the-gatsby-masterclass/WhatIsGatsbyImageWhyUseGatsbyImage.png)
@@ -3556,11 +3600,10 @@ export default Image
 - In order to use `gatsby-image` we need to query for the image useing the `placeholderImage`.
 
 > Query using file and childImageSharp.
+
 ```graphql
 {
-  file(relativePath: {
-    eq: "gatsby-icon.png"
-  }) {
+  file(relativePath: { eq: "gatsby-icon.png" }) {
     childImageSharp {
       fluid {
         src
@@ -3576,9 +3619,10 @@ export default Image
     }
   }
 }
-
 ```
+
 > Response
+
 ```json
 {
   "data": {
@@ -3603,25 +3647,26 @@ export default Image
 
 ## 13. Advanced Image Concepts in Gatsby / GraphQL Fragments
 
-### 32. GraphQL Fragments for Easier Image Queries / Displaying Images with Gatsby Image 
+### 32. GraphQL Fragments for Easier Image Queries / Displaying Images with Gatsby Image
 
-- Fragments are not going to be identified by `GraphiQL` although we can use them inside the app. 
+- Fragments are not going to be identified by `GraphiQL` although we can use them inside the app.
 
 > Query using file and GatsbyImageSharpFluid.
+
 ```graphql
 {
-  file(relativePath: {
-    eq: "gatsby-icon.png"
-  }) {
+  file(relativePath: { eq: "gatsby-icon.png" }) {
     childImageSharp {
       fluid(maxWidth: 590) {
-       ...GatsbyImageSharpFluid
+        ...GatsbyImageSharpFluid
       }
     }
   }
 }
 ```
+
 > Response
+
 ```json
 {
   "errors": [
@@ -3641,10 +3686,11 @@ export default Image
 - We can modify the `components/image.js` document to use it, we can even execute two queries at the same time.
 
 > components/image.js
+
 ```js
-import React from 'react'
-import { StaticQuery, graphql } from 'gatsby'
-import Img from 'gatsby-image'
+import React from "react";
+import { StaticQuery, graphql } from "gatsby";
+import Img from "gatsby-image";
 
 /*
  * This component is built using `gatsby-image` to automatically serve optimized
@@ -3684,8 +3730,8 @@ const Image = () => (
       </>
     )}
   />
-)
-export default Image
+);
+export default Image;
 ```
 
 ![](/images/staticwebs/the-gatsby-masterclass/GraphQLFragmentsForEasierImageQueries.png)
@@ -3702,15 +3748,16 @@ export default Image
 
 ![](/images/staticwebs/the-gatsby-masterclass/KeyDetailsAboutImagesServedWithGatsbyImage2.png)
 
-- The reason is becuase it is set in `pages\index.js` 
-> pages\index.js
-```js
-import React from 'react'
-import { Link } from 'gatsby'
+- The reason is becuase it is set in `pages\index.js`
+  > pages\index.js
 
-import Layout from '../components/layout'
-import Image from '../components/image'
-import SEO from '../components/seo'
+```js
+import React from "react";
+import { Link } from "gatsby";
+
+import Layout from "../components/layout";
+import Image from "../components/image";
+import SEO from "../components/seo";
 
 const IndexPage = () => (
   <Layout>
@@ -3723,16 +3770,18 @@ const IndexPage = () => (
     </div>
     <Link to="/page-2/">Go to page 2</Link>
   </Layout>
-)
+);
 
-export default IndexPage
+export default IndexPage;
 ```
 
-- We can change it 
+- We can change it
 
 > pages\index.js
+
 ```js
 ```
+
 ![](/images/staticwebs/the-gatsby-masterclass/KeyDetailsAboutImagesServedWithGatsbyImage3.png)
 
 ![](/images/staticwebs/the-gatsby-masterclass/KeyDetailsAboutImagesServedWithGatsbyImage4.png)
@@ -3740,13 +3789,14 @@ export default IndexPage
 - We revert to the original size.
 
 > pages\index.js
-```js
-import React from 'react'
-import { Link } from 'gatsby'
 
-import Layout from '../components/layout'
-import Image from '../components/image'
-import SEO from '../components/seo'
+```js
+import React from "react";
+import { Link } from "gatsby";
+
+import Layout from "../components/layout";
+import Image from "../components/image";
+import SEO from "../components/seo";
 
 const IndexPage = () => (
   <Layout>
@@ -3759,9 +3809,9 @@ const IndexPage = () => (
     </div>
     <Link to="/page-2/">Go to page 2</Link>
   </Layout>
-)
+);
 
-export default IndexPage
+export default IndexPage;
 ```
 
 - We can see there are some other attributes in the html related to the `Fluid` images
@@ -3774,7 +3824,8 @@ export default IndexPage
       /static/4a9773549091c227cd2eb82ccd9c5e3a/131ad/gatsby-icon.png 295w,
       /static/4a9773549091c227cd2eb82ccd9c5e3a/a19f4/gatsby-icon.png 512w
     "
-    sizes="(max-width: 512px) 100vw, 512px"/>
+    sizes="(max-width: 512px) 100vw, 512px"
+  />
   <img
     alt=""
     src="/static/4a9773549091c227cd2eb82ccd9c5e3a/a19f4/gatsby-icon.png"
@@ -3788,6 +3839,7 @@ export default IndexPage
 - We can include a video inside a MarkDown file using the `iframe` tag,
 
 > src\pages\post-two.md
+
 ```markdown
 ---
 title: "The Second Gatsby Garb Post"
@@ -3820,13 +3872,14 @@ found 3 low severity vulnerabilities
 - We need to change the `gatsby-config.js` docuemnt to change how `gatsby-transformer-remark` is et up.
 
 > gatsby-config.js
+
 ```js
 module.exports = {
   siteMetadata: {
     title: `Gatsby Garb`,
     description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
     author: `Juan Pablo Perez`,
-    createdAt: 2019,
+    createdAt: 2019
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -3834,25 +3887,25 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `images`,
-        path: `${__dirname}/src/images`,
-      },
+        path: `${__dirname}/src/images`
+      }
     },
     {
-      resolve: 'gatsby-transformer-remark',
+      resolve: "gatsby-transformer-remark",
       options: {
         plugins: [
           {
-            resolve: 'gatsby-remark-images',
-          },
-        ],
-      },
+            resolve: "gatsby-remark-images"
+          }
+        ]
+      }
     },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `posts`,
-        path: `${__dirname}/src/posts`,
-      },
+        path: `${__dirname}/src/posts`
+      }
     },
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
@@ -3865,14 +3918,14 @@ module.exports = {
         background_color: `#663399`,
         theme_color: `#663399`,
         display: `minimal-ui`,
-        icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
-      },
-    },
+        icon: `src/images/gatsby-icon.png` // This path is relative to the root of the site.
+      }
+    }
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.app/offline
     // 'gatsby-plugin-offline',
-  ],
-}
+  ]
+};
 ```
 
 - We have to put the images we want to use in the same directory where the Markdown file is.
@@ -3882,14 +3935,14 @@ module.exports = {
 - We can include the image in the post:
 
 > src\pages\post-two.md
+
 ```markdown
 ---
-title: 'The Second Gatsby Garb Post'
-date: '2019-02-10'
+title: "The Second Gatsby Garb Post"
+date: "2019-02-10"
 ---
 
 You're currently reading the second post made using Markdown!
-
 
 ![Tranquil Beach](tranquil-beach.jpg)
 ```
@@ -4081,6 +4134,7 @@ found 3 low severity vulnerabilities
 - We need to create a new `.env` document where we have to put the `Space ID` and `Content Delivery API - access token` values copied from the `ContentFul API Page`.
 
 > .env
+
 ```
 CONTENTFUL_SPACE_ID=..
 CONTENTFUL_ACCESS_TOKEN=..
@@ -4089,11 +4143,12 @@ CONTENTFUL_ACCESS_TOKEN=..
 - We need to modify the `gatsby-config.js` document to enable the new plugin using the new environment variables.
 
 > gatsby-config.js
-```js
-const dotenv = require('dotenv')
 
-if (process.env.NODE_ENV !== 'production') {
-  dotenv.config()
+```js
+const dotenv = require("dotenv");
+
+if (process.env.NODE_ENV !== "production") {
+  dotenv.config();
 }
 
 module.exports = {
@@ -4101,7 +4156,7 @@ module.exports = {
     title: `Gatsby Garb`,
     description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
     author: `Juan Pablo Perez`,
-    createdAt: 2019,
+    createdAt: 2019
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -4109,25 +4164,25 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `images`,
-        path: `${__dirname}/src/images`,
-      },
+        path: `${__dirname}/src/images`
+      }
     },
     {
-      resolve: 'gatsby-transformer-remark',
+      resolve: "gatsby-transformer-remark",
       options: {
         plugins: [
           {
-            resolve: 'gatsby-remark-images',
-          },
-        ],
-      },
+            resolve: "gatsby-remark-images"
+          }
+        ]
+      }
     },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `posts`,
-        path: `${__dirname}/src/posts`,
-      },
+        path: `${__dirname}/src/posts`
+      }
     },
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
@@ -4140,21 +4195,21 @@ module.exports = {
         background_color: `#663399`,
         theme_color: `#663399`,
         display: `minimal-ui`,
-        icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
-      },
+        icon: `src/images/gatsby-icon.png` // This path is relative to the root of the site.
+      }
     },
     {
-      resolve: 'gatsby-source-contentful',
+      resolve: "gatsby-source-contentful",
       options: {
         spaceId: process.env.CONTENTFUL_SPACE_ID,
-        accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
-      },
-    },    
+        accessToken: process.env.CONTENTFUL_ACCESS_TOKEN
+      }
+    }
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.app/offline
     // 'gatsby-plugin-offline',
-  ],
-}
+  ]
+};
 ```
 
 > request
@@ -4206,6 +4261,7 @@ module.exports = {
   }
 }
 ```
+
 ### 37. Creating our Individual Product Pages / Displaying Contentful Images
 
 - We need to create a new query that is going to be used for the creation of the Product pages on the fly.
@@ -4216,7 +4272,7 @@ module.exports = {
 
 ```graphql
 {
-  contentfulProduct(slug: {eq: "rayban-sunglasses"}) {
+  contentfulProduct(slug: { eq: "rayban-sunglasses" }) {
     name
     price
     description
@@ -4253,9 +4309,10 @@ module.exports = {
 - We need to make it variable:
 
 > Request
+
 ```graphql
 query($slug: String) {
-  contentfulProduct(slug: {eq: $slug}) {
+  contentfulProduct(slug: { eq: $slug }) {
     name
     price
     description
@@ -4270,6 +4327,7 @@ query($slug: String) {
 ```
 
 > Quey variables
+
 ```json
 {
   "slug": "rayban-sunglasses"
@@ -4299,37 +4357,38 @@ query($slug: String) {
 - We need to create the new `templates\product-template.js` document used to generate the product pages on the fly.
 
 > templates\product-template.js
-```js
-import React from 'react'
-import { graphql } from 'gatsby'
-import Img from 'gatsby-image'
 
-import Layout from '../components/layout'
+```js
+import React from "react";
+import { graphql } from "gatsby";
+import Img from "gatsby-image";
+
+import Layout from "../components/layout";
 
 const ProductTemplate = ({ data: { contentfulProduct } }) => (
   <Layout>
     <div
       style={{
-        marginLeft: '0 auto',
-        width: '100%',
-        textAlign: 'center',
+        marginLeft: "0 auto",
+        width: "100%",
+        textAlign: "center"
       }}
     >
       {/* Product Info */}
       <h2>
-        {contentfulProduct.name} -{' '}
-        <span style={{ color: '#ccc' }}>
+        {contentfulProduct.name} -{" "}
+        <span style={{ color: "#ccc" }}>
           Added on {contentfulProduct.createdAt}
         </span>
       </h2>
       <p>{contentfulProduct.description}</p>
     </div>
     <Img
-      style={{ margin: '0 auto', maxWidth: 600 }}
+      style={{ margin: "0 auto", maxWidth: 600 }}
       fluid={contentfulProduct.image.fluid}
     />
   </Layout>
-)
+);
 
 export const query = graphql`
   query($slug: String!) {
@@ -4346,37 +4405,38 @@ export const query = graphql`
       }
     }
   }
-`
+`;
 
-export default ProductTemplate
+export default ProductTemplate;
 ```
 
 - Modify the `gatsby-node.js` document to include the content product query and the use of the new `ProductTemplate` to generate the page for each product..
 
 > gatsby-node.js
-```js
-const path = require('path')
-const { createFilePath } = require('gatsby-source-filesystem')
 
-const PostTemplate = path.resolve('./src/templates/post-template.js')
-const BlogTemplate = path.resolve('./src/templates/blog-template.js')
-const ProductTemplate = path.resolve('./src/templates/product-template.js')
+```js
+const path = require("path");
+const { createFilePath } = require("gatsby-source-filesystem");
+
+const PostTemplate = path.resolve("./src/templates/post-template.js");
+const BlogTemplate = path.resolve("./src/templates/blog-template.js");
+const ProductTemplate = path.resolve("./src/templates/product-template.js");
 
 exports.onCreateNode = ({ node, getNode, actions }) => {
-  const { createNodeField } = actions
+  const { createNodeField } = actions;
 
-  if (node.internal.type === 'MarkdownRemark') {
-    const slug = createFilePath({ node, getNode, basepath: 'posts' })
+  if (node.internal.type === "MarkdownRemark") {
+    const slug = createFilePath({ node, getNode, basepath: "posts" });
     createNodeField({
       node,
-      name: 'slug',
-      value: slug,
-    })
+      name: "slug",
+      value: slug
+    });
   }
-}
+};
 
 exports.createPages = async ({ graphql, actions }) => {
-  const { createPage } = actions
+  const { createPage } = actions;
   const result = await graphql(`
     {
       allMarkdownRemark(limit: 1000) {
@@ -4397,28 +4457,28 @@ exports.createPages = async ({ graphql, actions }) => {
         }
       }
     }
-  `)
-  const posts = result.data.allMarkdownRemark.edges
+  `);
+  const posts = result.data.allMarkdownRemark.edges;
 
   posts.forEach(({ node: post }) => {
     createPage({
       path: `posts${post.fields.slug}`,
       component: PostTemplate,
       context: {
-        slug: post.fields.slug,
-      },
-    })
-  })
+        slug: post.fields.slug
+      }
+    });
+  });
 
-  const postsPerPage = 2
-  const totalPages = Math.ceil(posts.length / postsPerPage)
+  const postsPerPage = 2;
+  const totalPages = Math.ceil(posts.length / postsPerPage);
 
   Array.from({ length: totalPages }).forEach((_, index) => {
-    const currentPage = index + 1
-    const isFirstPage = index === 0
-    const isLastPage = currentPage === totalPages
+    const currentPage = index + 1;
+    const isFirstPage = index === 0;
+    const isLastPage = currentPage === totalPages;
     createPage({
-      path: isFirstPage ? '/blog/' : `blog/${currentPage}`,
+      path: isFirstPage ? "/blog/" : `blog/${currentPage}`,
       component: BlogTemplate,
       context: {
         limit: postsPerPage,
@@ -4426,22 +4486,22 @@ exports.createPages = async ({ graphql, actions }) => {
         isFirstPage,
         isLastPage,
         currentPage,
-        totalPages,
-      },
-    })
-  })
+        totalPages
+      }
+    });
+  });
 
-  const products = result.data.allContentfulProduct.edges
+  const products = result.data.allContentfulProduct.edges;
   products.forEach(({ node: product }) => {
     createPage({
       path: `/products/${product.slug}`,
       component: ProductTemplate,
       context: {
-        slug: product.slug,
-      },
-    })
-  })
-}
+        slug: product.slug
+      }
+    });
+  });
+};
 ```
 
 - Go to an invalid path to check if the link to the products is created on the fly.
@@ -4455,12 +4515,13 @@ exports.createPages = async ({ graphql, actions }) => {
 - Create the new `pages/products.js` page where we can see all the products.
 
 > pages/products.js
-```js
-import React from 'react'
-import { graphql, Link } from 'gatsby'
-import Img from 'gatsby-image'
 
-import Layout from '../components/layout'
+```js
+import React from "react";
+import { graphql, Link } from "gatsby";
+import Img from "gatsby-image";
+
+import Layout from "../components/layout";
 
 const Products = ({ data: { allContentfulProduct } }) => (
   <Layout>
@@ -4477,7 +4538,7 @@ const Products = ({ data: { allContentfulProduct } }) => (
       ))}
     </div>
   </Layout>
-)
+);
 
 export const query = graphql`
   {
@@ -4496,10 +4557,9 @@ export const query = graphql`
       }
     }
   }
-`
+`;
 
-export default Products
-
+export default Products;
 ```
 
 ![](/images/staticwebs/the-gatsby-masterclass/QueryingPreviewingAllProductsOnProductsPage.png)
@@ -4560,12 +4620,13 @@ npm ERR!     C:\Users\juan.pablo.perez\AppData\Roaming\npm-cache\_logs\2019-02-2
 - We need to modify the `pages/product.js` and `template/product-template.js` documents to include the price of the product.
 
 > pages/product.js
-```js
-import React from 'react'
-import { graphql, Link } from 'gatsby'
-import Img from 'gatsby-image'
 
-import Layout from '../components/layout'
+```js
+import React from "react";
+import { graphql, Link } from "gatsby";
+import Img from "gatsby-image";
+
+import Layout from "../components/layout";
 
 const Products = ({ data: { allContentfulProduct } }) => (
   <Layout>
@@ -4576,15 +4637,15 @@ const Products = ({ data: { allContentfulProduct } }) => (
           <h2>Garb Products</h2>
           <Link
             to={`/products/${product.slug}`}
-            style={{ textDecoration: 'none', color: '#551a8b' }}
+            style={{ textDecoration: "none", color: "#551a8b" }}
           >
             <h3>
-              {product.name} ·{' '}
+              {product.name} ·{" "}
               <span
                 style={{
-                  fontSize: '1.2rem',
+                  fontSize: "1.2rem",
                   fontWeight: 300,
-                  color: '#f60',
+                  color: "#f60"
                 }}
               >
                 ${product.price}
@@ -4596,7 +4657,7 @@ const Products = ({ data: { allContentfulProduct } }) => (
       ))}
     </div>
   </Layout>
-)
+);
 
 export const query = graphql`
   {
@@ -4616,32 +4677,33 @@ export const query = graphql`
       }
     }
   }
-`
+`;
 
-export default Products
+export default Products;
 ```
 
 > template/product-template.js
-```js
-import React from 'react'
-import { graphql } from 'gatsby'
-import Img from 'gatsby-image'
 
-import Layout from '../components/layout'
+```js
+import React from "react";
+import { graphql } from "gatsby";
+import Img from "gatsby-image";
+
+import Layout from "../components/layout";
 
 const ProductTemplate = ({ data: { contentfulProduct } }) => (
   <Layout>
     <div
       style={{
-        marginLeft: '0 auto',
-        width: '100%',
-        textAlign: 'center',
+        marginLeft: "0 auto",
+        width: "100%",
+        textAlign: "center"
       }}
     >
       {/* Product Info */}
       <h2>
-        {contentfulProduct.name} -{' '}
-        <span style={{ color: '#ccc' }}>
+        {contentfulProduct.name} -{" "}
+        <span style={{ color: "#ccc" }}>
           Added on {contentfulProduct.createdAt}
         </span>
       </h2>
@@ -4649,11 +4711,11 @@ const ProductTemplate = ({ data: { contentfulProduct } }) => (
       <p>{contentfulProduct.description}</p>
     </div>
     <Img
-      style={{ margin: '0 auto', maxWidth: 600 }}
+      style={{ margin: "0 auto", maxWidth: 600 }}
       fluid={contentfulProduct.image.fluid}
     />
   </Layout>
-)
+);
 
 export const query = graphql`
   query($slug: String!) {
@@ -4670,9 +4732,9 @@ export const query = graphql`
       }
     }
   }
-`
+`;
 
-export default ProductTemplate
+export default ProductTemplate;
 ```
 
 ![](/images/staticwebs/the-gatsby-masterclass/AddAbilityToPurchaseProductsWithSnipcart.png)
@@ -4694,11 +4756,13 @@ export default ProductTemplate
 - Copy the API key to the `.env` document.
 
 > .env
+
 ```
 CONTENTFUL_SPACE_ID=q7XXXXXXp640
 CONTENTFUL_ACCESS_TOKEN=caXXXXXXd2c940334XXXXXXf6ce75XXXXXX72a019XXXXXXa3fcb9XXXXXX05b73
 SNIPCART_API_KEY=NzBlYjVXXXXXXjg2Yy0XXXXXXTg2YjQXXXXXXDhjZjcXXXXXXjM2ODYXXXXXXzYzMTA2ODU2
 ```
+
 - We need to install the `gatsby-pluig-snipcart`
 
 ```bash
@@ -4716,11 +4780,12 @@ found 3 low severity vulnerabilities
 - Modify the `gatsby-config.js` document to include the new plugin
 
 > gatsby-config.js
-```js
-const dotenv = require('dotenv')
 
-if (process.env.NODE_ENV !== 'production') {
-  dotenv.config()
+```js
+const dotenv = require("dotenv");
+
+if (process.env.NODE_ENV !== "production") {
+  dotenv.config();
 }
 
 module.exports = {
@@ -4728,7 +4793,7 @@ module.exports = {
     title: `Gatsby Garb`,
     description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
     author: `Juan Pablo Perez`,
-    createdAt: 2019,
+    createdAt: 2019
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -4736,25 +4801,25 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `images`,
-        path: `${__dirname}/src/images`,
-      },
+        path: `${__dirname}/src/images`
+      }
     },
     {
-      resolve: 'gatsby-transformer-remark',
+      resolve: "gatsby-transformer-remark",
       options: {
         plugins: [
           {
-            resolve: 'gatsby-remark-images',
-          },
-        ],
-      },
+            resolve: "gatsby-remark-images"
+          }
+        ]
+      }
     },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `posts`,
-        path: `${__dirname}/src/posts`,
-      },
+        path: `${__dirname}/src/posts`
+      }
     },
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
@@ -4767,53 +4832,54 @@ module.exports = {
         background_color: `#663399`,
         theme_color: `#663399`,
         display: `minimal-ui`,
-        icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
-      },
+        icon: `src/images/gatsby-icon.png` // This path is relative to the root of the site.
+      }
     },
     {
-      resolve: 'gatsby-source-contentful',
+      resolve: "gatsby-source-contentful",
       options: {
         spaceId: process.env.CONTENTFUL_SPACE_ID,
-        accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
-      },
+        accessToken: process.env.CONTENTFUL_ACCESS_TOKEN
+      }
     },
     {
-      resolve: 'gatsby-plugin-snipcart',
+      resolve: "gatsby-plugin-snipcart",
       options: {
         apiKey: process.env.SNIPCART_API_KEY,
-        autopop: true,
-      },
-    },
+        autopop: true
+      }
+    }
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.app/offline
     // 'gatsby-plugin-offline',
-  ],
-}
+  ]
+};
 ```
 
 - We need to modify the `templates\product-template.js` document to include a button to add the product to the `snipcart` cart.
 
 > templates\product-template.js
-```js
-import React from 'react'
-import { graphql } from 'gatsby'
-import Img from 'gatsby-image'
 
-import Layout from '../components/layout'
+```js
+import React from "react";
+import { graphql } from "gatsby";
+import Img from "gatsby-image";
+
+import Layout from "../components/layout";
 
 const ProductTemplate = ({ data: { contentfulProduct }, location }) => (
   <Layout>
     <div
       style={{
-        marginLeft: '0 auto',
-        width: '100%',
-        textAlign: 'center',
+        marginLeft: "0 auto",
+        width: "100%",
+        textAlign: "center"
       }}
     >
       {/* Product Info */}
       <h2>
-        {contentfulProduct.name} -{' '}
-        <span style={{ color: '#ccc' }}>
+        {contentfulProduct.name} -{" "}
+        <span style={{ color: "#ccc" }}>
           Added on {contentfulProduct.createdAt}
         </span>
       </h2>
@@ -4831,11 +4897,11 @@ const ProductTemplate = ({ data: { contentfulProduct }, location }) => (
       </button>
     </div>
     <Img
-      style={{ margin: '0 auto', maxWidth: 600 }}
+      style={{ margin: "0 auto", maxWidth: 600 }}
       fluid={contentfulProduct.image.fluid}
     />
   </Layout>
-)
+);
 
 export const query = graphql`
   query($slug: String!) {
@@ -4855,9 +4921,9 @@ export const query = graphql`
       }
     }
   }
-`
+`;
 
-export default ProductTemplate
+export default ProductTemplate;
 ```
 
 ![](/images/staticwebs/the-gatsby-masterclass/AddAbilityToPurchaseProductsWithSnipcart8.png)
@@ -4871,26 +4937,27 @@ export default ProductTemplate
 - Modify the `templates\product-template.js` document to better style the `Add to cart` button..
 
 > templates\product-template.js
-```js
-import React from 'react'
-import { graphql } from 'gatsby'
-import Img from 'gatsby-image'
 
-import Layout from '../components/layout'
+```js
+import React from "react";
+import { graphql } from "gatsby";
+import Img from "gatsby-image";
+
+import Layout from "../components/layout";
 
 const ProductTemplate = ({ data: { contentfulProduct }, location }) => (
   <Layout>
     <div
       style={{
-        marginLeft: '0 auto',
-        width: '100%',
-        textAlign: 'center',
+        marginLeft: "0 auto",
+        width: "100%",
+        textAlign: "center"
       }}
     >
       {/* Product Info */}
       <h2>
-        {contentfulProduct.name} -{' '}
-        <span style={{ color: '#ccc' }}>
+        {contentfulProduct.name} -{" "}
+        <span style={{ color: "#ccc" }}>
           Added on {contentfulProduct.createdAt}
         </span>
       </h2>
@@ -4898,11 +4965,11 @@ const ProductTemplate = ({ data: { contentfulProduct }, location }) => (
       <p>{contentfulProduct.description}</p>
       <button
         style={{
-          background: 'darkorange',
-          color: 'white',
-          padding: '0.3em',
-          borderRadius: '5px',
-          cursor: 'pointer',
+          background: "darkorange",
+          color: "white",
+          padding: "0.3em",
+          borderRadius: "5px",
+          cursor: "pointer"
         }}
         className="snipcart-add-item"
         data-item-id={contentfulProduct.slug}
@@ -4915,11 +4982,11 @@ const ProductTemplate = ({ data: { contentfulProduct }, location }) => (
       </button>
     </div>
     <Img
-      style={{ margin: '0 auto', maxWidth: 600 }}
+      style={{ margin: "0 auto", maxWidth: 600 }}
       fluid={contentfulProduct.image.fluid}
     />
   </Layout>
-)
+);
 
 export const query = graphql`
   query($slug: String!) {
@@ -4939,9 +5006,9 @@ export const query = graphql`
       }
     }
   }
-`
+`;
 
-export default ProductTemplate
+export default ProductTemplate;
 ```
 
 ![](/images/staticwebs/the-gatsby-masterclass/DisplayShoppingCartSummaryInHeader.png)
@@ -4949,45 +5016,46 @@ export default ProductTemplate
 - We need to modify the `components/header.js` document to include the `Cart summary`.
 
 > components/header.js
-```js
-import { Link } from 'gatsby'
-import PropTypes from 'prop-types'
-import React from 'react'
 
-import gatsbyLogo from '../images/gatsby-icon.png'
+```js
+import { Link } from "gatsby";
+import PropTypes from "prop-types";
+import React from "react";
+
+import gatsbyLogo from "../images/gatsby-icon.png";
 
 const Header = ({ siteTitle }) => (
   <div
     style={{
       background: `rebeccapurple`,
-      marginBottom: `1.45rem`,
+      marginBottom: `1.45rem`
     }}
   >
     <div
       style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
         margin: `0 auto`,
         maxWidth: 960,
-        padding: `1.45rem 1.0875rem`,
+        padding: `1.45rem 1.0875rem`
       }}
     >
       {/* Title / Logo */}
       <span
         style={{
-          display: 'flex',
-          alignItems: 'center',
+          display: "flex",
+          alignItems: "center"
         }}
       >
         <img
           src={gatsbyLogo}
           alt="Gastby Garb Logo"
           style={{
-            borderRadius: '50%',
-            border: '3px solid orange',
-            margin: '0 5px',
-            width: `3rem`,
+            borderRadius: "50%",
+            border: "3px solid orange",
+            margin: "0 5px",
+            width: `3rem`
           }}
         />
         <h1 style={{ margin: 0 }}>
@@ -4995,7 +5063,7 @@ const Header = ({ siteTitle }) => (
             to="/"
             style={{
               color: `white`,
-              textDecoration: `none`,
+              textDecoration: `none`
             }}
           >
             {siteTitle}
@@ -5004,7 +5072,7 @@ const Header = ({ siteTitle }) => (
       </span>
       {/* Shopping Cart Summary */}
       <div
-        style={{ color: 'white', cursor: 'pointer' }}
+        style={{ color: "white", cursor: "pointer" }}
         className="snipcart-summary snipcart-checkout"
       >
         <div>
@@ -5012,32 +5080,32 @@ const Header = ({ siteTitle }) => (
         </div>
         <div>
           <span
-            style={{ fontWeight: 'bold' }}
+            style={{ fontWeight: "bold" }}
             className="snipcart-total-items"
-          />{' '}
+          />{" "}
           Items in Cart
         </div>
         <div>
-          Total price{' '}
+          Total price{" "}
           <span
-            style={{ fontWeight: 'bold' }}
+            style={{ fontWeight: "bold" }}
             className="snipcart-total-price"
           />
         </div>
       </div>
     </div>
   </div>
-)
+);
 
 Header.propTypes = {
-  siteTitle: PropTypes.string,
-}
+  siteTitle: PropTypes.string
+};
 
 Header.defaultProps = {
-  siteTitle: ``,
-}
+  siteTitle: ``
+};
 
-export default Header
+export default Header;
 ```
 
 ![](/images/staticwebs/the-gatsby-masterclass/DisplayShoppingCartSummaryInHeader2.png)
@@ -5047,7 +5115,8 @@ export default Header
 ### 41. Adding Custom NavLinks in Header Component
 
 - We need to modify the `components/layout.css` document to add the styles for the header links.
-> components/layout.css
+  > components/layout.css
+
 ```css
 .
 .
@@ -5072,51 +5141,52 @@ export default Header
 - We need to modify the `components/header.js` document to include the links to the blog and the products.
 
 > components/header.js
-```js
-import { Link } from 'gatsby'
-import PropTypes from 'prop-types'
-import React from 'react'
 
-import gatsbyLogo from '../images/gatsby-icon.png'
+```js
+import { Link } from "gatsby";
+import PropTypes from "prop-types";
+import React from "react";
+
+import gatsbyLogo from "../images/gatsby-icon.png";
 
 const isActive = ({ isCurrent }) => {
-  return { className: isCurrent ? 'active' : 'navlink' }
-}
+  return { className: isCurrent ? "active" : "navlink" };
+};
 
-const NavLink = props => <Link getProps={isActive} {...props} />
+const NavLink = props => <Link getProps={isActive} {...props} />;
 
 const Header = ({ siteTitle }) => (
   <div
     style={{
       background: `rebeccapurple`,
-      marginBottom: `1.45rem`,
+      marginBottom: `1.45rem`
     }}
   >
     <div
       style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
         margin: `0 auto`,
         maxWidth: 960,
-        padding: `1.45rem 1.0875rem`,
+        padding: `1.45rem 1.0875rem`
       }}
     >
       {/* Title / Logo */}
       <span
         style={{
-          display: 'flex',
-          alignItems: 'center',
+          display: "flex",
+          alignItems: "center"
         }}
       >
         <img
           src={gatsbyLogo}
           alt="Gastby Garb Logo"
           style={{
-            borderRadius: '50%',
-            border: '3px solid orange',
-            margin: '0 5px',
-            width: `3rem`,
+            borderRadius: "50%",
+            border: "3px solid orange",
+            margin: "0 5px",
+            width: `3rem`
           }}
         />
         <h1 style={{ margin: 0 }}>
@@ -5130,7 +5200,7 @@ const Header = ({ siteTitle }) => (
 
       {/* Shopping Cart Summary */}
       <div
-        style={{ color: 'white', cursor: 'pointer' }}
+        style={{ color: "white", cursor: "pointer" }}
         className="snipcart-summary snipcart-checkout"
       >
         <div>
@@ -5138,34 +5208,33 @@ const Header = ({ siteTitle }) => (
         </div>
         <div>
           <span
-            style={{ fontWeight: 'bold' }}
+            style={{ fontWeight: "bold" }}
             className="snipcart-total-items"
-          />{' '}
+          />{" "}
           Items in Cart
         </div>
         <div>
-          Total price{' '}
+          Total price{" "}
           <span
-            style={{ fontWeight: 'bold' }}
+            style={{ fontWeight: "bold" }}
             className="snipcart-total-price"
           />
         </div>
       </div>
     </div>
   </div>
-)
+);
 
 Header.propTypes = {
-  siteTitle: PropTypes.string,
-}
+  siteTitle: PropTypes.string
+};
 
 Header.defaultProps = {
-  siteTitle: ``,
-}
+  siteTitle: ``
+};
 
-export default Header
+export default Header;
 ```
-
 
 ![](/images/staticwebs/the-gatsby-masterclass/AddingCustomNavLinksInHeaderComponent.png)
 
@@ -5326,13 +5395,15 @@ found 3 low severity vulnerabilities
 - We need to modify the `components/header.js` documents to add the links to authenticate.
 
 > components/header.js
+
 ```js
 ```
 
 ![](/images/staticwebs/the-gatsby-masterclass/UsingNetlifyIdentityForMultiFactorAuthenticationInOurSite5.png)
 
 - We can improve the style changing the the `components/layout.css` document.
-> components/layout.css
+  > components/layout.css
+
 ```css
 .
 .
@@ -5447,37 +5518,38 @@ To https://github.com/peelmicro/the-gatsby-masterclass.git
 - Modify the `pages/product.js` document to show all the products only if the user is authenticated.
 
 > pages/product.js
-```js
-import React from 'react'
-import { graphql, Link } from 'gatsby'
-import Img from 'gatsby-image'
-import netlifyIdentity from 'netlify-identity-widget'
 
-import Layout from '../components/layout'
+```js
+import React from "react";
+import { graphql, Link } from "gatsby";
+import Img from "gatsby-image";
+import netlifyIdentity from "netlify-identity-widget";
+
+import Layout from "../components/layout";
 
 class Products extends React.Component {
   state = {
-    products: [],
-  }
+    products: []
+  };
 
   componentDidMount() {
-    this.getProducts()
-    netlifyIdentity.on('login', user => this.getProducts(user))
-    netlifyIdentity.on('logout', () => this.getProducts())
+    this.getProducts();
+    netlifyIdentity.on("login", user => this.getProducts(user));
+    netlifyIdentity.on("logout", () => this.getProducts());
   }
 
   getProducts = user => {
-    console.log('Current User', user)
-    const allProducts = this.props.data.allContentfulProduct.edges
+    console.log("Current User", user);
+    const allProducts = this.props.data.allContentfulProduct.edges;
     const products =
       netlifyIdentity.currentUser() !== null
         ? allProducts
-        : allProducts.filter(({ node: product }) => !product.private)
-    this.setState({ products })
-  }
+        : allProducts.filter(({ node: product }) => !product.private);
+    this.setState({ products });
+  };
 
   render() {
-    const { products } = this.state
+    const { products } = this.state;
 
     return (
       <Layout>
@@ -5488,15 +5560,15 @@ class Products extends React.Component {
               <h2>Garb Products</h2>
               <Link
                 to={`/products/${product.slug}`}
-                style={{ textDecoration: 'none', color: '#551a8b' }}
+                style={{ textDecoration: "none", color: "#551a8b" }}
               >
                 <h3>
-                  {product.name} ·{' '}
+                  {product.name} ·{" "}
                   <span
                     style={{
-                      fontSize: '1.2rem',
+                      fontSize: "1.2rem",
                       fontWeight: 300,
-                      color: '#f60',
+                      color: "#f60"
                     }}
                   >
                     ${product.price}
@@ -5508,7 +5580,7 @@ class Products extends React.Component {
           ))}
         </div>
       </Layout>
-    )
+    );
   }
 }
 
@@ -5531,9 +5603,9 @@ export const query = graphql`
       }
     }
   }
-`
+`;
 
-export default Products
+export default Products;
 ```
 
 ![](/images/staticwebs/the-gatsby-masterclass/DisplayingPrivateProductsForAuthUsers10.png)
@@ -5576,4 +5648,3 @@ To https://github.com/peelmicro/the-gatsby-masterclass.git
 ![](/images/staticwebs/the-gatsby-masterclass/DisplayingPrivateProductsForAuthUsers14.png)
 
 ![](/images/staticwebs/the-gatsby-masterclass/DisplayingPrivateProductsForAuthUsers15.png)
-
