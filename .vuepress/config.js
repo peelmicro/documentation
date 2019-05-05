@@ -57,9 +57,10 @@ module.exports = ctx => ({
           collapsable: true,
           children: [
             "react",
+            "/other/graphql-build-an-online-store-with-react-and-graphql-in-90-minutes",
             "/other/graphql-full-stack-react-python-and-graphql",
             "/other/graphql-full-stack-react-python-and-graphql-2",
-            "/other/graphql-full-stack-react-python-and-graphql-3",            
+            "/other/graphql-full-stack-react-python-and-graphql-3",
             "/frontend/react-react-hooks",
             "/other/docker-multi-docker",
             "/backend/nodejs-advanced-node-for-developers",
@@ -110,15 +111,16 @@ module.exports = ctx => ({
           collapsable: true,
           children: [
             "nodejs",
+            "/other/graphql-build-an-online-store-with-react-and-graphql-in-90-minutes",
+            "/other/graphql-graphql-react-event-booking",
+            "/databases/mongodb-mongodb-the-complete-developers-guide",
             "/other/docker-multi-docker",
             "nodejs-advanced-node-for-developers",
             "/other/bot-how-to-create-a-slack-bot-to-automate-tasks-for-you",
             "nodejs-node-with-react-fullstack-web-development",
             "/projects/node-with-vuejs-fullstack-web-development",
             "/other/blockchain-ethereum-kickstart",
-            "/projects/ethereum-kickstart-vue",
-            "/databases/mongodb-mongodb-the-complete-developers-guide",
-            "/other/graphql-graphql-react-event-booking"
+            "/projects/ethereum-kickstart-vue"
           ]
         },
         {
@@ -140,7 +142,7 @@ module.exports = ctx => ({
             "python",
             "/other/graphql-full-stack-react-python-and-graphql",
             "/other/graphql-full-stack-react-python-and-graphql-2",
-            "/other/graphql-full-stack-react-python-and-graphql-3",            
+            "/other/graphql-full-stack-react-python-and-graphql-3",
             "/projects/python-multi-docker",
             "python-pythonforbeginnersintro"
           ]
@@ -192,14 +194,15 @@ module.exports = ctx => ({
           collapsable: true,
           children: [
             "mongodb",
+            "/other/graphql-build-an-online-store-with-react-and-graphql-in-90-minutes",
+            "/other/graphql-graphql-react-event-booking",
             "/backend/dotnetcore-net-core-microservice",
+            "/databases/mongodb-mongodb-the-complete-developers-guide",
             "/backend/nodejs-advanced-node-for-developers",
             "/projects/dotnet-core-react-redux-advanced",
             "/backend/java-angular-4-java-developers",
             "/backend/nodejs-node-with-react-fullstack-web-development",
-            "/projects/node-with-vuejs-fullstack-web-development",
-            "/databases/mongodb-mongodb-the-complete-developers-guide",
-            "/other/graphql-graphql-react-event-booking"
+            "/projects/node-with-vuejs-fullstack-web-development"
           ]
         },
         {
@@ -233,7 +236,7 @@ module.exports = ctx => ({
             "sqlite",
             "/other/graphql-full-stack-react-python-and-graphql",
             "/other/graphql-full-stack-react-python-and-graphql-2",
-            "/other/graphql-full-stack-react-python-and-graphql-3",            
+            "/other/graphql-full-stack-react-python-and-graphql-3",
             "/backend/dotnetcore-asp-net-core-angular-from-scratch"
           ]
         }
@@ -286,7 +289,6 @@ module.exports = ctx => ({
             "/other/cicd-learn-devops-ci-cd-with-jenkins-using-pipelines-and-docker",
             "/other/cicd-learn-devops-kubernetes-deployment-by-kops-and-terraform",
             "/other/cicd-learn-devops-helm-helmfile-kubernetes-deployment"
-
           ]
         },
         {
@@ -359,12 +361,13 @@ module.exports = ctx => ({
           collapsable: true,
           children: [
             "graphql",
+            "/other/graphql-build-an-online-store-with-react-and-graphql-in-90-minutes",
             "/other/graphql-full-stack-react-python-and-graphql",
             "/other/graphql-full-stack-react-python-and-graphql-2",
             "/other/graphql-full-stack-react-python-and-graphql-3",
+            "/other/graphql-building-graphql-apis-aspdotnet-core",
             "/other/graphql-graphql-react-event-booking",
-            "/staticwebs/gatsby-the-gatsby-masterclass",
-            "/other/graphql-building-graphql-apis-aspdotnet-core"
+            "/staticwebs/gatsby-the-gatsby-masterclass"
           ]
         },
         {
