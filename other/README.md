@@ -13,3 +13,4 @@ This documentation section is about the use of `Other` technology.
 - [OWASP Top 10](owasp.md)
 - [GraphQL](graphql.md)
 - [CI/CD](cicd.md)
+- [Clould computing](cloud.md)
