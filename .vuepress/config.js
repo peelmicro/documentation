@@ -383,6 +383,14 @@ module.exports = ctx => ({
             "/other/cicd-learn-devops-kubernetes-deployment-by-kops-and-terraform",
             "/other/cicd-learn-devops-helm-helmfile-kubernetes-deployment"
           ]
+        },
+        {
+          title: "Cloud computing",
+          collapsable: true,
+          children: [
+            "cloud",
+            "/other/cloud-architect-saas-applications-unique-challenges-solutions"
+          ]
         }
       ]
     }
