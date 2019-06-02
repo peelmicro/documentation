@@ -14,3 +14,4 @@ This documentation section is about the use of `Other` technology.
 - [GraphQL](graphql.md)
 - [CI/CD](cicd.md)
 - [Clould computing](cloud.md)
+- [EDI](edi.md)

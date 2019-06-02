@@ -391,6 +391,23 @@ module.exports = ctx => ({
             "cloud",
             "/other/cloud-architect-saas-applications-unique-challenges-solutions"
           ]
+        },
+        {
+          title: "EDI",
+          collapsable: true,
+          children: [
+            "edi",
+            "/other/edi-babelway-level-2-certification",
+            "/other/edi-babelway-documents-and-partners",
+            "/other/edi-babelway-how-to-read-document-specifications",
+            "/other/edi-babelway-lookup-tables-routing",
+            "/other/edi-babelway-intermediate-transformation",
+            "/other/edi-babelway-level-1-certification",
+            "/other/edi-babelway-monitoring-messages",
+            "/other/edi-babelway-run-a-b2b-integration-project",
+            "/other/edi-babelway-basic-transformation",
+            "/other/edi-babelway-basics-start-here"
+          ]
         }
       ]
     }
