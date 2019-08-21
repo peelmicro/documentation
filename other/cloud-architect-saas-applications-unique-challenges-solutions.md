@@ -475,7 +475,7 @@ Response:
 4. What is the messaging scheme for inter-component messaging?
 
 - REST/JSON
-- GrahQL/JSON
+- Graphql/JSON
 
 5. Will you use a Data Bus? If so, which technology?
 
@@ -515,7 +515,7 @@ Response:
 4. What is the messaging scheme for inter-component messaging?
 
 - REST/JSON
-- GrahQL/JSON
+- Graphql/JSON
 
 5. Will you use a Data Bus? If so, which technology?
 

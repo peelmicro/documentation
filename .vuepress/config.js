@@ -24,6 +24,7 @@ module.exports = ctx => ({
       "/projects/": [
         "",
         "documentation",
+        "full-stack-vue-with-graphql-the-ultimate-guide-nuxt",
         "dotnet-core-multi-docker",
         "java-multi-docker",
         "python-multi-docker",
@@ -40,7 +41,9 @@ module.exports = ctx => ({
           collapsable: true,
           children: [
             "vuejs",
-            "/projects/node-with-vuejs-fullstack-web-development",
+            "/projects/full-stack-vue-with-graphql-the-ultimate-guide-nuxt",
+            "/frontend/vuejs-full-stack-vue-with-graphql-the-ultimate-guide",
+            "/frontend/vuejs-build-a-news-feed-with-nuxt-2-and-firestore",
             "/projects/ethereum-kickstart-vue",
             "/frontend/vuejs-a-comprehensive-project-with-vuetify-and-firebase",
             "/projects/devmeetup-vuetify-nuxt",
@@ -111,6 +114,8 @@ module.exports = ctx => ({
           collapsable: true,
           children: [
             "nodejs",
+            "/projects/full-stack-vue-with-graphql-the-ultimate-guide-nuxt",
+            "/frontend/vuejs-full-stack-vue-with-graphql-the-ultimate-guide",
             "/other/graphql-build-an-online-store-with-react-and-graphql-in-90-minutes",
             "/other/graphql-graphql-react-event-booking",
             "/databases/mongodb-mongodb-the-complete-developers-guide",
@@ -178,6 +183,7 @@ module.exports = ctx => ({
           collapsable: true,
           children: [
             "firebase",
+            "/frontend/vuejs-build-a-news-feed-with-nuxt-2-and-firestore",            
             "/databases/firebase-firebase-firestore-getting-started",
             "/other/bot-how-to-create-a-slack-bot-to-automate-tasks-for-you",
             "/projects/purchase-slack-command-dotnet",
@@ -194,6 +200,8 @@ module.exports = ctx => ({
           collapsable: true,
           children: [
             "mongodb",
+            "/projects/full-stack-vue-with-graphql-the-ultimate-guide-nuxt",
+            "/frontend/vuejs-full-stack-vue-with-graphql-the-ultimate-guide",
             "/other/graphql-build-an-online-store-with-react-and-graphql-in-90-minutes",
             "/other/graphql-graphql-react-event-booking",
             "/backend/dotnetcore-net-core-microservice",
@@ -361,6 +369,8 @@ module.exports = ctx => ({
           collapsable: true,
           children: [
             "graphql",
+            "/projects/full-stack-vue-with-graphql-the-ultimate-guide-nuxt",
+            "/frontend/vuejs-full-stack-vue-with-graphql-the-ultimate-guide",
             "/other/graphql-build-an-online-store-with-react-and-graphql-in-90-minutes",
             "/other/graphql-full-stack-react-python-and-graphql",
             "/other/graphql-full-stack-react-python-and-graphql-2",
