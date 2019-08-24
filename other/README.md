@@ -15,3 +15,4 @@ This documentation section is about the use of `Other` technology.
 - [CI/CD](cicd.md)
 - [Clould computing](cloud.md)
 - [EDI](edi.md)
+- [SEO](seo.md)

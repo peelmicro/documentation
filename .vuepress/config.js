@@ -418,6 +418,14 @@ module.exports = ctx => ({
             "/other/edi-babelway-basic-transformation",
             "/other/edi-babelway-basics-start-here"
           ]
+        },
+        {
+          title: "SEO",
+          collapsable: true,
+          children: [
+            "seo",
+            "/other/seo-seo-for-webmasters-thinking-seo"
+          ]
         }
       ]
     }
